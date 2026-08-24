@@ -23,7 +23,7 @@
 </head>
 <body class="text-slate-800 antialiased pb-20">
 
-  <!-- Fejléc (Sötétzöld & Földbarna) -->
+  <!-- Fejléc -->
   <header class="bg-[#1B4332] text-white py-12 px-4 shadow-xl mb-6 border-b-4 border-[#B7E4C7] relative overflow-hidden">
     <div class="max-w-5xl mx-auto text-center relative z-10">
       <span class="inline-block bg-[#2D6A4F] text-[#D8F3DC] text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3 border border-[#B7E4C7]/30">Tudatos Prevenció & Ciklusszinkron</span>
@@ -46,7 +46,7 @@
 
   <main class="max-w-5xl mx-auto px-4">
     
-    <!-- ==================== 1. TAB: TÜNETKERESŐ (Sötétzöld-Barna-Bézs) ==================== -->
+    <!-- ==================== 1. TAB: TÜNETKERESŐ ==================== -->
     <div id="symptomsTabSection">
       <!-- Bemutatkozó Kártya -->
       <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#E6CCB2] shadow-sm mb-8 text-center max-w-2xl mx-auto">
@@ -75,16 +75,37 @@
     </div>
 
 
-    <!-- ==================== 2. TAB: CIKLUS-IRÁNYTŰ (Lágy Hamvas-Rózsaszín & Nude) ==================== -->
+    <!-- ==================== 2. TAB: CIKLUS-IRÁNYTŰ ==================== -->
     <div id="cycleTabSection" class="hidden">
       
-      <!-- Ciklus Bevezető (Csajos Rózsaszín) -->
+      <!-- Ciklus Bevezető -->
       <div class="bg-gradient-to-b from-[#FFF0F3] to-[#FDE2E4] p-6 md:p-8 rounded-3xl border border-[#FFCAD4] mb-8 text-center max-w-3xl mx-auto shadow-sm">
         <span class="text-xs font-bold text-[#B56576] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#FFCAD4]">Ciklusszinkronizált Táplálkozás</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#6D597A] mt-3 mb-3">Harmónia a Női Ciklusban</h2>
-        <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light">
-          A női szervezet a 28 napos ciklus során négy különleges élettani fázison megy keresztül. Az energiaszükséglet, az emésztés és a tápanyag-szükséglet hétről hétre változik. Válaszd ki a ciklusod aktuális szakaszát a személyre szabott étrendért és receptekért!
+        <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light mb-6">
+          A női szervezet a 28 napos ciklus során négy különleges élettani fázison megy keresztül. Az energiaszükséglet, az emésztés és a tápanyag-szükséglet hétről hétre változik.
         </p>
+
+        <!-- KISZÁMÍTÓ INTERAKTÍV KALKULÁTOR -->
+        <div class="bg-white/80 backdrop-blur-sm p-5 rounded-2xl border border-[#FFCAD4] max-w-md mx-auto text-left">
+          <p class="text-xs font-bold text-[#6D597A] uppercase tracking-wider mb-3 text-center">🗓️ Ciklus-Kalkulátor</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 text-xs">
+            <div>
+              <label class="block text-slate-600 mb-1 font-semibold">Utolsó menstruáció 1. napja:</label>
+              <input type="date" id="lastPeriodDate" class="w-full px-3 py-2 rounded-xl border border-[#FFCAD4] text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#B56576]">
+            </div>
+            <div>
+              <label class="block text-slate-600 mb-1 font-semibold">Ciklus átlagos hossza (nap):</label>
+              <input type="number" id="cycleLength" value="28" min="20" max="45" class="w-full px-3 py-2 rounded-xl border border-[#FFCAD4] text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#B56576]">
+            </div>
+          </div>
+          <button onclick="calculateCyclePhase()" class="w-full py-2.5 bg-[#B56576] text-white text-xs font-bold rounded-xl shadow-sm hover:bg-[#A35263] transition">
+            Saját Fázis Kiszámítása
+          </button>
+          <div id="calcResult" class="hidden mt-3 p-2.5 bg-[#FFF0F3] rounded-xl text-center text-xs font-bold text-[#6D597A] border border-[#FFCAD4]">
+            <!-- Eredmény szövege -->
+          </div>
+        </div>
       </div>
 
       <!-- Fázis Választó Gombok -->
@@ -120,17 +141,14 @@
 
   </main>
 
-  <!-- Felugró Részletező Modál -->
+  <!-- Felugró Részletező Modál (Tünetekhez) -->
   <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#E6CCB2]">
-      
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
       
-      <div id="modalCategoryBadge" class="inline-flex items-center gap-2 bg-[#F8F5F2] text-[#1B4332] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 border border-[#E6CCB2]">
-        <!-- Ikon + Kategória név -->
-      </div>
+      <div id="modalCategoryBadge" class="inline-flex items-center gap-2 bg-[#F8F5F2] text-[#1B4332] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 border border-[#E6CCB2]"></div>
       <h3 id="modalSymptom" class="text-2xl font-bold text-[#1B4332] mb-6">Tünet neve</h3>
 
       <div class="space-y-4 text-sm">
@@ -138,12 +156,10 @@
           <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">💊 1. Tápanyag & Vitamin</p>
           <p id="modalVitamin" class="text-slate-700 mt-1.5 leading-relaxed">...</p>
         </div>
-
         <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]/80">
           <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">🌿 2. Gyógynövény & Tea</p>
           <p id="modalHerb" class="text-slate-700 mt-1.5 leading-relaxed">...</p>
         </div>
-
         <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]/80">
           <div class="flex items-center justify-between">
             <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">🥣 3. Konyha & Kamra</p>
@@ -151,28 +167,46 @@
           </div>
           <p id="modalFood" class="text-slate-700 mt-1.5 leading-relaxed">...</p>
         </div>
-
         <div class="p-4 bg-amber-50/90 rounded-2xl border border-amber-200/80">
           <p class="font-bold text-amber-900 flex items-center gap-2 text-base">💡 PRO TIPP (Alkalmazási trükk)</p>
           <p id="modalProTip" class="text-amber-800 italic mt-1.5 leading-relaxed">...</p>
         </div>
-
         <div class="p-4 bg-rose-50/90 rounded-2xl border border-rose-200/80">
           <p class="font-bold text-rose-900 flex items-center gap-2 text-base">⛔ MIT KERÜLJ EL?</p>
           <p id="modalAvoid" class="text-rose-800 mt-1.5 leading-relaxed">...</p>
         </div>
       </div>
-
       <p class="text-[11px] text-slate-400 text-center mt-6">⚠️ Az oldalon található információk tájékoztató jellegűek, nem helyettesítik a szakszerű orvosi diagnózist.</p>
     </div>
   </div>
 
+  <!-- Recept Részletező Modál -->
+  <div id="recipeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#FFCAD4]">
+      <button onclick="closeRecipeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+      <img id="recipeModalImg" class="w-full h-48 object-cover rounded-2xl mb-4 border border-[#FFCAD4]/60" src="" alt="">
+      <h3 id="recipeModalTitle" class="text-2xl font-bold font-serif-title text-[#6D597A] mb-2"></h3>
+      <p id="recipeModalDesc" class="text-xs text-slate-600 leading-relaxed mb-4 font-light"></p>
+      
+      <div class="p-4 bg-[#FFF0F3] rounded-2xl border border-[#FFCAD4] mb-4 text-xs text-[#B56576]">
+        <p class="font-bold mb-1 text-sm">🥣 Hozzávalók:</p>
+        <p id="recipeModalIngredients" class="text-slate-700 leading-relaxed"></p>
+      </div>
+
+      <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2] text-xs">
+        <p class="font-bold text-[#1B4332] mb-1 text-sm">👩‍🍳 Elkészítés lépésről lépésre:</p>
+        <p id="recipeModalSteps" class="text-slate-700 leading-relaxed whitespace-pre-line"></p>
+      </div>
+    </div>
+  </div>
 
   <!-- JavaScript Logika & Adatbázis -->
   <script>
     let symptomsData = [];
 
-    // Ciklus Fázisok Adatbázisa
+    // Ciklus Fázisok Adatbázisa (Pontosított receptek, helyesírás és szorosan illeszkedő képek)
     const cyclePhases = {
       1: {
         title: "1. Menstruációs Fázis (1–5. nap)",
@@ -185,20 +219,23 @@
           {
             name: "Céklás-Vöröslencsés Krémleves Tökmaggal",
             img: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80",
-            desc: "Rendkívül gazdag szerves vasban és folsavban. A meleg krémleves állag kíméli az emésztőrendszert, a tökmag cinkkel látja el a szervezetet.",
-            ingredients: "Cékla, vöröslencse, gyömbér, kókusztej, pirított tökmag."
+            desc: "Rendkívül gazdag szerves vasban és folsavban. A meleg krémleves kíméli az emésztőrendszert, a tökmag cinkkel látja el a szervezetet.",
+            ingredients: "2 fej cékla, 10 dkg vöröslencse, 1 dkg friss gyömbér, 2 dl kókusztej, 2 ek pirított tökmag.",
+            steps: "1. A céklát és gyömbért megtisztítjuk, felkockázzuk.\n2. A vöröslencsével együtt kevés vízben puhára főzzük (kb. 20 perc).\n3. Hozzáadjuk a kókusztejet, összeturmixoljuk, majd pirított tökmaggal tálaljuk."
           },
           {
             name: "Meleg Fahéjas Zabkása Meggyel & Étcsokival",
             img: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=600&q=80",
             desc: "A zab és az étcsokoládé magas magnéziumtartalma ellazítja a méh simaizmait, csökkentve a görcsös fájdalmakat.",
-            ingredients: "Zabpehely, meggy, 70%+ étcsoki, fahéj, mandulatej."
+            ingredients: "5 ek zabpehely, 2 dl mandulatej, 1 marék meggy, 2 kocka étcsoki (70%+), 1 tk fahéj.",
+            steps: "1. A zabpelyhet a mandulatejjel és a fahéjjal lassú tűzön krémesre főzzük.\n2. Tálkába öntjük, belekeverjük a meggyet.\n3. A tetejére rátesszük az étcsokit, ami a meleg kásán finoman ráolvad."
           },
           {
-            name: "Lassan Főtt Fűszeres Marharagú Gyökérzöldségekkel",
+            name: "Lassan Főtt Fűszeres Marharagu Gyökérzöldségekkel",
             img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
             desc: "Könnyen beépülő hem-vas forrás. A hosszan főzött alaplé regenerálja a bélnyálkahártyát és feltölti az energiaraktárakat.",
-            ingredients: "Marhahús / Gomba, sárgarépa, zeller, babérlevél, csontlé."
+            ingredients: "40 dkg marhalábszár (vagy csiperkegomba), 2 sárgarépa, 1 zellergyökér, babérlevél, 5 dl csontlé.",
+            steps: "1. A húst/gombát felkockázzuk, kevés zsiradékon átpirítjuk.\n2. Hozzáadjuk a felvágott gyökérzöldségeket és a babérlevelet.\n3. Felöntjük a csontlével, és lefedve, lassú tűzön 1.5-2 órán át puhára pároljuk."
           }
         ]
       },
@@ -214,19 +251,22 @@
             name: "Avokádós-Kimchis BOWL Csírákkal & Edamame Babbal",
             img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
             desc: "A fermentált kimchi táplálja a bélflórát, ami elengedhetetlen a növekvő ösztrogénszint optimális feldolgozásához.",
-            ingredients: "Kimchi, avokádó, edamame bab, retekcsíra, quinoa."
+            ingredients: "10 dkg főtt quinoa, fél avokádó, 3 ek kimchi, 1 marék edamame bab, 1 ek retekcsíra.",
+            steps: "1. A főtt quinoát egy tál aljára tesszük.\n2. Szépen mellé rendezzük a szeletelt avokádót, kimchit és az edamame babot.\n3. A tetejét friss retekcsírával és pár csepp olívaolajjal díszítjük."
           },
           {
             name: "Citromos-Kakukkfüves Lazacfilé Párolt Spárgával",
             img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&q=80",
             desc: "Magas Omega-3 és cink tartalmával közvetlenül támogatja az érő tüsző minőségét és a hormontermelést.",
-            ingredients: "Lazacfilé, zöldspárga, citrom, kakukkfű, olívaolaj."
+            ingredients: "1 szelet lazacfilé, 10 szál zöldspárga, fél citrom leve, friss kakukkfű, olívaolaj.",
+            steps: "1. A lazacot sózzuk, borsozzuk, friss kakukkfűvel és citromlével ízesítjük.\n2. Serpenyőben oldalanként 3-4 perc alatt készre sütjük.\n3. A spárgát pár perc alatt gőzfelett megpároljuk, és a lazac mellé tálaljuk."
           },
           {
             name: "Matcha-Spirulina Smoothie Tál Bogyós Gyümölcsökkel",
             img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80",
             desc: "Antioxidáns bombaként védi a sejteket az oxidatív stressztől a növekvő energiájú fázisban.",
-            ingredients: "Matcha por, spenót, fagyasztott málna, áfonya, kókuszvíz."
+            ingredients: "1 tk matcha por, 1 fagyasztott banán, 1 marék spenót, 1.5 dl kókuszvíz, friss málna és áfonya.",
+            steps: "1. A banánt, spenótot, matcha port és kókuszvizet sűrű turmixszá krémestjük.\n2. Tálba öntjük, és a tetejét kirakjuk friss málna- és áfonyaszemekkel."
           }
         ]
       },
@@ -242,19 +282,22 @@
             name: "Sült Brokkolis-Kefires Saláta Dióval & Gránátalmával",
             img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
             desc: "A brokkoliban található INDOL-3-KARBINOL vegyület bizonyítottan segíti a májat a felesleges ösztrogén kivezetésében.",
-            ingredients: "Brokkoli, kézműves kefir, dió, gránátalma magok."
+            ingredients: "1 fej brokkoli (rózsáira szedve), 1 dl natúr kefir, 1 marék dió, 2 ek gránátalmamag.",
+            steps: "1. A brokkolirózsákat sütőben 180 °C-on 15 perc alatt enyhén megpirítjuk.\n2. A kézműves kefirt sóval, borssal, pici citromlével kikeverjük öntetnek.\n3. Összeforgatjuk a brokkolit az öntettel, durvára vágott dióval és gránátalmával."
           },
           {
             name: "Szezámmagos Quinoa Tál Párolt Cukkínivel & Csirkével",
             img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
             desc: "A szezámmag fitoösztrogénjei természetes módon harmonizálják a hormoncsúcsot az ovuláció ablakában.",
-            ingredients: "Quinoa, cukkini, csirkemell csíkok, pörkölt szezámmag."
+            ingredients: "10 dkg quinoa, 15 dkg csirkemellfilé, 1 cukkini, 2 ek pörkölt szezámmag.",
+            steps: "1. A quinoát kétszeres mennyiségű vízben kifőzzük.\n2. A csirkemellet és cukkinit kockákra vágjuk, serpenyőben átpirítjuk.\n3. Egy tálban összekeverjük, és bőségesen megszórjuk pörkölt szezámmaggal."
           },
           {
             name: "Málnás-Chia Pudíng Kókusztejjel & Kókuszreszelékkel",
             img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600&q=80",
             desc: "Magas rosttartalma köti a bélben a lebontott ösztrogént, megakadályozva annak visszaszívódását.",
-            ingredients: "Chia mag, kókusztej, friss málna, vanília kivonat."
+            ingredients: "3 ek chia mag, 2 dl kókusztej, 1 marék friss málna, 1 tk kókuszreszelék.",
+            steps: "1. A chia magot elkeverjük a kókusztejjel, és legalább 2 órára (vagy éjszakára) hűtőbe tesszük.\n2. Tálaláskor a sűrű puding tetejére halmozzuk az összetört málnát és a kókuszreszeléket."
           }
         ]
       },
@@ -270,19 +313,22 @@
             name: "Sült Sütőtökös-Zsályás Rizottó Törökmogyoróval",
             img: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=600&q=80",
             desc: "A sütőtök komplex szénhidrátjai stabilizálják a vércukorszintet, megakadályozva az esti édesség-sóvárgást.",
-            ingredients: "Sütőtök, barna rizs / arborio, friss zsálya, törökmogyoró."
+            ingredients: "20 dkg sütőtök (kockázva), 10 dkg arborio rizottó rizs, 4 friss zsályalevél, 2 ek pirított törökmogyoró.",
+            steps: "1. A sütőtökkockákat sütőben megsütjük, felét pürésítjük.\n2. A rizst felöntögetve megfőzzük, hozzákeverjük a sütőtökpürét és a megsült kockákat.\n3. Vajas zsályával átforgatjuk, és pirított törökmogyoróval megszórva tálaljuk."
           },
           {
             name: "Édesburgonya-Bruschetta Kecskesajttal & Dióval",
             img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80",
             desc: "Magas B6-vitamin és kálium tartalmával csökkenti a premenstruációs vizesedést és a puffadást.",
-            ingredients: "Édesburgonya szeletek (sütve), kecskesajt, dió, kakukkfű."
+            ingredients: "1 nagy édesburgonya (vastag karikákra vágva), 8 dkg kecskesajt, 1 marék dió, kakukkfű.",
+            steps: "1. Az édesburgonya karikákat sütőpapíron 200 °C-on 20 perc alatt megroppantjuk.\n2. Rámorzsoljuk a kecskesajtot és a diót, majd további 5 percre visszatesszük a sütőbe.\n3. Friss kakukkfűvel megszórva melegen fogyasztjuk."
           },
           {
             name: "Lenmagpelyhes Banánkenyér Szilvával (Cukormentes)",
             img: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80",
             desc: "A frissen őrölt lenmag támogatja a progeszteron-termelődést a luteális fázis második felében.",
-            ingredients: "Érett banán, zabliszt, őrölt lenmag, szilva, fahéj."
+            ingredients: "2 érett banán, 2 tojás, 10 dkg zabliszt, 3 ek őrölt lenmag, 4 szem szilva (kockázva), 1 tk fahéj.",
+            steps: "1. A banánokat villával összetörjük, elkeverjük a tojásokkal, zabliszttel, lenmaggal és fahéjjal.\n2. Belekeverjük a szilvakockákat, és sütőformába öntjük.\n3. 180 °C-on kb. 35-40 perc alatt készre sütjük."
           }
         ]
       }
@@ -329,15 +375,12 @@
               </div>
               <span class="text-[11px] font-bold text-[#1B4332] uppercase tracking-wider bg-[#F8F5F2] px-2.5 py-0.5 rounded-md border border-[#E6CCB2]/60">${item.category}</span>
             </div>
-            
             <h3 class="text-xl font-bold text-[#1B4332] mb-3 group-hover:text-[#2D6A4F] transition">${item.symptom}</h3>
-            
             <div class="space-y-1.5 text-xs text-[#4A3728] mb-4 bg-[#F8F5F2] p-3 rounded-xl border border-[#E6CCB2]/50">
               <div class="flex items-center gap-1.5"><span class="font-bold text-[#1B4332]">💊 Tápanyag:</span> <span class="truncate">${vitShort}</span></div>
               <div class="flex items-center gap-1.5"><span class="font-bold text-[#1B4332]">🌿 Gyógynövény:</span> <span class="truncate">${herbShort}</span></div>
             </div>
           </div>
-
           <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-[#2D6A4F] font-semibold">
             <span>Részletes protokoll megnyitása</span>
             <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
@@ -368,7 +411,7 @@
       modal.classList.add('hidden');
     }
 
-    // Tab Váltó (Sötétzöld vs Csajos Rózsaszín)
+    // Tab Váltó
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
@@ -389,7 +432,43 @@
       }
     }
 
-    // Ciklus Fázis Megjelenítő (Hamvas-Rózsaszín kártyák)
+    // Ciklus-Kalkulátor Számítás
+    function calculateCyclePhase() {
+      const dateVal = document.getElementById('lastPeriodDate').value;
+      const lengthVal = parseInt(document.getElementById('cycleLength').value) || 28;
+      const resDiv = document.getElementById('calcResult');
+
+      if (!dateVal) {
+        resDiv.innerText = "⚠️ Kérjük, válaszd ki az utolsó menstruációd első napját!";
+        resDiv.classList.remove('hidden');
+        return;
+      }
+
+      const lastDate = new Date(dateVal);
+      const today = new Date();
+      const diffTime = Math.abs(today - lastDate);
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) % lengthVal + 1;
+
+      let phaseNum = 1;
+      let phaseName = "";
+
+      if (diffDays >= 1 && diffDays <= 5) {
+        phaseNum = 1; phaseName = "1. Menstruációs Fázis";
+      } else if (diffDays >= 6 && diffDays <= 12) {
+        phaseNum = 2; phaseName = "2. Follikuláris Fázis";
+      } else if (diffDays >= 13 && diffDays <= 16) {
+        phaseNum = 3; phaseName = "3. Ovulációs Fázis";
+      } else {
+        phaseNum = 4; phaseName = "4. Luteális Fázis";
+      }
+
+      resDiv.innerHTML = `🌸 Ma a ciklusod <strong>${diffDays}. napján</strong> vagy. <br>Aktuális fázisod: <strong>${phaseName}</strong>.`;
+      resDiv.classList.remove('hidden');
+
+      showPhase(phaseNum);
+    }
+
+    // Ciklus Fázis Megjelenítő
     function showPhase(phaseNum) {
       const p = cyclePhases[phaseNum];
       const container = document.getElementById('phaseContent');
@@ -404,16 +483,23 @@
       }
 
       let recipesHtml = '';
-      p.recipes.forEach(r => {
+      p.recipes.forEach((r, idx) => {
         recipesHtml += `
-          <div class="bg-white rounded-3xl border border-[#FFCAD4] overflow-hidden shadow-sm hover:shadow-md transition">
-            <img src="${r.img}" alt="${r.name}" class="w-full h-48 object-cover">
-            <div class="p-6">
-              <h4 class="text-xl font-bold font-serif-title text-[#6D597A] mb-2">${r.name}</h4>
-              <p class="text-xs text-slate-600 leading-relaxed mb-4 font-light">${r.desc}</p>
-              <div class="p-3 bg-[#FFF0F3] rounded-xl border border-[#FFCAD4]/60 text-xs text-[#B56576]">
-                <span class="font-bold">🥣 Hozzávalók:</span> ${r.ingredients}
+          <div class="bg-white rounded-3xl border border-[#FFCAD4] overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div>
+              <img src="${r.img}" alt="${r.name}" class="w-full h-48 object-cover">
+              <div class="p-6">
+                <h4 class="text-xl font-bold font-serif-title text-[#6D597A] mb-2">${r.name}</h4>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4 font-light">${r.desc}</p>
+                <div class="p-3 bg-[#FFF0F3] rounded-xl border border-[#FFCAD4]/60 text-xs text-[#B56576] mb-4">
+                  <span class="font-bold">🥣 Hozzávalók:</span> ${r.ingredients}
+                </div>
               </div>
+            </div>
+            <div class="px-6 pb-6">
+              <button onclick="openRecipeModal(${phaseNum}, ${idx})" class="w-full py-2.5 bg-[#FFF0F3] text-[#B56576] hover:bg-[#B56576] hover:text-white border border-[#FFCAD4] rounded-xl text-xs font-bold transition duration-300">
+                Elkészítési útmutató →
+              </button>
             </div>
           </div>
         `;
@@ -423,11 +509,9 @@
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#FFCAD4] shadow-sm mb-10">
           <h3 class="text-3xl font-bold font-serif-title text-[#6D597A] mb-1">${p.title}</h3>
           <p class="text-sm font-bold text-[#B56576] uppercase tracking-wider mb-4">${p.subtitle}</p>
-          
           <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light mb-6 bg-[#FFF0F3] p-4 rounded-2xl border border-[#FFCAD4]/60">
             ${p.description}
           </p>
-
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             <div class="p-4 bg-[#FFF0F3] rounded-2xl border border-[#FFCAD4]">
               <p class="font-bold text-[#B56576] mb-1 text-sm">💊 Ajánlott Tápanyagok</p>
@@ -451,6 +535,26 @@
           </div>
         </div>
       `;
+    }
+
+    // Recept Modál megnyitása
+    function openRecipeModal(phaseNum, idx) {
+      const r = cyclePhases[phaseNum].recipes[idx];
+      document.getElementById('recipeModalImg').src = r.img;
+      document.getElementById('recipeModalTitle').innerText = r.name;
+      document.getElementById('recipeModalDesc').innerText = r.desc;
+      document.getElementById('recipeModalIngredients').innerText = r.ingredients;
+      document.getElementById('recipeModalSteps').innerText = r.steps;
+
+      const modal = document.getElementById('recipeModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeRecipeModal() {
+      const modal = document.getElementById('recipeModal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
     }
 
     document.getElementById('searchInput').addEventListener('input', (e) => {
