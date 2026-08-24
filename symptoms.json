@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "category": "Idegrendszer, Alvás & Stressz",
+    "symptom": "Lábgörcs / Izomgörcs (éjszakai)",
+    "vitamin": "Magnézium-biszglicinát (200-400 mg) + B6-vitamin",
+    "herb": "Csalántea vagy Zsurlótea (ásványi anyag pótlás)",
+    "food": "Tökmag (1 marék), étcsoki (70%+), vagy áztatott mandula",
+    "proTip": "A magnéziumot este, elalvás előtt 30 perccel vedd be a legjobb izomrelaxáló hatásért. Ne kombináld magas kalciumtartalmú ételekkel egy időben!",
+    "avoid": "Koffeines italok este, alkoholfogyasztás, túlzott finomított só, dehidratáltság"
+  },
+  {
+    "id": 2,
+    "category": "Idegrendszer, Alvás & Stressz",
+    "symptom": "Nehéz elalvás / Nyugtalanság",
+    "vitamin": "Magnézium-glicinát + L-Theanin",
+    "herb": "Citromfű-, Levendula- vagy Macskagyökér tea",
+    "food": "Meleg növényi tej 1 kávéskanál nyers mézzel és csipet fahéjjal",
+    "proTip": "A gyógyteát lefedve áztasd 10-15 percig, hogy az illóolajok ne párologjanak el. Készítsd el 45 perccel lefekvés előtt!",
+    "avoid": "Képernyőzés (kék fény) elalvás előtt 1 órával, kávé 14:00 után, nehéz/zsíros vacsora"
+  },
+  {
+    "id": 3,
+    "category": "Emésztőrendszer & Gyomor",
+    "symptom": "Puffadás / Gázképződés",
+    "vitamin": "Emésztőenzimek + Probiotikum (spórás)",
+    "herb": "Édeskömény-, Ánizs- vagy Köménytea",
+    "food": "2 evőkanál savanyú káposzta leve vagy párolt cukkini",
+    "proTip": "Az édeskömény magját enyhén törd meg mozsárban a teafőzés előtt, így 3x több illóolaj szabadul fel belőle!",
+    "avoid": "Tejtermékek, szénsavas italok, rágózás (levegőnyelés), túl gyors evés rágás nélkül"
+  },
+  {
+    "id": 4,
+    "category": "Immunitás & Légutak",
+    "symptom": "Kezdődő torokfájás / Kaparás",
+    "vitamin": "C-vitamin (1000 mg) + Cink (15-20 mg)",
+    "herb": "Orvosi kakukkfű tea vagy Zsályateás gurgulázó",
+    "food": "Aktivált fokhagymás-mézes szirup (zúzott fokhagyma mézben pihentetve)",
+    "proTip": "A mézet SOHA ne tedd 40 °C-nál melegebb teába! A zsályás gurgulázás után 20 percig ne egyél/igyál!",
+    "avoid": "Finomított cukor (gyengíti az immunsejteket), tejtermékek (fokozzák a nyálkaképződést), forró italok"
+  },
+  {
+    "id": 5,
+    "category": "Női Egészség & Hormonok",
+    "symptom": "Menstruációs görcsök",
+    "vitamin": "Magnézium-citrát (400 mg) + B6-vitamin",
+    "herb": "Palástfű tea vagy Cickafark tea",
+    "food": "Meleg meggymag párna a alhasra + 2 kocka étcsoki (70%+)",
+    "proTip": "A palástfű teát érdemes a menstruáció előtt 3-4 nappal elkezdeni inni napi 2 csészével a megelőzésért.",
+    "avoid": "Koffein (fokozza az érszűkületet és a görcsöt), hideg italok, stressz"
+  }
+]
