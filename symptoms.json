@@ -21,6 +21,46 @@
   },
   {
     "id": 3,
+    "category": "Idegrendszer, Alvás & Stressz",
+    "symptom": "Napközbeni feszültség / Szorongás",
+    "vitamin": "B-komplex (főleg B6) + Cink",
+    "herb": "Kamillatea, Orbáncfű (óvatosan) vagy Ashwagandha",
+    "food": "Dió, törökmogyoró, áztatott lenmag (Omega-3 zsírsavak)",
+    "proTip": "A B-vitaminokat mindig reggel vagy délben vedd be étkezés közben, mert este élénkíthetnek!",
+    "avoid": "Energiaitalok, túlzott koffein, finomított cukor (vércukor-ingadozást és szorongást vált ki)"
+  },
+  {
+    "id": 4,
+    "category": "Idegrendszer, Alvás & Stressz",
+    "symptom": "Délutáni agymentesség / Fáradtság",
+    "vitamin": "C-vitamin + Vas (ha hiány van) + CoQ10",
+    "herb": "Zöld tea vagy Borsmenta tea",
+    "food": "1 nagy pohár víz 1 csipet tengeri sóval és citromlével (elektrolit bomba)",
+    "proTip": "A délutáni fáradtságot 80%-ban a dehidratáltság okozza. Először igyál meg 0.5 liter vizet, mielőtt kávéhoz nyúlnál!",
+    "avoid": "Cukros nassolnivalók (vércukor-zuhanást okoznak 1 óra múlva), gyors felszívódású szénhidrátos ebéd"
+  },
+  {
+    "id": 5,
+    "category": "Idegrendszer, Alvás & Stressz",
+    "symptom": "Fejfájás (feszültség alapú)",
+    "vitamin": "Magnézium-malát vagy citrát",
+    "herb": "Borsmenta tea (vagy 1 csepp borsmenta illóolaj a halántékra)",
+    "food": "1 nagy pohár langyos víz + 1 gerezd zúzott fokhagyma vagy pár szem meggy",
+    "proTip": "A borsmenta olajat mindig hordozóolajjal (pl. olívaolaj) hígítva kend a bőrödre, és ügyelj, hogy szembe ne kerüljön!",
+    "avoid": "Képernyő folyamatos nézése szünet nélkül, nyakizmok bemerevedése, folyadékhiány"
+  },
+  {
+    "id": 6,
+    "category": "Idegrendszer, Alvás & Stressz",
+    "symptom": "Szellemi kimerültség / Memóriazavar",
+    "vitamin": "Lecitin / Omega-3 (DHA/EPA) + B12-vitamin",
+    "herb": "Rozmaring tea vagy Gotu Kola",
+    "food": "Áfonya, szeder, étcsoki vagy dió",
+    "proTip": "A rozmaring teát éhgyomorra vagy délelőtt érdemes fogyasztani, mert természetes módon serkenti az agyi vérkeringést.",
+    "avoid": "Késő esti alváshiány, feldolgozott élelmiszerek, transzzsírok"
+  },
+  {
+    "id": 7,
     "category": "Emésztőrendszer & Gyomor",
     "symptom": "Puffadás / Gázképződés",
     "vitamin": "Emésztőenzimek + Probiotikum (spórás)",
@@ -30,7 +70,57 @@
     "avoid": "Tejtermékek, szénsavas italok, rágózás (levegőnyelés), túl gyors evés rágás nélkül"
   },
   {
-    "id": 4,
+    "id": 8,
+    "category": "Emésztőrendszer & Gyomor",
+    "symptom": "Gyomorrontás / Nehéz emésztés",
+    "vitamin": "B-vitamin komplex + Gyömbér kivonat",
+    "herb": "Gyömbértea (friss gyömbérből) vagy Borsmenta tea",
+    "food": "Meleg, hosszan főzött csontleves vagy reszelt alma",
+    "proTip": "A friss gyömbért szeleteld vékonyra és főzd 5-10 percig a vízben, ne csak forrázd, ha erős hatást szeretnél!",
+    "avoid": "Nehéz, zsíros, rántott ételek, túl hideg italok evés közben (hígítják a gyomorsavat)"
+  },
+  {
+    "id": 9,
+    "category": "Emésztőrendszer & Gyomor",
+    "symptom": "Gyomorégés / Savtúltengés",
+    "vitamin": "Cink-karmozin vagy Mallow (Mályva)",
+    "herb": "Akácfavirág tea, Mályvatej vagy Fehér akác",
+    "food": "Nyers krumplilé (2-3 korty), zabkása vízzel, vagy 1 tk szódabikarbónás víz",
+    "proTip": "A mályvateát hideg áztatással készítsd (hadd álljon 4-6 órát), mert a forró víz elpusztítja a nyálkaanyagokat!",
+    "avoid": "Paradicsom, kávé, csoki, alvás közvetlenül evés után (várj 3 órát), szoros ruházat"
+  },
+  {
+    "id": 10,
+    "category": "Emésztőrendszer & Gyomor",
+    "symptom": "Szorulás / Lassú emésztés",
+    "vitamin": "Inulin / Útifű maghéj + C-vitamin",
+    "herb": "Gyermekláncfű gyökér tea vagy Szenna (csak rövid ideig!)",
+    "food": "Este vízbe áztatott 3 szem aszalt szilva (reggel megeve a vizével együtt), lenmag",
+    "proTip": "Útifű maghéj fogyasztása esetén KÖTELEZŐ legalább 3-4 dl vizet azonnal meginni rá, különben ellenkező hatást ér el!",
+    "avoid": "Mozgásszegény életmód, kevés rost, a székelési inger halogatása"
+  },
+  {
+    "id": 11,
+    "category": "Emésztőrendszer & Gyomor",
+    "symptom": "Hasi görcsök (emésztési)",
+    "vitamin": "Magnézium-citrát",
+    "herb": "Levendula-, Kamilla- vagy Mentatea",
+    "food": "Párolt sárgarépa csipet őrölt köménnyel, meleg meggymag párna a hasra",
+    "proTip": "A meleg vizes borogatás vagy meggymag párna ellazítja a simaizmokat, így duplázza a gyógytea hatását.",
+    "avoid": "Nyers, nehezen emészthető zöldségek (pl. nyers káposzta, karfiol), jeges italok"
+  },
+  {
+    "id": 12,
+    "category": "Emésztőrendszer & Gyomor",
+    "symptom": "Hányinger",
+    "vitamin": "B6-vitamin (nagy dózis, 50 mg)",
+    "herb": "Gyömbértea vagy Citromfűtea",
+    "food": "Érett banán, kétszersült vagy főtt krumpli",
+    "proTip": "Lassan, kiskortyokban idd a langyos gyömbérteát. A B6-vitamin természetes módon blokkolja a hányinger-központot.",
+    "avoid": "Erős illatok, hirtelen mozdulatok, zsíros ételek, éhgyomorra kávé"
+  },
+  {
+    "id": 13,
     "category": "Immunitás & Légutak",
     "symptom": "Kezdődő torokfájás / Kaparás",
     "vitamin": "C-vitamin (1000 mg) + Cink (15-20 mg)",
@@ -40,7 +130,97 @@
     "avoid": "Finomított cukor (gyengíti az immunsejteket), tejtermékek (fokozzák a nyálkaképződést), forró italok"
   },
   {
-    "id": 5,
+    "id": 14,
+    "category": "Immunitás & Légutak",
+    "symptom": "Orrdugulás / Megfázás",
+    "vitamin": "C-vitamin + Cink + D3-vitamin (5000 NE)",
+    "herb": "Hársfatea, Kerti kakukkfű vagy Feketebodza tea",
+    "food": "Csípős reszelt torma mézzel, vagy forró csontleves gyömbérrel",
+    "proTip": "A hársfateát itasd melegen, takaró alatt, mert izzasztó hatásával segít leküzdeni a kórokozókat.",
+    "avoid": "Dohányfüst, száraz szobai levegő (használj párásítót), hideg lábak (hordj vastag zoknit)"
+  },
+  {
+    "id": 15,
+    "category": "Immunitás & Légutak",
+    "symptom": "Köhögés (száraz)",
+    "vitamin": "A-vitamin + C-vitamin",
+    "herb": "Lándzsás útifű tea vagy Fehérmályva tea",
+    "food": "Fekete retek közepe kikaparva és mézzel megtöltve (pár óra múlva keletkező szirup)",
+    "proTip": "A fekete retek szirupja természetes nyálkaoldó és köhögéscsillapító. Napi 3x1 kávéskanállal egyél belőle!",
+    "avoid": "Száraz levegő hálószobában, hideg szél, nyálkahártyát szárító koffein"
+  },
+  {
+    "id": 16,
+    "category": "Immunitás & Légutak",
+    "symptom": "Tavaszi / Őszi Allergia",
+    "vitamin": "Kvercetin (500 mg) + C-vitamin",
+    "herb": "Csalántea (természetes antihisztamin)",
+    "food": "Helyi, termelői virágméz (kis adagokban fogyasztva szezon előtt deszenzitizál)",
+    "proTip": "A csalánteát érdemes 2-3 héttel az allergiaszezon előtt elkezdeni kúraszerűen inni napi 1-2 csészével.",
+    "avoid": "Szellőztetés magas pollenkoncentráció idején (kora reggel/délután), porfelhalmozódás"
+  },
+  {
+    "id": 17,
+    "category": "Immunitás & Légutak",
+    "symptom": "Hőemelkedés / Levertség",
+    "vitamin": "C-vitamin (2000 mg) + D3-vitamin",
+    "herb": "Bodzavirág tea vagy Kamillatea",
+    "food": "Fokhagymás zöldségleves vagy meleg csontleves",
+    "proTip": "A hőemelkedés a szervezet természetes védekezése, ne nyomd el azonnal lázcsillapítóval 38 °C alatt!",
+    "avoid": "Fizikai megerőltetés, nehéz ételek (az energia a gyógyulásra kell, ne az emésztésre)"
+  },
+  {
+    "id": 18,
+    "category": "Bőr, Haj & Ízületek",
+    "symptom": "Bőrszárazság / Extrém hámlás",
+    "vitamin": "E-vitamin + Omega-3 (halolaj / algaolaj)",
+    "herb": "Körömvirág tea (belsőleg és külső lemosásként)",
+    "food": "Avokádó, hidegen sajtolt olívaolaj vagy dió",
+    "proTip": "Az E-vitamint és Omega-3-at mindig zsírt tartalmazó étkezés közben vedd be a tökéletes felszívódásért!",
+    "avoid": "Túl forró zuhany/fürdő, szárító szappanok, elégtelen vízfogyasztás"
+  },
+  {
+    "id": 19,
+    "category": "Bőr, Haj & Ízületek",
+    "symptom": "Ízületi kattogás / Fájdalom",
+    "vitamin": "Kollagén (I és II típus) + C-vitamin + MSM",
+    "herb": "Ördögcsáklya tea vagy Fűzfajkéreg tea",
+    "food": "Hosszú főzésű csontleves, kocsonya, vagy zselatin",
+    "proTip": "A kollagén szedése C-vitamin nélkül szinte hatástalan, mert a C-vitamin a beépülési katalizátor!",
+    "avoid": "Cukros ételek (fokozzák a szervezetbeli gyulladásokat), mozgáshiány, hideg nyirkos idő"
+  },
+  {
+    "id": 20,
+    "category": "Bőr, Haj & Ízületek",
+    "symptom": "Pattanásos bőr / Gyulladás",
+    "vitamin": "Cink (25 mg) + A-vitamin",
+    "herb": "Aranyvessző tea, Gyermekláncfű vagy Csalántea",
+    "food": "Fermentált ételek (kefir, savanyú káposzta, kimchi) a bél-bőr tengely támogatására",
+    "proTip": "A bőr gyulladásai 90%-ban a bélflóra állapotát tükrözik. A probiotikus ételek fontosabbak, mint a drága krémek!",
+    "avoid": "Finomított tejtermékek, olajban sült ételek, cukor, arc folyamatos fogdosása"
+  },
+  {
+    "id": 21,
+    "category": "Bőr, Haj & Ízületek",
+    "symptom": "Hajhullás",
+    "vitamin": "Biotin (B7) + Cink + Vas (ha hiányzik)",
+    "herb": "Mezei zsurló tea (kovasav-bomba)",
+    "food": "Tökmagolaj (1 ek/nap), tojássárgája, szezámmag",
+    "proTip": "A zsurlóteát főzd 10-15 percig, hogy a szilícium/kovasav kioldódjon a növényi sejtfalakból!",
+    "avoid": "Szigorú koplalás/villám-diéták, túlzott stressz, agresszív hajvasalás/festés"
+  },
+  {
+    "id": 22,
+    "category": "Bőr, Haj & Ízületek",
+    "symptom": "Táskás / Ödémás szemek",
+    "vitamin": "K-vitamin + C-vitamin",
+    "herb": "Zöld tea (belsőleg + a kihűlt filtert a szemhéjra helyezve)",
+    "food": "Uborkakarikák a szemre, friss petrezselyemzöld ételbe keverve",
+    "proTip": "A használt zöld teafiltert tedd 5 percre a fagyasztóba használat előtt: a koffein és a hideg összehúzza az ereket.",
+    "avoid": "Késő esti sós vacsora (vizesedést okoz), alváshiány, hason alvás"
+  },
+  {
+    "id": 23,
     "category": "Női Egészség & Hormonok",
     "symptom": "Menstruációs görcsök",
     "vitamin": "Magnézium-citrát (400 mg) + B6-vitamin",
@@ -48,5 +228,125 @@
     "food": "Meleg meggymag párna a alhasra + 2 kocka étcsoki (70%+)",
     "proTip": "A palástfű teát érdemes a menstruáció előtt 3-4 nappal elkezdeni inni napi 2 csészével a megelőzésért.",
     "avoid": "Koffein (fokozza az érszűkületet és a görcsöt), hideg italok, stressz"
+  },
+  {
+    "id": 24,
+    "category": "Női Egészség & Hormonok",
+    "symptom": "PMS (Menstruáció előtti ingerlékenység)",
+    "vitamin": "B6-vitamin (50 mg) + Cink + Magnézium",
+    "herb": "Citromfűtea vagy Orbáncfű tea",
+    "food": "Érett banán (triptofán/szerotonin forrás), zabkása",
+    "proTip": "A B6-vitamin és a magnézium együttesen támogatja a sárgatesthormon termelődését a luteális fázisban.",
+    "avoid": "Finomított cukor, koffein, alkohol, alváshiány ebben a 7-10 napban"
+  },
+  {
+    "id": 25,
+    "category": "Női Egészség & Hormonok",
+    "symptom": "Klimax / Hőhullámok",
+    "vitamin": "E-vitamin + B-komplex",
+    "herb": "Orvosi zsálya tea vagy Poloskavész tea",
+    "food": "Frissen őrölt lenmagpehely (fitoösztrogének) ételekbe szórva",
+    "proTip": "A zsályatea hidegen fogyasztva a leghatékonyabb az éjszakai izzadás és hőhullámok ellen!",
+    "avoid": "Fűszeres, csípős ételek, forró kávé, alkohol, szintetikus ruházat"
+  },
+  {
+    "id": 26,
+    "category": "Női Egészség & Hormonok",
+    "symptom": "Felfázás / Húgyúti irritáció",
+    "vitamin": "C-vitamin (2000 mg) + D-Mannóz",
+    "herb": "Tőzegáfonya tea vagy Medveszőlőlevél tea",
+    "food": "Nyers zúzott fokhagyma + sok-sok tiszta víz (napi 2.5-3 liter)",
+    "proTip": "A D-Mannóz meggátolja az E. coli baktériumok megtapadását a húgyhólyag falán. Igyál rá rengeteg vizet!",
+    "avoid": "Cukros italok (táplálják a baktériumokat), vizelet tartogatása, hideg felületre ülés"
+  },
+  {
+    "id": 27,
+    "category": "Női Egészség & Hormonok",
+    "symptom": "Vizesedés / Puffadás (ciklus végén)",
+    "vitamin": "Kálium + Magnézium",
+    "herb": "Csalántea vagy Gyermekláncfű levél tea",
+    "food": "Friss zellerszár rágcsálva vagy uborkasaláta",
+    "proTip": "A csalántea természetes vízhajtó, de este 6 után már ne idd, hogy ne zavarja meg az éjszakai alvásodat!",
+    "avoid": "Túlzott konyhasó használat, feldolgozott felvágottak, tartósított élelmiszerek"
+  },
+  {
+    "id": 28,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Tavaszi Fáradtság",
+    "vitamin": "D3-vitamin (4000 NE) + K2-vitamin + C-vitamin",
+    "herb": "Csipkebogyó tea (hideg áztatással)",
+    "food": "Céklalé vagy sárgarépalé (frissen préselve)",
+    "proTip": "A csipkebogyó teát SOHA ne forrázd! Este áztasd hideg vízbe, reggel szűrd le, így megmarad a C-vitamin tartalma.",
+    "avoid": "Nehéz, téli ételek folytatása, zárt térben maradás (menj ki a természetes napfényre!)"
+  },
+  {
+    "id": 29,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Hideg kezek és lábak",
+    "vitamin": "Niacin (B3-vitamin) + Ginkgo Biloba",
+    "herb": "Gyömbér-fahéj tea",
+    "food": "Csípős paprikás ételek, dió, tökmag",
+    "proTip": "A gyömbér és a fahéj belsőleg melegítő növények. Egy csésze meleg gyömbértea 15 perc alatt serkenti a perifériás keringést.",
+    "avoid": "Dohányzás (extrém érszűkítő!), mozgásszegénység, szoros zokni/cipő"
+  },
+  {
+    "id": 30,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Vérnyomás ingadozás (enyhe)",
+    "vitamin": "CoQ10 + Kálium + Magnézium",
+    "herb": "Galagonya virágzó ágvég tea",
+    "food": "Nyers cékla, zúzott fokhagyma olívaolajjal",
+    "proTip": "A galagonyatea a szív és keringés 'védőangyala'. Kúraszerűen, legalább 4-6 héten át érdemes inni a hatásért.",
+    "avoid": "Túlzott kávézás, elhúzódó stressz, sós nassolnivalók"
+  },
+  {
+    "id": 31,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Izomláz edzés után",
+    "vitamin": "L-Glutamin + Magnézium + C-vitamin",
+    "herb": "Zöld tea vagy Kamillatea",
+    "food": "Cseresznyelé (természetes gyulladáscsökkentő) vagy csontleves",
+    "proTip": "A cseresznyelé antocianin tartalma bizonyítottan csökkenti az izomrostok mikrosérülései miatti fájdalmat.",
+    "avoid": "Azonnali statikus nyújtás hideg izomra, szaunázás közvetlenül edzés után (ha nagyon gyulladt az izom)"
+  },
+  {
+    "id": 32,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Szemfáradtság (monitornézés)",
+    "vitamin": "Lutein (10-20 mg) + Zeaxantin + A-vitamin",
+    "herb": "Szemvidító fű tea (belsőleg és borogatásként)",
+    "food": "Párolt sárgarépa, sütőtök, spenót (zsírral fogyasztva a béta-karotin miatt)",
+    "proTip": "Alkalmazd a 20-20-20 szabályt: 20 percenként nézz 20 másodpercig egy 20 lábra (6 méterre) lévő tárgyat!",
+    "avoid": "Sötétben monitornézés, kevés pislogás, elégtelen megvilágítás az íróasztalnál"
+  },
+  {
+    "id": 33,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Másnaposság / Méregtelenítés",
+    "vitamin": "Elektrolitok (Kálium/Nátrium) + B-komplex + C-vitamin",
+    "herb": "Máriatövis mag tea vagy Édeskömény tea",
+    "food": "Savanyú káposzta leve, csontleves vagy kovászos uborka leve",
+    "proTip": "A máriatövis magját törd meg szedés előtt. A szilimarin hatóanyag segíti a májsejtek regenerációját az alkohol után.",
+    "avoid": "Kávé éhgyomorra másnaposan (tovább dehidratál), zsíros meki kaja (terheli az amúgy is szenvedő májat)"
+  },
+  {
+    "id": 34,
+    "category": "Általános Vitalitás & Keringés",
+    "symptom": "Gyakori szájnyálkahártya-sebek (Afta)",
+    "vitamin": "B12-vitamin + Cink + C-vitamin",
+    "herb": "Orvosi zsálya tea vagy Kakukkfű tea (öblögetésre)",
+    "food": "Nyers kézműves méz közvetlenül a sebre kenve",
+    "proTip": "A zsályateás öblögetést ne nyeld le, csak forgasd meg a szádban 1 percig, majd köpd ki!",
+    "avoid": "SLS-t (Sodium Lauryl Sulfate) tartalmazó fogkrémek, diófélék/magvak túlzott rágcsálása (mikrosérülések)"
+  },
+  {
+    "id": 35,
+    "category": "Immunitás & Légutak",
+    "symptom": "Megfázás / Hidegrázás",
+    "vitamin": "C-vitamin + D3-vitamin + Cink",
+    "herb": "Gyömbér-bodza teakeverék",
+    "food": "Forró, fokhagymás húsleves reszelt gyömbérrel",
+    "proTip": "A forró gyömbéres húsleves nemcsak belülről melegít fel, de a fokhagyma és gyömbér illóolajai tisztítják a légutakat is.",
+    "avoid": "Hideg helyiségben való tartózkodás, vizes hajval utcára menetel, fizikai túlterhelés"
   }
 ]
