@@ -5,40 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vita-Natura – Holisztikus Házipatika & Ciklus-Iránytű</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Cormorant Garamond (Elegáns Nude/Ciklus Címek), Playfair Display & Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     body { 
       font-family: 'Plus Jakarta Sans', sans-serif; 
-      background-color: #FDF8F5;
-      background-image: radial-gradient(#E8D3CD 0.6px, transparent 0.6px), radial-gradient(#E8D3CD 0.6px, #FDF8F5 0.6px);
-      background-size: 28px 28px;
-      background-position: 0 0, 14px 14px;
+      background-color: #F8F5F2;
+      background-image: radial-gradient(#DDB8A6 0.5px, transparent 0.5px), radial-gradient(#DDB8A6 0.5px, #F8F5F2 0.5px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
     }
-    .font-cormorant { 
-      font-family: 'Cormorant Garamond', serif; 
+    h1, h2, h3, .font-serif-title { 
+      font-family: 'Playfair Display', serif; 
     }
   </style>
 </head>
 <body class="text-slate-800 antialiased pb-20">
 
-  <!-- Fejléc -->
-  <header class="bg-[#2A1E22] text-[#FDF8F5] py-12 px-4 shadow-xl mb-6 border-b-4 border-[#C89B9C] relative overflow-hidden">
+  <!-- Fejléc (Sötétzöld & Földbarna) -->
+  <header class="bg-[#1B4332] text-white py-12 px-4 shadow-xl mb-6 border-b-4 border-[#B7E4C7] relative overflow-hidden">
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <span class="inline-block bg-[#423137] text-[#E8D3CD] text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3 border border-[#C89B9C]/30">Tudatos Prevenció & Ciklusszinkron</span>
-      <h1 class="text-4xl md:text-5xl font-normal font-cormorant tracking-wide mb-2 text-[#FDF8F5]">Vita-Natura</h1>
-      <p class="text-[#E8D3CD] text-base md:text-lg max-w-xl mx-auto font-light">Holisztikus házipatika és ciklushoz igazodó női táplálkozási útmutató</p>
+      <span class="inline-block bg-[#2D6A4F] text-[#D8F3DC] text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3 border border-[#B7E4C7]/30">Tudatos Prevenció & Ciklusszinkron</span>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-[#F8F5F2]">Vita-Natura</h1>
+      <p class="text-[#D8F3DC] text-base md:text-lg max-w-xl mx-auto font-light">Holisztikus házipatika és ciklushoz igazodó női táplálkozási útmutató</p>
     </div>
   </header>
 
-  <!-- Fő Navigációs Tabok (Lapozó) -->
+  <!-- Navigációs Tabok -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
-    <div class="flex justify-center gap-3 bg-white/80 backdrop-blur-sm p-1.5 rounded-2xl border border-[#E8D3CD] max-w-md mx-auto shadow-sm">
-      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#7A4B56] text-white shadow-sm">
+    <div class="flex justify-center gap-2 bg-white/90 backdrop-blur-sm p-2 rounded-2xl border border-[#DDB8A6]/40 max-w-md mx-auto shadow-sm">
+      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm">
         🌿 Tünetkereső
       </button>
-      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#7A4B56] hover:bg-[#F9EFEA]">
+      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#FFF0F5]">
         🌸 Ciklus-Iránytű & Étrend
       </button>
     </div>
@@ -46,108 +46,108 @@
 
   <main class="max-w-5xl mx-auto px-4">
     
-    <!-- ==================== 1. TAB: TÜNETKERESŐ ==================== -->
+    <!-- ==================== 1. TAB: TÜNETKERESŐ (Sötétzöld-Barna-Bézs) ==================== -->
     <div id="symptomsTabSection">
       <!-- Bemutatkozó Kártya -->
-      <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#E8D3CD] shadow-sm mb-8 text-center max-w-2xl mx-auto">
-        <h2 class="text-2xl font-normal font-cormorant text-[#2A1E22] mb-2 text-3xl">Mi az a Vita-Natura?</h2>
-        <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
+      <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#E6CCB2] shadow-sm mb-8 text-center max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold text-[#1B4332] mb-2">Mi az a Vita-Natura?</h2>
+        <p class="text-[#4A3728] text-sm md:text-base leading-relaxed font-light">
           A Vita-Natura egy független, tudományos alapokon nyugvó holisztikus tudásbázis. Célunk, hogy a mindennapi testi panaszokra **hármas védelmi vonalat** adjunk a kezedbe: célzott vitaminokat, gyógyteákat és a saját konyhádban fellelhető otthoni élelmiszer-alapanyagokat.
         </p>
       </div>
 
       <!-- Kereső sáv -->
       <div class="mb-8 text-center">
-        <h3 class="text-xl font-normal font-cormorant text-[#2A1E22] text-2xl mb-3">Milyen panaszra keresel azonnali megoldást?</h3>
+        <h3 class="text-xl font-bold text-[#1B4332] mb-3">Milyen panaszra keresel azonnali megoldást?</h3>
         <div class="relative max-w-lg mx-auto shadow-sm hover:shadow-md transition">
           <input type="text" id="searchInput" placeholder="Keresés pl. lábgörcs, torokfájás, puffadás, fejfájás..." 
-                 class="w-full px-6 py-4 pl-12 rounded-2xl border border-[#E8D3CD] focus:outline-none focus:ring-2 focus:ring-[#7A4B56] focus:border-transparent transition bg-white text-[#2A1E22] placeholder-slate-400">
-          <div class="absolute left-4 top-4 text-[#7A4B56]">
+                 class="w-full px-6 py-4 pl-12 rounded-2xl border border-[#B7E4C7] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F] focus:border-transparent transition bg-white text-[#1B4332] placeholder-slate-400">
+          <div class="absolute left-4 top-4 text-[#2D6A4F]">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
         </div>
       </div>
 
-      <!-- Tartalmasabb Tünet-kártyák rácsa -->
+      <!-- Tünet-kártyák rácsa -->
       <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <!-- A kártyák ide töltődnek be automatikusan a JSON-ból -->
+        <!-- Kártyák betöltése -->
       </div>
     </div>
 
 
-    <!-- ==================== 2. TAB: CIKLUS-IRÁNYTŰ ==================== -->
+    <!-- ==================== 2. TAB: CIKLUS-IRÁNYTŰ (Lágy Hamvas-Rózsaszín & Nude) ==================== -->
     <div id="cycleTabSection" class="hidden">
       
-      <!-- Ciklus Bevezető -->
-      <div class="bg-[#F9EFEA] p-6 md:p-8 rounded-3xl border border-[#E8D3CD] mb-8 text-center max-w-3xl mx-auto shadow-sm">
-        <span class="text-xs font-bold text-[#7A4B56] tracking-widest uppercase bg-white px-3 py-1 rounded-full border border-[#E8D3CD]">Ciklusszinkronizált Táplálkozás</span>
-        <h2 class="text-3xl md:text-4xl font-normal font-cormorant text-[#2A1E22] mt-3 mb-3">Harmónia a Női Horizonton</h2>
+      <!-- Ciklus Bevezető (Csajos Rózsaszín) -->
+      <div class="bg-gradient-to-b from-[#FFF0F3] to-[#FDE2E4] p-6 md:p-8 rounded-3xl border border-[#FFCAD4] mb-8 text-center max-w-3xl mx-auto shadow-sm">
+        <span class="text-xs font-bold text-[#B56576] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#FFCAD4]">Ciklusszinkronizált Táplálkozás</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#6D597A] mt-3 mb-3">Harmónia a Női Ciklusban</h2>
         <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light">
-          A női hormonháztartás a 28 napos ciklus során négy teljesen eltérő élettani fázison megy keresztül. Az energiaszükséglet, az emésztési kapacitás és a tápanyag-szükséglet hétről hétre változik. Válaszd ki a ciklusod aktuális szakaszát a személyre szabott protokollért és receptekeért!
+          A női szervezet a 28 napos ciklus során négy különleges élettani fázison megy keresztül. Az energiaszükséglet, az emésztés és a tápanyag-szükséglet hétről hétre változik. Válaszd ki a ciklusod aktuális szakaszát a személyre szabott étrendért és receptekért!
         </p>
       </div>
 
       <!-- Fázis Választó Gombok -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-        <button onclick="showPhase(1)" id="phaseBtn1" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#E8D3CD] shadow-sm hover:border-[#7A4B56] active-phase">
-          <span class="block text-xl mb-1">🩸</span>
-          <span class="block font-cormorant font-bold text-lg text-[#2A1E22]">1. Menstruáció</span>
+        <button onclick="showPhase(1)" id="phaseBtn1" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#FFCAD4] shadow-sm hover:border-[#B56576]">
+          <span class="block text-xl mb-1">🌸</span>
+          <span class="block font-bold text-base text-[#6D597A]">1. Menstruáció</span>
           <span class="block text-[11px] text-slate-500">1–5. nap</span>
         </button>
-        <button onclick="showPhase(2)" id="phaseBtn2" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#E8D3CD] shadow-sm hover:border-[#7A4B56]">
+        <button onclick="showPhase(2)" id="phaseBtn2" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#FFCAD4] shadow-sm hover:border-[#B56576]">
           <span class="block text-xl mb-1">🌱</span>
-          <span class="block font-cormorant font-bold text-lg text-[#2A1E22]">2. Follikuláris</span>
+          <span class="block font-bold text-base text-[#6D597A]">2. Follikuláris</span>
           <span class="block text-[11px] text-slate-500">6–12. nap</span>
         </button>
-        <button onclick="showPhase(3)" id="phaseBtn3" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#E8D3CD] shadow-sm hover:border-[#7A4B56]">
-          <span class="block text-xl mb-1">☀️</span>
-          <span class="block font-cormorant font-bold text-lg text-[#2A1E22]">3. Ovuláció</span>
+        <button onclick="showPhase(3)" id="phaseBtn3" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#FFCAD4] shadow-sm hover:border-[#B56576]">
+          <span class="block text-xl mb-1">✨</span>
+          <span class="block font-bold text-base text-[#6D597A]">3. Ovuláció</span>
           <span class="block text-[11px] text-slate-500">13–16. nap</span>
         </button>
-        <button onclick="showPhase(4)" id="phaseBtn4" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#E8D3CD] shadow-sm hover:border-[#7A4B56]">
+        <button onclick="showPhase(4)" id="phaseBtn4" class="p-4 rounded-2xl border text-center transition-all bg-white border-[#FFCAD4] shadow-sm hover:border-[#B56576]">
           <span class="block text-xl mb-1">🍂</span>
-          <span class="block font-cormorant font-bold text-lg text-[#2A1E22]">4. Luteális</span>
+          <span class="block font-bold text-base text-[#6D597A]">4. Luteális</span>
           <span class="block text-[11px] text-slate-500">17–28. nap</span>
         </button>
       </div>
 
-      <!-- FÁZIS TARTALMAK (Dinamikus) -->
+      <!-- FÁZIS TARTALMAK -->
       <div id="phaseContent">
-        <!-- Ide töltődik be a kiválasztott fázis élettani leírása és receptjei -->
+        <!-- Dinamikus fázis tartalom -->
       </div>
 
     </div>
 
   </main>
 
-  <!-- Felugró Részletező Modál (Tünetekhez) -->
+  <!-- Felugró Részletező Modál -->
   <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#E8D3CD]">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#E6CCB2]">
       
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
       
-      <div id="modalCategoryBadge" class="inline-flex items-center gap-2 bg-[#F9EFEA] text-[#7A4B56] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3">
+      <div id="modalCategoryBadge" class="inline-flex items-center gap-2 bg-[#F8F5F2] text-[#1B4332] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 border border-[#E6CCB2]">
         <!-- Ikon + Kategória név -->
       </div>
-      <h3 id="modalSymptom" class="text-2xl font-bold font-cormorant text-[#2A1E22] mb-6">Tünet neve</h3>
+      <h3 id="modalSymptom" class="text-2xl font-bold text-[#1B4332] mb-6">Tünet neve</h3>
 
       <div class="space-y-4 text-sm">
-        <div class="p-4 bg-[#FDF8F5] rounded-2xl border border-[#E8D3CD]">
-          <p class="font-bold text-[#7A4B56] flex items-center gap-2 text-base">💊 1. Tápanyag & Vitamin</p>
+        <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]/80">
+          <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">💊 1. Tápanyag & Vitamin</p>
           <p id="modalVitamin" class="text-slate-700 mt-1.5 leading-relaxed">...</p>
         </div>
 
-        <div class="p-4 bg-[#FDF8F5] rounded-2xl border border-[#E8D3CD]">
-          <p class="font-bold text-[#7A4B56] flex items-center gap-2 text-base">🌿 2. Gyógynövény & Tea</p>
+        <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]/80">
+          <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">🌿 2. Gyógynövény & Tea</p>
           <p id="modalHerb" class="text-slate-700 mt-1.5 leading-relaxed">...</p>
         </div>
 
-        <div class="p-4 bg-[#FDF8F5] rounded-2xl border border-[#E8D3CD]">
+        <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]/80">
           <div class="flex items-center justify-between">
-            <p class="font-bold text-[#7A4B56] flex items-center gap-2 text-base">🥣 3. Konyha & Kamra</p>
-            <span class="text-[11px] text-[#7A4B56] bg-[#E8D3CD]/60 px-2 py-0.5 rounded font-medium">Otthoni alapanyagok</span>
+            <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">🥣 3. Konyha & Kamra</p>
+            <span class="text-[11px] text-[#4A3728] bg-[#E6CCB2]/60 px-2 py-0.5 rounded font-medium">Otthoni alapanyagok</span>
           </div>
           <p id="modalFood" class="text-slate-700 mt-1.5 leading-relaxed">...</p>
         </div>
@@ -168,16 +168,16 @@
   </div>
 
 
-  <!-- JavaScript Logika & Ciklus Adatbázis -->
+  <!-- JavaScript Logika & Adatbázis -->
   <script>
     let symptomsData = [];
 
-    // Ciklus Fázisok Adatbázisa (Élettani magyarázat + 3-3 Recept fotóval)
+    // Ciklus Fázisok Adatbázisa
     const cyclePhases = {
       1: {
         title: "1. Menstruációs Fázis (1–5. nap)",
-        subtitle: "Melegítés, Vasfótlás & Belső Pihenés",
-        description: "Az ösztrogén és a progeszteron szintje a legalacsonyabb. A szervezet méhnyálkahártyát választ le, ami tápanyag- és vesztéssel jár. Az emésztőrendszer lassabb és érzékenyebb. Cél a melegítő, folyékony, könnyen emészthető és vasban gazdag ételek fogyasztása.",
+        subtitle: "Melegítés, Vaspótlás & Belső Pihenés",
+        description: "Az ösztrogén és a progeszteron szintje a legalacsonyabb. A szervezet méhnyálkahártyát választ le, ami tápanyag- és vasvesztéssel jár. Az emésztőrendszer lassabb és érzékenyebb. Cél a melegítő, folyékony, könnyen emészthető és vasban gazdag ételek fogyasztása.",
         vitamins: "Vas + C-vitamin (a felszívódásért), Magnézium-biszglicinát (görcsoldás), Omega-3 zsírsavak.",
         herbs: "Cickafarktea, Palástfűtea, Friss Gyömbértea.",
         avoid: "Jeges és hideg italok, túlzott koffein (szűkíti a hajszálereket, fokozza a görcsöket), sós rágcsálnivalók.",
@@ -290,12 +290,12 @@
 
     // Kategória ikonok
     function getCategorySVG(cat) {
-      if (cat.includes('Idegrendszer')) return `<svg class="w-4 h-4 text-[#7A4B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`;
-      if (cat.includes('Emésztőrendszer')) return `<svg class="w-4 h-4 text-[#7A4B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>`;
-      if (cat.includes('Immunitás')) return `<svg class="w-4 h-4 text-[#7A4B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`;
-      if (cat.includes('Bőr')) return `<svg class="w-4 h-4 text-[#7A4B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>`;
-      if (cat.includes('Női')) return `<svg class="w-4 h-4 text-[#7A4B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`;
-      return `<svg class="w-4 h-4 text-[#7A4B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`;
+      if (cat.includes('Idegrendszer')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`;
+      if (cat.includes('Emésztőrendszer')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>`;
+      if (cat.includes('Immunitás')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`;
+      if (cat.includes('Bőr')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>`;
+      if (cat.includes('Női')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`;
+      return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`;
     }
 
     async function loadSymptoms() {
@@ -308,7 +308,6 @@
       }
     }
 
-    // Továbbfejlesztett, tartalmasabb Tünet-kártyák (mondatok nélkül, tömör kulcsszavakkal)
     function renderCards(data) {
       const grid = document.getElementById('cardsGrid');
       grid.innerHTML = '';
@@ -316,32 +315,30 @@
       data.forEach(item => {
         const svgIcon = getCategorySVG(item.category);
         const card = document.createElement('div');
-        card.className = "bg-white p-6 rounded-3xl border border-[#E8D3CD] shadow-sm hover:shadow-md hover:border-[#7A4B56] transition-all duration-300 cursor-pointer flex flex-col justify-between group";
+        card.className = "bg-white p-6 rounded-3xl border border-[#E6CCB2] shadow-sm hover:shadow-md hover:border-[#2D6A4F] transition-all duration-300 cursor-pointer flex flex-col justify-between group";
         card.onclick = () => openModal(item);
         
-        // Rövidített áttekintők a kártyán
         const vitShort = item.vitamin.split('+')[0];
         const herbShort = item.herb.split('vagy')[0];
 
         card.innerHTML = `
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <div class="p-1.5 bg-[#F9EFEA] rounded-lg">
+              <div class="p-1.5 bg-[#F8F5F2] rounded-lg border border-[#E6CCB2]">
                 ${svgIcon}
               </div>
-              <span class="text-[11px] font-bold text-[#7A4B56] uppercase tracking-wider bg-[#F9EFEA] px-2.5 py-0.5 rounded-md">${item.category}</span>
+              <span class="text-[11px] font-bold text-[#1B4332] uppercase tracking-wider bg-[#F8F5F2] px-2.5 py-0.5 rounded-md border border-[#E6CCB2]/60">${item.category}</span>
             </div>
             
-            <h3 class="text-xl font-bold font-cormorant text-[#2A1E22] mb-3 group-hover:text-[#7A4B56] transition">${item.symptom}</h3>
+            <h3 class="text-xl font-bold text-[#1B4332] mb-3 group-hover:text-[#2D6A4F] transition">${item.symptom}</h3>
             
-            <!-- Tartalmasabb gyorselemek a kártyán -->
-            <div class="space-y-1.5 text-xs text-slate-600 mb-4 bg-[#FDF8F5] p-3 rounded-xl border border-[#E8D3CD]/50">
-              <div class="flex items-center gap-1.5"><span class="font-bold text-[#7A4B56]">💊 Tápanyag:</span> <span class="truncate">${vitShort}</span></div>
-              <div class="flex items-center gap-1.5"><span class="font-bold text-[#7A4B56]">🌿 Gyógynövény:</span> <span class="truncate">${herbShort}</span></div>
+            <div class="space-y-1.5 text-xs text-[#4A3728] mb-4 bg-[#F8F5F2] p-3 rounded-xl border border-[#E6CCB2]/50">
+              <div class="flex items-center gap-1.5"><span class="font-bold text-[#1B4332]">💊 Tápanyag:</span> <span class="truncate">${vitShort}</span></div>
+              <div class="flex items-center gap-1.5"><span class="font-bold text-[#1B4332]">🌿 Gyógynövény:</span> <span class="truncate">${herbShort}</span></div>
             </div>
           </div>
 
-          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-[#7A4B56] font-semibold">
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-[#2D6A4F] font-semibold">
             <span>Részletes protokoll megnyitása</span>
             <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
           </div>
@@ -371,7 +368,7 @@
       modal.classList.add('hidden');
     }
 
-    // Tab Váltó (Tünetek vs Ciklus)
+    // Tab Váltó (Sötétzöld vs Csajos Rózsaszín)
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
@@ -381,42 +378,40 @@
       if (tab === 'symptoms') {
         symptomsSec.classList.remove('hidden');
         cycleSec.classList.add('hidden');
-        symptomsBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#7A4B56] text-white shadow-sm";
-        cycleBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#7A4B56] hover:bg-[#F9EFEA]";
+        symptomsBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm";
+        cycleBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#FFF0F5]";
       } else {
         symptomsSec.classList.add('hidden');
         cycleSec.classList.remove('hidden');
-        cycleBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#7A4B56] text-white shadow-sm";
-        symptomsBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#7A4B56] hover:bg-[#F9EFEA]";
-        showPhase(1); // Alapértelmezett fázis
+        cycleBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#B56576] text-white shadow-sm";
+        symptomsBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#1B4332] hover:bg-[#F8F5F2]";
+        showPhase(1);
       }
     }
 
-    // Ciklus Fázis Megjelenítő
+    // Ciklus Fázis Megjelenítő (Hamvas-Rózsaszín kártyák)
     function showPhase(phaseNum) {
       const p = cyclePhases[phaseNum];
       const container = document.getElementById('phaseContent');
 
-      // Gombok aktív állapota
       for (let i = 1; i <= 4; i++) {
         const btn = document.getElementById(`phaseBtn${i}`);
         if (i === phaseNum) {
-          btn.className = "p-4 rounded-2xl border text-center transition-all bg-[#7A4B56] text-white border-[#7A4B56] shadow-md";
+          btn.className = "p-4 rounded-2xl border text-center transition-all bg-[#B56576] text-white border-[#B56576] shadow-md";
         } else {
-          btn.className = "p-4 rounded-2xl border text-center transition-all bg-white border-[#E8D3CD] text-[#2A1E22] hover:border-[#7A4B56]";
+          btn.className = "p-4 rounded-2xl border text-center transition-all bg-white border-[#FFCAD4] text-[#6D597A] hover:border-[#B56576]";
         }
       }
 
-      // Recept kártyák generálása
       let recipesHtml = '';
       p.recipes.forEach(r => {
         recipesHtml += `
-          <div class="bg-white rounded-3xl border border-[#E8D3CD] overflow-hidden shadow-sm hover:shadow-md transition">
+          <div class="bg-white rounded-3xl border border-[#FFCAD4] overflow-hidden shadow-sm hover:shadow-md transition">
             <img src="${r.img}" alt="${r.name}" class="w-full h-48 object-cover">
             <div class="p-6">
-              <h4 class="text-xl font-bold font-cormorant text-[#2A1E22] mb-2">${r.name}</h4>
+              <h4 class="text-xl font-bold font-serif-title text-[#6D597A] mb-2">${r.name}</h4>
               <p class="text-xs text-slate-600 leading-relaxed mb-4 font-light">${r.desc}</p>
-              <div class="p-3 bg-[#FDF8F5] rounded-xl border border-[#E8D3CD]/60 text-xs text-[#7A4B56]">
+              <div class="p-3 bg-[#FFF0F3] rounded-xl border border-[#FFCAD4]/60 text-xs text-[#B56576]">
                 <span class="font-bold">🥣 Hozzávalók:</span> ${r.ingredients}
               </div>
             </div>
@@ -425,22 +420,21 @@
       });
 
       container.innerHTML = `
-        <!-- Élettani Áttekintés Doboz -->
-        <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#E8D3CD] shadow-sm mb-10">
-          <h3 class="text-3xl font-normal font-cormorant text-[#2A1E22] mb-1">${p.title}</h3>
-          <p class="text-sm font-bold text-[#7A4B56] uppercase tracking-wider mb-4">${p.subtitle}</p>
+        <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#FFCAD4] shadow-sm mb-10">
+          <h3 class="text-3xl font-bold font-serif-title text-[#6D597A] mb-1">${p.title}</h3>
+          <p class="text-sm font-bold text-[#B56576] uppercase tracking-wider mb-4">${p.subtitle}</p>
           
-          <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light mb-6 bg-[#FDF8F5] p-4 rounded-2xl border border-[#E8D3CD]/60">
+          <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light mb-6 bg-[#FFF0F3] p-4 rounded-2xl border border-[#FFCAD4]/60">
             ${p.description}
           </p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div class="p-4 bg-[#F9EFEA] rounded-2xl border border-[#E8D3CD]">
-              <p class="font-bold text-[#7A4B56] mb-1 text-sm">💊 Ajánlott Tápanyagok</p>
+            <div class="p-4 bg-[#FFF0F3] rounded-2xl border border-[#FFCAD4]">
+              <p class="font-bold text-[#B56576] mb-1 text-sm">💊 Ajánlott Tápanyagok</p>
               <p class="text-slate-700">${p.vitamins}</p>
             </div>
-            <div class="p-4 bg-[#F9EFEA] rounded-2xl border border-[#E8D3CD]">
-              <p class="font-bold text-[#7A4B56] mb-1 text-sm">🌿 Gyógynövények</p>
+            <div class="p-4 bg-[#FFF0F3] rounded-2xl border border-[#FFCAD4]">
+              <p class="font-bold text-[#B56576] mb-1 text-sm">🌿 Gyógynövények</p>
               <p class="text-slate-700">${p.herbs}</p>
             </div>
             <div class="p-4 bg-rose-50/80 rounded-2xl border border-rose-200/80">
@@ -450,9 +444,8 @@
           </div>
         </div>
 
-        <!-- 3 Célzott Recept -->
         <div class="mb-6">
-          <h3 class="text-2xl font-normal font-cormorant text-[#2A1E22] mb-4 text-center">🌸 Ajánlott Receptötletek a Fázishoz</h3>
+          <h3 class="text-2xl font-bold font-serif-title text-[#6D597A] mb-4 text-center">🌸 Ajánlott Receptötletek a Fázishoz</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             ${recipesHtml}
           </div>
