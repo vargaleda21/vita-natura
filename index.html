@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vita-Natura – Holisztikus Házipatika & Ciklus-Iránytű</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <!-- PDF generáló könyvtár -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -48,7 +50,6 @@
     
     <!-- ==================== 1. TAB: TÜNETKERESŐ ==================== -->
     <div id="symptomsTabSection">
-      <!-- Bemutatkozó Kártya -->
       <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#E6CCB2] shadow-sm mb-8 text-center max-w-2xl mx-auto">
         <h2 class="text-2xl font-bold text-[#1B4332] mb-2">Mi az a Vita-Natura?</h2>
         <p class="text-[#4A3728] text-sm md:text-base leading-relaxed font-light">
@@ -56,7 +57,6 @@
         </p>
       </div>
 
-      <!-- Kereső sáv -->
       <div class="mb-8 text-center">
         <h3 class="text-xl font-bold text-[#1B4332] mb-3">Milyen panaszra keresel azonnali megoldást?</h3>
         <div class="relative max-w-lg mx-auto shadow-sm hover:shadow-md transition">
@@ -68,10 +68,7 @@
         </div>
       </div>
 
-      <!-- Tünet-kártyák rácsa -->
-      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <!-- Kártyák betöltése -->
-      </div>
+      <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
     </div>
 
 
@@ -86,7 +83,21 @@
           A női szervezet a 28 napos ciklus során négy különleges élettani fázison megy keresztül. Az energiaszükséglet, az emésztés és a tápanyag-szükséglet hétről hétre változik.
         </p>
 
-        <!-- KISZÁMÍTÓ INTERAKTÍV KALKULÁTOR -->
+        <!-- LEAD MAGNET: PDF LETÖLTŐ KÁRTYA -->
+        <div class="bg-white/90 backdrop-blur-sm p-6 rounded-2xl border border-[#FFCAD4] max-w-xl mx-auto mb-6 text-center shadow-sm">
+          <div class="flex items-center justify-center gap-2 mb-2">
+            <span class="text-xl">📄</span>
+            <h4 class="text-lg font-bold text-[#6D597A]">Ingyenes Nyomtatható Ciklus-Menü (PDF)</h4>
+          </div>
+          <p class="text-xs text-slate-600 mb-4 leading-relaxed font-light">
+            Töltsd le a hűtőre kitehető, elegáns A4-es heti étrend-útmutatót mind a 4 fázishoz, receptekkel és bevásárlólistával!
+          </p>
+          <button onclick="openPdfModal()" class="px-6 py-3 bg-[#B56576] text-white text-xs font-bold rounded-xl shadow-md hover:bg-[#A35263] transition flex items-center justify-center gap-2 mx-auto">
+            <span>📩</span> Ingyenes Letöltés E-mailben
+          </button>
+        </div>
+
+        <!-- CIKLUS KALKULÁTOR -->
         <div class="bg-white/80 backdrop-blur-sm p-5 rounded-2xl border border-[#FFCAD4] max-w-md mx-auto text-left">
           <p class="text-xs font-bold text-[#6D597A] uppercase tracking-wider mb-3 text-center">🗓️ Ciklus-Kalkulátor</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 text-xs">
@@ -102,9 +113,7 @@
           <button onclick="calculateCyclePhase()" class="w-full py-2.5 bg-[#B56576] text-white text-xs font-bold rounded-xl shadow-sm hover:bg-[#A35263] transition">
             Saját Fázis Kiszámítása
           </button>
-          <div id="calcResult" class="hidden mt-3 p-2.5 bg-[#FFF0F3] rounded-xl text-center text-xs font-bold text-[#6D597A] border border-[#FFCAD4]">
-            <!-- Eredmény szövege -->
-          </div>
+          <div id="calcResult" class="hidden mt-3 p-2.5 bg-[#FFF0F3] rounded-xl text-center text-xs font-bold text-[#6D597A] border border-[#FFCAD4]"></div>
         </div>
       </div>
 
@@ -133,24 +142,102 @@
       </div>
 
       <!-- FÁZIS TARTALMAK -->
-      <div id="phaseContent">
-        <!-- Dinamikus fázis tartalom -->
-      </div>
+      <div id="phaseContent"></div>
 
     </div>
 
   </main>
 
-  <!-- Felugró Részletező Modál (Tünetekhez) -->
+  <!-- PDF FELIRATKOZÓ MODÁL -->
+  <div id="pdfModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl relative border border-[#FFCAD4]">
+      <button onclick="closePdfModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="text-center mb-6">
+        <span class="text-3xl mb-2 inline-block">🌸</span>
+        <h3 class="text-2xl font-bold font-serif-title text-[#6D597A]">Töltsd le a Ciklus-Menüt!</h3>
+        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+          Add meg a neved és az e-mail címed, és azonnal letöltheted az elegáns A4-es nyomtatható étrendet és tápanyag-útmutatót!
+        </p>
+      </div>
+
+      <form id="subscribeForm" onsubmit="handlePdfDownload(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Keresztneved:</label>
+          <input type="text" id="subscriberName" required placeholder="Pl. Laura" class="w-full px-4 py-3 rounded-xl border border-[#FFCAD4] text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#B56576]">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">E-mail címed:</label>
+          <input type="email" id="subscriberEmail" required placeholder="laura@example.com" class="w-full px-4 py-3 rounded-xl border border-[#FFCAD4] text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#B56576]">
+        </div>
+
+        <div class="flex items-start gap-2 pt-1">
+          <input type="checkbox" id="privacyConsent" required class="mt-0.5 rounded border-[#FFCAD4] text-[#B56576] focus:ring-[#B56576]">
+          <label for="privacyConsent" class="text-[11px] text-slate-500 leading-tight">
+            Elfogadom az adatkezelést, és hozzájárulok a heti ingyenes Vita-Natura egészség-tippek fogadásához.
+          </label>
+        </div>
+
+        <button type="submit" id="downloadBtn" class="w-full py-3 bg-[#B56576] text-white font-bold rounded-xl shadow-md hover:bg-[#A35263] transition flex items-center justify-center gap-2">
+          <span>📥</span> PDF Étrend Letöltése
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- REJTETT HTML SABLON A PDF GENERÁLÁSHOZ -->
+  <div class="hidden">
+    <div id="pdfTemplate" class="p-8 bg-white text-slate-800" style="width: 700px; font-family: 'Plus Jakarta Sans', sans-serif;">
+      <div style="text-align: center; border-bottom: 2px solid #FFCAD4; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="font-family: 'Playfair Display', serif; color: #6D597A; font-size: 28px; margin: 0;">🌿 Vita-Natura Ciklus-Iránytű</h1>
+        <p style="color: #B56576; font-size: 13px; font-weight: bold; margin-top: 5px;">Heti Étrend & Ciklusszinkronizált Útmutató</p>
+        <p id="pdfWelcomeUser" style="color: #666; font-size: 11px; margin-top: 3px;"></p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🌸 1. Menstruáció (1–5. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Melegítés, Vaspótlás & Görcsoldás</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Céklás vöröslencse leves, Meleg fahéjas zabkása, Lassan főtt marharagu.</p>
+        </div>
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🌱 2. Follikuláris (6–12. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Frissesség & Bélflóra Támogatás</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Kimchi bowl avokádóval, Citromos lazac spárgával, Matcha smoothie.</p>
+        </div>
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">✨ 3. Ovuláció (13–16. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Máj-támogatás & Ösztrogén-kivezetés</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Sült brokkolis saláta kefírrel, Szezámmagos quinoa, Málnás chia puding.</p>
+        </div>
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🍂 4. Luteális (17–28. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Vércukor-stabilizálás & PMS megelőzés</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Sült sütőtökös rizottó, Édesburgonya bruschetta, Banánkenyér szilvával.</p>
+        </div>
+      </div>
+
+      <div style="background: #F8F5F2; padding: 12px; border-radius: 12px; border: 1px solid #E6CCB2; text-align: center; margin-top: 15px;">
+        <p style="font-size: 10px; color: #1B4332; font-weight: bold; margin: 0;">🌿 Hasznos Napi Rutin Emlékeztető</p>
+        <p style="font-size: 9px; color: #555; margin-top: 3px;">Igyál legalább 2.5 liter vizet naponta • Magnéziumot mindig este vedd be • C-vitamint a vas mellé fogyassz!</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px; font-size: 9px; color: #aaa;">
+        Vita-Natura – Holisztikus Házipatika • www.vita-natura.hu
+      </div>
+    </div>
+  </div>
+
+  <!-- Felugró Modálok (Tünetek & Receptek) -->
   <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#E6CCB2]">
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
-      
       <div id="modalCategoryBadge" class="inline-flex items-center gap-2 bg-[#F8F5F2] text-[#1B4332] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 border border-[#E6CCB2]"></div>
       <h3 id="modalSymptom" class="text-2xl font-bold text-[#1B4332] mb-6">Tünet neve</h3>
-
       <div class="space-y-4 text-sm">
         <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]/80">
           <p class="font-bold text-[#1B4332] flex items-center gap-2 text-base">💊 1. Tápanyag & Vitamin</p>
@@ -180,7 +267,6 @@
     </div>
   </div>
 
-  <!-- Recept Részletező Modál -->
   <div id="recipeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#FFCAD4]">
       <button onclick="closeRecipeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -189,12 +275,10 @@
       <img id="recipeModalImg" class="w-full h-48 object-cover rounded-2xl mb-4 border border-[#FFCAD4]/60" src="" alt="">
       <h3 id="recipeModalTitle" class="text-2xl font-bold font-serif-title text-[#6D597A] mb-2"></h3>
       <p id="recipeModalDesc" class="text-xs text-slate-600 leading-relaxed mb-4 font-light"></p>
-      
       <div class="p-4 bg-[#FFF0F3] rounded-2xl border border-[#FFCAD4] mb-4 text-xs text-[#B56576]">
         <p class="font-bold mb-1 text-sm">🥣 Hozzávalók:</p>
         <p id="recipeModalIngredients" class="text-slate-700 leading-relaxed"></p>
       </div>
-
       <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2] text-xs">
         <p class="font-bold text-[#1B4332] mb-1 text-sm">👩‍🍳 Elkészítés lépésről lépésre:</p>
         <p id="recipeModalSteps" class="text-slate-700 leading-relaxed whitespace-pre-line"></p>
@@ -202,11 +286,10 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika & Adatbázis -->
+  <!-- JavaScript Logika & PDF generálás -->
   <script>
     let symptomsData = [];
 
-    // Ciklus Fázisok Adatbázisa (Pontosított receptek, helyesírás és szorosan illeszkedő képek)
     const cyclePhases = {
       1: {
         title: "1. Menstruációs Fázis (1–5. nap)",
@@ -290,7 +373,7 @@
             img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
             desc: "A szezámmag fitoösztrogénjei természetes módon harmonizálják a hormoncsúcsot az ovuláció ablakában.",
             ingredients: "10 dkg quinoa, 15 dkg csirkemellfilé, 1 cukkini, 2 ek pörkölt szezámmag.",
-            steps: "1. A quinoát kétszeres mennyiségű vízben kifőzzük.\n2. A csirkemellet és cukkinit kockákra vágjuk, serpenyőben átpirítjuk.\n3. Egy tálban összekeverjük, és bőségesen megszórjuk pörkölt szezámmaggal."
+            steps: "1. A quinoát kétszeres mennyiségű vízben kifőzzük.\n2. A csirkemellet és cukkinit kockákra vágjuk, serpenyőben átpirítjuk.\n3. Egy tálban összekeverjük, és bőségesen megszórjuk pörkölt szezámmaggol."
           },
           {
             name: "Málnás-Chia Pudíng Kókusztejjel & Kókuszreszelékkel",
@@ -328,13 +411,12 @@
             img: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80",
             desc: "A frissen őrölt lenmag támogatja a progeszteron-termelődést a luteális fázis második felében.",
             ingredients: "2 érett banán, 2 tojás, 10 dkg zabliszt, 3 ek őrölt lenmag, 4 szem szilva (kockázva), 1 tk fahéj.",
-            steps: "1. A banánokat villával összetörjük, elkeverjük a tojásokkal, zabliszttel, lenmaggal és fahéjjal.\n2. Belekeverjük a szilvakockákat, és sütőformába öntjük.\n3. 180 °C-on kb. 35-40 perc alatt készre sütjük."
+            steps: "1. A banánokat villával összetörjük, elkeverjük a tojásokkal, zabliszttel, lenmaggal és fahéjgal.\n2. Belekeverjük a szilvakockákat, és sütőformába öntjük.\n3. 180 °C-on kb. 35-40 perc alatt készre sütjük."
           }
         ]
       }
     };
 
-    // Kategória ikonok
     function getCategorySVG(cat) {
       if (cat.includes('Idegrendszer')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`;
       if (cat.includes('Emésztőrendszer')) return `<svg class="w-4 h-4 text-[#1B4332]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>`;
@@ -357,22 +439,17 @@
     function renderCards(data) {
       const grid = document.getElementById('cardsGrid');
       grid.innerHTML = '';
-
       data.forEach(item => {
         const svgIcon = getCategorySVG(item.category);
         const card = document.createElement('div');
         card.className = "bg-white p-6 rounded-3xl border border-[#E6CCB2] shadow-sm hover:shadow-md hover:border-[#2D6A4F] transition-all duration-300 cursor-pointer flex flex-col justify-between group";
         card.onclick = () => openModal(item);
-        
         const vitShort = item.vitamin.split('+')[0];
         const herbShort = item.herb.split('vagy')[0];
-
         card.innerHTML = `
           <div>
             <div class="flex items-center gap-2 mb-3">
-              <div class="p-1.5 bg-[#F8F5F2] rounded-lg border border-[#E6CCB2]">
-                ${svgIcon}
-              </div>
+              <div class="p-1.5 bg-[#F8F5F2] rounded-lg border border-[#E6CCB2]">${svgIcon}</div>
               <span class="text-[11px] font-bold text-[#1B4332] uppercase tracking-wider bg-[#F8F5F2] px-2.5 py-0.5 rounded-md border border-[#E6CCB2]/60">${item.category}</span>
             </div>
             <h3 class="text-xl font-bold text-[#1B4332] mb-3 group-hover:text-[#2D6A4F] transition">${item.symptom}</h3>
@@ -399,19 +476,15 @@
       document.getElementById('modalFood').innerText = item.food;
       document.getElementById('modalProTip').innerText = item.proTip;
       document.getElementById('modalAvoid').innerText = item.avoid;
-      
-      const modal = document.getElementById('modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
     }
 
     function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+      document.getElementById('modal').classList.add('hidden');
     }
 
-    // Tab Váltó
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
@@ -432,7 +505,6 @@
       }
     }
 
-    // Ciklus-Kalkulátor Számítás
     function calculateCyclePhase() {
       const dateVal = document.getElementById('lastPeriodDate').value;
       const lengthVal = parseInt(document.getElementById('cycleLength').value) || 28;
@@ -464,11 +536,9 @@
 
       resDiv.innerHTML = `🌸 Ma a ciklusod <strong>${diffDays}. napján</strong> vagy. <br>Aktuális fázisod: <strong>${phaseName}</strong>.`;
       resDiv.classList.remove('hidden');
-
       showPhase(phaseNum);
     }
 
-    // Ciklus Fázis Megjelenítő
     function showPhase(phaseNum) {
       const p = cyclePhases[phaseNum];
       const container = document.getElementById('phaseContent');
@@ -537,7 +607,6 @@
       `;
     }
 
-    // Recept Modál megnyitása
     function openRecipeModal(phaseNum, idx) {
       const r = cyclePhases[phaseNum].recipes[idx];
       document.getElementById('recipeModalImg').src = r.img;
@@ -545,16 +614,63 @@
       document.getElementById('recipeModalDesc').innerText = r.desc;
       document.getElementById('recipeModalIngredients').innerText = r.ingredients;
       document.getElementById('recipeModalSteps').innerText = r.steps;
-
-      const modal = document.getElementById('recipeModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      document.getElementById('recipeModal').classList.remove('hidden');
+      document.getElementById('recipeModal').classList.add('flex');
     }
 
     function closeRecipeModal() {
-      const modal = document.getElementById('recipeModal');
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
+      document.getElementById('recipeModal').classList.remove('flex');
+      document.getElementById('recipeModal').classList.add('hidden');
+    }
+
+    // PDF MODÁL KEZELÉS
+    function openPdfModal() {
+      document.getElementById('pdfModal').classList.remove('hidden');
+      document.getElementById('pdfModal').classList.add('flex');
+    }
+
+    function closePdfModal() {
+      document.getElementById('pdfModal').classList.remove('flex');
+      document.getElementById('pdfModal').classList.add('hidden');
+    }
+
+    // PDF GENERÁLÁS ÉS ADAT-SALVAGE
+    function handlePdfDownload(e) {
+      e.preventDefault();
+      const name = document.getElementById('subscriberName').value;
+      const email = document.getElementById('subscriberEmail').value;
+
+      if (!name || !email) return;
+
+      // Elmentjük a feliratkozót a böngésző helyi tárolójába (később Mailchimp-re exportálható)
+      let subscribers = JSON.parse(localStorage.getItem('vitaNaturaSubscribers') || '[]');
+      subscribers.push({ name, email, date: new Date().toISOString() });
+      localStorage.setItem('vitaNaturaSubscribers', JSON.stringify(subscribers));
+
+      document.getElementById('pdfWelcomeUser').innerText = `Készült: ${name} részére (${email})`;
+
+      // PDF Generálás html2pdf-fel
+      const element = document.getElementById('pdfTemplate');
+      const opt = {
+        margin:       0.5,
+        filename:     `Vita-Natura_Ciklus_Etrend_${name}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      const btn = document.getElementById('downloadBtn');
+      btn.innerText = "⏳ PDF Generálása...";
+      btn.disabled = true;
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        btn.innerText = "✅ Sikeres letöltés!";
+        setTimeout(() => {
+          closePdfModal();
+          btn.innerText = "📥 PDF Étrend Letöltése";
+          btn.disabled = false;
+        }, 1500);
+      });
     }
 
     document.getElementById('searchInput').addEventListener('input', (e) => {
