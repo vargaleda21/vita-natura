@@ -294,7 +294,7 @@
     </div>
 
 
-    <!-- ==================== 4. TAB: ÉLETMÓD, BMI ÉS KALKULÁTOR (DÚSÍTOTT BOGSÁG) ==================== -->
+    <!-- ==================== 4. TAB: ÉLETMÓD, BMI ÉS KALKULÁTOR ==================== -->
     <div id="lifestyleTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott táplálkozási architektúra</span>
@@ -415,6 +415,7 @@
 
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
         
+        <!-- 1. Zöldségek & Gombák -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -1021,55 +1022,427 @@
     let symptomsData = [];
     let activeRecipeOriginalIng = "";
 
+    // EGYEDI ALAPANYAG ADATBÁZIS (MINDEN ELEM SAJÁT KÜLÖN PROFILLAL)
     const ingredientDetails = {
-      "fokhagyma": {
-        name: "Fokhagyma",
-        nutrients: "C-vitamin, B6-vitamin, Mangán, Allicin, Szelén",
-        benefits: "❤️ Szív-érrendszer támogatása (vérnyomás-csökkentő)\n🛡️ Antioxidáns & természetes gomba/antibakteriális védelem\n🦠 Immunrendszer közvetlen támogatása",
-        usage: "Levesekben, sült zöldségekhez, hummuszban, öntetekben, pirítósra zúzva",
-        recipeName: "Lassan főtt fűszeres marharagu gyökérzöldségekkel"
+      "brokkoli": {
+        name: "Brokkoli",
+        nutrients: "Szulforafán, Indol-3-karbinol, C-vitamin, K1-vitamin, Élelmi rostok",
+        benefits: "🛡️ Támogatja a máj ösztrogén-kivezető funkcióit az ovulációs fázisban\n🦴 Erősíti a csontokat és csökkenti a sejtszintű gyulladásokat",
+        usage: "Gőzben párolva, sütőben pirítva fokhagymás kefíröntettel vagy krémlevesként",
+        recipeName: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával"
+      },
+      "karfiol": {
+        name: "Karfiol",
+        nutrients: "C-vitamin, Folsav (B9), Kolin, Glukozinolátok",
+        benefits: "🧠 A kolin tartalom támogatja az agyműködést és a hormonális egyensúlyt\n⚖️ Alacsony szénhidráttartalmú, kímélő alapanyag a puffadás ellen",
+        usage: "Sütőben egyben fűszerezve sütve, steak-ként, vagy karfiolrizs alapnak",
+        recipeName: "Sült brokkolis-kefires saláta pörkölt dióval (Karfiol alternatívával)"
+      },
+      "savanyú káposzta": {
+        name: "Savanyú káposzta",
+        nutrients: "Élőflórás probiotikumok, C-vitamin, Tejsav, K2-vitamin",
+        benefits: "🦠 Regenerálja a bélnyálkahártyát és a mikrobiomot\n🛡️ Kiemelkedő immunerősítő és méregtelenítő hatású",
+        usage: "Nyersen salátákhoz keverve, vagy reggeli éhgyomri emésztésserkentőként",
+        recipeName: "Avokádós-kimchis bowl csírákkal & edamame babbal"
+      },
+      "spenót": {
+        name: "Spenót",
+        nutrients: "Lutein, Béta-karotin, Folsav, Növényi vas, Magnézium",
+        benefits: "👁️ Védi a szem egészségét és a látást\n🩸 Támogatja a vérképzést és elernyessze a görcsös izmokat",
+        usage: "Frissen bébispenótként salátákba, smoothie-ba vagy tejszínes rangukba",
+        recipeName: "Édesburgonyás-spenótos omlett"
+      },
+      "rukkola": {
+        name: "Rukkola",
+        nutrients: "Kesernyés fitonutriensek, K-vitamin, Kalcium, Folsav",
+        benefits: "🛡️ A kesernyés ízanyagok serkentik a gyomorsav- és epe-termelést\n🩸 Támogatja a máj méregtelenítő folyamatait",
+        usage: "Friss saláták alapjaként, pirítósra halmozva vagy pesto-ként",
+        recipeName: "Avokádós-kimchis bowl csírákkal & edamame babbal (Rukkolával)"
+      },
+      "uborka": {
+        name: "Uborka",
+        nutrients: "95% strukturált víz, Kálium, Fitoszterolok, Szilícium",
+        benefits: "💧 Kiváló hidratáló, segíti a felesleges víz kiürítését a szövetekből\n🧴 Szépíti a bőrt és hűsíti a gyulladt gyomrot",
+        usage: "Kockázva salátákba, hideg tzatziki alapnak vagy préslébe",
+        recipeName: "Tonhalas kevert saláta capri öntettel és uborkával"
+      },
+      "paradicsom": {
+        name: "Paradicsom",
+        nutrients: "Likopin, C-vitamin, Kálium, Béta-karotin",
+        benefits: "❤️ A likopin hőkezelve erősíti a szív- és érrendszert\n🛡️ Sejtvédő antioxidáns gátolja az öregedést",
+        usage: "Sütőben konfitálva, passataként szószokba vagy friss salátába",
+        recipeName: "Tepsis cukkini-hajók tonhalkrémmel és paradicsommal"
+      },
+      "paprika": {
+        name: "Paprika / Kápia",
+        nutrients: "Kiemelkedő C-vitamin, Kapszaicin, A-vitamin, Rutin",
+        benefits: "🛡️ Növeli az érfalak rugalmasságát és az ellenállóképességet\n⚡ Élénkíti a vérkeringést és a metabolizmust",
+        usage: "Nyersen mártogatósokhoz, sütőben kápaként megsütve héj nélkül",
+        recipeName: "Tepsis fűszeres cukkini-hajók tonhalkrémmel"
+      },
+      "sárgarépa": {
+        name: "Sárgarépa",
+        nutrients: "Béta-karotin (A-vitamin előanyag), Pektin, Kálium",
+        benefits: "👁️ Védi a látást és a nyálkahártyák épségét\n⚖️ A rostok megkötik a bélben a felesleges ösztrogént",
+        usage: "Párolva pürének, tepsiben fűszeresen sütve vagy nyersen reszelve",
+        recipeName: "Rozmaringos marharagu szilvás mártással és gyökérzöldségekkel"
       },
       "cékla": {
         name: "Cékla",
-        nutrients: "Szerves vas, Folsav, Nitrátok, C-vitamin, Kálium",
-        benefits: "🩸 Vérképzés és oxigénszállítás fokozása\n❤️ Vérnyomás és szív-érrendszer támogatása\n⚡ Állóképesség és fizikai energia növelése",
-        usage: "Krémlevesként, nyersen préslében, sütőben sült zöldségként salátába",
-        recipeName: "Céklás-vöröslencsés krémleves tökmaggal"
-      },
-      "brokkoli": {
-        name: "Brokkoli / Karfiol",
-        nutrients: "Indol-3-karbinol, Szulforafán, C-vitamin, K-vitamin, Rost",
-        benefits: "🛡️ Máj-méregtelenítés & Ösztrogén-kivezetés támogatása\n🦴 Csontok és kötőszövetek védelme\n🧴 Bőr tisztasága és kollagén-termelés",
-        usage: "Párolva köretként, krémlevesnek, sütőben pirítva kefires öntettel",
-        recipeName: "Sült brokkolis-kefires saláta dióval & gránátalmával"
-      },
-      "édesburgonya": {
-        name: "Édesburgonya",
-        nutrients: "Béta-karotin (A-vitamin), B6-vitamin, Kálium, Komplex rostok",
-        benefits: "⚖️ Lassan felszívódó szénhidrát (vércukor-stabilizálás)\n🌙 Idegrendszer megnyugtatása és PMS csökkentés\n👁️ Látás és bőr egészsége",
-        usage: "Sütőben sült karikákként, pürének, bruschettaként kecskesajttal",
-        recipeName: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával és mogyorós-szezámos tahini öntettel"
+        nutrients: "Szerves vas, Folsav, Nitrátok, Betanin, Kálium",
+        benefits: "🩸 Vérképzés és oxigénszállítás fokozása\n❤️ Vérnyomás-csökkentő és állóképesség-növelő hatás",
+        usage: "Krémlevesként, nyersen préslében vagy sütőben sült kockákként",
+        recipeName: "Céklás-vöröslencsés krémleves pirított tökmaggal"
       },
       "cukkini": {
         name: "Cukkini",
-        nutrients: "C-vitamin, Kálium, B6-vitamin, Élelmi rostok",
-        benefits: "💧 Víz-háztartás és veseműködés egyensúlya\n🥬 Könnyű emészthetőség a kímélő napokon",
-        usage: "Tepsiben töltve, krémlevesként, grillezve capri öntettel",
-        recipeName: "Tepsis fűszeres cukkini-hajók tonhalkrémmel, kapribogyóval és érlelt sajttal"
+        nutrients: "C-vitamin, Kálium, B6-vitamin, Kímélő rostok",
+        benefits: "💧 Segíti a veseműködést és a vízháztartás egyensúlyát\n🥬 Rendkívül kíméletes az érzékeny emésztőrendszernek",
+        usage: "Tepsiben tölve, tócsninak reszelve vagy krémlevesként",
+        recipeName: "Tepsis fűszeres cukkini-hajók tonhalkrémmel, kapribogyóval és érett sajttal"
+      },
+      "sütőtök": {
+        name: "Sütőtök",
+        nutrients: "Lutein, Zeaxantin, Béta-karotin, Komplex szénhidrátok",
+        benefits: "⚖️ Lassan felszívódó energiát ad, stabilizálja a vércukrot\n🌙 Megnyugtatja az idegrendszert a luteális fázisban",
+        usage: "Sütőben mézes-fűszeresen sütve, krémlevesnek vagy gnocchi tésztába",
+        recipeName: "Édesburgonya-bruschetta kecskesajttal (Sütőtök opcióval)"
+      },
+      "spárga": {
+        name: "Spárga",
+        nutrients: "Aszparagin, Folsav, E-vitamin, C-vitamin, Króm",
+        benefits: "💧 Erős természetes vízhajtó, tisztítja a veséket\n⚖️ A króm tartalom segít a vércukorszint egyensúlyban tartásában",
+        usage: "Vajon pár perc alatt megpirítva, gőzben párolva lazac mellé",
+        recipeName: "Citromos-kakukkfüves lazacfilé párolt zöldspárgával"
+      },
+      "gomba": {
+        name: "Gomba",
+        nutrients: "D-vitamin előanyagok, Béta-glükánok, Szelén, Réz",
+        benefits: "🛡️ A béta-glükánok aktiválják az immunsejteket\n🦴 Támogatja a csontok ásványianyag-ellátottságát",
+        usage: "Fokhagymás-kakukkfüves pirítás után salátába, ragukba vagy levesbe",
+        recipeName: "Rozmaringos marharagu gyökérzöldségekkel és gombával"
+      },
+      "vöröshagyma": {
+        name: "Vöröshagyma / Lilahagyma",
+        nutrients: "Kvercetin, Szerves kénvegyületek, C-vitamin, Inulin",
+        benefits: "🛡️ A kvercetin erős természetes gyulladáscsökkentő és antihisztamin\n🥬 Az inulin táplálja a hasznos bélbaktériumokat",
+        usage: "Lassan karamellizálva alapokhoz, nyersen lilahagymaként salátákba",
+        recipeName: "Lassan főtt fűszeres marharagu gyökérzöldségekkel"
+      },
+      "fokhagyma": {
+        name: "Fokhagyma",
+        nutrients: "Allicin, Szelén, Mangán, B6-vitamin, C-vitamin",
+        benefits: "❤️ Szív- és érrendszer védelme (vérnyomás & koleszterin)\n🦠 Természetes antibakteriális és gombaellenes hatás",
+        usage: "Frissen zúzva ételek végén belekeverve a maximális allicinért",
+        recipeName: "Rozmaringos marharagu szilvás mártással"
+      },
+      "édesburgonya": {
+        name: "Édesburgonya",
+        nutrients: "B6-vitamin, A-vitamin, Kálium, Lassan felszívódó rostok",
+        benefits: "⚖️ Megakadályozza az esti cukoréhséget és a vércukor-ingadozást\n🌙 Támogatja a progeszteron-termelést a ciklus második felében",
+        usage: "Sütőben hasábként, hajában sütve feltéttel, vagy bruschettaként",
+        recipeName: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahini öntettel"
+      },
+      "avokádó": {
+        name: "Avokádó",
+        nutrients: "Egyszeresen telítetlen zsírsavak, E-vitamin, Kálium, Folsav",
+        benefits: "❤️ Védi a szív- és érrendszert, csökkenti a gyulladásokat\n🧴 Bársonyossá és hidratálttá teszi a száraz bőrt",
+        usage: "Szeletelve tálakba, krémnek kikeverve fokhagymával, vagy tojással",
+        recipeName: "Avokádós-kimchis quinoa tál edamame babbal"
+      },
+      "alma": {
+        name: "Alma",
+        nutrients: "Pektin (oldható rost), C-vitamin, Flavonoidok",
+        benefits: "🥬 A pektin zselésedve tisztítja a bélfalat és segíti a székletet\n⚖️ Lassítja a cukrok felszívódását",
+        usage: "Nyersen héjával, sütőben fahéjjal megsütve vagy zabkásába reszelve",
+        recipeName: "Fahéjas zabkása meggyraguval (Reszelt almával)"
       },
       "banán": {
         name: "Banán",
-        nutrients: "Kálium, B6-vitamin, Triptofán, Magas rost",
-        benefits: "💪 Izomgörcsök megelőzése és elektrolit-pótlás\n🌙 Esti alvásminőség és szerotonin-termelés javítása\n⚡ Gyors energia edzés előtt",
-        usage: "Zabkásába, smoothie-kba, cukormentes banánkenyérbe",
-        recipeName: "Lenmagpelyhes banánkenyér szilvával (Cukormentes)"
+        nutrients: "Kálium, B6-vitamin, Triptofán, Magnézium",
+        benefits: "💪 Izomgörcsök kivédése edzés előtt/után\n🌙 A triptofán elősegíti a jó alvást és a jókedvet",
+        usage: "Zabkásába karikázva, turmixokba sűrítőnek vagy banánkenyérbe",
+        recipeName: "Lenmagpelyhes banánkenyér szilvával & fahéjjal"
+      },
+      "narancs": {
+        name: "Narancs / Mandarin",
+        nutrients: "C-vitamin, Heszperidin, Folsav, Tiamin",
+        benefits: "🛡️ A heszperidin támogatja a hajszálerek rugalmasságát\n🩸 Segíti a növényi vas felszívódását a bélben",
+        usage: "Frissen facsarva, gerezdjeire szedve salátákba vagy öntetekbe",
+        recipeName: "Sült brokkolis-kefires saláta gránátalmával és narancsdarabokkal"
+      },
+      "citrom": {
+        name: "Citrom / Lime",
+        nutrients: "Citromsav, C-vitamin, Bioflavonoidok",
+        benefits: "💧 Serkenti az epeöntést és a máj méregtelenítését\n⚖️ Lúgosító hatású az emésztés során",
+        usage: "Reggeli langyos vízbe facsarva, halakra vagy salátaöntetekbe",
+        recipeName: "Citromos-kakukkfüves lazacfilé párolt zöldspárgával"
+      },
+      "gránátalma": {
+        name: "Gránátalma",
+        nutrients: "Punikalaginok, C-vitamin, K-vitamin, Polifenolok",
+        benefits: "❤️ Kiemelkedő érvédő, gátolja az érelmeszesedést\n🧴 Öregedésgátló hatással bír a bőrsejtekre",
+        usage: "Magjait salátákra, porridge-ra vagy kefíres ételekre szórva",
+        recipeName: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával"
+      },
+      "szilva": {
+        name: "Szilva",
+        nutrients: "Szagitol, Szorbitol, Iszatát, C-vitamin, K-vitamin",
+        benefits: "🥬 Természetes módon mozdítja meg a renyhe bélműködést\n🛡️ Magas antioxidáns tartalmú bogyós-jellegű gyümölcs",
+        usage: "Fahéjjal sütőben megsütve süteményekre vagy porridge-ra",
+        recipeName: "Lenmagpelyhes banánkenyér szilvával & fahéjjal"
+      },
+      "meggy": {
+        name: "Meggy / Cseresznye",
+        nutrients: "Melatonin, Antocianinok, C-vitamin, Kálium",
+        benefits: "🌙 A természetes melatonin tartalom mélyíti a gecei alvást\n💪 Bizonyítottan csökkenti az edzés utáni izomlázat",
+        usage: "Meleg kásákba lefőzve ragunak, smoothie-ba vagy frissen",
+        recipeName: "Fahéjas zabkása meggyraguval & olvasztott étcsokoládéval"
+      },
+      "datolya": {
+        name: "Datolya / Füge",
+        nutrients: "Természetes fruktóz/glükóz, Magnézium, Kálium, Rostok",
+        benefits: "⚡ Azonnali tiszta energiát ad az edzések előtt\n🥬 Segíti a bélperisztaltikát",
+        usage: "Nyers édességek édesítésére, zabkásába aprítva vagy dióval töltve",
+        recipeName: "Fahéjas zabkása meggyraguval (Datolyával édesítve)"
       },
       "áfonya": {
-        name: "Áfonya / Málna",
-        nutrients: "Antioxidánsok (Antocianin), C-vitamin, Mangán, Rost",
-        benefits: "🧠 Agyműködés és memória védelme\n🧴 Bőr öregedésgátlása és sejtvédelem\n🛡️ Gyulladáscsökkentés",
-        usage: "Frissen zabkására, chia pudingra, turmixokba",
-        recipeName: "Málnás-chia pudíng kókusztejjel & kókuszreszelékkel"
+        name: "Áfonya",
+        nutrients: "Antocianin, C-vitamin, K-vitamin, Mangán",
+        benefits: "🧠 Védi az agysejteket és a memóriát az öregedéstől\n👁️ Támogatja a szem hajszálereinek keringését",
+        usage: "Frissen reggeli kásákra, chia pudingra vagy magvakkal",
+        recipeName: "Málnás-chia puding kókusztejszínnel & kókuszpehellyel"
+      },
+      "málna": {
+        name: "Málna / Eper",
+        nutrients: "Ellagsav, C-vitamin, Mangán, B-vitaminok",
+        benefits: "🛡️ Az ellagsav erős daganatellenes és sejtvédő antioxidáns\n⚖️ Alacsony glikémiás indexű bogyós gyümölcs",
+        usage: "Villával összenyomva chia puding tetejére vagy smoothie-ba",
+        recipeName: "Málnás-chia puding kókusztejszínnel & kókuszpehellyel"
+      },
+      "zabpehely": {
+        name: "Zabpehely",
+        nutrients: "Béta-glükán (oldható rost), Magnézium, B1-vitamin, Vas",
+        benefits: "❤️ A béta-glükán igazoltan csökkenti a koleszterinszintet\n⚖️ Hosszú órákra egyenletes vércukrot és jóllakottságot biztosít",
+        usage: "Kásaként lefőzve, éjszakai áztatott zabként vagy zablisztnek őrölve",
+        recipeName: "Fahéjas zabkása meggyraguval & olvasztott étcsokoládéval"
+      },
+      "barna rizs": {
+        name: "Barna rizs / Basmati",
+        nutrients: "Komplex szénhidrátok, B-vitaminok, Magnézium, Szelén",
+        benefits: "⚡ Egyenletes energiát ad edzés előtt és után\n⚖️ A basmati rizs glikémiás indexe kedvezőbb a sima fehér rizsnél",
+        usage: "Köretként fűszeresen főzve, bowls alapjaként salátákhoz",
+        recipeName: "Pácolt lazacfilé barna rizzsel & pirított zöldspárgával"
+      },
+      "quinoa": {
+        name: "Quinoa",
+        nutrients: "Teljes értékű növényi fehérje (összes esszenciális aminosav), Rost, Vas",
+        benefits: "💪 Tökéletes fehérjeforrás vegetáriánusoknak és sportolóknak\n🌾 Gluténmentes, könnyen emészthető pszeudogabonaféle",
+        usage: "Kétszeres vízben megfőzve tálak alapjának vagy salátába",
+        recipeName: "Avokádós-kimchis quinoa tál edamame babbal"
+      },
+      "hajdina": {
+        name: "Hajdina / Bulgur",
+        nutrients: "Rutin, B-vitaminok, Magnézium, Cink",
+        benefits: "❤️ A rutin tartalom erősíti a hajszálereket és javítja a keringést\n⚖️ Alacsony glikémiás válasz",
+        usage: "Sós köretként, tepsis zöldségek mellé vagy kásaként",
+        recipeName: "Ropogós fűszeres csicseriborsó tál (Hajdina körettel)"
+      },
+      "teljes kiőrlésű kenyér": {
+        name: "Kovászos / Teljes kiőrlésű kenyér",
+        nutrients: "Élelmi rostok, B-vitaminok, Tejsavbaktériumok (kovász esetén)",
+        benefits: "🥬 A kovászolás előemészti a glutént és csökkenti a fitinsavat\n⚖️ Nem dobja meg hirtelen a vércukrot",
+        usage: "Pirítva bruschettának, kecskesajttal vagy szendvicsnek",
+        recipeName: "Édesburgonya-bruschetta kecskesajttal, dióval & kakukkfűvel"
+      },
+      "vöröslencse": {
+        name: "Vöröslencse / Lencse",
+        nutrients: "Növényi fehérje, Szerves vas, Folsav, Lassan emésztendő rostok",
+        benefits: "🩸 Kiváló vas- és folsavpótlás a menstruáció idején\n🥬 Nem puffaszt annyira, mint a barna lencse, mert héjatlan",
+        usage: "Krémleveseknek, dhal-nak (indiai curry) vagy raguk sűrítésére",
+        recipeName: "Céklás-vöröslencsés krémleves pirított tökmaggal"
+      },
+      "csicseriborsó": {
+        name: "Csicseriborsó",
+        nutrients: "Lizin, B6-vitamin, Folsav, Cink, Növényi fehérje",
+        benefits: "💪 Támogatja az izomépítést és a szövetek regenerációját\n⚖️ Nagyon magas a telítőértéke, megakadályozza a nassolást",
+        usage: "Sütőben fűszeresen ropogósra sütve, vagy hummusznak kikeverve",
+        recipeName: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahini öntettel"
+      },
+      "vörösbab": {
+        name: "Vörösbab / Fehérbab",
+        nutrients: "Reszisztens keményítő, Molybdén, Fehérje, Vas",
+        benefits: "🥬 A reszisztens keményítő táplálja a vastagbél jó baktériumait\n⚖️ Stabilizálja az inzulinválaszt",
+        usage: "Mexikói tálakba, krémlevesekbe, vagy salátákba összeforgatva",
+        recipeName: "Ropogós csicseriborsó tál (Vörösbabbal kiegészítve)"
+      },
+      "edamame": {
+        name: "Edamame / Szójabab",
+        nutrients: "Izoflavonok (fitoösztrogének), Teljes értékű fehérje, K-vitamin",
+        benefits: "🌸 Fitoösztrogénjei természetes úton harmonizálják a női ciklust\n💪 Izommegőrző hatású",
+        usage: "Pár percig sós vízben kifőzve tálakba, salátákba",
+        recipeName: "Avokádós-kimchis quinoa tál edamame babbal"
+      },
+      "chia": {
+        name: "Chia mag",
+        nutrients: "Alfa-linolénsav (Omega-3), Oldható nyálkarost, Kalcium",
+        benefits: "❤️ Csökkenti a szervezet gyulladásos folyamatait\n🥬 A folyadékban zselésedő rostok tisztítják a bélfalat",
+        usage: "Folyadékba áztatva pudingnak, smoothie-ba vagy kásába keverve",
+        recipeName: "Málnás-chia puding kókusztejszínnel & kókuszpehellyel"
+      },
+      "lenmag": {
+        name: "Lenmag",
+        nutrients: "Lignánok (fitoösztrogén), Omega-3, Növényi nyálka",
+        benefits: "🌸 A lignánok segítik a progeszteron egyensúlyt a luteális fázisban\n🥬 Kiváló természetes székletlágyító és bélvédő",
+        usage: "Mindig frissen őrölve süteményekbe, banánkenyérbe vagy joghurtba",
+        recipeName: "Lenmagpelyhes banánkenyér szilvával & fahéjjal"
+      },
+      "tökmag": {
+        name: "Tökmag",
+        nutrients: "Szerves Cink, Triptofán, Magnézium, Fitintartalom",
+        benefits: "🦠 A cink elengedhetetlen az immunsejtek és a hormonok képződéséhez\n🌙 Segíti a pihentető alvást",
+        usage: "Enyhén megpirítva krémlevesek tetejére, salátákba vagy nassolni",
+        recipeName: "Céklás-vöröslencsés krémleves pirított tökmaggal"
+      },
+      "dió": {
+        name: "Dió / Mogyoró",
+        nutrients: "Növényi Omega-3 (ALA), E-vitamin, Szelén, Neuroprotektív vegyületek",
+        benefits: "🧠 Formája is jelzi: védi az agysejteket és a mentális fókuszt\n❤️ Védi a szív- és érrendszert",
+        usage: "Sütőben megpirítva salátákra, tésztákra szórva vagy kásába",
+        recipeName: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával"
+      },
+      "szezámmag": {
+        name: "Szezámmag / Tahini",
+        nutrients: "Kiemelkedő Kalcium, Szejamin, Lignánok, Réz",
+        benefits: "🦴 Az egyik legjobb növényi kalciumforrás a csontok védelmére\n🌸 Támogatja a máj ösztrogén-lebontását",
+        usage: "Tahiniként szószokba, vagy pörkölt magként tálakra szórva",
+        recipeName: "Ropogós fűszeres csicseriborsó tál mogyorós-szezámos tahini öntettel"
+      },
+      "étcsoki": {
+        name: "Étcsoki (70%+)",
+        nutrients: "Kakaó-polifenolok, Magnézium, Vas, Flavonoidok",
+        benefits: "🌙 Ellazítja a görcsös méhizmokat a menstruáció idején\n⚡ Serkenti az agyi vérkeringést és javítja a hangulatot",
+        usage: "Meleg kásák tetejére morzsolva, vagy napi 2 kocka önmagában",
+        recipeName: "Fahéjas zabkása meggyraguval & olvasztott étcsokoládéval"
+      },
+      "kókusztej": {
+        name: "Kókusztej",
+        nutrients: "MCT zsírsavak (közepes láncú trigliceridek), Laurinsav",
+        benefits: "⚡ Az MCT zsírok azonnal energiává alakulnak, nem raktározódnak\n🦠 A laurinsav természetes fertőtlenítő hatású",
+        usage: "Krémlevesek krémesítésére, chia puding alapnak vagy currybe",
+        recipeName: "Málnás-chia puding kókusztejszínnel & kókuszpehellyel"
+      },
+      "görög joghurt": {
+        name: "Görög joghurt / Natúr",
+        nutrients: "Koncentrált fehérje, Probiotikumok, Kalcium, B12-vitamin",
+        benefits: "🦠 Táplálja a bélflórát és hosszan tartó jóllakottságot ad\n🦴 Erősíti a csontozatot és az izomtömeget",
+        usage: "Öntetek alapjának, reggeli kásák mellé vagy gyümölcsökkel",
+        recipeName: "Sült brokkolis saláta fokhagymás kefír-öntettel"
+      },
+      "kefir": {
+        name: "Kefir",
+        nutrients: "Kefirgomba élesztők és baktériumok, B2-vitamin, Kalcium",
+        benefits: "🦠 Bonyolultabb és sokrétűbb élőflórát tartalmaz, mint a sima joghurt\n🥬 Segíti a laktóz lebontását az emésztésben",
+        usage: "Öntetként fokhagymával bekeverve sütőben sült zöldségekre",
+        recipeName: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával"
+      },
+      "túró": {
+        name: "Túró / Cottage / Skyr",
+        nutrients: "Kazein fehérje (lassú felszívódású), Kalcium, Foszfor",
+        benefits: "💪 A kazein órákon át egyenletes aminosav-ellátást biztosít az izmoknak\n⚖️ Súlycsökkentő diéták alapköve",
+        usage: "Sósan zöldfűszerekkel krémnek, vagy édesen bogyós gyümölcsökkel",
+        recipeName: "Édesburgonya-bruschetta (Túrókrém alternatívával)"
+      },
+      "mozzarella": {
+        name: "Mozzarella / Feta",
+        nutrients: "Kiváló minőségű fehérje, Zsírsavak, Kalcium, Cink",
+        benefits: "🦴 Támogatja a csontásványosodást\n⚖️ A feta sós íze mértékkel kiválóan feldobja a zöldségsalátákat",
+        usage: "Friss paradicsom mellé, tepsis zöldségekre morzsolva",
+        recipeName: "Édesburgonya-bruschetta kecskesajttal vagy fetával"
+      },
+      "kecskesajt": {
+        name: "Kecskesajt / Juhsajt",
+        nutrients: "A2-béta kazein (könnyebben emészthető), Caprinsav, Kalcium",
+        benefits: "🥬 Sokan jobban tolerálják, mint a tehéntejtermékeket\n❤️ A benne lévő zsírsavak gyorsan energiává alakulnak",
+        usage: "Sütőben sült meleg zöldségekre morzsolva, mézzel és dióval",
+        recipeName: "Édesburgonya-bruschetta kecskesajttal, dióval & kakukkfűvel"
+      },
+      "tyúktojás": {
+        name: "Tojás",
+        nutrients: "Kolin, Lutein, Teljes értékű fehérje, D-vitamin, B12",
+        benefits: "🧠 A sárgájában lévő kolin elengedhetetlen az agy- és májműködéshez\n💪 A létező legmagasabb biológiai hasznosulású fehérjeforrás",
+        usage: "Lágytojásnak, omlettnek spenóttal, vagy keménytojásként salátába",
+        recipeName: "Édesburgonyás-spenótos omlett"
+      },
+      "lazac": {
+        name: "Lazacfilé / Pisztráng",
+        nutrients: "EPA & DHA Omega-3 zsírsavak, Szelén, B12-vitamin, Fehérje",
+        benefits: "❤️ A legerősebb természetes gyulladáscsökkentő étel a szervezetben\n🌸 Támogatja a petefészek működését és az érfalak egészségét",
+        usage: "Serpenyőben bőrén sütve citrommal és kakukkfűvel",
+        recipeName: "Citromos-kakukkfüves lazacfilé párolt zöldspárgával"
+      },
+      "szardínia": {
+        name: "Szardínia / Tonhal",
+        nutrients: "Omega-3, Kalcium (apró csontokból), D-vitamin, B12, Fehérje",
+        benefits: "🦴 A kis halak apró csontjai kiváló szerves kalciumforrások\n❤️ Csökkentik a vérrögképződés kockázatát",
+        usage: "Konzervként capri öntettel, zöldségekbe töltve vagy salátákba",
+        recipeName: "Tepsis fűszeres cukkini-hajók tonhalkrémmel, kapribogyóval & érett sajttal"
+      },
+      "csirkemell": {
+        name: "Csirkemell / Pulyka",
+        nutrients: "Sovány fehérje, Niacin (B3), B6-vitamin, Foszfor",
+        benefits: "💪 Tiszta izomépítő aminosav-forrás felesleges zsír nélkül\n⚡ Támogatja az idegrendszer energiagazdálkodását",
+        usage: "Mellfiléként szaftosan sütve, csíkokra vágva tálakba",
+        recipeName: "Avokádós-kimchis quinoa tál csirkemell csíkokkal"
+      },
+      "sovány marhahús": {
+        name: "Marhahús / Borjú",
+        nutrients: "Hem-vas (kiválóan felszívódó), Cink, B12-vitamin, Kreatin",
+        benefits: "🩸 A leghatékonyabb természetes vaspótlás menstruációs vérvesztéskor\n⚡ A kreatin és B12 felpörgeti a sejtek energiatermelését",
+        usage: "Lassan főzött ragukban gyökérzöldségekkel és csontlével",
+        recipeName: "Rozmaringos marharagu szilvás mártással és gyökérzöldségekkel"
+      },
+      "sertésszűz": {
+        name: "Sertésszűz",
+        nutrients: "B1-vitamin (Tiamin), Sovány fehérje, Cink, Szelén",
+        benefits: "⚡ A B1-vitamin elengedhetetlen a szénhidrátok energiává alakításához\n💪 Igen sovány, tiszta húsforrás",
+        usage: "Medallionként hirtelen átsütve, fűszerkéregben vagy sütőben",
+        recipeName: "Rozmaringos sertésszűz-csíkok szilvás mártással"
+      },
+      "máj": {
+        name: "Máj (Marha / Csirke)",
+        nutrients: "A-vitamin (Retinol), B12-vitamin, Szerves Vas, Folsav, Réz",
+        benefits: "🩸 A természet legkoncentráltabb multivitaminja a vérképzéshez\n⚡ Megszünteti a mély elhúzódó fáradtságot",
+        usage: "Hagymásan hirtelen pirítva, vagy házi májkrémnek kókusz zsírral",
+        recipeName: "Rozmaringos marhamáj szilvás-hagyma mártással"
+      },
+      "tofu": {
+        name: "Tofu / Tempeh",
+        nutrients: "Szójafehérje, Kalcium, Izoflavonok, Vas",
+        benefits: "🌸 A tempeh fermentált szójából készül, ami szuper a bélflórának\n💪 Gluténmentes növényi fehérjebomba",
+        usage: "Kockázva pirítva szójaszósszal és szezámolajjal tálakba",
+        recipeName: "Avokádós-kimchis quinoa tál pirított tofuval"
+      },
+      "hummusz": {
+        name: "Hummusz",
+        nutrients: "Csicseriborsó, Tahini, Fokhagyma, Olívaolaj, Citromlé",
+        benefits: "❤️ Szuper szívvédő és vércukor-stabilizáló kence\n🥬 Rostos és fitoösztrogénekben gazdag",
+        usage: "Nyers zöldséghasábok mellé mártogatósnak vagy szendvicsre",
+        recipeName: "Ropogós fűszeres csicseriborsó tál hummusz öntettel"
+      },
+      "passata": {
+        name: "Paradicsompüré / Passata",
+        nutrients: "Koncentrált Likopin, C-vitamin, Kálium",
+        benefits: "❤️ A főzött paradicsomban lévő likopin jobban szívódik fel, mint a nyersben\n🛡️ Védi a sejteket az oxidatív károsodástól",
+        usage: "Raguk, tepsis ételek, zöldség-hajók szaftos alapjaként",
+        recipeName: "Tepsis fűszeres cukkini-hajók tonhalkrémmel és passatával"
+      },
+      "mustár": {
+        name: "Mustár / Citromlé",
+        nutrients: "Mustármag szinigrin, Szelén, Omega-3, Citromsav",
+        benefits: "🛡️ A mustármag csípős hatóanyaga serkenti az emésztést és zsírbontást\n💧 Tisztítja a nyálkahártyákat",
+        usage: "Salátaöntetek emulziójához, pácokhoz és sült húsokhoz",
+        recipeName: "Tonhalas kevert saláta mustáros-citromos capri öntettel"
       }
     };
 
@@ -1190,14 +1563,14 @@
             steps: "1. A céklát és gyömbért felkockázzuk.\n2. A vöröslencsével együtt vízzel puhára főzzük (20 perc).\n3. Hozzáadjuk a kókusztejet, összeturmixoljuk, tökmaggal tálaljuk."
           },
           {
-            name: "Meleg fahéjas zabkása meggyel & étcsokival",
+            name: "Fahéjas zabkása meggyraguval & olvasztott étcsokoládéval",
             img: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=600&q=80",
             desc: "A zab és az étcsokoládé magas magnéziumtartalma ellazítja a méh simaizmait.",
             ingredients: "60g zabpehely, 250ml mandulatej, 60g meggy, 20g étcsoki (70%+), 1tk fahéj.",
             steps: "1. A zabpelyhet mandulatejjel és fahéjjal lassú tűzön megfőzzük.\n2. Belekeverjük a meggyet, tetejére szórjuk az étcsokit."
           },
           {
-            name: "Lassan főtt fűszeres marharagu gyökérzöldségekkel",
+            name: "Rozmaringos marharagu szilvás mártással & gyökérzöldségekkel",
             img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
             desc: "Könnyen beépülő hem-vas forrás. A hosszan főzött alaplé regenerálja a bélnyálkahártyát.",
             ingredients: "200g marhalábszár, 120g sárgarépa, 80g zeller, babérlevél, 300ml csontlé.",
@@ -1215,14 +1588,14 @@
         sport: "🏋️‍♀️ Csúcsenergia & erőnléti edzés: Súlyzós edzés, HIIT és izomépítés.",
         recipes: [
           {
-            name: "Avokádós-kimchis bowl csírákkal & edamame babbal",
+            name: "Avokádós-kimchis quinoa tál edamame babbal & retekcsírával",
             img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
             desc: "A fermentált kimchi táplálja a bélflórát az ösztrogénszint optimális feldolgozásához.",
             ingredients: "100g főtt quinoa, 80g avokádó, 50g kimchi, 60g edamame bab, 15g retekcsíra.",
             steps: "1. A főtt quinoát tálba tesszük.\n2. Mellé rendezzük a szeletelt avokádót, kimchit és edamame babot, csírával díszítjük."
           },
           {
-            name: "Citromos-kakukkfüves lazacfilé párolt zöldspárgával",
+            name: "Pácolt lazacfilé pirított zöldspárgával & citromos kakukkfűvel",
             img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&q=80",
             desc: "Magas Omega-3 és cink tartalmával támogatja a tüsző minőségét.",
             ingredients: "180g lazacfilé, 150g zöldspárga, 1/2 citrom leve, kakukkfű, 10ml olívaolaj.",
@@ -1240,14 +1613,14 @@
         sport: "🔥 Maximális teljesítmény: Köredzés, kardió, sprinting.",
         recipes: [
           {
-            name: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával",
+            name: "Tepsis sült brokkoli fokhagymás kefíröntettel, dióval & gránátalmával",
             img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
             desc: "A brokkoliban lévő vegyületek segítik a májat a felesleges ösztrogén kivezetésében.",
             ingredients: "180g brokkoli, 120ml kefir, 25g dió, 30g gránátalmamag.",
             steps: "1. A brokkolit sütőben megpirítjuk.\n2. Kefires öntettel összeforgatjuk, pirított dióval és gránátalmával megszórjuk."
           },
           {
-            name: "Málnás-chia puding kókusztejjel & kókuszpehellyel",
+            name: "Málnás chia puding kókusztejszínnel & pirított kókuszpehellyel",
             img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600&q=80",
             desc: "Magas rosttartalma köti a bélben a lebontott ösztrogént.",
             ingredients: "35g chia mag, 200ml kókusztej, 80g málna, 15g kókuszpehely.",
@@ -1265,25 +1638,25 @@
         sport: "🌿 Közepes / mérsékelt intenzitás: Pilates, úszás, tempós séta.",
         recipes: [
           {
-            name: "Édesburgonya-bruschetta kecskesajttal, pirított dióval & kakukkfűvel",
+            name: "Sült édesburgonya-bruschetta kecskesajttal, dióval & friss kakukkfűvel",
             img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80",
             desc: "Magas B6-vitamin és kálium tartalmával csökkenti a PMS vizesedést.",
             ingredients: "180g édesburgonya szeletelve, 60g kecskesajt, 25g dió, friss kakukkfű.",
             steps: "1. Az édesburgonya szeleteket sütőben megroppantjuk.\n2. Rámorzsoljuk a kecskesajtot, diót, pár percre visszatesszük a sütőbe."
           },
           {
-            name: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & mogyorós-szezámos tahini öntettel",
+            name: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahini öntettel",
             img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
             desc: "Fehérjében és lassan felszívódó szénhidrátokban gazdag, stabilizálja az emésztést.",
             ingredients: "150g főtt csicseriborsó, 150g édesburgonya, 20g tahini, 10ml szezámolaj, római kömény.",
             steps: "1. A csicseriborsót és édesburgonyát fűszerezve sütőben ropogósra sütjük.\n2. Tahinis öntettel meglocsolva tálaljuk."
           },
           {
-            name: "Lenmagpelyhes banánkenyér szilvával & fahéjjal",
-            img: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80",
-            desc: "A frissen őrölt lenmag támogatja a progeszteron-termelődést.",
-            ingredients: "150g banán, 1 tojás, 60g zabliszt, 25g őrölt lenmag, 50g szilva, 1tk fahéj.",
-            steps: "1. A banánt villával összetörjük, tojással, zabliszttel, lenmaggal, fahéjjal elkeverjük.\n2. Belekeverjük a szilvakockákat és sütőben 35 percig sütjük."
+            name: "Tepsis fűszeres cukkini-hajók tonhalkrémmel, kapribogyóval & érett sajttal",
+            img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80",
+            desc: "Omega-3 zsírsavakban gazdag, kímélő tepsis vacsora.",
+            ingredients: "180g cukkini, 120g tonhalkonzerv, 20g kapribogyó, 30g érett sajt, 1tk mustár.",
+            steps: "1. A cukkiniket félbevágjuk, kikaparjuk.\n2. Beletöltjük a tonhallal, kaprival, mustárral kikevert krémet, sajttal megszórva átsütjük."
           }
         ]
       }
@@ -1386,7 +1759,7 @@
         nutrients: "Szerkezetileg értékes mikrotápanyagok, antioxidánsok és rostok",
         benefits: "❤️ Támogatja a sejt regenerációt és a szervezet természetes védekezőképességét",
         usage: "Levesekhez, köretként, friss salátákhoz vagy tálakba",
-        recipeName: "Avokádós-kimchis bowl csírákkal & edamame babbal"
+        recipeName: "Avokádós-kimchis quinoa tál edamame babbal"
       };
 
       document.getElementById('ingModalName').innerText = ing.name;
@@ -1546,7 +1919,7 @@
                   <h4 class="text-xl font-bold font-serif-title text-[#556B4E] mb-2">${r.name}</h4>
                   <p class="text-xs text-slate-600 leading-relaxed mb-4 font-light">${r.desc}</p>
                   <div class="p-3 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/40 text-xs text-[#556B4E] mb-4">
-                    <span class="font-bold">🥣 Pontos Hozzávalók (1 adag):</span> ${r.ingredients}
+                    <span class="font-bold">🥣 Hozzávalók (1 adag):</span> ${r.ingredients}
                   </div>
                 </div>
               </div>
@@ -1768,13 +2141,13 @@
       `;
 
       const days = [
-        { d: "Hétfő", reg: "Chia-zabkása bogyós gyümölcsökkel (60g zabpehely, 20g chia, 80g málna, 200ml mandulatej)", ebed: "Grillezett csirkemell quinoával (180g csirkemell, 80g quinoa, 150g párolt brokkoli)", vacs: "Cukkinikrémleves tökmaggal (200g cukkini, 20g pirított tökmag, 150ml kókusztej)" },
-        { d: "Kedd", reg: "Fűszeres banánkenyér dióval (150g banán, 50g zabliszt, 25g dió)", ebed: "Vöröslencse-főzelék sárgarépával (100g vöröslencse, 120g sárgarépa, gyömbér)", vacs: "Tonhalas kevert saláta capri öntettel (120g tonhal, 100g uborka, 50g feta, 20g kapribogyó)" },
-        { d: "Szerda", reg: "Spenótos-banános zöld smoothie (100g banán, 40g spenót, 15g chia mag, 200ml kókuszvíz)", ebed: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahinivel (150g csicseriborsó, 150g édesburgonya, 20g tahini)", vacs: "Sült brokkolis saláta kefírrel és dióval (150g brokkoli, 100ml kefir, 20g dió)" },
-        { d: "Csütörtök", reg: "Meggyes-fahéjas áztatott zabpehely (60g zabpehely, 60g meggy, 20g étcsoki, 250ml mandulatej)", ebed: "Párolt lazacfilé barna rizzsel & zöldspárgával (160g lazacfilé, 80g barna rizs, 120g spárga)", vacs: "Céklás-gyömbéres krémleves napraforgómaggal (180g cékla, 20g napraforgómag, 100ml kókusztej)" },
-        { d: "Péntek", reg: "Lágy tojás avokádóval & lenmaggal (2 db tojás, 60g avokádó, 15g őrölt lenmag)", ebed: "Sütőtökös rizottó törökmogyoróval (150g sütőtök, 70g arborio rizs, 20g mogyoró)", vacs: "Tepsis fűszeres cukkini-hajók tonhalkrémmel (150g cukkini, 120g tonhal, 30g sajt)" },
-        { d: "Szombat", reg: "Édesburgonyás-spenótos omlett (2 db tojás, 80g édesburgonya, 30g spenót)", ebed: "Lassan főtt marharagu gyökérzöldségekkel (180g marhahús, 100g sárgarépa, 200ml csontlé)", vacs: "Édesburgonya-bruschetta kecskesajttal & dióval (150g édesburgonya, 50g kecskesajt, 20g dió)" },
-        { d: "Vasárnap", reg: "Amerikai zablisztes palacsinta áfonyával (60g zabliszt, 1 db tojás, 60g áfonya)", ebed: "Sült citromos-kakukkfüves csirke zöldségpürével (180g csirkemell, 150g édesburgonya/sárgarépa püré)", vacs: "Gazdag csontleves főtt marhahússal (250ml csontlé, 80g marhahús, gyökérzöldségek)" }
+        { d: "Hétfő", reg: "Fahéjas chia-zabkása bogyós gyümölcsökkel (60g zabpehely, 20g chia, 80g málna, 200ml mandulatej)", ebed: "Pácolt csirkemell csíkok quinoával & párolt brokkolival (180g csirkemell, 80g quinoa, 150g brokkoli)", vacs: "Cukkinikrémleves tökmaggal & kókusztejszínnel (200g cukkini, 20g tökmag, 100ml kókusztej)" },
+        { d: "Kedd", reg: "Lenmagpelyhes banánkenyér dióval (150g banán, 50g zabliszt, 25g dió, 1tk fahéj)", ebed: "Vöröslencse-dhal sárgarépával & gyömbérrel (100g vöröslencse, 120g sárgarépa, 10g gyömbér)", vacs: "Tonhalas kevert bisztrósaláta capri öntettel (120g tonhal, 100g uborka, 50g feta, 20g kapribogyó)" },
+        { d: "Szerda", reg: "Spenótos zöld smoothie chia maggal (100g banán, 40g spenót, 15g chia, 200ml kókuszvíz)", ebed: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahini öntettel (150g csicseriborsó, 150g édesburgonya, 20g tahini)", vacs: "Tepsis sült brokkoli fokhagymás kefíröntettel & dióval (180g brokkoli, 100ml kefir, 20g dió)" },
+        { d: "Csütörtök", reg: "Fahéjas meggyes áztatott zabkása étcsokival (60g zabpehely, 60g meggy, 20g étcsoki, 250ml mandulatej)", ebed: "Pácolt lazacfilé barna rizzsel & zöldspárgával (160g lazacfilé, 80g barna rizs, 120g spárga)", vacs: "Céklás-gyömbéres krémleves pirított napraforgómaggal (180g cékla, 20g napraforgómag, 100ml kókusztej)" },
+        { d: "Péntek", reg: "Lágy tojás avokádóval & lenmaggal (2 db tojás, 60g avokádó, 15g őrölt lenmag)", ebed: "Sütőtökös rizottó pirított törökmogyoróval (150g sütőtök, 70g rizs, 20g mogyoró)", vacs: "Tepsis fűszeres cukkini-hajók tonhalkrémmel & érlelt sajttal (180g cukkini, 120g tonhal, 30g sajt)" },
+        { d: "Szombat", reg: "Édesburgonyás-spenótos omlett (2 db tojás, 80g édesburgonya, 30g spenót)", ebed: "Rozmaringos marharagu szilvás mártással & gyökérzöldségekkel (180g marhahús, 100g sárgarépa, 200ml csontlé)", vacs: "Sült édesburgonya-bruschetta kecskesajttal & dióval (150g édesburgonya, 50g kecskesajt, 20g dió)" },
+        { d: "Vasárnap", reg: "Amerikai zablisztes palacsinta áfonyával (60g zabliszt, 1 db tojás, 60g áfonya)", ebed: "Sült citromos-kakukkfüves csirkemell édesburgonya pürével (180g csirkemell, 150g édesburgonya püré)", vacs: "Lassan főtt gazdag csontleves marhahússal & zöldségekkel (250ml csontlé, 80g marhahús, zöldségek)" }
       ];
 
       let weeklyHtml = `
