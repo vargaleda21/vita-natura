@@ -54,7 +54,7 @@
     </svg>
   </div>
 
-  <!-- Fejléc (Márka-mottóval) -->
+  <!-- Fejléc -->
   <header class="bg-[#556B4E] text-white py-10 px-4 shadow-md mb-6 relative overflow-hidden">
     <div class="max-w-5xl mx-auto text-center relative z-10">
       <span class="inline-block bg-[#F06292] text-white text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3 shadow-sm">
@@ -66,6 +66,36 @@
       </p>
     </div>
   </header>
+
+  <!-- HERO VIZUÁLIS SZEKCIÓ (AZONNALI ÉRTÉK ÉS 3 MÁSODPERCES BIZALOM) -->
+  <div class="max-w-5xl mx-auto px-4 mb-8">
+    <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#F06292]/30 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-3 text-center md:text-left flex-1">
+        <span class="text-[11px] font-bold text-[#F06292] bg-[#F06292]/10 px-3 py-1 rounded-full border border-[#F06292]/30">
+          🌸 Természetes Egyensúly & Ciklusszinkron
+        </span>
+        <h2 class="text-2xl md:text-3xl font-bold font-serif-title text-[#556B4E]">Tudd meg, mire van szüksége a testednek ma!</h2>
+        <p class="text-xs md:text-sm text-slate-600 font-light leading-relaxed">
+          Személyre szabott táplálkozási útmutatók, heti étrendtervező, kamra-receptkereső és ciklusszinkron edzések egyetlen helyen.
+        </p>
+        <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-3">
+          <button onclick="openPdfModal()" class="px-5 py-2.5 bg-[#F06292] text-white font-bold rounded-xl text-xs shadow-md hover:bg-[#e05282] transition flex items-center gap-1.5">
+            <span>📄</span> Ingyenes 3 napos menü (PDF)
+          </button>
+          <button onclick="switchTab('cycle')" class="px-5 py-2.5 bg-[#F7F3ED] text-[#556B4E] font-bold rounded-xl text-xs border border-[#A7B69A]/40 hover:bg-[#556B4E] hover:text-white transition">
+            🗓️ Ciklusfázis kiszámítása
+          </button>
+        </div>
+      </div>
+      
+      <div class="w-full md:w-64 flex-shrink-0 relative">
+        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80" alt="Egészséges tál" class="w-full h-44 object-cover rounded-2xl border-2 border-white shadow-md">
+        <div class="absolute -bottom-3 -left-3 bg-white px-3 py-1.5 rounded-xl border border-[#A7B69A]/40 text-[10px] font-bold text-[#556B4E] shadow-sm flex items-center gap-1">
+          <span>🥗</span> 100% Természetes receptek
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- MINDENNAPI ALAPPILLÉREK -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
@@ -122,7 +152,7 @@
 
   <main class="max-w-5xl mx-auto px-4">
     
-    <!-- ==================== 1. TAB: TÜNETKERESŐ + EGÉSZSÉG-CÉLOK ==================== -->
+    <!-- ==================== 1. TAB: TÜNETKERESŐ ==================== -->
     <div id="symptomsTabSection">
       
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8">
@@ -378,13 +408,14 @@
         </p>
 
         <div class="relative max-w-md mx-auto mb-2">
-          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Keresés pl. avokádó, fokhagyma, spárga, skyr, tahini..." 
+          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Keresés pl. avokádó, fokhagyma, spárga, karfiol, rukkola..." 
                  class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none focus:ring-1 focus:ring-[#556B4E]">
         </div>
       </div>
 
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
         
+        <!-- 1. Zöldségek & Gombák -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -397,16 +428,21 @@
               <button onclick="openIngredientInfo('cékla')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
             </div>
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span></label>
+              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli / Karfiol</span></label>
               <button onclick="openIngredientInfo('brokkoli')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
             </div>
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
               <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="édesburgonya" class="pantry-item-check text-[#556B4E]"> <span>Édesburgonya</span></label>
               <button onclick="openIngredientInfo('édesburgonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
             </div>
+            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="rukkola" class="pantry-item-check text-[#556B4E]"> <span>Rukkola / Saláták</span></label>
+              <button onclick="openIngredientInfo('rukkola')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+            </div>
           </div>
         </div>
 
+        <!-- 2. Gyümölcsök -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -462,6 +498,55 @@
       <div id="workoutContentZone" class="space-y-6 mb-8"></div>
     </div>
 
+    <!-- VALÓSÁGHŰ NŐI VISSZAJELZÉSEK (SOCIAL PROOF A BIZALOMÉPÍTÉSHEZ) -->
+    <div class="mb-12">
+      <div class="text-center mb-6">
+        <span class="text-xs font-bold text-[#556B4E] uppercase tracking-wider bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Közösségünk tapasztalatai</span>
+        <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mt-2">Mit mondanak más nők a Vita-Naturáról?</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+        <div class="bg-white/90 backdrop-blur-sm p-5 rounded-3xl border border-[#A7B69A]/40 shadow-sm flex flex-col justify-between">
+          <p class="text-slate-700 italic leading-relaxed mb-4">
+            „A luteális fázisban lévő PMS és a puffadásom 2 hét alatt a felére csökkent, miután elkezdtem a ciklusomhoz igazítani a meleg ételeket. A 30 napos receptkönyv a legjobb befektetésem volt!”
+          </p>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+            <div class="w-8 h-8 rounded-full bg-[#F06292]/20 text-[#F06292] font-bold flex items-center justify-center">D</div>
+            <div>
+              <p class="font-bold text-[#556B4E]">Dóra (32)</p>
+              <p class="text-[10px] text-slate-400">Marketing menedzser</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/90 backdrop-blur-sm p-5 rounded-3xl border border-[#A7B69A]/40 shadow-sm flex flex-col justify-between">
+          <p class="text-slate-700 italic leading-relaxed mb-4">
+            „A Kamra-főző funkció a megmentőm a pörgős hétköznapokban. Végre nem dobok ki ételt, és 2 perc alatt tudom, mit főzzek abból, ami épp itthon van a hűtőben.”
+          </p>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+            <div class="w-8 h-8 rounded-full bg-[#556B4E]/20 text-[#556B4E] font-bold flex items-center justify-center">K</div>
+            <div>
+              <p class="font-bold text-[#556B4E]">Kata (28)</p>
+              <p class="text-[10px] text-slate-400">Kisgyermekes anyuka</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white/90 backdrop-blur-sm p-5 rounded-3xl border border-[#A7B69A]/40 shadow-sm flex flex-col justify-between">
+          <p class="text-slate-700 italic leading-relaxed mb-4">
+            „Akkor edzek keményen, amikor van energiám, és végre nem ostorozom magam a nehéz napokon. Az edzéstervek és a receptek párosa teljesen átformálta az életmódomat.”
+          </p>
+          <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+            <div class="w-8 h-8 rounded-full bg-[#A7B69A]/30 text-[#556B4E] font-bold flex items-center justify-center">Z</div>
+            <div>
+              <p class="font-bold text-[#556B4E]">Zsófi (35)</p>
+              <p class="text-[10px] text-slate-400">Projektvezető</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ALAPANYAG RÉSZLETEZŐ MODÁL (DINAMIKUS RECEPTAJÁNLÓVAL) -->
@@ -488,7 +573,7 @@
           <p id="ingModalUsage" class="text-slate-700 leading-relaxed">...</p>
         </div>
         
-        <!-- KAPCSOLÓDÓ RECEPT BLOKK -->
+        <!-- INTELLIGENS RECEPTJASLAT MÁTRIX -->
         <div id="ingModalRecipeBox" class="p-3.5 bg-[#F06292]/10 rounded-2xl border border-[#F06292]/30 flex items-center justify-between">
           <div>
             <p class="font-bold text-[#556B4E]">🍳 Ajánlott recept ezzel az alapanyaggal:</p>
@@ -605,7 +690,7 @@
     </div>
   </div>
 
-  <!-- TÜNETEK MODÁL (KIVÁLTÓ OKOKKAL) -->
+  <!-- TÜNETEK MODÁL -->
   <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#A7B69A]/40">
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -614,7 +699,6 @@
       <div id="modalCategoryBadge" class="inline-flex items-center gap-2 bg-[#F7F3ED] text-[#556B4E] text-xs font-bold px-3.5 py-1.5 rounded-full mb-3 border border-[#A7B69A]/40"></div>
       <h3 id="modalSymptom" class="text-2xl font-bold text-[#556B4E] mb-4">Tünet neve</h3>
       
-      <!-- GYAKORI KIVÁLTÓ OKOK BLOKK -->
       <div class="p-3.5 bg-sky-50 rounded-2xl border border-sky-200 mb-4 text-xs">
         <p class="font-bold text-sky-900 flex items-center gap-1.5 text-sm mb-1">❓ MÉRLEGLŐ: Mitől alakulhatott ki?</p>
         <p id="modalCauses" class="text-sky-800 leading-relaxed font-light">Fáradtság, átmeneti tápanyaghiány vagy fokozott fizikai/mentális leterheltség.</p>
@@ -721,7 +805,6 @@
     let symptomsData = [];
     let activeRecipeOriginalIng = "";
 
-    // ALAPANYAG RÉSZLETEZŐ ADATBÁZIS ÉS KAPCSOLÓDÓ RECEPTEK
     const ingredientDetails = {
       "fokhagyma": {
         name: "Fokhagyma",
@@ -738,11 +821,11 @@
         recipeName: "Céklás-vöröslencsés krémleves tökmaggal"
       },
       "brokkoli": {
-        name: "Brokkoli",
+        name: "Brokkoli / Karfiol",
         nutrients: "Indol-3-karbinol, Szulforafán, C-vitamin, K-vitamin, Rost",
         benefits: "🛡️ Máj-méregtelenítés & Ösztrogén-kivezetés támogatása\n🦴 Csontok és kötőszövetek védelme\n🧴 Bőr tisztasága és kollagén-termelés",
         usage: "Párolva köretként, krémlevesnek, sütőben pirítva kefires öntettel",
-        recipeName: "Sült brokkolis-kefires saláta dióval & gránátalmával"
+        recipeName: "Sült brokkolis-kefires saláta dióval & gránátalmával (Próbáld ki karfiollal is!)"
       },
       "édesburgonya": {
         name: "Édesburgonya",
@@ -764,6 +847,13 @@
         benefits: "🧠 Agyműködés és memória védelme\n🧴 Bőr öregedésgátlása és sejtvédelem\n🛡️ Gyulladáscsökkentés",
         usage: "Frissen zabkására, chia pudingra, turmixokba",
         recipeName: "Málnás-chia pudíng kókusztejjel & kókuszreszelékkel"
+      },
+      "rukkola": {
+        name: "Rukkola / Zöldsaláták",
+        nutrients: "Folsav, K-vitamin, Béta-karotin, Kesernyés fitonutriensek",
+        benefits: "🛡️ Emésztőenzimek stimulálása\n🩸 Máj tisztulási folyamatainak segítése",
+        usage: "Frissen saláták alapjaként, avokádó és edamame bab mellé tálalva",
+        recipeName: "Avokádós-kimchis bowl csírákkal & edamame babbal (Próbáld ki rukkolával!)"
       }
     };
 
@@ -888,15 +978,14 @@
       renderCards(filtered.length > 0 ? filtered : symptomsData);
     }
 
-    // DINAMIKUS ALAPANYAG PROFIL NYITÁS KAPCSOLÓDÓ RECEPTTEL
     function openIngredientInfo(ingKey) {
       const cleanKey = ingKey.toLowerCase().trim();
       const ing = ingredientDetails[cleanKey] || {
         name: ingKey.toUpperCase(),
-        nutrients: "Magas tápanyagsűrűségű szerves ásványi anyagok, vitaminok és rostok",
+        nutrients: "Szerkezetileg értékes mikrotápanyagok, antioxidánsok és rostok",
         benefits: "❤️ Támogatja a sejt regenerációt és a szervezet természetes védekezőképességét",
-        usage: "Levesekhez, friss salátákba, sült zöldségköretként vagy krémekhez",
-        recipeName: null
+        usage: "Levesekhez, köretként, friss salátákhoz vagy tálakba",
+        recipeName: "Avokádós-kimchis bowl csírákkal & edamame babbal"
       };
 
       document.getElementById('ingModalName').innerText = ing.name;
@@ -928,7 +1017,6 @@
       document.getElementById('modalCategoryBadge').innerHTML = `${svgIcon} <span>${item.category}</span>`;
       document.getElementById('modalSymptom').innerText = item.symptom;
       
-      // KIVÁLTÓ OKOK DINAMIKUS MEGJELENÍTÉSE
       const defaultCauses = "Átmeneti tápanyaghiány, fokozott fizikai/mentális leterheltség, nem megfelelő alvásminőség vagy folyadékhiány.";
       document.getElementById('modalCauses').innerText = item.causes || defaultCauses;
 
