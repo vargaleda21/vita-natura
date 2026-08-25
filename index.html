@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vita-Natura – Holisztikus Házipatika & Ciklus-Iránytű</title>
+  <title>Vita-Natura – Holisztikus Házipatika & Csomagok</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- PDF generáló könyvtár -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -28,20 +28,23 @@
   <!-- Fejléc -->
   <header class="bg-[#1B4332] text-white py-12 px-4 shadow-xl mb-6 border-b-4 border-[#B7E4C7] relative overflow-hidden">
     <div class="max-w-5xl mx-auto text-center relative z-10">
-      <span class="inline-block bg-[#2D6A4F] text-[#D8F3DC] text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3 border border-[#B7E4C7]/30">Tudatos Prevenció & Ciklusszinkron</span>
+      <span class="inline-block bg-[#2D6A4F] text-[#D8F3DC] text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3 border border-[#B7E4C7]/30">Tudatos Prevenció & Protokollok</span>
       <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-[#F8F5F2]">Vita-Natura</h1>
-      <p class="text-[#D8F3DC] text-base md:text-lg max-w-xl mx-auto font-light">Holisztikus házipatika és ciklushoz igazodó női táplálkozási útmutató</p>
+      <p class="text-[#D8F3DC] text-base md:text-lg max-w-xl mx-auto font-light">Holisztikus házipatika, ciklus-útmutató és tematikus egészségcsomagok</p>
     </div>
   </header>
 
-  <!-- Navigációs Tabok -->
+  <!-- Navigációs Tabok (3 Opció) -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
-    <div class="flex justify-center gap-2 bg-white/90 backdrop-blur-sm p-2 rounded-2xl border border-[#DDB8A6]/40 max-w-md mx-auto shadow-sm">
-      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm">
+    <div class="flex flex-wrap justify-center gap-2 bg-white/90 backdrop-blur-sm p-2 rounded-2xl border border-[#DDB8A6]/40 max-w-xl mx-auto shadow-sm">
+      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm">
         🌿 Tünetkereső
       </button>
-      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#FFF0F5]">
-        🌸 Ciklus-Iránytű & Étrend
+      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#FFF0F5]">
+        🌸 Ciklus-Iránytű
+      </button>
+      <button id="tabPackagesBtn" onclick="switchTab('packages')" class="flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#F8F5F2]">
+        📦 Tematikus Csomagok
       </button>
     </div>
   </div>
@@ -74,8 +77,6 @@
 
     <!-- ==================== 2. TAB: CIKLUS-IRÁNYTŰ ==================== -->
     <div id="cycleTabSection" class="hidden">
-      
-      <!-- Ciklus Bevezető -->
       <div class="bg-gradient-to-b from-[#FFF0F3] to-[#FDE2E4] p-6 md:p-8 rounded-3xl border border-[#FFCAD4] mb-8 text-center max-w-3xl mx-auto shadow-sm">
         <span class="text-xs font-bold text-[#B56576] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#FFCAD4]">Ciklusszinkronizált Táplálkozás</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#6D597A] mt-3 mb-3">Harmónia a Női Ciklusban</h2>
@@ -141,9 +142,21 @@
         </button>
       </div>
 
-      <!-- FÁZIS TARTALMAK -->
       <div id="phaseContent"></div>
+    </div>
 
+
+    <!-- ==================== 3. TAB: TEMATIKUS CSOMAGOK (Kettős Modell) ==================== -->
+    <div id="packagesTabSection" class="hidden">
+      <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#E6CCB2] shadow-sm mb-8 text-center max-w-3xl mx-auto">
+        <span class="text-xs font-bold text-[#1B4332] tracking-widest uppercase bg-[#F8F5F2] px-3.5 py-1 rounded-full border border-[#E6CCB2]">Komplex Egészség-Sinergiák</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#1B4332] mt-3 mb-2">Vita-Natura Protokoll Csomagok</h2>
+        <p class="text-[#4A3728] text-sm md:text-base leading-relaxed font-light">
+          Válaszd ki a számodra legmegfelelőbb utat! Mérésekkel igazolt **kész kapszulás csomagjaink** a kényelmet biztosítják, míg a **kamra & házipatika** opcióval te magad állíthatod össze a protokollodat otthoni alapanyagokból.
+        </p>
+      </div>
+
+      <div id="packagesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
     </div>
 
   </main>
@@ -187,50 +200,47 @@
     </div>
   </div>
 
-  <!-- REJTETT HTML SABLON A PDF GENERÁLÁSHOZ -->
-  <div class="hidden">
-    <div id="pdfTemplate" class="p-8 bg-white text-slate-800" style="width: 700px; font-family: 'Plus Jakarta Sans', sans-serif;">
-      <div style="text-align: center; border-bottom: 2px solid #FFCAD4; padding-bottom: 15px; margin-bottom: 20px;">
-        <h1 style="font-family: 'Playfair Display', serif; color: #6D597A; font-size: 28px; margin: 0;">🌿 Vita-Natura Ciklus-Iránytű</h1>
-        <p style="color: #B56576; font-size: 13px; font-weight: bold; margin-top: 5px;">Heti Étrend & Ciklusszinkronizált Útmutató</p>
-        <p id="pdfWelcomeUser" style="color: #666; font-size: 11px; margin-top: 3px;"></p>
+  <!-- CSOMAG ADAGOLÁSI RÉSZLETEZŐ MODÁL -->
+  <div id="packageDosageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#E6CCB2]">
+      <button onclick="closePackageDosageModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="flex items-center gap-2 mb-2">
+        <span id="pkgModalIcon" class="text-2xl">📦</span>
+        <span id="pkgModalModeBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-[#F8F5F2] text-[#1B4332] border border-[#E6CCB2]">Opció</span>
+      </div>
+      <h3 id="pkgModalTitle" class="text-2xl font-bold text-[#1B4332] mb-4">Csomag Neve</h3>
+
+      <div id="pkgModalDosageContent" class="space-y-4 text-xs">
+        <!-- Dinamikus adagolási és beviteli mennyiségek -->
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
-          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🌸 1. Menstruáció (1–5. nap)</h3>
-          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Melegítés, Vaspótlás & Görcsoldás</p>
-          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Céklás vöröslencse leves, Meleg fahéjas zabkása, Lassan főtt marharagu.</p>
-        </div>
-        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
-          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🌱 2. Follikuláris (6–12. nap)</h3>
-          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Frissesség & Bélflóra Támogatás</p>
-          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Kimchi bowl avokádóval, Citromos lazac spárgával, Matcha smoothie.</p>
-        </div>
-        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
-          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">✨ 3. Ovuláció (13–16. nap)</h3>
-          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Máj-támogatás & Ösztrogén-kivezetés</p>
-          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Sült brokkolis saláta kefírrel, Szezámmagos quinoa, Málnás chia puding.</p>
-        </div>
-        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
-          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🍂 4. Luteális (17–28. nap)</h3>
-          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Vércukor-stabilizálás & PMS megelőzés</p>
-          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Sült sütőtökös rizottó, Édesburgonya bruschetta, Banánkenyér szilvával.</p>
-        </div>
-      </div>
-
-      <div style="background: #F8F5F2; padding: 12px; border-radius: 12px; border: 1px solid #E6CCB2; text-align: center; margin-top: 15px;">
-        <p style="font-size: 10px; color: #1B4332; font-weight: bold; margin: 0;">🌿 Hasznos Napi Rutin Emlékeztető</p>
-        <p style="font-size: 9px; color: #555; margin-top: 3px;">Igyál legalább 2.5 liter vizet naponta • Magnéziumot mindig este vedd be • C-vitamint a vas mellé fogyassz!</p>
-      </div>
-
-      <div style="text-align: center; margin-top: 20px; font-size: 9px; color: #aaa;">
-        Vita-Natura – Holisztikus Házipatika • www.vita-natura.hu
+      <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
+        <button onclick="downloadPackageDosagePdf()" class="flex-1 py-3 bg-[#1B4332] text-white font-bold rounded-xl shadow-md hover:bg-[#2D6A4F] transition text-xs flex items-center justify-center gap-2">
+          <span>📄</span> Adagolás Letöltése PDF-ben
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Felugró Modálok (Tünetek & Receptek) -->
+  <!-- REJTETT HTML SABLON CSOMAG PDF GENERÁLÁSHOZ -->
+  <div class="hidden">
+    <div id="pkgPdfTemplate" class="p-8 bg-white text-slate-800" style="width: 700px; font-family: 'Plus Jakarta Sans', sans-serif;">
+      <div style="text-align: center; border-bottom: 2px solid #1B4332; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="font-family: 'Playfair Display', serif; color: #1B4332; font-size: 26px; margin: 0;">🌿 Vita-Natura Protokoll Útmutató</h1>
+        <h2 id="pkgPdfTitle" style="color: #4A3728; font-size: 16px; font-weight: bold; margin-top: 5px;"></h2>
+        <p id="pkgPdfMode" style="color: #666; font-size: 11px; margin-top: 2px;"></p>
+      </div>
+      <div id="pkgPdfBody" style="font-size: 11px; line-height: 1.6; color: #333;"></div>
+      <div style="text-align: center; margin-top: 30px; font-size: 9px; color: #aaa; border-top: 1px solid #eee; padding-top: 10px;">
+        Vita-Natura – Holisztikus Házipatika & Protokollok • Tájékoztató jellegű dokumentum
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejtett elemek a korábbi modáloknak -->
   <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#E6CCB2]">
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -286,10 +296,149 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika & PDF generálás -->
+  <!-- Rejtett sablon Ciklus PDF-hez -->
+  <div class="hidden">
+    <div id="pdfTemplate" class="p-8 bg-white text-slate-800" style="width: 700px; font-family: 'Plus Jakarta Sans', sans-serif;">
+      <div style="text-align: center; border-bottom: 2px solid #FFCAD4; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="font-family: 'Playfair Display', serif; color: #6D597A; font-size: 28px; margin: 0;">🌿 Vita-Natura Ciklus-Iránytű</h1>
+        <p style="color: #B56576; font-size: 13px; font-weight: bold; margin-top: 5px;">Heti Étrend & Ciklusszinkronizált Útmutató</p>
+        <p id="pdfWelcomeUser" style="color: #666; font-size: 11px; margin-top: 3px;"></p>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🌸 1. Menstruáció (1–5. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Melegítés, Vaspótlás & Görcsoldás</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Céklás vöröslencse leves, Meleg fahéjas zabkása, Lassan főtt marharagu.</p>
+        </div>
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🌱 2. Follikuláris (6–12. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Frissesség & Bélflóra Támogatás</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Kimchi bowl avokádóval, Citromos lazac spárgával, Matcha smoothie.</p>
+        </div>
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">✨ 3. Ovuláció (13–16. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Máj-támogatás & Ösztrogén-kivezetés</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Sült brokkolis saláta kefírrel, Szezámmagos quinoa, Málnás chia puding.</p>
+        </div>
+        <div style="background: #FFF0F3; padding: 12px; border-radius: 12px; border: 1px solid #FFCAD4;">
+          <h3 style="color: #6D597A; font-size: 14px; margin: 0 0 5px 0;">🍂 4. Luteális (17–28. nap)</h3>
+          <p style="font-size: 10px; color: #444; margin: 0 0 5px 0;"><strong>Fókusz:</strong> Vércukor-stabilizálás & PMS megelőzés</p>
+          <p style="font-size: 9px; color: #666; margin: 0;"><strong>Receptek:</strong> Sült sütőtökös rizottó, Édesburgonya bruschetta, Banánkenyér szilvával.</p>
+        </div>
+      </div>
+      <div style="background: #F8F5F2; padding: 12px; border-radius: 12px; border: 1px solid #E6CCB2; text-align: center; margin-top: 15px;">
+        <p style="font-size: 10px; color: #1B4332; font-weight: bold; margin: 0;">🌿 Hasznos Napi Rutin Emlékeztető</p>
+        <p style="font-size: 9px; color: #555; margin-top: 3px;">Igyál legalább 2.5 liter vizet naponta • Magnéziumot mindig este vedd be • C-vitamint a vas mellé fogyassz!</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript Logika & Csomag Adatbázis -->
   <script>
     let symptomsData = [];
 
+    // TEMATIKUS CSOMAGOK ADATBÁZISA (Kettős modell + Pontos Adagolások)
+    const packageData = [
+      {
+        id: "winter",
+        icon: "❄️",
+        name: "Téli Immun-Pajzs Protokoll",
+        desc: "Légúti fertőzések megelőzése, immunsejtek aktiválása és téli szürkeség elleni védelem.",
+        activeMode: "supplements", // supplements / pantry
+        supplements: {
+          items: ["D3-vitamin (4000 NE) + K2-vitamin csepp", "C-vitamin (1000 mg) + Csipkebogyó kivonat", "Szerves Cink-biszglicinát (15-20 mg)"],
+          dosage: [
+            { item: "D3/K2-vitamin", dose: "Napi 10 csepp (4000 NE)", time: "Reggeli közben (zsíroldékony)", tip: "Zsírt tartalmazó étkezéssel vedd be a tökéletes felszívódásért!" },
+            { item: "C-vitamin", dose: "Napi 1000 mg (nyújtott felszívódású)", time: "Reggel és délben (500-500 mg)", tip: "Éhgyomorra ne vedd be, ha érzékeny a gyomrod!" },
+            { item: "Cink-biszglicinát", dose: "Napi 15-20 mg", time: "Ebéd közben", tip: "Ne vedd be éhgyomorra, mert émelygést okozhat!" }
+          ]
+        },
+        pantry: {
+          items: ["Csipkebogyótea (hideg áztatással)", "Pirított Tökmag (1 marék/nap)", "Zúzott fokhagyma nyers mézben áztatva (1 tk/nap)", "Feketebodza tea"],
+          dosage: [
+            { item: "Csipkebogyótea", dose: "2 csésze/nap (2 tk szárított csipke)", time: "Napközben", tip: "Este áztasd hideg vízbe, reggel szűrd le, így nem sérül a C-vitamin!" },
+            { item: "Tökmag (Cinkforrás)", dose: "1 marék (kb. 30g)", time: "Délutáni nassolásként", tip: "Enyhén pirítsd meg serpenyőben zsiradék nélkül a jobb emészthetőségért!" },
+            { item: "Mézes Fokhagyma", dose: "1 kávéskanál", time: "Reggel vagy este", tip: "Zúzd össze a fokhagymát, várj 10 percet az allicin képződésre, majd keverd mézbe!" }
+          ],
+          note: "⚠️ Szakmai megjegyzés: Téli időszakban a D3-vitamint élelmiszerekből (tojás, zsíros halak) nehéz a terápiás 4000 NE szinten bevinni, így ott a D3-csepp használata javasolt!"
+        }
+      },
+      {
+        id: "spring",
+        icon: "🌱",
+        name: "Tavaszi Megújulás & Vitalitás",
+        desc: "Tavaszi fáradtság leküzdése, bélflóra regeneráció és szervezet áthangolása a tél után.",
+        activeMode: "supplements",
+        supplements: {
+          items: ["Bioaktív B-Komplex (B6, B9, B12)", "Spórás Probiotikum kapszula", "Magnézium-malát (energetizáló formában)"],
+          dosage: [
+            { item: "B-Komplex", dose: "Napi 1 kapszula", time: "Reggeli közben", tip: "Mindig délelőtt vedd be, mert élénkítő hatása van!" },
+            { item: "Spórás Probiotikum", dose: "Napi 1-2 kapszula", time: "Vacsora előtt 20 perccel", tip: "Éhgyomorra vagy étkezés elején a leghatékonyabb." },
+            { item: "Magnézium-malát", dose: "Napi 200-400 mg", time: "Reggel vagy kora délután", tip: "A malátsav segít a sejtszintű energiatermelésben." }
+          ]
+        },
+        pantry: {
+          items: ["Sörélesztőpehely (2 ek/nap ételekbe szóróva)", "Házi Kefir / Savanyú káposzta leve (1 dl/nap)", "Csalántea & Mezei zsurlótea kúra (14 nap)"],
+          dosage: [
+            { item: "Sörélesztőpehely (B-vitamin)", dose: "2 evőkanál/nap", time: "Ebédre szórva salátára vagy levesbe", tip: "Ne főzd bele, meleg ételre a végén szórd rá!" },
+            { item: "Savanyú káposzta leve", dose: "1 dl friss lé", time: "Reggel éhgyomorra", tip: "Természetes élőflóra-bomba a bélrendszernek." },
+            { item: "Csalán-zsurló teakeverék", dose: "2 csésze/nap (1-1 tk teafű)", time: "Délelőtt és délután", tip: "14 napos kúraként idd, majd tarts 1 hét szünetet!" }
+          ],
+          note: "A fermentált ételek rendszeres fogyasztása 2 hét alatt érezhetően növeli az energiaszintet a bélflóra tisztulása révén."
+        }
+      },
+      {
+        id: "sport",
+        icon: "🏃‍♂️",
+        name: "Aktív Sportoló & Izomrehabilitáció",
+        desc: "Izomgörcsök elkerülése, gyorsabb regeneráció és az ízületek, porcok védelme terhelés alatt.",
+        activeMode: "supplements",
+        supplements: {
+          items: ["Magnézium-biszglicinát (400 mg)", "Hidrolizált Kollagén peptid (10g) + C-vitamin", "Omega-3 halolaj (magas EPA/DHA)"],
+          dosage: [
+            { item: "Magnézium-biszglicinát", dose: "Napi 400 mg", time: "Lefekvés előtt 30 perccel", tip: "Ellazítja az izmokat és mélyíti az alvásminőséget." },
+            { item: "Hidrolizált Kollagén", dose: "Napi 10-15g por", time: "Edzés után vagy este", tip: "Mindig igyál rá C-vitamint, mert az a beépülési katalizátora!" },
+            { item: "Omega-3 Halolaj", dose: "Napi 2000 mg (1000mg EPA/DHA)", time: "Vacsora közben", tip: "Gátolja az edzés utáni mikrosérülések gyulladássá alakulását." }
+          ]
+        },
+        pantry: {
+          items: ["Hosszú főzésű Csontleves (2 dl/nap kollagénforrás)", "100%-os Cseresznyelé / Meggylé edzés után", "Tökmagolaj + Érett Banán + Étcsoki (70%+)"],
+          dosage: [
+            { item: "Csontleves (Természetes kollagén)", dose: "2 dl meleg leves", time: "Ebédhez vagy vacsorához", tip: "Legalább 12 órán át főzött alaplé a maximális zselatinért." },
+            { item: "Meggylé (Antioxidáns)", dose: "1.5 dl 100%-os lé", time: "Közvetlenül edzés után", tip: "Igazoltan csökkenti a másnapi izomláz mértékét." },
+            { item: "Elektrolit koktél (Banán + csipet só)", dose: "1 banán + 1 csipet tengeri só vízzel", time: "Edzés előtt 45 perccel", tip: "Megakadályozza az izomgörcsöket izzadás közben." }
+          ],
+          note: "A csontleves és a meggylé párosa a legősibb és leghatékonyabb természetes sportszerek egyike."
+        }
+      },
+      {
+        id: "pregnancy",
+        icon: "🌸",
+        name: "Kismama & Babaváró (Prekoncepció)",
+        desc: "Családalapítás előtti/alatti hormonális feltöltés, petesejt-minőség és magzati fejlődés támogatása.",
+        activeMode: "supplements",
+        supplements: {
+          items: ["Aktív Folát (L-metilfolát, MTHFR-barát)", "Gyomorkímélő Vas-biszglicinát + C-vitamin", "Kolin + DHA (alga- vagy halolaj)"],
+          dosage: [
+            { item: "Aktív Folát (B9)", dose: "Napi 400-800 mcg", time: "Reggeli közben", tip: "A sima folsav helyett a metilált formát válaszd a jobb hasznosulásért!" },
+            { item: "Vas-biszglicinát", dose: "Napi 20-30 mg", time: "Reggel éhgyomorra C-vitaminnal", tip: "Kávéval, teával vagy tejtermékkel egy időben ne vedd be!" },
+            { item: "DHA + Kolin", dose: "Napi 200-300 mg DHA", time: "Ebéd közben", tip: "Kritikus a baba agy- és idegrendszeri fejlődéséhez." }
+          ]
+        },
+        pantry: {
+          items: ["Párolt Spenót & Céklalé (Természetes vas & folát)", "Tojássárgája (Kolinforrás) & Szezámmag", "Palástfűtea & Cickafarktea (fogantatás előtt)"],
+          dosage: [
+            { item: "Spenót & Cékla", dose: "Napi 1 adag ételben vagy préslében", time: "Ebédre", tip: "Locsold meg citromlével a növényi vas jobb felszívódásáért!" },
+            { item: "Tojássárgája (Kolin)", dose: "Napi 1-2 lágytojás", time: "Reggelire", tip: "A lágyan hagyott sárgájában megmarad a kolin szerkezete." },
+            { item: "Palástfűtea", dose: "1 csésze/nap", time: "Délután", tip: "A ciklus 14. napjától a menstruációig igyad a sárgatest támogatására." }
+          ],
+          note: "⚠️ Orvosi figyelmeztetés: A velőcső-záródási rendellenességek megelőzésére a folát bevitelt az orvosi ajánlások szerint étrendkiegészítő formájában is kötelező biztosítani!"
+        }
+      }
+    ];
+
+    // Ciklus Fázisok Adatbázisa
     const cyclePhases = {
       1: {
         title: "1. Menstruációs Fázis (1–5. nap)",
@@ -485,26 +634,184 @@
       document.getElementById('modal').classList.add('hidden');
     }
 
+    // TAB VÁLTÓ LOGIKA (3 Opció)
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
+      const packagesSec = document.getElementById('packagesTabSection');
+      
       const symptomsBtn = document.getElementById('tabSymptomsBtn');
       const cycleBtn = document.getElementById('tabCycleBtn');
+      const packagesBtn = document.getElementById('tabPackagesBtn');
+
+      symptomsSec.classList.add('hidden');
+      cycleSec.classList.add('hidden');
+      packagesSec.classList.add('hidden');
+
+      symptomsBtn.className = "flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#F8F5F2]";
+      cycleBtn.className = "flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#FFF0F5]";
+      packagesBtn.className = "flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#F8F5F2]";
 
       if (tab === 'symptoms') {
         symptomsSec.classList.remove('hidden');
-        cycleSec.classList.add('hidden');
-        symptomsBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm";
-        cycleBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#8A5A44] hover:bg-[#FFF0F5]";
-      } else {
-        symptomsSec.classList.add('hidden');
+        symptomsBtn.className = "flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm";
+      } else if (tab === 'cycle') {
         cycleSec.classList.remove('hidden');
-        cycleBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#B56576] text-white shadow-sm";
-        symptomsBtn.className = "flex-1 py-3 px-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#1B4332] hover:bg-[#F8F5F2]";
+        cycleBtn.className = "flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#B56576] text-white shadow-sm";
         showPhase(1);
+      } else if (tab === 'packages') {
+        packagesSec.classList.remove('hidden');
+        packagesBtn.className = "flex-1 py-3 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#1B4332] text-white shadow-sm";
+        renderPackages();
       }
     }
 
+    // TEMATIKUS CSOMAGOK RENDERELÉSE (Kettős modell)
+    function renderPackages() {
+      const grid = document.getElementById('packagesGrid');
+      grid.innerHTML = '';
+
+      packageData.forEach((pkg, index) => {
+        const isSupp = pkg.activeMode === 'supplements';
+        const currentData = isSupp ? pkg.supplements : pkg.pantry;
+
+        let itemsListHtml = '';
+        currentData.items.forEach(item => {
+          itemsListHtml += `<li class="flex items-start gap-2 text-xs text-slate-700">
+            <span class="text-[#1B4332] font-bold">✓</span> <span>${item}</span>
+          </li>`;
+        });
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-3xl border border-[#E6CCB2] p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+        
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-3xl">${pkg.icon}</span>
+              <span class="text-[11px] font-bold text-[#1B4332] bg-[#F8F5F2] px-3 py-1 rounded-full border border-[#E6CCB2]">Protokoll Csomag</span>
+            </div>
+            
+            <h3 class="text-xl font-bold font-serif-title text-[#1B4332] mb-2">${pkg.name}</h3>
+            <p class="text-xs text-slate-600 font-light mb-4 leading-relaxed">${pkg.desc}</p>
+
+            <!-- KETTTŐS TOGGLE GOMB -->
+            <div class="flex bg-[#F8F5F2] p-1 rounded-xl border border-[#E6CCB2] mb-4 text-xs">
+              <button onclick="togglePackageMode(${index}, 'supplements')" class="flex-1 py-1.5 rounded-lg font-bold transition ${isSupp ? 'bg-[#1B4332] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
+                💊 Kész Kapszulák
+              </button>
+              <button onclick="togglePackageMode(${index}, 'pantry')" class="flex-1 py-1.5 rounded-lg font-bold transition ${!isSupp ? 'bg-[#1B4332] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
+                🌿 Otthoni Kamra
+              </button>
+            </div>
+
+            <!-- TARTALOM LISTA -->
+            <div class="bg-[#F8F5F2] p-4 rounded-2xl border border-[#E6CCB2]/70 mb-4">
+              <p class="text-xs font-bold text-[#1B4332] mb-2 uppercase tracking-wider">${isSupp ? '💊 Csomag Összetevői:' : '🥣 Kamra & Házipatika elemei:'}</p>
+              <ul class="space-y-2">
+                ${itemsListHtml}
+              </ul>
+              ${!isSupp && pkg.pantry.note ? `<p class="mt-3 text-[11px] text-amber-900 italic bg-amber-50 p-2 rounded-lg border border-amber-200/80">${pkg.pantry.note}</p>` : ''}
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <button onclick="openPackageDosageModal(${index})" class="w-full py-2.5 bg-[#F8F5F2] text-[#1B4332] hover:bg-[#1B4332] hover:text-white border border-[#E6CCB2] font-bold rounded-xl text-xs transition flex items-center justify-center gap-2">
+              <span>📋</span> Adagolási Útmutató Megtekintése →
+            </button>
+            ${isSupp ? `
+              <button disabled class="w-full py-2.5 bg-slate-100 text-slate-400 font-bold rounded-xl text-xs border border-slate-200 cursor-not-allowed">
+                🛒 Vásárlás a Webshopban (Hamarosan)
+              </button>
+            ` : ''}
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    // Toggle váltás a csomagnál
+    function togglePackageMode(index, mode) {
+      packageData[index].activeMode = mode;
+      renderPackages();
+    }
+
+    // CSOMAG ADAGOLÁSI MODÁL NYITÁS
+    let currentPkgModalData = null;
+
+    function openPackageDosageModal(index) {
+      const pkg = packageData[index];
+      const isSupp = pkg.activeMode === 'supplements';
+      const dosageData = isSupp ? pkg.supplements.dosage : pkg.pantry.dosage;
+      currentPkgModalData = { pkg, isSupp, dosageData };
+
+      document.getElementById('pkgModalIcon').innerText = pkg.icon;
+      document.getElementById('pkgModalTitle').innerText = pkg.name;
+      document.getElementById('pkgModalModeBadge').innerText = isSupp ? '💊 Kész Kapszulás Adagolás' : '🌿 Otthoni Kamra Adagolás';
+
+      let dosageHtml = '';
+      dosageData.forEach(d => {
+        dosageHtml += `
+          <div class="p-4 bg-[#F8F5F2] rounded-2xl border border-[#E6CCB2]">
+            <div class="flex items-center justify-between mb-1">
+              <p class="font-bold text-[#1B4332] text-sm">${d.item}</p>
+              <span class="text-[11px] bg-[#E6CCB2]/60 text-[#4A3728] px-2.5 py-0.5 rounded-full font-semibold">${d.time}</span>
+            </div>
+            <p class="text-xs text-slate-800 font-bold mb-1">🎯 Pontos mennyiség: ${d.dose}</p>
+            <p class="text-[11px] text-slate-600 italic">💡 Szinergia tipp: ${d.tip}</p>
+          </div>
+        `;
+      });
+
+      document.getElementById('pkgModalDosageContent').innerHTML = dosageHtml;
+
+      const modal = document.getElementById('packageDosageModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePackageDosageModal() {
+      const modal = document.getElementById('packageDosageModal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    // CSOMAG ADAGOLÓ PDF LETÖLTÉSE
+    function downloadPackageDosagePdf() {
+      if (!currentPkgModalData) return;
+      const { pkg, isSupp, dosageData } = currentPkgModalData;
+
+      document.getElementById('pkgPdfTitle').innerText = `${pkg.icon} ${pkg.name}`;
+      document.getElementById('pkgPdfMode').innerText = isSupp ? "💊 Kész Kapszulás Adagolási & Szinergia Terv" : "🌿 Otthoni Kamra & Házipatika Adagolási Terv";
+
+      let bodyHtml = `<p style="margin-bottom: 15px;">${pkg.desc}</p><h4 style="color: #1B4332; font-size: 13px; margin-bottom: 10px;">Pontos Napi Beviteli & Adagolási Útmutató:</h4>`;
+
+      dosageData.forEach(d => {
+        bodyHtml += `
+          <div style="background: #F8F5F2; padding: 10px; border-radius: 8px; border: 1px solid #E6CCB2; margin-bottom: 10px;">
+            <p style="margin: 0; font-weight: bold; color: #1B4332; font-size: 12px;">${d.item}</p>
+            <p style="margin: 3px 0; font-weight: bold; color: #444;">🎯 Napi adag: ${d.dose} • 🕒 Időzítés: ${d.time}</p>
+            <p style="margin: 0; font-style: italic; color: #666; font-size: 10px;">💡 Hasznosítási trükk: ${d.tip}</p>
+          </div>
+        `;
+      });
+
+      document.getElementById('pkgPdfBody').innerHTML = bodyHtml;
+
+      const element = document.getElementById('pkgPdfTemplate');
+      const opt = {
+        margin:       0.5,
+        filename:     `Vita-Natura_Adagolas_${pkg.id}_${isSupp?'kapszula':'kamra'}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+
+    // Ciklus-Kalkulátor & Egyéb funkciók
     function calculateCyclePhase() {
       const dateVal = document.getElementById('lastPeriodDate').value;
       const lengthVal = parseInt(document.getElementById('cycleLength').value) || 28;
@@ -623,7 +930,6 @@
       document.getElementById('recipeModal').classList.add('hidden');
     }
 
-    // PDF MODÁL KEZELÉS
     function openPdfModal() {
       document.getElementById('pdfModal').classList.remove('hidden');
       document.getElementById('pdfModal').classList.add('flex');
@@ -634,7 +940,6 @@
       document.getElementById('pdfModal').classList.add('hidden');
     }
 
-    // PDF GENERÁLÁS ÉS ADAT-SALVAGE
     function handlePdfDownload(e) {
       e.preventDefault();
       const name = document.getElementById('subscriberName').value;
@@ -642,14 +947,12 @@
 
       if (!name || !email) return;
 
-      // Elmentjük a feliratkozót a böngésző helyi tárolójába (később Mailchimp-re exportálható)
       let subscribers = JSON.parse(localStorage.getItem('vitaNaturaSubscribers') || '[]');
       subscribers.push({ name, email, date: new Date().toISOString() });
       localStorage.setItem('vitaNaturaSubscribers', JSON.stringify(subscribers));
 
       document.getElementById('pdfWelcomeUser').innerText = `Készült: ${name} részére (${email})`;
 
-      // PDF Generálás html2pdf-fel
       const element = document.getElementById('pdfTemplate');
       const opt = {
         margin:       0.5,
