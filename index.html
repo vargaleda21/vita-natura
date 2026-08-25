@@ -65,7 +65,7 @@
     </div>
   </header>
 
-  <!-- MINDENNAPI ALAPPILLÉREK (Főoldali fix blokk) -->
+  <!-- MINDENNAPI ALAPPILLÉREK -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
     <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm">
       <p class="text-xs font-bold text-[#556B4E] uppercase tracking-wider mb-3 text-center">🌿 A mindennapi egészség alappillérei</p>
@@ -236,7 +236,6 @@
         </p>
       </div>
 
-      <!-- KISZÁMÍTÓ VARÁZSLÓ -->
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-3xl mx-auto">
         <h3 class="text-lg font-bold text-[#556B4E] mb-4 flex items-center gap-2"><span>📏</span> 1. Testösszetétel és aktivitás</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-xs">
@@ -331,49 +330,123 @@
     </div>
 
 
-    <!-- ==================== 5. TAB: ALAPANYAGOK & KAMRA-FŐZŐ (ÚJ!) ==================== -->
+    <!-- ==================== 5. TAB: BŐVÍTETT ALAPANYAGOK & KAMRA-FŐZŐ ==================== -->
     <div id="pantryTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens receptajánló</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Alapanyag-tár és kamra-főző</h2>
-        <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
-          Jelöld ki, milyen alapanyagok vannak itthon a konyhádban! A rendszer azonnal felkínálja a megfőzhető prémium ételeket, kiemelve azt az 1-2 apró elemet, amit még érdemes hozzátenned.
+        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Bővített alapanyag-tár és kamra-főző</h2>
+        <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light mb-4">
+          Jelöld ki a kategóriákból az itthoni alapanyagokat, vagy keress rájuk gyorsan! A kód azonnal megmutatja a legjobban illeszkedő ételeket.
         </p>
+
+        <!-- GYORS KERESŐ MEZŐ AZ ALAPANYAGOKHOZ -->
+        <div class="relative max-w-md mx-auto mb-2">
+          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Gyorskeresés alapanyagra pl. cékla, tojás, tonhal..." 
+                 class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none focus:ring-1 focus:ring-[#556B4E]">
+        </div>
       </div>
 
-      <!-- OTTHONI KÉSZLET JELÖLŐ -->
-      <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-3xl mx-auto text-xs">
-        <p class="font-bold text-[#556B4E] text-sm mb-3">🛒 Jelöld ki, mi van itthon a kamrában / hűtőben:</p>
+      <!-- OTTHONI KÉSZLET JELÖLŐ (KATEGORIZÁLVA ~30+ ALAPANYAG) -->
+      <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-3xl mx-auto text-xs space-y-5">
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="cékla" class="pantry-item-check text-[#556B4E]"> <span>Cékla</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="vöröslencse" class="pantry-item-check text-[#556B4E]"> <span>Vöröslencse</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="zabpehely" class="pantry-item-check text-[#556B4E]"> <span>Zabpehely</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="quinoa" class="pantry-item-check text-[#556B4E]"> <span>Quinoa</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="avokádó" class="pantry-item-check text-[#556B4E]"> <span>Avokádó</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="lazacfilé" class="pantry-item-check text-[#556B4E]"> <span>Lazacfilé</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span>
-          </label>
-          <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" value="sütőtök" class="pantry-item-check text-[#556B4E]"> <span>Sütőtök</span>
-          </label>
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gyümölcsök:</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="cékla" class="pantry-item-check text-[#556B4E]"> <span>Cékla</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="édesburgonya" class="pantry-item-check text-[#556B4E]"> <span>Édesburgonya</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="cukkini" class="pantry-item-check text-[#556B4E]"> <span>Cukkini</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="sütőtök" class="pantry-item-check text-[#556B4E]"> <span>Sütőtök</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="sárgarépa" class="pantry-item-check text-[#556B4E]"> <span>Sárgarépa</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="spenót" class="pantry-item-check text-[#556B4E]"> <span>Spenót</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="banán" class="pantry-item-check text-[#556B4E]"> <span>Banán</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="meggy" class="pantry-item-check text-[#556B4E]"> <span>Meggy</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="szilva" class="pantry-item-check text-[#556B4E]"> <span>Szilva</span>
+            </label>
+          </div>
         </div>
 
-        <button onclick="findPantryRecipes()" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl shadow-sm hover:bg-[#44563e] transition">
-          🍳 Ajánlj recepteket az itthoni készletemből!
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🌾</span> Hüvelyesek, Gabonák & Magvak:</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="vöröslencse" class="pantry-item-check text-[#556B4E]"> <span>Vöröslencse</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="zabpehely" class="pantry-item-check text-[#556B4E]"> <span>Zabpehely</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="quinoa" class="pantry-item-check text-[#556B4E]"> <span>Quinoa</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="rizs" class="pantry-item-check text-[#556B4E]"> <span>Arborio / Barna rizs</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="chia" class="pantry-item-check text-[#556B4E]"> <span>Chia mag</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="lenmag" class="pantry-item-check text-[#556B4E]"> <span>Lenmag</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="tökmag" class="pantry-item-check text-[#556B4E]"> <span>Tökmag</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="dió" class="pantry-item-check text-[#556B4E]"> <span>Dió / Mogyoró</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥩</span> Fehérjék & Tejtermékek:</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="csirke" class="pantry-item-check text-[#556B4E]"> <span>Csirkemell</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="marha" class="pantry-item-check text-[#556B4E]"> <span>Marhahús</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="lazac" class="pantry-item-check text-[#556B4E]"> <span>Lazacfilé</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="tojás" class="pantry-item-check text-[#556B4E]"> <span>Tojás</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="kecskesajt" class="pantry-item-check text-[#556B4E]"> <span>Kecskesajt</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="kefir" class="pantry-item-check text-[#556B4E]"> <span>Natúr kefir</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="avokádó" class="pantry-item-check text-[#556B4E]"> <span>Avokádó</span>
+            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="étcsoki" class="pantry-item-check text-[#556B4E]"> <span>Étcsoki (70%+)</span>
+            </label>
+          </div>
+        </div>
+
+        <button onclick="findPantryRecipes()" class="w-full py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
+          <span>🍳</span> Milyen receptet tudok ezekből főzni?
         </button>
       </div>
 
@@ -497,7 +570,7 @@
     </div>
   </div>
 
-  <!-- RECEPT MODÁL (ADAGVÁLASZTÓ KÁRTYÁVAL) -->
+  <!-- RECEPT MODÁL -->
   <div id="recipeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#F06292]/30">
       <button onclick="closeRecipeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -507,7 +580,6 @@
       <h3 id="recipeModalTitle" class="text-2xl font-bold font-serif-title text-[#556B4E] mb-2"></h3>
       <p id="recipeModalDesc" class="text-xs text-slate-600 leading-relaxed mb-4 font-light"></p>
       
-      <!-- ADAGKÁLKUÁTOR BEÉPÍTVE -->
       <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 mb-4 text-xs text-[#556B4E]">
         <div class="flex items-center justify-between mb-2">
           <p class="font-bold text-sm">🥣 Hozzávalók kiszámítása:</p>
@@ -868,7 +940,7 @@
       document.getElementById('modal').classList.add('hidden');
     }
 
-    // TAB VÁLTÓ LOGIKA (5 Opció)
+    // FÜLVÁLTÓ LOGIKA
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
@@ -915,7 +987,6 @@
       }
     }
 
-    // CIKLUS MEGJELEÍTŐ
     function showPhase(phaseNum) {
       const p = cyclePhases[phaseNum];
       const container = document.getElementById('phaseContent');
@@ -990,6 +1061,20 @@
       `;
     }
 
+    // ALAPANYAG GYORSKERESŐ SZŰRŐ
+    function filterPantryCheckboxes() {
+      const q = document.getElementById('pantryQuickSearch').value.toLowerCase();
+      const labels = document.querySelectorAll('.pantry-item-label');
+      labels.forEach(lbl => {
+        const text = lbl.innerText.toLowerCase();
+        if (text.includes(q)) {
+          lbl.classList.remove('hidden');
+        } else {
+          lbl.classList.add('hidden');
+        }
+      });
+    }
+
     // ALAPANYAG-FŐZŐ INTELIGENS KERESŐ LOGIKA
     function findPantryRecipes() {
       const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
@@ -1012,7 +1097,6 @@
         return;
       }
 
-      // Végigpörgetjük az összes receptet a meglévő és hiányzó elemekért
       let foundCount = 0;
       allRecipes.forEach(r => {
         const ingText = r.ingredients.toLowerCase();
@@ -1020,7 +1104,6 @@
 
         if (matched.length > 0) {
           foundCount++;
-          const matchPercent = Math.round((matched.length / userItems.length) * 100);
 
           const card = document.createElement('div');
           card.className = "bg-white/90 backdrop-blur-sm rounded-3xl border border-[#A7B69A]/40 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between";
@@ -1052,7 +1135,7 @@
       if (foundCount === 0) {
         resGrid.innerHTML = `
           <div class="col-span-2 text-center p-8 bg-white/80 rounded-3xl border border-[#A7B69A]/40 text-xs text-slate-600">
-            Keresünk további illeszkedő recepteket... Próbálj bejelölni céklát, zabpelyhet, brokkolit vagy lazacot!
+            Nem találtunk pontos egyezést a kijelölt elemekkel. Próbálj bejelölni céklát, zabpelyhet, brokkolit, lazacot vagy édesburgonyát!
           </div>
         `;
       }
