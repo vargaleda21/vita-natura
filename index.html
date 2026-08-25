@@ -67,7 +67,7 @@
     </div>
   </header>
 
-  <!-- STRATÉGIAI HERO SZEKCIÓ: A LEGERŐSEBB PROBLÉMAMEGOLDÓ POZICIONÁLÁS -->
+  <!-- LETISZTULT HERO SZEKCIÓ (DUPLA ALAPANYAG-LISTA NÉLKÜL) -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
     <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm text-center max-w-3xl mx-auto">
       <span class="text-[11px] font-bold text-[#556B4E] bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40 uppercase tracking-wider mb-3 inline-block">
@@ -75,30 +75,10 @@
       </span>
       <h2 class="text-3xl md:text-4xl font-bold font-serif-title text-[#556B4E] mb-3">Ne menj el bevásárolni. Nézd meg, mi van már otthon!</h2>
       <p class="text-slate-600 text-xs md:text-sm max-w-xl mx-auto font-light leading-relaxed mb-6">
-        Nézz körül a konyhádban. Lehet, hogy már mindened megvan egy fantasztikus, tápláló és egészséges vacsorához anélkül, hogy egyetlen forintot is költenél!
+        Nézz körül a konyhádban! Lehet,hogy már mindened megvan egy fantasztikus, tápláló és egészséges vacsorához anélkül, hogy elhagynád a házat.
       </p>
-
-      <!-- FŐ INTELLIGENS KAMRA-FŐZŐ GOMBSOR -->
-      <div class="bg-[#F7F3ED] p-5 rounded-2xl border border-[#A7B69A]/40 text-left mb-4">
-        <p class="font-bold text-[#556B4E] text-xs uppercase tracking-wider mb-3 text-center">🧺 Pipáld ki, mit találsz otthon a hűtőben vagy a kamrában:</p>
-        
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 text-xs mb-4">
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="fokhagyma" class="pantry-hero-check text-[#556B4E]"> <span>Fokhagyma</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="cékla" class="pantry-hero-check text-[#556B4E]"> <span>Cékla</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="brokkoli" class="pantry-hero-check text-[#556B4E]"> <span>Brokkoli</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="édesburgonya" class="pantry-hero-check text-[#556B4E]"> <span>Édesburgonya</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="cukkini" class="pantry-hero-check text-[#556B4E]"> <span>Cukkini</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="tojás" class="pantry-hero-check text-[#556B4E]"> <span>Tojás</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="lazac" class="pantry-hero-check text-[#556B4E]"> <span>Lazacfilé</span></label>
-          <label class="p-2 bg-white rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="zabpehely" class="pantry-hero-check text-[#556B4E]"> <span>Zabpehely</span></label>
-        </div>
-
-        <button onclick="runHeroPantrySearch()" class="w-full py-3.5 bg-[#556B4E] text-white font-bold text-xs md:text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
-          <span>🍳</span> Megnézem, mit tudok főzni belőle →
-        </button>
-      </div>
-      <button onclick="switchTab('pantry')" class="text-[11px] font-semibold text-[#556B4E] underline hover:text-[#F06292]">
-        + Kinyitom a teljes (60+ elemű) alapanyag-listát
+      <button onclick="switchTab('pantry')" class="px-6 py-3 bg-[#556B4E] text-white font-bold text-xs md:text-sm rounded-xl shadow-md hover:bg-[#44563e] transition inline-flex items-center gap-2">
+        <span>🍳</span> Megnézem, mit tudok főzni az itthoni alapanyagokból →
       </button>
     </div>
   </div>
@@ -129,11 +109,11 @@
 
   <main class="max-w-5xl mx-auto px-4">
 
-    <!-- ==================== 1. TAB: KAMRA-FŐZŐ & ALAPANYAG-TÁR (FŐ FUNKCIÓ) ==================== -->
+    <!-- ==================== 1. TAB: KAMRA-FŐZŐ ==================== -->
     <div id="pantryTabSection">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens receptajánló</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Bővített kamra-főző</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Kamra-főző & Alapanyagok</h2>
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light mb-4">
           Jelöld ki az itthoni alapanyagokat! Kattints a <strong>"Mire jó?"</strong> gombra az élettani előnyökért.
         </p>
@@ -184,6 +164,20 @@
           </div>
         </div>
 
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök:</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="banán" class="pantry-item-check text-[#556B4E]"> <span>Banán</span></label>
+              <button onclick="openIngredientInfo('banán')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+            </div>
+            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="áfonya" class="pantry-item-check text-[#556B4E]"> <span>Áfonya / Málna</span></label>
+              <button onclick="openIngredientInfo('áfonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+            </div>
+          </div>
+        </div>
+
         <button onclick="findPantryRecipes()" class="w-full py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
           <span>🍳</span> Milyen receptet tudok ezekből főzni?
         </button>
@@ -194,7 +188,7 @@
     </div>
 
 
-    <!-- ==================== 2. TAB: TÜNETKERESŐ (TERMÉSZETES TÁMOGATÁS) ==================== -->
+    <!-- ==================== 2. TAB: TÜNETKERESŐ ==================== -->
     <div id="symptomsTabSection" class="hidden">
       
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8">
@@ -273,7 +267,7 @@
     </div>
 
 
-    <!-- ==================== 4. TAB: NŐI CIKLUS (DEDIKÁLT MODULKÉNT) ==================== -->
+    <!-- ==================== 4. TAB: NŐI CIKLUS ==================== -->
     <div id="cycleTabSection" class="hidden">
       <div class="bg-gradient-to-b from-[#F7F3ED] to-[#E8DCC6]/40 p-6 md:p-8 rounded-3xl border border-[#F06292]/30 mb-8 text-center max-w-3xl mx-auto shadow-sm">
         <span class="text-xs font-bold text-[#F06292] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#F06292]/30">🌸 Női Ciklusszinkron Munkatér</span>
@@ -514,9 +508,60 @@
       "áfonya": { name: "Áfonya / Málna", nutrients: "Antocianinok, C-vitamin", benefits: "🧠 Sejtek védelme az oxidatív stressztől", usage: "Kásákra, chia pudingra", recipeName: "Málnás-chia puding" }
     };
 
+    const packageData = [
+      {
+        id: "winter",
+        icon: "❄️",
+        name: "Téli immun-pajzs csomag",
+        desc: "Légúti fertőzések megelőzése, immunsejtek aktiválása és téli szürkeség elleni védelem.",
+        activeMode: "supplements",
+        supplements: {
+          items: ["D3-vitamin (4000 NE) + K2-vitamin csepp", "C-vitamin (1000 mg) + Csipkebogyó kivonat", "Szerves cink-biszglicinát (15-20 mg)"],
+          dosage: [
+            { item: "D3/K2-vitamin", dose: "Napi 10 csepp (4000 NE)", time: "Reggeli közben (zsíroldékony)", tip: "Zsírt tartalmazó étkezéssel vedd be a tökéletes felszívódásért!" },
+            { item: "C-vitamin", dose: "Napi 1000 mg (nyújtott felszívódású)", time: "Reggel és délben (500-500 mg)", tip: "Éhgyomorra ne vedd be, ha érzékeny a gyomrod!" },
+            { item: "Cink-biszglicinát", dose: "Napi 15-20 mg", time: "Ebéd közben", tip: "Ne vedd be éhgyomorra, mert émelygést okozhat!" }
+          ]
+        },
+        pantry: {
+          items: ["Csipkebogyótea (hideg áztatással)", "Pirított tökmag (1 marék/nap)", "Zúzott fokhagyma nyers mézben áztatva (1 tk/nap)", "Feketebodza tea"],
+          dosage: [
+            { item: "Csipkebogyótea", dose: "2 csésze/nap (2 tk szárított csipke)", time: "Napközben", tip: "Este áztasd hideg vízbe, reggel szűrd le, így nem sérül a C-vitamin!" },
+            { item: "Tökmag (Cinkforrás)", dose: "1 marék (kb. 30g)", time: "Délutáni nassolásként", tip: "Enyhén pirítsd meg serpenyőben zsiradék nélkül a jobb emészthetőségért!" },
+            { item: "Mézes fokhagyma", dose: "1 kávéskanál", time: "Reggel vagy este", tip: "Zúzd össze a fokhagymát, várj 10 percet az allicin képződésre, majd keverd mézbe!" }
+          ],
+          note: "⚠️ Szakmai megjegyzés: Téli időszakban a D3-vitamint élelmiszerekből nehéz a terápiás 4000 NE szinten bevinni, így ott a D3-csepp használata javasolt!"
+        }
+      },
+      {
+        id: "spring",
+        icon: "🌱",
+        name: "Tavaszi megújulás és vitalitás",
+        desc: "Tavaszi fáradtság leküzdése, bélflóra regeneráció és szervezet áthangolása a tél után.",
+        activeMode: "supplements",
+        supplements: {
+          items: ["Bioaktív B-komplex (B6, B9, B12)", "Spórás probiotikum kapszula", "Magnézium-malát (energetizáló formában)"],
+          dosage: [
+            { item: "B-komplex", dose: "Napi 1 kapszula", time: "Reggeli közben", tip: "Mindig délelőtt vedd be, mert élénkítő hatása van!" },
+            { item: "Spórás probiotikum", dose: "Napi 1-2 kapszula", time: "Vacsora előtt 20 perccel", tip: "Éhgyomorra vagy étkezés elején a leghatékonyabb." },
+            { item: "Magnézium-malát", dose: "Napi 200-400 mg", time: "Reggel vagy kora délután", tip: "A malátsav segít a sejtszintű energiatermelésben." }
+          ]
+        },
+        pantry: {
+          items: ["Sörélesztőpehely (2 ek/nap ételekbe szórva)", "Házi kefir / savanyú káposzta leve (1 dl/nap)", "Csalántea & mezei zsurlótea kúra (14 nap)"],
+          dosage: [
+            { item: "Sörélesztőpehely (B-vitamin)", dose: "2 evőkanál/nap", time: "Ebédre szórva salátára vagy levesbe", tip: "Ne főzd bele, meleg ételre a végén szórd rá!" },
+            { item: "Savanyú káposzta leve", dose: "1 dl friss lé", time: "Reggel éhgyomorra", tip: "Természetes élőflóra-bomba a bélrendszernek." },
+            { item: "Csalán-zsurló teakeverék", dose: "2 csésze/nap (1-1 tk teafű)", time: "Délelőtt és délután", tip: "14 napos kúraként idd, majd tarts 1 hét szünetet!" }
+          ],
+          note: "A fermentált ételek rendszeres fogyasztása 2 hét alatt érezhetően növeli az energiaszintet."
+        }
+      }
+    ];
+
     const cyclePhases = {
       1: {
-        title: "1. Menstruációs fázis",
+        title: "1. Menstruációs fázis (1–5. nap)",
         subtitle: "Melegítés, vaspótlás & belső pihenés",
         description: "A menstruáció alatti tápanyag- és vasbevitel támogatása.",
         vitamins: "Vas + C-vitamin, Magnézium",
@@ -527,7 +572,50 @@
           { name: "Céklás-vöröslencsés krémleves pirított tökmaggal", img: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80", desc: "Vasban és folsavban gazdag meleg leves.", ingredients: "200g cékla, 100g vöröslencse, gyömbér, kókusztej, tökmag", steps: "Puhára főzzük, turmixoljuk, tökmaggal tálaljuk." },
           { name: "Fahéjas zabkása meggyraguval & étcsokoládéval", img: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=600&q=80", desc: "Magnéziumban gazdag meleg reggeli.", ingredients: "60g zabpehely, 250ml mandulatej, meggy, étcsoki", steps: "Megfőzzük, meggyel és csokival tálaljuk." }
         ]
+      },
+      2: {
+        title: "2. Follikuláris fázis (6–12. nap)",
+        subtitle: "Frissesség & raktárak feltöltése",
+        description: "Friss, fehérjében és antioxidánsokban gazdag ételek fogyasztása.",
+        vitamins: "B-komplex, Cink",
+        herbs: "Csalántea, Zöld tea",
+        avoid: "Nehéz, zsíros ételek",
+        sport: "🏋️‍♀️ Súlyzós edzés, HIIT",
+        recipes: [
+          { name: "Avokádós-kimchis quinoa tál edamame babbal", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80", desc: "A fermentált kimchi táplálja a bélflórát.", ingredients: "100g főtt quinoa, 80g avokádó, 50g kimchi, 60g edamame bab", steps: "A quinoára halmozzuk a hozzávalókat." }
+        ]
+      },
+      3: {
+        title: "3. Ovulációs fázis (13–16. nap)",
+        subtitle: "Csúcsforma & Máj támogatása",
+        description: "A máj és a normál anyagcsere támogatása ételekkel.",
+        vitamins: "Kvercetin, C-vitamin",
+        herbs: "Máriatövis tea",
+        avoid: "Alkohol, transzzsírok",
+        sport: "🔥 Köredzés, kardió",
+        recipes: [
+          { name: "Sült brokkolis-kefires saláta dióval & gránátalmával", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80", desc: "Sült zöldséges laktató saláta.", ingredients: "180g brokkoli, 120ml kefir, 25g dió, gránátalma", steps: "Megsütjük a brokkolit, kefíröntettel tálaljuk." }
+        ]
+      },
+      4: {
+        title: "4. Luteális fázis (17–28. nap)",
+        subtitle: "Vércukor-stabilizálás & PMS idején beilleszthető ételek",
+        description: "Vércukor-stabilizálás és a természetes jóllakottság támogatása.",
+        vitamins: "Magnézium-biszglicinát, B6-vitamin",
+        herbs: "Citromfűtea, Levendulatea",
+        avoid: "Finomított cukor",
+        sport: "🌿 Pilates, tempós séta",
+        recipes: [
+          { name: "Sült édesburgonya-bruschetta kecskesajttal", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80", desc: "Ínycsiklandó tepsis falatok.", ingredients: "180g édesburgonya, 60g kecskesajt, dió, kakukkfű", steps: "Megsütjük az édesburgonyát, rásütjük a sajtos diót." }
+        ]
       }
+    };
+
+    const workoutData = {
+      1: { title: "1. Menstruáció – Regeneráció & Lazítás", desc: "Görcsoldó nyújtások.", trainer: "Nagy Laura", trainerDesc: "Gyógytornász", videoUrl: "https://www.youtube.com/embed/inpok4MKVLM", trainerUrl: "#" },
+      2: { title: "2. Follikuláris – Erőnlét", desc: "Dinamikus edzés.", trainer: "Kovács Anna", trainerDesc: "Funkcionális tréner", videoUrl: "https://www.youtube.com/embed/inpok4MKVLM", trainerUrl: "#" },
+      3: { title: "3. Ovuláció – Csúcsforma", desc: "HIIT & Köredzés.", trainer: "Szabó Eszter", trainerDesc: "Kardió tréner", videoUrl: "https://www.youtube.com/embed/inpok4MKVLM", trainerUrl: "#" },
+      4: { title: "4. Luteális – Pilates", desc: "Tónusformálás.", trainer: "Molnár Zsófia", trainerDesc: "Pilates oktató", videoUrl: "https://www.youtube.com/embed/inpok4MKVLM", trainerUrl: "#" }
     };
 
     async function loadSymptoms() {
@@ -545,23 +633,9 @@
         const card = document.createElement('div');
         card.className = "bg-white p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm hover:shadow-md cursor-pointer";
         card.onclick = () => openModal(item);
-        card.innerHTML = `<h3 class="text-xl font-bold text-[#556B4E] mb-2">${item.symptom}</h3><p class="text-xs text-slate-600">Kattints a részletekért →</p>`;
+        card.innerHTML = `<h3 class="text-xl font-bold text-[#556B4E] mb-2">${item.symptom}</h3><p class="text-xs text-slate-600">Részletes táplálkozási tanácsok →</p>`;
         grid.appendChild(card);
       });
-    }
-
-    function runHeroPantrySearch() {
-      const heroChecks = document.querySelectorAll('.pantry-hero-check:checked');
-      const selected = Array.from(heroChecks).map(c => c.value);
-      
-      switchTab('pantry');
-
-      const allChecks = document.querySelectorAll('.pantry-item-check');
-      allChecks.forEach(c => {
-        if (selected.includes(c.value)) c.checked = true;
-      });
-
-      findPantryRecipes();
     }
 
     function findPantryRecipes() {
@@ -583,8 +657,8 @@
           if (matched.length > 0) {
             found++;
             const card = document.createElement('div');
-            card.className = "bg-white rounded-3xl border p-5 text-xs";
-            card.innerHTML = `<h4 class="font-bold text-base text-[#556B4E]">${r.name}</h4><p class="text-slate-600 mt-1">${r.desc}</p><p class="mt-2 text-emerald-700 font-semibold">✓ Meglévő alapanyagod: ${matched.join(", ")}</p>`;
+            card.className = "bg-white rounded-3xl border p-5 text-xs shadow-sm";
+            card.innerHTML = `<h4 class="font-bold text-base text-[#556B4E] mb-1">${r.name}</h4><p class="text-slate-600 mb-2">${r.desc}</p><p class="text-emerald-700 font-bold bg-emerald-50 p-2 rounded-xl border border-emerald-200">✓ Meglévő alapanyagod: ${matched.join(", ")}</p><p class="mt-2 text-slate-500"><strong>Hozzávalók:</strong> ${r.ingredients}</p>`;
             resGrid.appendChild(card);
           }
         });
@@ -613,6 +687,7 @@
 
     function openModal(item) {
       document.getElementById('modalSymptom').innerText = item.symptom;
+      document.getElementById('modalCauses').innerText = item.causes || "Átmeneti tápanyaghiány vagy fokozott leterheltség.";
       document.getElementById('modalVitamin').innerText = item.vitamin || "-";
       document.getElementById('modalHerb').innerText = item.herb || "-";
       document.getElementById('modalFood').innerText = item.food || "-";
@@ -633,32 +708,153 @@
       });
       const activeSec = document.getElementById(tab + 'TabSection');
       if (activeSec) activeSec.classList.remove('hidden');
+
+      if (tab === 'cycle') showPhase(1);
+      if (tab === 'packages') renderPackages();
+      if (tab === 'workout') showWorkoutPhase(1);
     }
 
     function calculateCyclePhase() {
       const dateVal = document.getElementById('lastPeriodDate').value;
       if (!dateVal) return;
-      document.getElementById('calcResult').innerText = "🌸 A fázis kiszámítva!";
+      document.getElementById('calcResult').innerText = "🌸 A fázis kiszámítva! Lásd az 1-4. gombokat alább.";
       document.getElementById('calcResult').classList.remove('hidden');
     }
 
     function showPhase(p) {
       const phaseData = cyclePhases[p];
-      if (phaseData) {
-        document.getElementById('phaseContent').innerHTML = `<div class="bg-white p-6 rounded-3xl border"><h3 class="text-2xl font-bold text-[#556B4E]">${phaseData.title}</h3><p class="text-xs text-slate-600 mt-2">${phaseData.description}</p></div>`;
+      if (!phaseData) return;
+      
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`phaseBtn${i}`);
+        if (btn) btn.className = i === p ? "p-4 rounded-2xl border text-center transition-all bg-[#F06292] text-white border-[#F06292] shadow-md" : "p-4 rounded-2xl border text-center transition-all bg-white border-[#F06292]/30 text-[#556B4E]";
       }
+
+      let recipesHtml = '';
+      if (phaseData.recipes) {
+        phaseData.recipes.forEach((r, idx) => {
+          recipesHtml += `
+            <div class="bg-white rounded-3xl border border-[#F06292]/30 overflow-hidden shadow-sm flex flex-col justify-between">
+              <img src="${r.img}" alt="${r.name}" class="w-full h-44 object-cover">
+              <div class="p-5 text-xs">
+                <h4 class="text-base font-bold text-[#556B4E] mb-1">${r.name}</h4>
+                <p class="text-slate-600 mb-3">${r.desc}</p>
+                <div class="p-3 bg-[#F7F3ED] rounded-xl mb-3"><strong>Hozzávalók:</strong> ${r.ingredients}</div>
+                <p class="text-slate-700"><strong>Elkészítés:</strong> ${r.steps}</p>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      document.getElementById('phaseContent').innerHTML = `
+        <div class="bg-white p-6 rounded-3xl border border-[#F06292]/30 shadow-sm mb-6">
+          <h3 class="text-2xl font-bold text-[#556B4E]">${phaseData.title}</h3>
+          <p class="text-xs font-bold text-[#F06292] mt-1">${phaseData.subtitle}</p>
+          <p class="text-xs text-slate-700 mt-3 leading-relaxed bg-[#F7F3ED] p-3 rounded-xl">${phaseData.description}</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 text-xs">
+            <div class="p-3 bg-[#F7F3ED] rounded-xl"><strong>💊 Tápanyagok:</strong> ${phaseData.vitamins}</div>
+            <div class="p-3 bg-[#F7F3ED] rounded-xl"><strong>🌿 Gyógynövények:</strong> ${phaseData.herbs}</div>
+            <div class="p-3 bg-rose-50 rounded-xl text-rose-900"><strong>⛔ Kerülendő:</strong> ${phaseData.avoid}</div>
+          </div>
+        </div>
+        <h4 class="text-xl font-bold text-[#556B4E] mb-4 text-center">Ajánlott receptek</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">${recipesHtml}</div>
+      `;
+    }
+
+    function renderPackages() {
+      const grid = document.getElementById('packagesGrid');
+      grid.innerHTML = '';
+      packageData.forEach((pkg, index) => {
+        const isSupp = pkg.activeMode === 'supplements';
+        const currentData = isSupp ? pkg.supplements : pkg.pantry;
+        let itemsListHtml = '';
+        currentData.items.forEach(item => {
+          itemsListHtml += `<li class="flex items-start gap-2 text-xs text-slate-700"><span class="text-[#556B4E] font-bold">✓</span> <span>${item}</span></li>`;
+        });
+        const card = document.createElement('div');
+        card.className = "bg-white/90 rounded-3xl border p-6 shadow-sm flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3"><span class="text-3xl">${pkg.icon}</span><span class="text-xs font-bold text-[#556B4E] bg-[#F7F3ED] px-3 py-1 rounded-full">Természetes csomag</span></div>
+            <h3 class="text-xl font-bold text-[#556B4E] mb-2">${pkg.name}</h3>
+            <p class="text-xs text-slate-600 mb-4">${pkg.desc}</p>
+            <div class="bg-[#F7F3ED] p-4 rounded-2xl mb-4"><ul class="space-y-2">${itemsListHtml}</ul></div>
+          </div>
+          <button onclick="openPackageDosageModal(${index})" class="w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl text-xs">📋 Adagolási útmutató →</button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openPackageDosageModal(index) {
+      const pkg = packageData[index];
+      const dosageData = pkg.supplements.dosage;
+      let dosageHtml = `<h3 class="text-xl font-bold text-[#556B4E] mb-3">${pkg.name}</h3>`;
+      dosageData.forEach(d => {
+        dosageHtml += `<div class="p-3 bg-[#F7F3ED] rounded-xl mb-2 text-xs"><strong>${d.item}:</strong> ${d.dose} (${d.time})<br><span class="italic text-slate-500">${d.tip}</span></div>`;
+      });
+      document.getElementById('pkgModalDosageContent').innerHTML = dosageHtml;
+      document.getElementById('packageDosageModal').classList.remove('hidden');
+      document.getElementById('packageDosageModal').classList.add('flex');
+    }
+
+    function closePackageDosageModal() {
+      document.getElementById('packageDosageModal').classList.remove('flex');
+      document.getElementById('packageDosageModal').classList.add('hidden');
+    }
+
+    function showWorkoutPhase(pNum) {
+      const w = workoutData[pNum];
+      if (!w) return;
+      document.getElementById('workoutContentZone').innerHTML = `
+        <div class="bg-white p-6 rounded-3xl border shadow-sm">
+          <h3 class="text-2xl font-bold text-[#556B4E] mb-2">${w.title}</h3>
+          <p class="text-xs text-slate-600 mb-4">${w.desc}</p>
+          <div class="aspect-video w-full rounded-2xl overflow-hidden mb-4 bg-slate-900"><iframe class="w-full h-full" src="${w.videoUrl}" frameborder="0" allowfullscreen></iframe></div>
+          <p class="text-xs font-bold text-[#556B4E]">Oktató: ${w.trainer} (${w.trainerDesc})</p>
+        </div>
+      `;
     }
 
     function calculateLifestylePlan() {
-      document.getElementById('lsAnalysisBox').innerHTML = `<h3 class="text-xl font-bold text-[#556B4E]">Személyes profil elkészült!</h3>`;
-      document.getElementById('lsWeeklyMealBox').innerHTML = `<div class="p-4 bg-white rounded-2xl text-xs font-semibold text-[#556B4E]">7 napos mintaétrend generálva!</div>`;
+      const h = parseFloat(document.getElementById('lsHeight').value) / 100;
+      const w = parseFloat(document.getElementById('lsWeight').value);
+      const age = parseInt(document.getElementById('lsAge').value);
+      const act = parseFloat(document.getElementById('lsActivity').value);
+      if (!h || !w) return;
+
+      const bmi = (w / (h * h)).toFixed(1);
+      let bmr = 10 * w + 6.25 * (h * 100) - 5 * age - 161;
+      let tdee = Math.round(bmr * act);
+
+      document.getElementById('lsAnalysisBox').innerHTML = `
+        <h3 class="text-xl font-bold text-[#556B4E] mb-2">Személyes metabolikus profil (BMI: ${bmi})</h3>
+        <p class="text-xs text-slate-700">Napi kalóriaszükséglet a súlytartáshoz: <strong>${tdee} kcal</strong> | Vízigény: <strong>${(w*0.035).toFixed(1)} liter</strong></p>
+      `;
+
+      document.getElementById('lsWeeklyMealBox').innerHTML = `
+        <div class="bg-white p-6 rounded-3xl border text-xs space-y-2">
+          <h4 class="font-bold text-sm text-[#556B4E] mb-2">Mintaétrend 1 napra (Pontos adagokkal):</h4>
+          <p><strong>Reggeli:</strong> Chia-zabkása bogyós gyümölcsökkel (60g zabpehely, 20g chia, 80g málna)</p>
+          <p><strong>Ebéd:</strong> Pácolt csirkemell csíkok quinoával (180g csirkemell, 80g quinoa, 150g brokkoli)</p>
+          <p><strong>Vacsora:</strong> Cukkinikrémleves tökmaggal (200g cukkini, 20g tökmag, 100ml kókusztej)</p>
+        </div>
+      `;
+
+      document.getElementById('lsShoppingListBox').innerHTML = `
+        <div class="bg-white p-6 rounded-3xl border text-xs">
+          <h4 class="font-bold text-sm text-[#556B4E] mb-2">🛒 Összesített heti bevásárlólista (1 főre):</h4>
+          <p class="text-slate-700">1kg cékla, 800g édesburgonya, 500g brokkoli, 500g zabpehely, 200g quinoa, 800g csirkemell, 10 db tojás, 300ml kefir</p>
+        </div>
+      `;
+
       document.getElementById('lifestyleResultZone').classList.remove('hidden');
+      document.getElementById('lifestyleResultZone').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function filterByHealthGoal(goal) {
-      document.getElementById('searchInput').value = goal;
-    }
-
+    function filterByHealthGoal(goal) { document.getElementById('searchInput').value = goal; }
     function filterPantryCheckboxes() {
       const q = document.getElementById('pantryQuickSearch').value.toLowerCase();
       document.querySelectorAll('.pantry-item-label').forEach(lbl => {
