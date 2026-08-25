@@ -67,87 +67,83 @@
     </div>
   </header>
 
-  <!-- ÚJ STRATÉGIAI HERO SZEKCIÓ (Mire van szüksége a testednek?) -->
+  <!-- AKCIÓ- ÉS CÉLORIENTÁLT HERO SZEKCIÓ -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
     <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm text-center max-w-4xl mx-auto">
       <span class="text-[11px] font-bold text-[#556B4E] bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40 uppercase tracking-wider mb-3 inline-block">
-        🌿 Természetes Egészség & Egyensúly
+        🌿 Természetes Egészség & Holisztikus Egyensúly
       </span>
-      <h2 class="text-3xl md:text-4xl font-bold font-serif-title text-[#556B4E] mb-3">Mire van szüksége a testednek ma?</h2>
+      <h2 class="text-3xl md:text-4xl font-bold font-serif-title text-[#556B4E] mb-3">Milyen életmódbeli célra keresel természetes támogatást?</h2>
       <p class="text-slate-600 text-xs md:text-sm max-w-xl mx-auto font-light leading-relaxed mb-6">
-        Válaszd ki a személyes célodat, és megmutatjuk a célzott ételeket, életmódbeli tippeket és a releváns kiegészítőket!
+        Válaszd ki a személyes fókuszodat, és mutatjuk a célzott ételeket, a gyógynövényes rituálékat és a kapcsolódó vitamin-szinergiákat!
       </p>
 
-      <!-- 6 FŐ CÉL GOMBSOR -->
+      <!-- 6 AKCIÓ-GOMB (NYELVTANILAG PONTOS MEFOGALMAZÁSOK) -->
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs text-center mb-6">
         <button onclick="selectCoreGoal('energia')" class="p-3 bg-[#F7F3ED] hover:bg-[#556B4E] hover:text-white rounded-2xl border border-[#A7B69A]/30 transition font-bold text-[#556B4E]">
-          ⚡ Energia & Fókusz
+          ⚡ Energiaszint & Fókusz növelése
         </button>
         <button onclick="selectCoreGoal('alvas')" class="p-3 bg-[#F7F3ED] hover:bg-[#556B4E] hover:text-white rounded-2xl border border-[#A7B69A]/30 transition font-bold text-[#556B4E]">
-          🌙 Alvás & Nyugalom
+          🌙 Mély alvás & Esti kikapcsolódás
         </button>
         <button onclick="selectCoreGoal('immun')" class="p-3 bg-[#F7F3ED] hover:bg-[#556B4E] hover:text-white rounded-2xl border border-[#A7B69A]/30 transition font-bold text-[#556B4E]">
-          🛡️ Immunrendszer
+          🛡️ Immunrendszer erősítése
         </button>
         <button onclick="selectCoreGoal('emesztes')" class="p-3 bg-[#F7F3ED] hover:bg-[#556B4E] hover:text-white rounded-2xl border border-[#A7B69A]/30 transition font-bold text-[#556B4E]">
-          🌿 Emésztés & Bélflóra
+          🌿 Emésztés & Bélflóra harmonizálása
         </button>
         <button onclick="selectCoreGoal('sport')" class="p-3 bg-[#F7F3ED] hover:bg-[#556B4E] hover:text-white rounded-2xl border border-[#A7B69A]/30 transition font-bold text-[#556B4E]">
-          💪 Sport & Izom
+          💪 Sportteljesítmény & Regeneráció
         </button>
         <button onclick="selectCoreGoal('ciklus')" class="p-3 bg-[#F7F3ED] hover:bg-[#F06292] hover:text-white rounded-2xl border border-[#F06292]/30 transition font-bold text-[#556B4E]">
-          🌸 Női Egyensúly
+          🌸 Női hormonális egyensúly
         </button>
       </div>
 
-      <!-- KINYÍLÓ 3 LÉPCSŐS EREDMÉNYBLOKK -->
-      <div id="coreGoalResultZone" class="hidden text-left bg-[#F7F3ED] p-5 rounded-2xl border border-[#A7B69A]/40 space-y-4">
-        <h3 id="goalResultTitle" class="text-xl font-bold font-serif-title text-[#556B4E]">Cél neve</h3>
+      <!-- KINYÍLÓ 4 ELEMŰ DÚSÍTOTT ÚTMUTATÓ -->
+      <div id="coreGoalResultZone" class="hidden text-left bg-[#F7F3ED] p-6 rounded-3xl border border-[#A7B69A]/40 space-y-4">
+        <h3 id="goalResultTitle" class="text-2xl font-bold font-serif-title text-[#556B4E]">Cél neve</h3>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
           <!-- 1. ÉTEL -->
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200">
-            <p class="font-bold text-[#556B4E] mb-1.5 flex items-center gap-1"><span class="text-base">🍎</span> 1. ÉTEL (Mit egyek?):</p>
-            <p id="goalFoodText" class="text-slate-700 leading-relaxed font-light">...</p>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> 1. ÉTEL & TÁPANYAGOK:</p>
+              <p id="goalFoodText" class="text-slate-700 leading-relaxed font-light">...</p>
+            </div>
           </div>
-          <!-- 2. ÉLETMÓD -->
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200">
-            <p class="font-bold text-[#556B4E] mb-1.5 flex items-center gap-1"><span class="text-base">🌱</span> 2. ÉLETMÓD (Mit változtassak?):</p>
-            <p id="goalLifestyleText" class="text-slate-700 leading-relaxed font-light">...</p>
+
+          <!-- 2. GYÓGYNÖVÉNY & RITUÁLÉ -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>☕</span> 2. TEÁK & RITUÁLÉK:</p>
+              <p id="goalHerbsText" class="text-slate-700 leading-relaxed font-light">...</p>
+            </div>
           </div>
-          <!-- 3. KIEGÉSZÍTÉS / AFFILIATE -->
-          <div class="bg-white p-3.5 rounded-xl border border-[#F06292]/30 bg-rose-50/30">
-            <p class="font-bold text-[#556B4E] mb-1.5 flex items-center gap-1"><span class="text-base">💊</span> 3. CÉLZOTT VÁLOGATÁS:</p>
-            <p id="goalSuppText" class="text-slate-700 leading-relaxed font-light mb-2">...</p>
-            <button onclick="switchTab('packages')" class="w-full py-2 bg-[#556B4E] text-white font-bold rounded-lg text-[11px] hover:bg-[#44563e] transition text-center block">
-              Megnézem a kapcsolódó csomagot →
+
+          <!-- 3. BIZSTRÓ RECEPT -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥗</span> 3. RECEPTAJÁNLÓ:</p>
+              <p id="goalRecipeText" class="text-slate-700 leading-relaxed font-semibold">...</p>
+            </div>
+            <button onclick="switchTab('pantry')" class="mt-3 py-2 bg-[#F7F3ED] text-[#556B4E] border border-[#A7B69A]/40 font-bold rounded-xl text-[11px] hover:bg-[#556B4E] hover:text-white transition text-center block">
+              Kamra-főző megnyitása →
+            </button>
+          </div>
+
+          <!-- 4. CÉLZOTT KIEGÉSZÍTÉS (AFFILIATE) -->
+          <div class="bg-white p-4 rounded-2xl border border-[#F06292]/30 bg-rose-50/20 flex flex-col justify-between">
+            <div>
+              <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>💊</span> 4. KIEGÉSZÍTÉS & KORSZERŰ KIEGÉSZÍTŐK:</p>
+              <p id="goalSuppText" class="text-slate-700 leading-relaxed font-light mb-2">...</p>
+            </div>
+            <button onclick="switchTab('packages')" class="mt-3 py-2 bg-[#556B4E] text-white font-bold rounded-xl text-[11px] hover:bg-[#44563e] transition text-center block">
+              Kapcsolódó csomag megtekintése →
             </button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- INTELLIGENS CÉL-DIAGNOSZTIKA BLOKK ("Találd meg, mire van szükséged") -->
-  <div class="max-w-5xl mx-auto px-4 mb-8">
-    <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm max-w-3xl mx-auto text-xs">
-      <p class="font-bold text-[#556B4E] text-sm mb-1 text-center">🧠 Személyes életmód-szűrő</p>
-      <p class="text-slate-600 font-light text-center mb-4">Pipáld ki a rád jellemző állapotokat a célzott táplálkozási javaslatért!</p>
-      
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-2.5 mb-4">
-        <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" id="diagFatigue" class="rounded text-[#556B4E]"> <span>Fáradékony vagyok</span></label>
-        <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" id="diagStress" class="rounded text-[#556B4E]"> <span>Sokat stresszelek</span></label>
-        <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" id="diagSleep" class="rounded text-[#556B4E]"> <span>Keveset alszom</span></label>
-        <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" id="diagSport" class="rounded text-[#556B4E]"> <span>Rendszeresen sportolok</span></label>
-        <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" id="diagFish" class="rounded text-[#556B4E]"> <span>Kevés halat eszem</span></label>
-        <label class="p-2.5 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" id="diagVeg" class="rounded text-[#556B4E]"> <span>Kevés zöldséget eszem</span></label>
-      </div>
-
-      <button onclick="runLifestyleDiag()" class="w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl shadow-sm hover:bg-[#44563e] transition text-center">
-        Javasolt életmódbeli és táplálkozási mátrix generálása →
-      </button>
-
-      <div id="diagResultBox" class="hidden mt-4 p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 text-slate-700 space-y-2"></div>
     </div>
   </div>
 
@@ -539,6 +535,20 @@
     </div>
   </div>
 
+  <!-- RECEPT MODÁL -->
+  <div id="recipeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#F06292]/30">
+      <button onclick="closeRecipeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+      <img id="recipeModalImg" class="w-full h-48 object-cover rounded-2xl mb-4 border border-[#F06292]/30" src="" alt="">
+      <h3 id="recipeModalTitle" class="text-2xl font-bold font-serif-title text-[#556B4E] mb-2"></h3>
+      <p id="recipeModalDesc" class="text-xs text-slate-600 leading-relaxed mb-4 font-light"></p>
+      <div id="recipeModalIngredients" class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 mb-4 text-xs text-[#556B4E]"></div>
+      <div id="recipeModalSteps" class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 text-xs text-slate-700"></div>
+    </div>
+  </div>
+
   <!-- Rejtett sablon Ciklus PDF-hez -->
   <div class="hidden">
     <div id="pdfTemplate" class="p-8 bg-white text-slate-800" style="width: 700px;">
@@ -552,43 +562,49 @@
   <script>
     let symptomsData = [];
 
-    // 6 FŐ CÉL ADATBÁZISA (3 LÉPCSŐS PIRAMIS)
+    // 6 FŐ CÉL ADATBÁZISA (4 ELEMŰ DÚSÍTOTT COMPLEX ÉS MEGNEVEZÉSEK)
     const coreGoalsData = {
       "energia": {
-        title: "⚡ Energia & Fókusz Támogatása",
-        food: "Tojás, sovány marhahús, spenót, vöröslencse, banán, avokádó és zabpehely.",
-        lifestyle: "Délelőtti természetes napfény, heti 3 mérsékelt edzés, és a finomított szénhidrátok csökkentése.",
-        supp: "Bioaktív B-komplex (B6, B12), Magnézium-malát és Q10 koenzim."
+        title: "⚡ Energiaszint & Fókusz Növelése",
+        food: "Tojás (kolin & B12), sovány marhahús (hem-vas), spenót, vöröslencse, banán (kálium) és avokádó.",
+        herbs: "Ginzeng tea, friss gyömbérszelet citrommal és rozmaring infúzió a délelőtti órákban.",
+        recipe: "Rozmaringos marharagu szilvás mártással & gyökérzöldségekkel",
+        supp: "Bioaktív B-komplex (B6, B12), Magnézium-malát (energetizáló forma) és Q10 koenzim."
       },
       "alvas": {
-        title: "🌙 Alvás & Esti Nyugalom Rutin",
-        food: "Banán, zabpehely, meggy, dió, étcsokoládé (70%+) és házi csontleves.",
-        lifestyle: "Koffein elhagyása 14:00 után, képernyőmentes utolsó óra és langyos esti gyógytea.",
-        supp: "Magnézium-biszglicinát (este), L-theanin és Citromfű/Kamilla kivonat."
+        title: "🌙 Mély Alvás & Esti Kikapcsolódás",
+        food: "Banán, meggy (természetes melatonin), zabpehely, dió, étcsokoládé (70%+) és házi csontleves.",
+        herbs: "Citromfűtea, levendulavirág infúzió és macskagyökér teakeverék 30 perccel lefekvés előtt.",
+        recipe: "Fahéjas zabkása meggyraguval & olvasztott étcsokoládéval",
+        supp: "Magnézium-biszglicinát (ellazítja az izmokat), L-theanin és B6-vitamin."
       },
       "immun": {
-        title: "🛡️ Immunrendszer & Védekezőképesség",
-        food: "Fokhagyma, savanyú káposzta, cékla, brokkoli, fermentált kefir és citrom.",
-        lifestyle: "Napi 2.5 liter folyadék, napi 20 perc séta friss levegőn és kímélő alvás rutin.",
-        supp: "D3-vitamin (4000 NE) + K2-vitamin csepp, C-vitamin és Szerves Cink."
+        title: "🛡️ Immunrendszer & Védekezőképesség Erősítése",
+        food: "Fokhagyma (allicin), savanyú káposzta (élőflóra), cékla, brokkoli, fermentált kefir és friss citrom.",
+        herbs: "Csipkebogyótea (hideg áztatással!), feketebodza tea és kasvirág (echinacea) kúra.",
+        recipe: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával",
+        supp: "D3-vitamin (4000 NE) + K2-vitamin csepp, N-acetil-cisztein és Szerves Cink-biszglicinát."
       },
       "emesztes": {
-        title: "🌿 Emésztés & Bélflóra Egyensúly",
-        food: "Savanyú káposzta, házi kefir, kimchi, chia mag, frissen őrölt lenmag és cukkini.",
-        lifestyle: "Lassú, alapos rágás, bőséges rostbevitel és feldolgozott ételek elhagyása.",
-        supp: "Spórás probiotikum komplex, Emésztőenzimek és Béta-glükán."
+        title: "🌿 Emésztés & Bélflóra Harmonizálása",
+        food: "Savanyú káposzta leve, házi kefir, kimchi, chia mag (nyálkarost), őrölt lenmag és cukkini.",
+        herbs: "Édesköménytea, borsmentatea és kamillavirág teakeverék étkezések után.",
+        recipe: "Avokádós-kimchis quinoa tál edamame babbal & retekcsírával",
+        supp: "Spórás probiotikum komplex (MTHFR-barát), Emésztőenzimek és Béta-glükán."
       },
       "sport": {
-        title: "💪 Sport & Izomrehabilitáció",
-        food: "Lazacfilé, csirkemell, tojás, quinoa, csicseriborsó, edamame bab és meggylé.",
-        lifestyle: "Munkamenet utáni 45 perces fehérjepótlás, nyújtás és megfelelő pihenőnapok.",
-        supp: "Hidrolizált Kollagén peptid, Magnézium-biszglicinát és Omega-3 halolaj."
+        title: "💪 Sportteljesítmény & Gyors Regeneráció",
+        food: "Lazacfilé (Omega-3), csirkemell, tojás, quinoa, csicseriborsó, edamame bab és meggylé.",
+        herbs: "Zöld tea edzés előtt, csalántea az anyagcsere-termékek kivezetésére edzés után.",
+        recipe: "Pácolt lazacfilé pirított zöldspárgával & citromos kakukkfűvel",
+        supp: "Hidrolizált Kollagén peptid (10g) + C-vitamin, Magnézium-biszglicinát és Omega-3 halolaj."
       },
       "ciklus": {
-        title: "🌸 Női Ciklusszinkron Mátrix",
-        food: "Cékla, édesburgonya, lenmag, spenót, tengeri halak és fermentált zöldségek.",
-        lifestyle: "Ciklusfázishoz igazított edzésintenzitás és melegítő ételek a menstruáció idején.",
-        supp: "Aktív folát (L-metilfolát), Vas-biszglicinát és B6-vitamin."
+        title: "🌸 Női Hormonális Egyensúly Támogatása",
+        food: "Cékla, édesburgonya, frissen őrölt lenmag (lignánok), spenót, tengeri halak és fermentált zöldségek.",
+        herbs: "Palástfűtea (sárgatest-támogatás) és cickafarktea a ciklus második felében.",
+        recipe: "Sült édesburgonya-bruschetta kecskesajttal, dióval & friss kakukkfűvel",
+        supp: "Aktív folát (L-metilfolát), Gyomorkímélő vas-biszglicinát és B6-vitamin."
       }
     };
 
@@ -596,7 +612,7 @@
       "fokhagyma": { name: "Fokhagyma", nutrients: "Allicin, Szelén, C-vitamin", benefits: "❤️ Szív-érrendszer és természetes védekezőképesség támogatása", usage: "Pácokba, levesekbe, zúzva öntetekbe", recipeName: "Rozmaringos marharagu szilvás mártással" },
       "cékla": { name: "Cékla", nutrients: "Szerves vas, Folsav, Nitrátok", benefits: "🩸 Vérképzés és fizikai állóképesség támogatása", usage: "Krémlevesnek, sült kockákként", recipeName: "Céklás-vöröslencsés krémleves pirított tökmaggal" },
       "brokkoli": { name: "Brokkoli / Karfiol", nutrients: "Szulforafán, Indol-3-karbinol, Rost", benefits: "🛡️ Máj és normál anyagcsere támogatása", usage: "Párolva, sütőben pirítva", recipeName: "Tepsis sült brokkoli fokhagymás kefíröntettel" },
-      "édesburgonya": { name: "Édesburgonya", nutrients: "B6-vitamin, A-vitamin, Kálium", benefits: "⚖️ Lassan felszívódó szénhidrát a vércukor egyensúlyáért", usage: "Hasábként, pürének, bruschettaként", recipeName: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával" },
+      "édesburgonya": { name: "Édesburgonya", nutrients: "B6-vitamin, A-vitamin, Kálium", benefits: "⚖️ Lassan felszívódó szénhidrát a vércukor egyensúlyáért", usage: "Hasábként, pürének, bruschettaként", recipeName: "Ropogós csicseriborsó tál sült édesburgonyával" },
       "cukkini": { name: "Cukkini", nutrients: "Kálium, C-vitamin, Kímélő rostok", benefits: "💧 Segíti a veseműködést és a hidratációt", usage: "Tepsiben töltve, krémlevesnek", recipeName: "Tepsis fűszeres cukkini-hajók tonhalkrémmel" },
       "banán": { name: "Banán", nutrients: "Kálium, B6-vitamin, Triptofán", benefits: "💪 Izomgörcsök kivédése és jó alvás", usage: "Kásákba, banánkenyérbe", recipeName: "Lenmagpelyhes banánkenyér szilvával" },
       "áfonya": { name: "Áfonya / Málna", nutrients: "Antocianinok, C-vitamin", benefits: "🧠 Sejtek védelme az oxidatív stressztől", usage: "Kásákra, chia pudingra", recipeName: "Málnás-chia puding kókusztejszínnel" }
@@ -703,7 +719,7 @@
         avoid: "Alkohol, transzzsírok",
         sport: "🔥 Köredzés, kardió",
         recipes: [
-          { name: "Tepsis sült brokkoli fokhagymás kefíröntettel & dióval", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80", desc: "Sült zöldséges laktató saláta.", ingredients: "180g brokkoli, 120ml kefir, 25g dió, gránátalma", steps: "Megsütjük a brokkolit, kefíröntettel tálaljuk." }
+          { name: "Sült brokkolis-kefires saláta dióval & gránátalmával", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80", desc: "Sült zöldséges laktató saláta.", ingredients: "180g brokkoli, 120ml kefir, 25g dió, gránátalma", steps: "Megsütjük a brokkolit, kefíröntettel tálaljuk." }
         ]
       },
       4: {
@@ -733,28 +749,13 @@
 
       document.getElementById('goalResultTitle').innerText = g.title;
       document.getElementById('goalFoodText').innerText = g.food;
-      document.getElementById('goalLifestyleText').innerText = g.lifestyle;
+      document.getElementById('goalHerbsText').innerText = g.herbs;
+      document.getElementById('goalRecipeText').innerText = g.recipe;
       document.getElementById('goalSuppText').innerText = g.supp;
 
       const box = document.getElementById('coreGoalResultZone');
       box.classList.remove('hidden');
       box.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function runLifestyleDiag() {
-      const isFatigue = document.getElementById('diagFatigue').checked;
-      const isStress = document.getElementById('diagStress').checked;
-      const isSleep = document.getElementById('diagSleep').checked;
-
-      let msg = "<strong>Elemzésed eredménye:</strong><br>";
-      if (isFatigue) msg += "• Fáradékonyság esetén: Fókuszálj a vas- és B-vitamin tartalmú ételekre (cékla, marhahús, spenót)!<br>";
-      if (isStress) msg += "• Stressz esetén: Emeld az esti magnézium- és B6-vitamin bevitelt, igyál citromfűteát!<br>";
-      if (isSleep) msg += "• Alvászavar esetén: Kerüld a koffeint 14:00 után, egyél banánt vagy meggyet vacsorára!<br>";
-      if (!isFatigue && !isStress && !isSleep) msg += "• Remek formában vagy! Tartsuk fenn ezt a természetes egyensúlyt a heti étrendtervezővel!";
-
-      const box = document.getElementById('diagResultBox');
-      box.innerHTML = msg;
-      box.classList.remove('hidden');
     }
 
     async function loadSymptoms() {
