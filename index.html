@@ -94,23 +94,26 @@
     </div>
   </div>
 
-  <!-- Navigációs Tabok (5 Opció) -->
+  <!-- LETISZTULT, EGYNSOROS NAVIGÁCIÓS TABOK (6 Rövid Opció) -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
-    <div class="flex flex-wrap justify-center gap-2 bg-[#E8DCC6]/60 backdrop-blur-sm p-2 rounded-2xl border border-[#A7B69A]/40 max-w-3xl mx-auto shadow-sm">
-      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm">
+    <div class="flex flex-wrap justify-center gap-1.5 bg-[#E8DCC6]/60 backdrop-blur-sm p-2 rounded-2xl border border-[#A7B69A]/40 max-w-4xl mx-auto shadow-sm">
+      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm">
         🌿 Tünetkereső
       </button>
-      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#F06292]/10">
-        🌸 Ciklus-iránytű
+      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#F06292]/10">
+        🌸 Ciklus
       </button>
-      <button id="tabPackagesBtn" onclick="switchTab('packages')" class="flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
+      <button id="tabPackagesBtn" onclick="switchTab('packages')" class="flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
         📦 Csomagok
       </button>
-      <button id="tabLifestyleBtn" onclick="switchTab('lifestyle')" class="flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
+      <button id="tabLifestyleBtn" onclick="switchTab('lifestyle')" class="flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
         🥗 Életmód & BMI
       </button>
-      <button id="tabPantryBtn" onclick="switchTab('pantry')" class="flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
-        🥦 Alapanyagok & Kamra-Főző
+      <button id="tabPantryBtn" onclick="switchTab('pantry')" class="flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
+        🥦 Alapanyagok
+      </button>
+      <button id="tabWorkoutBtn" onclick="switchTab('workout')" class="flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20">
+        🏃‍♀️ Edzések
       </button>
     </div>
   </div>
@@ -226,13 +229,13 @@
     </div>
 
 
-    <!-- ==================== 4. TAB: ÉLETMÓD, BMI, BEVÁSÁRLÓLISTA & SPORT ==================== -->
+    <!-- ==================== 4. TAB: ÉLETMÓD & BMI ==================== -->
     <div id="lifestyleTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
-        <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott táplálkozás és edzés</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Életmód, BMI és sport-kalkulátor</h2>
+        <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott táplálkozás</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Életmód, BMI és kalkulátor</h2>
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
-          Számold ki a testtömeg-indexedet (BMI), válaszd ki a személyes célodat és az étkezési érzékenységeidet! A rendszer összeállít egy teljes heti mintaétrendet, pontos heti bevásárlólistát és egy testreszabott sport-táplálkozási stratégiát.
+          Számold ki a testtömeg-indexedet (BMI), válaszd ki a személyes célodat és az étkezési érzékenységeidet! A rendszer összeállít egy teljes heti mintaétrendet és pontos heti bevásárlólistát.
         </p>
       </div>
 
@@ -316,7 +319,7 @@
         </div>
 
         <button onclick="calculateLifestylePlan()" class="w-full py-3.5 bg-[#556B4E] text-white text-sm font-bold rounded-2xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
-          <span>✨</span> Személyre szabott heti étrend és sport-stratégia generálása
+          <span>✨</span> Személyre szabott heti étrend generálása
         </button>
       </div>
 
@@ -330,7 +333,7 @@
     </div>
 
 
-    <!-- ==================== 5. TAB: BŐVÍTETT ALAPANYAGOK & KAMRA-FŐZŐ ==================== -->
+    <!-- ==================== 5. TAB: ALAPANYAGOK & KAMRA-FŐZŐ ==================== -->
     <div id="pantryTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens receptajánló</span>
@@ -339,109 +342,46 @@
           Jelöld ki a kategóriákból az itthoni alapanyagokat, vagy keress rájuk gyorsan! A kód azonnal megmutatja a legjobban illeszkedő ételeket.
         </p>
 
-        <!-- GYORS KERESŐ MEZŐ AZ ALAPANYAGOKHOZ -->
         <div class="relative max-w-md mx-auto mb-2">
           <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Gyorskeresés alapanyagra pl. cékla, tojás, tonhal..." 
                  class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none focus:ring-1 focus:ring-[#556B4E]">
         </div>
       </div>
 
-      <!-- OTTHONI KÉSZLET JELÖLŐ (KATEGORIZÁLVA ~30+ ALAPANYAG) -->
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-3xl mx-auto text-xs space-y-5">
-        
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gyümölcsök:</p>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="cékla" class="pantry-item-check text-[#556B4E]"> <span>Cékla</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="édesburgonya" class="pantry-item-check text-[#556B4E]"> <span>Édesburgonya</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="cukkini" class="pantry-item-check text-[#556B4E]"> <span>Cukkini</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="sütőtök" class="pantry-item-check text-[#556B4E]"> <span>Sütőtök</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="sárgarépa" class="pantry-item-check text-[#556B4E]"> <span>Sárgarépa</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="spenót" class="pantry-item-check text-[#556B4E]"> <span>Spenót</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="banán" class="pantry-item-check text-[#556B4E]"> <span>Banán</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="meggy" class="pantry-item-check text-[#556B4E]"> <span>Meggy</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="szilva" class="pantry-item-check text-[#556B4E]"> <span>Szilva</span>
-            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="cékla" class="pantry-item-check text-[#556B4E]"> <span>Cékla</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="édesburgonya" class="pantry-item-check text-[#556B4E]"> <span>Édesburgonya</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="cukkini" class="pantry-item-check text-[#556B4E]"> <span>Cukkini</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="sütőtök" class="pantry-item-check text-[#556B4E]"> <span>Sütőtök</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="sárgarépa" class="pantry-item-check text-[#556B4E]"> <span>Sárgarépa</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="spenót" class="pantry-item-check text-[#556B4E]"> <span>Spenót</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="banán" class="pantry-item-check text-[#556B4E]"> <span>Banán</span></label>
           </div>
         </div>
 
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🌾</span> Hüvelyesek, Gabonák & Magvak:</p>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="vöröslencse" class="pantry-item-check text-[#556B4E]"> <span>Vöröslencse</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="zabpehely" class="pantry-item-check text-[#556B4E]"> <span>Zabpehely</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="quinoa" class="pantry-item-check text-[#556B4E]"> <span>Quinoa</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="rizs" class="pantry-item-check text-[#556B4E]"> <span>Arborio / Barna rizs</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="chia" class="pantry-item-check text-[#556B4E]"> <span>Chia mag</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="lenmag" class="pantry-item-check text-[#556B4E]"> <span>Lenmag</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="tökmag" class="pantry-item-check text-[#556B4E]"> <span>Tökmag</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="dió" class="pantry-item-check text-[#556B4E]"> <span>Dió / Mogyoró</span>
-            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="vöröslencse" class="pantry-item-check text-[#556B4E]"> <span>Vöröslencse</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="zabpehely" class="pantry-item-check text-[#556B4E]"> <span>Zabpehely</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="quinoa" class="pantry-item-check text-[#556B4E]"> <span>Quinoa</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="chia" class="pantry-item-check text-[#556B4E]"> <span>Chia mag</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="tökmag" class="pantry-item-check text-[#556B4E]"> <span>Tökmag</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="dió" class="pantry-item-check text-[#556B4E]"> <span>Dió / Mogyoró</span></label>
           </div>
         </div>
 
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥩</span> Fehérjék & Tejtermékek:</p>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="csirke" class="pantry-item-check text-[#556B4E]"> <span>Csirkemell</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="marha" class="pantry-item-check text-[#556B4E]"> <span>Marhahús</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="lazac" class="pantry-item-check text-[#556B4E]"> <span>Lazacfilé</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="tojás" class="pantry-item-check text-[#556B4E]"> <span>Tojás</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="kecskesajt" class="pantry-item-check text-[#556B4E]"> <span>Kecskesajt</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="kefir" class="pantry-item-check text-[#556B4E]"> <span>Natúr kefir</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="avokádó" class="pantry-item-check text-[#556B4E]"> <span>Avokádó</span>
-            </label>
-            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" value="étcsoki" class="pantry-item-check text-[#556B4E]"> <span>Étcsoki (70%+)</span>
-            </label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="csirke" class="pantry-item-check text-[#556B4E]"> <span>Csirkemell</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="lazac" class="pantry-item-check text-[#556B4E]"> <span>Lazacfilé</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="tojás" class="pantry-item-check text-[#556B4E]"> <span>Tojás</span></label>
+            <label class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center gap-2 cursor-pointer"><input type="checkbox" value="kecskesajt" class="pantry-item-check text-[#556B4E]"> <span>Kecskesajt</span></label>
           </div>
         </div>
 
@@ -450,8 +390,42 @@
         </button>
       </div>
 
-      <!-- KAMRA RECEPTEK EREDMÉNYE -->
       <div id="pantryRecipeResults" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
+    </div>
+
+
+    <!-- ==================== 6. TAB: CIKLUSSZINKRON EDZÉSEK (ÚJ!) ==================== -->
+    <div id="workoutTabSection" class="hidden">
+      <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
+        <span class="text-xs font-bold text-[#F06292] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#F06292]/30">Videós edzéstár & oktatóink</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Ciklusszinkron edzések</h2>
+        <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
+          Itt megtalálod a ciklusfázisodhoz legjobban illeszkedő 15-30 perces videós edzéseket és női oktatóink ajánlatait.
+        </p>
+      </div>
+
+      <!-- FÁZIS VÁLASZTÓ EDZÉSEKHEZ -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+        <button onclick="showWorkoutPhase(1)" id="wkPhaseBtn1" class="p-3.5 rounded-2xl border text-center transition bg-[#F06292] text-white border-[#F06292]">
+          <span class="block font-bold text-xs">1. Menstruáció</span>
+          <span class="block text-[10px] opacity-90">Yin jóga & Nyújtás</span>
+        </button>
+        <button onclick="showWorkoutPhase(2)" id="wkPhaseBtn2" class="p-3.5 rounded-2xl border text-center transition bg-white border-[#A7B69A]/40 text-[#556B4E]">
+          <span class="block font-bold text-xs">2. Follikuláris</span>
+          <span class="block text-[10px] text-slate-500">Súlyzós & HIIT</span>
+        </button>
+        <button onclick="showWorkoutPhase(3)" id="wkPhaseBtn3" class="p-3.5 rounded-2xl border text-center transition bg-white border-[#A7B69A]/40 text-[#556B4E]">
+          <span class="block font-bold text-xs">3. Ovuláció</span>
+          <span class="block text-[10px] text-slate-500">Köredzés & Kardió</span>
+        </button>
+        <button onclick="showWorkoutPhase(4)" id="wkPhaseBtn4" class="p-3.5 rounded-2xl border text-center transition bg-white border-[#A7B69A]/40 text-[#556B4E]">
+          <span class="block font-bold text-xs">4. Luteális</span>
+          <span class="block text-[10px] text-slate-500">Pilates & Tónus</span>
+        </button>
+      </div>
+
+      <!-- EDZÉS VIDEÓ ÉS OKTATÓI KÁRTYA -->
+      <div id="workoutContentZone" class="space-y-6 mb-8"></div>
     </div>
 
   </main>
@@ -495,7 +469,7 @@
     </div>
   </div>
 
-  <!-- CSOMAG ADAGOLÁSI RÉSZLETEZŐ MODÁL -->
+  <!-- CSOMAG MODÁL -->
   <div id="packageDosageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#A7B69A]/40">
       <button onclick="closePackageDosageModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -514,21 +488,6 @@
         <button onclick="downloadPackageDosagePdf()" class="flex-1 py-3 bg-[#556B4E] text-white font-bold rounded-xl shadow-md hover:bg-[#44563e] transition text-xs flex items-center justify-center gap-2">
           <span>📄</span> Adagolás letöltése PDF-ben
         </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- REJTETT HTML SABLON CSOMAG PDF GENERÁLÁSHOZ -->
-  <div class="hidden">
-    <div id="pkgPdfTemplate" class="p-8 bg-white text-slate-800" style="width: 700px; font-family: 'Plus Jakarta Sans', sans-serif;">
-      <div style="text-align: center; border-bottom: 2px solid #556B4E; padding-bottom: 15px; margin-bottom: 20px;">
-        <h1 style="font-family: 'Playfair Display', serif; color: #556B4E; font-size: 26px; margin: 0;">🌿 Vita-Natura természetes útmutató</h1>
-        <h2 id="pkgPdfTitle" style="color: #333; font-size: 16px; font-weight: bold; margin-top: 5px;"></h2>
-        <p id="pkgPdfMode" style="color: #666; font-size: 11px; margin-top: 2px;"></p>
-      </div>
-      <div id="pkgPdfBody" style="font-size: 11px; line-height: 1.6; color: #333;"></div>
-      <div style="text-align: center; margin-top: 30px; font-size: 9px; color: #aaa; border-top: 1px solid #eee; padding-top: 10px;">
-        Vita-Natura – Természetes tudásbázis • Tájékoztató jellegű dokumentum
       </div>
     </div>
   </div>
@@ -872,6 +831,42 @@
       }
     };
 
+    // EDZÉSEK ADATBÁZISA OKTATÓKKAL
+    const workoutData = {
+      1: {
+        title: "1. Menstruáció – Regeneráció & Lazítás",
+        desc: "Lassú tempójú, görcsoldó mozgásformák a méh simaizmainak ellazítására és a megújulásra.",
+        trainer: "Nagy Laura (Yin Jóga & Gyógytorna Oktató)",
+        trainerDesc: "Holisztikus szemléletű gyógytornász, aki a női medencealap védelmére és a görcsoldó nyújtásokra szakosodott.",
+        videoUrl: "https://www.youtube.com/embed/inpok4MKVLM", // Minta beágyazás
+        trainerUrl: "#"
+      },
+      2: {
+        title: "2. Follikuláris – Erőnlét & Izomépítés",
+        desc: "Növekvő ösztrogénszint, kiváló szénhidrát-felhasználás és csúcsenergia az erősítéshez.",
+        trainer: "Kovács Anna (Súlyzós & Funkcionális Edző)",
+        trainerDesc: "Funkcionális tréner, aki abban segít a nőknek, hogy a ciklusuk csúcsfázisaiban a legmagasabb erőt hozzák ki magukból.",
+        videoUrl: "https://www.youtube.com/embed/inpok4MKVLM",
+        trainerUrl: "#"
+      },
+      3: {
+        title: "3. Ovuláció – Maximális Teljesítmény",
+        desc: "Tesztoszteroncsúcs, magas állóképesség és dinamikus mozgásformák csoportos órákhoz vagy sprintinghez.",
+        trainer: "Szabó Eszter (HIIT & Kardió Tréner)",
+        trainerDesc: "Dinamikus csoportos edző, aki pörgős, vidám és kalóriaégető köredzéseket állít össze.",
+        videoUrl: "https://www.youtube.com/embed/inpok4MKVLM",
+        trainerUrl: "#"
+      },
+      4: {
+        title: "4. Luteális – Pilates & Tónusformálás",
+        desc: "Közepes tempójú kardió, mélyizom-erősítés és túlmelegedést megelőző tónusformáló órák.",
+        trainer: "Molnár Zsófia (Klasszikus Pilates Oktató)",
+        trainerDesc: "A törzsizomzat és a mélyizmok tónusos formálásának szakértője, kímélve az ízületeket.",
+        videoUrl: "https://www.youtube.com/embed/inpok4MKVLM",
+        trainerUrl: "#"
+      }
+    };
+
     function getCategorySVG(cat) {
       if (cat.includes('Idegrendszer')) return `<svg class="w-4 h-4 text-[#556B4E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-0a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`;
       if (cat.includes('Emésztőrendszer')) return `<svg class="w-4 h-4 text-[#556B4E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>`;
@@ -940,51 +935,99 @@
       document.getElementById('modal').classList.add('hidden');
     }
 
-    // FÜLVÁLTÓ LOGIKA
+    // TAB VÁLTÓ LOGIKA (6 Rövid Opció)
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
       const packagesSec = document.getElementById('packagesTabSection');
       const lifestyleSec = document.getElementById('lifestyleTabSection');
       const pantrySec = document.getElementById('pantryTabSection');
+      const workoutSec = document.getElementById('workoutTabSection');
       
       const symptomsBtn = document.getElementById('tabSymptomsBtn');
       const cycleBtn = document.getElementById('tabCycleBtn');
       const packagesBtn = document.getElementById('tabPackagesBtn');
       const lifestyleBtn = document.getElementById('tabLifestyleBtn');
       const pantryBtn = document.getElementById('tabPantryBtn');
+      const workoutBtn = document.getElementById('tabWorkoutBtn');
 
       symptomsSec.classList.add('hidden');
       cycleSec.classList.add('hidden');
       packagesSec.classList.add('hidden');
       lifestyleSec.classList.add('hidden');
       pantrySec.classList.add('hidden');
+      workoutSec.classList.add('hidden');
 
-      symptomsBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20";
-      cycleBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#F06292]/10";
-      packagesBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20";
-      lifestyleBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20";
-      pantryBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20";
+      const inactiveStyle = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 text-[#556B4E] hover:bg-[#A7B69A]/20";
+      
+      symptomsBtn.className = inactiveStyle;
+      cycleBtn.className = inactiveStyle;
+      packagesBtn.className = inactiveStyle;
+      lifestyleBtn.className = inactiveStyle;
+      pantryBtn.className = inactiveStyle;
+      workoutBtn.className = inactiveStyle;
 
       if (tab === 'symptoms') {
         symptomsSec.classList.remove('hidden');
-        symptomsBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
+        symptomsBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
       } else if (tab === 'cycle') {
         cycleSec.classList.remove('hidden');
-        cycleBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#F06292] text-white shadow-sm";
+        cycleBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#F06292] text-white shadow-sm";
         showPhase(1);
       } else if (tab === 'packages') {
         packagesSec.classList.remove('hidden');
-        packagesBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
+        packagesBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
         renderPackages();
       } else if (tab === 'lifestyle') {
         lifestyleSec.classList.remove('hidden');
-        lifestyleBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
+        lifestyleBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
       } else if (tab === 'pantry') {
         pantrySec.classList.remove('hidden');
-        pantryBtn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
+        pantryBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
         findPantryRecipes();
+      } else if (tab === 'workout') {
+        workoutSec.classList.remove('hidden');
+        workoutBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
+        showWorkoutPhase(1);
       }
+    }
+
+    // EDZÉS FÁZIS KIJELZŐ
+    function showWorkoutPhase(pNum) {
+      const w = workoutData[pNum];
+      const container = document.getElementById('workoutContentZone');
+
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`wkPhaseBtn${i}`);
+        if (i === pNum) {
+          btn.className = "p-3.5 rounded-2xl border text-center transition bg-[#F06292] text-white border-[#F06292]";
+        } else {
+          btn.className = "p-3.5 rounded-2xl border text-center transition bg-white border-[#A7B69A]/40 text-[#556B4E]";
+        }
+      }
+
+      container.innerHTML = `
+        <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm">
+          <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-1">${w.title}</h3>
+          <p class="text-xs text-slate-600 mb-6 font-light">${w.desc}</p>
+
+          <!-- VIDEÓ LEJÁTSZÓ BEÉPÍTVE -->
+          <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-md mb-6 border border-[#A7B69A]/30 bg-slate-900 flex items-center justify-center">
+            <iframe class="w-full h-full" src="${w.videoUrl}" title="${w.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+
+          <!-- OKTATÓI KÁRTYA (WIN-WIN MODELL) -->
+          <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+            <div>
+              <p class="font-bold text-[#556B4E] text-sm mb-0.5">👩‍🏫 Kiemelt oktatónk ebben a fázisban: ${w.trainer}</p>
+              <p class="text-slate-600 font-light">${w.trainerDesc}</p>
+            </div>
+            <a href="${w.trainerUrl}" target="_blank" class="whitespace-nowrap px-4 py-2.5 bg-[#556B4E] text-white font-bold rounded-xl shadow-sm hover:bg-[#44563e] transition text-center">
+              Oktató teljes programja →
+            </a>
+          </div>
+        </div>
+      `;
     }
 
     function showPhase(phaseNum) {
@@ -1061,7 +1104,6 @@
       `;
     }
 
-    // ALAPANYAG GYORSKERESŐ SZŰRŐ
     function filterPantryCheckboxes() {
       const q = document.getElementById('pantryQuickSearch').value.toLowerCase();
       const labels = document.querySelectorAll('.pantry-item-label');
@@ -1075,7 +1117,6 @@
       });
     }
 
-    // ALAPANYAG-FŐZŐ INTELIGENS KERESŐ LOGIKA
     function findPantryRecipes() {
       const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
       const userItems = Array.from(checkedBoxes).map(cb => cb.value.toLowerCase());
@@ -1141,7 +1182,6 @@
       }
     }
 
-    // ÉLETMÓD LOGIKA
     function toggleTargetWeightInput(show) {
       const box = document.getElementById('targetWeightBox');
       if (show) box.classList.remove('hidden');
