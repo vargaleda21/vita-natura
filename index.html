@@ -23,12 +23,19 @@
       font-family: 'Plus Jakarta Sans', sans-serif; 
       background-color: var(--beige-light);
       color: #333333;
-      /* Minimalista, absztrakt organikus alakzatok a háttérben */
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(167, 182, 154, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(240, 98, 146, 0.15) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(232, 220, 198, 0.35) 0%, transparent 60%);
-      background-attachment: fixed;
+      position: relative;
+    }
+
+    /* Absztrakt lágy organikus háttéralakzatok láthatósága */
+    .bg-abstract-shape {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
     }
 
     h1, h2, h3, .font-serif-title { 
@@ -37,6 +44,16 @@
   </style>
 </head>
 <body class="antialiased pb-20">
+
+  <!-- Absztrakt organikus hátterek -->
+  <div class="bg-abstract-shape">
+    <svg class="absolute -top-20 -left-20 w-[500px] h-[500px] opacity-25 text-[#A7B69A]" viewBox="0 0 200 200" fill="currentColor">
+      <path d="M44.7,-59.2C56.9,-48.6,65.2,-33.5,68.4,-17.5C71.6,-1.5,69.7,15.4,61.8,28.8C53.9,42.2,40.1,52,24.8,59.3C9.5,66.6,-7.3,71.4,-23.5,67.3C-39.7,63.2,-55.3,50.2,-63.8,33.8C-72.3,17.4,-73.7,-2.4,-68.2,-20.1C-62.7,-37.8,-50.3,-53.4,-35.6,-62.8C-20.9,-72.2,-3.9,-75.4,11.2,-73.5C26.3,-71.6,32.5,-69.8,44.7,-59.2Z" transform="translate(100 100)" />
+    </svg>
+    <svg class="absolute top-1/2 -right-32 w-[600px] h-[600px] opacity-20 text-[#F06292]" viewBox="0 0 200 200" fill="currentColor">
+      <path d="M38.1,-48.8C49.9,-38.3,60.3,-26.4,63.8,-12.3C67.3,1.8,63.9,18.1,55.1,30.8C46.3,43.5,32.1,52.6,16.5,57.2C0.9,61.8,-16.1,61.9,-30.7,55.2C-45.3,48.5,-57.5,35,-62.4,19.2C-67.3,3.4,-64.9,-14.7,-56.3,-28.5C-47.7,-42.3,-32.9,-51.8,-18.8,-54.6C-4.7,-57.4,8.7,-53.5,38.1,-48.8Z" transform="translate(100 100)" />
+    </svg>
+  </div>
 
   <!-- Fejléc -->
   <header class="bg-[#556B4E] text-white py-12 px-4 shadow-md mb-6 relative overflow-hidden">
@@ -71,7 +88,7 @@
     
     <!-- ==================== 1. TAB: TÜNETKERESŐ ==================== -->
     <div id="symptomsTabSection">
-      <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-2xl mx-auto">
+      <div class="bg-white/85 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-2xl mx-auto">
         <h2 class="text-2xl font-bold text-[#556B4E] mb-2">Mi az a Vita-Natura?</h2>
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
           A Vita-Natura egy független, tudományos alapokon nyugvó természetes tudásbázis. Célunk, hogy a mindennapi testi panaszokra hármas védelmi vonalat adjunk a kezedbe: célzott vitaminokat, gyógyteákat és a saját konyhádban fellelhető otthoni élelmiszer-alapanyagokat.
@@ -95,7 +112,7 @@
 
     <!-- ==================== 2. TAB: CIKLUS-IRÁNYTŰ ==================== -->
     <div id="cycleTabSection" class="hidden">
-      <div class="bg-gradient-to-b from-[#F7F3ED] to-[#E8DCC6]/40 p-6 md:p-8 rounded-3xl border border-[#F06292]/30 mb-8 text-center max-w-3xl mx-auto shadow-sm">
+      <div class="bg-gradient-to-b from-[#F7F3ED]/90 to-[#E8DCC6]/50 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#F06292]/30 mb-8 text-center max-w-3xl mx-auto shadow-sm">
         <span class="text-xs font-bold text-[#F06292] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#F06292]/30">Ciklusszinkronizált táplálkozás és edzés</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-3">Harmónia a női ciklusban</h2>
         <p class="text-slate-700 text-sm md:text-base leading-relaxed font-light mb-6">
@@ -166,7 +183,7 @@
 
     <!-- ==================== 3. TAB: CSOMAGOK ==================== -->
     <div id="packagesTabSection" class="hidden">
-      <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
+      <div class="bg-white/85 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Komplex egészség-szinergiák</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Vita-Natura természetes csomagok</h2>
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
@@ -180,7 +197,7 @@
 
     <!-- ==================== 4. TAB: ÉLETMÓD, BMI, BEVÁSÁRLÓLISTA & SPORT ==================== -->
     <div id="lifestyleTabSection" class="hidden">
-      <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
+      <div class="bg-white/85 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott táplálkozás és edzés</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Életmód, BMI és sport-kalkulátor</h2>
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light">
@@ -285,6 +302,7 @@
         <div id="lsAnalysisBox" class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8"></div>
         <div id="lsSportBox" class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8"></div>
         <div id="lsWeeklyMealBox" class="mb-8"></div>
+        <div id="lsNutrientSuppBox" class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8"></div>
         <div id="lsShoppingListBox" class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8"></div>
       </div>
 
@@ -406,7 +424,7 @@
     </div>
   </div>
 
-  <!-- RECEPT MODÁL -->
+  <!-- RECEPT MODÁL (ADAGVÁLASZTÓ KÁRTYÁVAL) -->
   <div id="recipeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#F06292]/30">
       <button onclick="closeRecipeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -415,10 +433,20 @@
       <img id="recipeModalImg" class="w-full h-48 object-cover rounded-2xl mb-4 border border-[#F06292]/30" src="" alt="">
       <h3 id="recipeModalTitle" class="text-2xl font-bold font-serif-title text-[#556B4E] mb-2"></h3>
       <p id="recipeModalDesc" class="text-xs text-slate-600 leading-relaxed mb-4 font-light"></p>
+      
+      <!-- ADAGKÁLKUÁTOR BEÉPÍTVE -->
       <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 mb-4 text-xs text-[#556B4E]">
-        <p class="font-bold mb-1 text-sm">🥣 Hozzávalók:</p>
-        <p id="recipeModalIngredients" class="text-slate-700 leading-relaxed"></p>
+        <div class="flex items-center justify-between mb-2">
+          <p class="font-bold text-sm">🥣 Hozzávalók kiszámítása:</p>
+          <div class="flex gap-1">
+            <button onclick="updateRecipeServings(1)" id="servBtn1" class="px-2.5 py-1 rounded-lg font-bold border transition bg-[#556B4E] text-white border-[#556B4E]">1 adag</button>
+            <button onclick="updateRecipeServings(2)" id="servBtn2" class="px-2.5 py-1 rounded-lg font-bold border transition bg-white text-slate-700 border-slate-200">2 adag</button>
+            <button onclick="updateRecipeServings(4)" id="servBtn4" class="px-2.5 py-1 rounded-lg font-bold border transition bg-white text-slate-700 border-slate-200">4 adag</button>
+          </div>
+        </div>
+        <p id="recipeModalIngredients" class="text-slate-700 leading-relaxed mt-2"></p>
       </div>
+
       <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 text-xs">
         <p class="font-bold text-[#556B4E] mb-1 text-sm">👩‍🍳 Elkészítés lépésről lépésre:</p>
         <p id="recipeModalSteps" class="text-slate-700 leading-relaxed whitespace-pre-line"></p>
@@ -467,8 +495,8 @@
   <!-- JavaScript Logika -->
   <script>
     let symptomsData = [];
+    let activeRecipeOriginalIng = "";
 
-    // CSOMAGOK ADATBÁZISA
     const packageData = [
       {
         id: "winter",
@@ -491,7 +519,7 @@
             { item: "Tökmag (Cinkforrás)", dose: "1 marék (kb. 30g)", time: "Délutáni nassolásként", tip: "Enyhén pirítsd meg serpenyőben zsiradék nélkül a jobb emészthetőségért!" },
             { item: "Mézes fokhagyma", dose: "1 kávéskanál", time: "Reggel vagy este", tip: "Zúzd össze a fokhagymát, várj 10 percet az allicin képződésre, majd keverd mézbe!" }
           ],
-          note: "⚠️ Szakmai megjegyzés: Téli időszakban a D3-vitamint élelmiszerekből (tojás, zsíros halak) nehéz a terápiás 4000 NE szinten bevinni, így ott a D3-csepp használata javasolt!"
+          note: "⚠️ Szakmai megjegyzés: Téli időszakban a D3-vitamint élelmiszerekből nehéz a terápiás 4000 NE szinten bevinni, így ott a D3-csepp használata javasolt!"
         }
       },
       {
@@ -515,7 +543,7 @@
             { item: "Savanyú káposzta leve", dose: "1 dl friss lé", time: "Reggel éhgyomorra", tip: "Természetes élőflóra-bomba a bélrendszernek." },
             { item: "Csalán-zsurló teakeverék", dose: "2 csésze/nap (1-1 tk teafű)", time: "Délelőtt és délután", tip: "14 napos kúraként idd, majd tarts 1 hét szünetet!" }
           ],
-          note: "A fermentált ételek rendszeres fogyasztása 2 hét alatt érezhetően növeli az energiaszintet a bélflóra tisztulása révén."
+          note: "A fermentált ételek rendszeres fogyasztása 2 hét alatt érezhetően növeli az energiaszintet."
         }
       },
       {
@@ -568,7 +596,6 @@
       }
     ];
 
-    // CIKLUS FÁZISOK ADATBÁZISA
     const cyclePhases = {
       1: {
         title: "1. Menstruációs fázis (1–5. nap)",
@@ -583,21 +610,21 @@
             name: "Céklás-vöröslencsés krémleves tökmaggal",
             img: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80",
             desc: "Rendkívül gazdag szerves vasban és folsavban. A meleg krémleves kíméli az emésztőrendszert, a tökmag cinkkel látja el a szervezetet.",
-            ingredients: "2 fej cékla, 10 dkg vöröslencse, 1 dkg friss gyömbér, 2 dl kókusztej, 2 ek pirított tökmag.",
+            ingredients: "20 dkg cékla, 10 dkg vöröslencse, 1 dkg friss gyömbér, 2 dl kókusztej, 2 dkg pirított tökmag.",
             steps: "1. A céklát és gyömbért megtisztítjuk, felkockázzuk.\n2. A vöröslencsével együtt kevés vízben puhára főzzük (kb. 20 perc).\n3. Hozzáadjuk a kókusztejet, összeturmixoljuk, majd pirított tökmaggal tálaljuk."
           },
           {
             name: "Meleg fahéjas zabkása meggyel & étcsokival",
             img: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=600&q=80",
             desc: "A zab és az étcsokoládé magas magnéziumtartalma ellazítja a méh simaizmait, csökkentve a görcsös fájdalmakat.",
-            ingredients: "5 ek zabpehely, 2 dl mandulatej, 1 marék meggy, 2 kocka étcsoki (70%+), 1 tk fahéj.",
+            ingredients: "5 dkg zabpehely, 2 dl mandulatej, 5 dkg meggy, 2 dkg étcsoki (70%+), 1 tk fahéj.",
             steps: "1. A zabpelyhet a mandulatejjel és a fahéjjal lassú tűzön krémesre főzzük.\n2. Tálkába öntjük, belekeverjük a meggyet.\n3. A tetejére rátesszük az étcsokit, ami a meleg kásán finoman ráolvad."
           },
           {
             name: "Lassan főtt fűszeres marharagu gyökérzöldségekkel",
             img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
             desc: "Könnyen beépülő hem-vas forrás. A hosszan főzött alaplé regenerálja a bélnyálkahártyát és feltölti az energiaraktárakat.",
-            ingredients: "40 dkg marhalábszár (vagy csiperkegomba), 2 sárgarépa, 1 zellergyökér, babérlevél, 5 dl csontlé.",
+            ingredients: "20 dkg marhalábszár (vagy gomba), 10 dkg sárgarépa, 5 dkg zellergyökér, babérlevél, 3 dl csontlé.",
             steps: "1. A húst/gombát felkockázzuk, kevés zsiradékon átpirítjuk.\n2. Hozzáadjuk a felvágott gyökérzöldségeket és a babérlevelet.\n3. Felöntjük a csontlével, és lefedve, lassú tűzön 1.5-2 órán át puhára pároljuk."
           }
         ]
@@ -615,21 +642,21 @@
             name: "Avokádós-kimchis bowl csírákkal & edamame babbal",
             img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
             desc: "A fermentált kimchi táplálja a bélflórát, ami elengedhetetlen a növekvő ösztrogénszint optimális feldolgozásához.",
-            ingredients: "10 dkg főtt quinoa, fél avokádó, 3 ek kimchi, 1 marék edamame bab, 1 ek retekcsíra.",
+            ingredients: "10 dkg főtt quinoa, 5 dkg avokádó, 4 dkg kimchi, 5 dkg edamame bab, 1 dkg retekcsíra.",
             steps: "1. A főtt quinoát egy tál aljára tesszük.\n2. Szépen mellé rendezzük a szeletelt avokádót, kimchit és az edamame babot.\n3. A tetejét friss retekcsírával és pár csepp olívaolajjal díszítjük."
           },
           {
             name: "Citromos-kakukkfüves lazacfilé párolt spárgával",
             img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&q=80",
             desc: "Magas Omega-3 és cink tartalmával közvetlenül támogatja az érő tüsző minőségét és a hormontermelést.",
-            ingredients: "1 szelet lazacfilé, 10 szál zöldspárga, fél citrom leve, friss kakukkfű, olívaolaj.",
+            ingredients: "15 dkg lazacfilé, 10 dkg zöldspárga, fél citrom leve, friss kakukkfű, 1 dkg olívaolaj.",
             steps: "1. A lazacot sózzuk, borsozzuk, friss kakukkfűvel és citromlével ízesítjük.\n2. Serpenyőben oldalanként 3-4 perc alatt készre sütjük.\n3. A spárgát pár perc alatt gőzfelett megpároljuk, és a lazac mellé tálaljuk."
           },
           {
             name: "Matcha-spirulina smoothie tál bogyós gyümölcsökkel",
             img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80",
             desc: "Antioxidáns bombaként védi a sejteket az oxidatív stressztől a növekvő energiájú fázisban.",
-            ingredients: "1 tk matcha por, 1 fagyasztott banán, 1 marék spenót, 1.5 dl kókuszvíz, friss málna és áfonya.",
+            ingredients: "0.5 dkg matcha por, 10 dkg fagyasztott banán, 3 dkg spenót, 1.5 dl kókuszvíz, 5 dkg málna és áfonya.",
             steps: "1. A banánt, spenótot, matcha port és kókuszvizet sűrű turmixszá krémestjük.\n2. Tálba öntjük, és a tetejét kirakjuk friss málna- és áfonyaszemekkel."
           }
         ]
@@ -647,21 +674,21 @@
             name: "Sült brokkolis-kefires saláta dióval & gránátalmával",
             img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
             desc: "A brokkoliban található INDOL-3-KARBINOL vegyület bizonyítottan segíti a májat a felesleges ösztrogén kivezetésében.",
-            ingredients: "1 fej brokkoli (rózsáira szedve), 1 dl natúr kefir, 1 marék dió, 2 ek gránátalmamag.",
+            ingredients: "15 dkg brokkoli, 1 dl natúr kefir, 2 dkg dió, 2 dkg gránátalmamag.",
             steps: "1. A brokkolirózsákat sütőben 180 °C-on 15 perc alatt enyhén megpirítjuk.\n2. A kefirt sóval, borssal, pici citromlével kikeverjük öntetnek.\n3. Összeforgatjuk a brokkolit az öntettel, durvára vágott dióval és gránátalmával."
           },
           {
             name: "Szezámmagos quinoa tál párolt cukkínivel & csirkével",
             img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
             desc: "A szezámmag fitoösztrogénjei természetes módon harmonizálják a hormoncsúcsot az ovuláció ablakában.",
-            ingredients: "10 dkg quinoa, 15 dkg csirkemellfilé, 1 cukkini, 2 ek pörkölt szezámmag.",
+            ingredients: "10 dkg quinoa, 15 dkg csirkemellfilé, 10 dkg cukkini, 1.5 dkg pörkölt szezámmag.",
             steps: "1. A quinoát kétszeres mennyiségű vízben kifőzzük.\n2. A csirkemellet és cukkinit kockákra vágjuk, serpenyőben átpirítjuk.\n3. Egy tálban összekeverjük, és bőségesen megszórjuk pörkölt szezámmaggol."
           },
           {
             name: "Málnás-chia pudíng kókusztejjel & kókuszreszelékkel",
             img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600&q=80",
             desc: "Magas rosttartalma köti a bélben a lebontott ösztrogént, megakadályozva annak visszaszívódását.",
-            ingredients: "3 ek chia mag, 2 dl kókusztej, 1 marék friss málna, 1 tk kókuszreszelék.",
+            ingredients: "3 dkg chia mag, 2 dl kókusztej, 5 dkg friss málna, 1 dkg kókuszreszelék.",
             steps: "1. A chia magot elkeverjük a kókusztejjel, és legalább 2 órára hűtőbe tesszük.\n2. Tálaláskor a sűrű puding tetejére halmozzuk az összetört málnát és a kókuszreszeléket."
           }
         ]
@@ -679,21 +706,21 @@
             name: "Sült sütőtökös-zsályás rizottó törökmogyoróval",
             img: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=600&q=80",
             desc: "A sütőtök komplex szénhidrátjai stabilizálják a vércukorszintet, megakadályozva az esti édesség-sóvárgást.",
-            ingredients: "20 dkg sütőtök, 10 dkg arborio rizs, 4 friss zsályalevél, 2 ek pirított törökmogyoró.",
+            ingredients: "20 dkg sütőtök, 8 dkg arborio rizs, 4 friss zsályalevél, 2 dkg pirított törökmogyoró.",
             steps: "1. A sütőtökkockákat sütőben megsütjük, felét pürésítjük.\n2. A rizst felöntögetve megfőzzük, hozzákeverjük a sütőtökpürét és a megsült kockákat.\n3. Vajas zsályával átforgatjuk, és pirított törökmogyoróval megszórva tálaljuk."
           },
           {
             name: "Édesburgonya-bruschetta kecskesajttal & dióval",
             img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80",
             desc: "Magas B6-vitamin és kálium tartalmával csökkenti a premenstruációs vizesedést és a puffadást.",
-            ingredients: "1 nagy édesburgonya karikákra vágva, 8 dkg kecskesajt, 1 marék dió, kakukkfű.",
+            ingredients: "15 dkg édesburgonya karikákra vágva, 5 dkg kecskesajt, 2 dkg dió, kakukkfű.",
             steps: "1. Az édesburgonya karikákat sütőpapíron 200 °C-on 20 perc alatt megroppantjuk.\n2. Rámorzsoljuk a kecskesajtot és a diót, majd további 5 percre visszatesszük a sütőbe.\n3. Friss kakukkfűvel megszórva melegen fogyasztjuk."
           },
           {
             name: "Lenmagpelyhes banánkenyér szilvával (Cukormentes)",
             img: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80",
             desc: "A frissen őrölt lenmag támogatja a progeszteron-termelődést a luteális fázis második felében.",
-            ingredients: "2 érett banán, 2 tojás, 10 dkg zabliszt, 3 ek őrölt lenmag, 4 szem szilva, 1 tk fahéj.",
+            ingredients: "15 dkg érett banán, 1 tojás, 5 dkg zabliszt, 2 dkg őrölt lenmag, 4 dkg szilva, 1 tk fahéj.",
             steps: "1. A banánokat villával összetörjük, elkeverjük a tojásokkal, zabliszttel, lenmaggal és fahéjgal.\n2. Belekeverjük a szilvakockákat, és sütőformába öntjük.\n3. 180 °C-on kb. 35-40 perc alatt készre sütjük."
           }
         ]
@@ -768,7 +795,6 @@
       document.getElementById('modal').classList.add('hidden');
     }
 
-    // FÜLVÁLTÓ LOGIKA
     function switchTab(tab) {
       const symptomsSec = document.getElementById('symptomsTabSection');
       const cycleSec = document.getElementById('cycleTabSection');
@@ -830,7 +856,7 @@
                 <h4 class="text-xl font-bold font-serif-title text-[#556B4E] mb-2">${r.name}</h4>
                 <p class="text-xs text-slate-600 leading-relaxed mb-4 font-light">${r.desc}</p>
                 <div class="p-3 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/40 text-xs text-[#556B4E] mb-4">
-                  <span class="font-bold">🥣 Hozzávalók:</span> ${r.ingredients}
+                  <span class="font-bold">🥣 Hozzávalók (1 adag):</span> ${r.ingredients}
                 </div>
               </div>
             </div>
@@ -947,7 +973,7 @@
           <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
             <p class="font-bold text-[#556B4E] mb-1">🔥 Napi kalória cél:</p>
             <p class="text-[#556B4E] font-bold text-base">${targetCalories} kcal</p>
-            <p class="text-[10px] text-slate-500 mt-0.5">Fenntartó: ${tdee} kcal</p>
+            <p class="text-[10px] text-slate-500 mt-0.5">Súlytartó igény: ${tdee} kcal</p>
           </div>
           <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
             <p class="font-bold text-[#556B4E] mb-1">💧 Ajánlott vízfogyasztás:</p>
@@ -1038,39 +1064,69 @@
       weeklyHtml += `</div></div>`;
       document.getElementById('lsWeeklyMealBox').innerHTML = weeklyHtml;
 
+      // CÉLZOTT MIKROTÁPANYAG AJÁNLÓ DOBOZ
+      document.getElementById('lsNutrientSuppBox').innerHTML = `
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-2xl">🌱</span>
+          <h3 class="text-2xl font-bold font-serif-title text-[#556B4E]">Ajánlott természetes és mikrotápanyag-pótlás</h3>
+        </div>
+        <p class="text-xs text-slate-600 mb-4 font-light">A kiválasztott életmódcélod és a heti étrend kiegészítéseként ezekkel a természetes alapanyagokkal és vitaminokkal éred el a leggyorsabb és legbiztonságosabb eredményt:</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
+            <p class="font-bold text-[#556B4E] mb-2 text-sm">🥣 Élelmiszerből kinyerhető (Kamra):</p>
+            <ul class="space-y-1.5 text-slate-700 font-light">
+              <li>• <strong>Rost és emésztés:</strong> Napi 1 evőkanál frissen őrölt lenmag az ételekre szórva.</li>
+              <li>• <strong>Elektrolit és izmok:</strong> Napi 1 marék pirított tökmag és 1 banán az izomláz ellen.</li>
+              <li>• <strong>Bélflóra:</strong> Napi 1 dl savanyú káposzta lé vagy házi kefir a tiszta emésztésért.</li>
+            </ul>
+          </div>
+          <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
+            <p class="font-bold text-[#556B4E] mb-2 text-sm">💊 Célzott kiegészítésként javasolt:</p>
+            <ul class="space-y-1.5 text-slate-700 font-light">
+              <li>• <strong>Magnézium-biszglicinát:</strong> Napi 300-400 mg este elalvás előtt (izomlazítás és stresszcsökkentés).</li>
+              <li>• <strong>D3-vitamin + K2:</strong> Napi 2000-4000 NE csepp formájában zsíros étkezés közben.</li>
+              <li>• <strong>Bioaktív B-komplex:</strong> Napi 1 kapszula reggelizéskor a metabolizmus felpörgetéséhez.</li>
+            </ul>
+          </div>
+        </div>
+      `;
+
+      // HETI PIPÁLHATÓ BEVÁSÁRLÓLISTA (1 HÉTRE KISZÁMÍTVA)
       document.getElementById('lsShoppingListBox').innerHTML = `
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-2xl font-bold font-serif-title text-[#556B4E]">🛒 Összesített heti bevásárlólista</h3>
-          <span class="text-xs font-bold text-[#F06292] bg-[#F7F3ED] px-3 py-1 rounded-full border border-[#F06292]/30">A heti receptek alapján</span>
+          <h3 class="text-2xl font-bold font-serif-title text-[#556B4E]">🛒 Összesített heti bevásárlólista (1 hétre)</h3>
+          <span class="text-xs font-bold text-[#F06292] bg-[#F7F3ED] px-3 py-1 rounded-full border border-[#F06292]/30">Interaktív pipálható lista</span>
         </div>
-        <p class="text-xs text-slate-600 mb-6 font-light">Ezeket az alapanyagokat érdemes beszerezned a heti étrendhez. A listát helyi termelői piacokon vagy webshopban is beszerezheted.</p>
+        <p class="text-xs text-slate-600 mb-6 font-light">Közvetlenül a telefonodon ki tudod pipálni az elemeket a boltban vagy a piacon vásárlás közben!</p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
-            <p class="font-bold text-[#556B4E] mb-2 text-sm">🥬 Zöldségek & Gyümölcsök:</p>
-            <ul class="space-y-1 text-slate-700 font-light">
-              <li>• Cékla, brokkoli, zöldspárga, cukkini</li>
-              <li>• Édesburgonya, sütőtök, sárgarépa</li>
-              <li>• Banán, málna, áfonya, meggy, szilva</li>
-              <li>• Spenót, friss zöldfűszerek, gyömbér</li>
-            </ul>
+            <p class="font-bold text-[#556B4E] mb-3 text-sm">🥬 Zöldségek & Gyümölcsök (Heti adag):</p>
+            <div class="space-y-2 text-slate-700 font-light">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>1 kg cékla & 1 kg édesburgonya</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>2 fej brokkoli & 1 csomag zöldspárga</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>2 kg banán & 50 dkg áfonya/málna</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>1 zacskó friss spenót & friss gyömbér</span></label>
+            </div>
           </div>
           <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
-            <p class="font-bold text-[#556B4E] mb-2 text-sm">🌾 Magvak, Gabonák & Kamra:</p>
-            <ul class="space-y-1 text-slate-700 font-light">
-              <li>• Zabpehely, zabliszt, quinoa, barna rizs</li>
-              <li>• Chia mag, lenmag, tökmag, dió, törökmogyoró</li>
-              <li>• Kókusztej, kókuszvíz, étcsoki (70%+)</li>
-              <li>• Vöröslencse, csicseriborsó, kimchi</li>
-            </ul>
+            <p class="font-bold text-[#556B4E] mb-3 text-sm">🌾 Magvak, Gabonák & Kamra (Heti adag):</p>
+            <div class="space-y-2 text-slate-700 font-light">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>50 dkg zabpehely & 25 dkg quinoa</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>20 dkg tökmag & 20 dkg dió</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>1 doboz chia mag & őrölt lenmag</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>1 liter kókusztej & 1 tábla étcsoki (70%+)</span></label>
+            </div>
           </div>
           <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
-            <p class="font-bold text-[#556B4E] mb-2 text-sm">🥩 Fehérjék & Helyi Termelői:</p>
-            <ul class="space-y-1 text-slate-700 font-light">
-              <li>• Csirkemellfilé, marhalábszár, lazacfilé, tonhal</li>
-              <li>• Friss tanyasi tojás, kecskesajt, natúr kefir</li>
-              <li>• Csontlé alaplé (vagy leveszöldségek)</li>
-            </ul>
+            <p class="font-bold text-[#556B4E] mb-3 text-sm">🥩 Fehérjék & Helyi Termelői (Heti adag):</p>
+            <div class="space-y-2 text-slate-700 font-light">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>80 dkg csirkemellfilé / tofu</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>40 dkg lazacfilé & 2 doboz tonhalkonzerv</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>10 db friss tanyasi tojás</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="rounded text-[#556B4E]"> <span>20 dkg kecskesajt & 1 doboz natúr kefir</span></label>
+            </div>
           </div>
         </div>
 
@@ -1229,15 +1285,40 @@
       showPhase(phaseNum);
     }
 
+    // RECEPT ADAGVÁLASZTÓ ÉS ÁTSZÁMOLÓ LOGIKA
     function openRecipeModal(phaseNum, idx) {
       const r = cyclePhases[phaseNum].recipes[idx];
       document.getElementById('recipeModalImg').src = r.img;
       document.getElementById('recipeModalTitle').innerText = r.name;
       document.getElementById('recipeModalDesc').innerText = r.desc;
-      document.getElementById('recipeModalIngredients').innerText = r.ingredients;
+      
+      activeRecipeOriginalIng = r.ingredients;
+      updateRecipeServings(1);
+
       document.getElementById('recipeModalSteps').innerText = r.steps;
       document.getElementById('recipeModal').classList.remove('hidden');
       document.getElementById('recipeModal').classList.add('flex');
+    }
+
+    function updateRecipeServings(multiplier) {
+      for (let i of [1, 2, 4]) {
+        const btn = document.getElementById(`servBtn${i}`);
+        if (i === multiplier) {
+          btn.className = "px-2.5 py-1 rounded-lg font-bold border transition bg-[#556B4E] text-white border-[#556B4E]";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg font-bold border transition bg-white text-slate-700 border-slate-200";
+        }
+      }
+
+      if (!activeRecipeOriginalIng) return;
+
+      // Számok átszámítása a szorzó alapján
+      const scaled = activeRecipeOriginalIng.replace(/(\d+(?:\.\d+)?)/g, (match) => {
+        const num = parseFloat(match);
+        return (num * multiplier).toString();
+      });
+
+      document.getElementById('recipeModalIngredients').innerText = scaled;
     }
 
     function closeRecipeModal() {
