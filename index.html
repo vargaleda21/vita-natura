@@ -368,56 +368,546 @@
     </div>
 
 
-    <!-- ==================== 5. TAB: ALAPANYAG-TÁR ÉS KAMRA-FŐZŐ (130+ ELEMMEL) ==================== -->
+    <!-- ==================== 5. TAB: ALAPANYAG-TÁR ÉS KAMRA-FŐZŐ (150+ FULL ELEMMEL) ==================== -->
     <div id="pantryTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens receptajánló</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Alapanyag-tár és kamra-főző</h2>
         <p class="text-slate-600 text-sm md:text-base leading-relaxed font-light mb-4">
-          Jelöld ki a kategóriákból az itthoni alapanyagokat, vagy keress rájuk gyorsan a több mint 130 elem között! Kattints az alapanyagok melletti <strong>"Mire jó?"</strong> gombra a részletes élettani hatásokért.
+          Jelöld ki a kategóriákból az itthoni alapanyagokat, vagy keress rájuk a teljes (150+ elemű) adatbázisban! Kattints a <strong>"Mire jó?"</strong> gombra a részletes élettani előnyökért.
         </p>
 
         <div class="relative max-w-md mx-auto mb-2">
-          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Keresés pl. avokádó, edamame, fokhagyma, spárga..." 
+          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Keresés pl. avokádó, fokhagyma, spárga, skyr, tahini..." 
                  class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none focus:ring-1 focus:ring-[#556B4E]">
         </div>
       </div>
 
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
         
+        <!-- 1. Zöldségek & Gombák -->
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák:</p>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák (41 elem):</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="fokhagyma" class="pantry-item-check text-[#556B4E]"> <span>Fokhagyma</span></label>
-              <button onclick="openIngredientInfo('fokhagyma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
-            </div>
-            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="cékla" class="pantry-item-check text-[#556B4E]"> <span>Cékla</span></label>
-              <button onclick="openIngredientInfo('cékla')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
-            </div>
-            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span></label>
-              <button onclick="openIngredientInfo('brokkoli')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
-            </div>
-            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="édesburgonya" class="pantry-item-check text-[#556B4E]"> <span>Édesburgonya</span></label>
-              <button onclick="openIngredientInfo('édesburgonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
-            </div>
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span></label>
+  <button onclick="openIngredientInfo('brokkoli')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="karfiol" class="pantry-item-check text-[#556B4E]"> <span>Karfiol</span></label>
+  <button onclick="openIngredientInfo('karfiol')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="fehér káposzta" class="pantry-item-check text-[#556B4E]"> <span>Fehér káposzta</span></label>
+  <button onclick="openIngredientInfo('fehér káposzta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="vörös káposzta" class="pantry-item-check text-[#556B4E]"> <span>Vörös káposzta</span></label>
+  <button onclick="openIngredientInfo('vörös káposzta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="savanyú káposzta" class="pantry-item-check text-[#556B4E]"> <span>Savanyú káposzta</span></label>
+  <button onclick="openIngredientInfo('savanyú káposzta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kelkáposzta" class="pantry-item-check text-[#556B4E]"> <span>Kelkáposzta</span></label>
+  <button onclick="openIngredientInfo('kelkáposzta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="spenót" class="pantry-item-check text-[#556B4E]"> <span>Spenót</span></label>
+  <button onclick="openIngredientInfo('spenót')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="rukkola" class="pantry-item-check text-[#556B4E]"> <span>Rukkola</span></label>
+  <button onclick="openIngredientInfo('rukkola')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="madársaláta" class="pantry-item-check text-[#556B4E]"> <span>Madársaláta</span></label>
+  <button onclick="openIngredientInfo('madársaláta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="fejes saláta" class="pantry-item-check text-[#556B4E]"> <span>Fejes saláta</span></label>
+  <button onclick="openIngredientInfo('fejes saláta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="római saláta" class="pantry-item-check text-[#556B4E]"> <span>Római saláta</span></label>
+  <button onclick="openIngredientInfo('római saláta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="uborka" class="pantry-item-check text-[#556B4E]"> <span>Uborka</span></label>
+  <button onclick="openIngredientInfo('uborka')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="paradicsom" class="pantry-item-check text-[#556B4E]"> <span>Paradicsom</span></label>
+  <button onclick="openIngredientInfo('paradicsom')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="koktélparadicsom" class="pantry-item-check text-[#556B4E]"> <span>Koktélparadicsom</span></label>
+  <button onclick="openIngredientInfo('koktélparadicsom')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="paprika" class="pantry-item-check text-[#556B4E]"> <span>Paprika</span></label>
+  <button onclick="openIngredientInfo('paprika')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kápia paprika" class="pantry-item-check text-[#556B4E]"> <span>Kápia paprika</span></label>
+  <button onclick="openIngredientInfo('kápia paprika')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kaliforniai paprika" class="pantry-item-check text-[#556B4E]"> <span>Kaliforniai paprika</span></label>
+  <button onclick="openIngredientInfo('kaliforniai paprika')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="sárgarépa" class="pantry-item-check text-[#556B4E]"> <span>Sárgarépa</span></label>
+  <button onclick="openIngredientInfo('sárgarépa')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="petrezselyemgyökér" class="pantry-item-check text-[#556B4E]"> <span>Petrezselyemgyökér</span></label>
+  <button onclick="openIngredientInfo('petrezselyemgyökér')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="zeller" class="pantry-item-check text-[#556B4E]"> <span>Zeller</span></label>
+  <button onclick="openIngredientInfo('zeller')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="cékla" class="pantry-item-check text-[#556B4E]"> <span>Cékla</span></label>
+  <button onclick="openIngredientInfo('cékla')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="retek" class="pantry-item-check text-[#556B4E]"> <span>Retek</span></label>
+  <button onclick="openIngredientInfo('retek')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="hónapos retek" class="pantry-item-check text-[#556B4E]"> <span>Hónapos retek</span></label>
+  <button onclick="openIngredientInfo('hónapos retek')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="cukkini" class="pantry-item-check text-[#556B4E]"> <span>Cukkini</span></label>
+  <button onclick="openIngredientInfo('cukkini')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="padlizsán" class="pantry-item-check text-[#556B4E]"> <span>Padlizsán</span></label>
+  <button onclick="openIngredientInfo('padlizsán')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="sütőtök" class="pantry-item-check text-[#556B4E]"> <span>Sütőtök</span></label>
+  <button onclick="openIngredientInfo('sütőtök')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="főzőtök" class="pantry-item-check text-[#556B4E]"> <span>Főzőtök</span></label>
+  <button onclick="openIngredientInfo('főzőtök')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="zöldbab" class="pantry-item-check text-[#556B4E]"> <span>Zöldbab</span></label>
+  <button onclick="openIngredientInfo('zöldbab')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="zöldborsó" class="pantry-item-check text-[#556B4E]"> <span>Zöldborsó</span></label>
+  <button onclick="openIngredientInfo('zöldborsó')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kukorica" class="pantry-item-check text-[#556B4E]"> <span>Kukorica</span></label>
+  <button onclick="openIngredientInfo('kukorica')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="spárga" class="pantry-item-check text-[#556B4E]"> <span>Spárga</span></label>
+  <button onclick="openIngredientInfo('spárga')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="gomba" class="pantry-item-check text-[#556B4E]"> <span>Gomba</span></label>
+  <button onclick="openIngredientInfo('gomba')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="vöröshagyma" class="pantry-item-check text-[#556B4E]"> <span>Vöröshagyma</span></label>
+  <button onclick="openIngredientInfo('vöröshagyma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="lilahagyma" class="pantry-item-check text-[#556B4E]"> <span>Lilahagyma</span></label>
+  <button onclick="openIngredientInfo('lilahagyma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="fokhagyma" class="pantry-item-check text-[#556B4E]"> <span>Fokhagyma</span></label>
+  <button onclick="openIngredientInfo('fokhagyma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="póréhagyma" class="pantry-item-check text-[#556B4E]"> <span>Póréhagyma</span></label>
+  <button onclick="openIngredientInfo('póréhagyma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="édesburgonya" class="pantry-item-check text-[#556B4E]"> <span>Édesburgonya</span></label>
+  <button onclick="openIngredientInfo('édesburgonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="burgonya" class="pantry-item-check text-[#556B4E]"> <span>Burgonya</span></label>
+  <button onclick="openIngredientInfo('burgonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="articsóka" class="pantry-item-check text-[#556B4E]"> <span>Articsóka</span></label>
+  <button onclick="openIngredientInfo('articsóka')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="avokádó" class="pantry-item-check text-[#556B4E]"> <span>Avokádó</span></label>
+  <button onclick="openIngredientInfo('avokádó')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="olívabogyó" class="pantry-item-check text-[#556B4E]"> <span>Olívabogyó</span></label>
+  <button onclick="openIngredientInfo('olívabogyó')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
           </div>
         </div>
 
+        <!-- 2. Gyümölcsök -->
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök:</p>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök (33 elem):</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="banán" class="pantry-item-check text-[#556B4E]"> <span>Banán</span></label>
-              <button onclick="openIngredientInfo('banán')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
-            </div>
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="alma" class="pantry-item-check text-[#556B4E]"> <span>Alma</span></label>
+  <button onclick="openIngredientInfo('alma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="körte" class="pantry-item-check text-[#556B4E]"> <span>Körte</span></label>
+  <button onclick="openIngredientInfo('körte')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="banán" class="pantry-item-check text-[#556B4E]"> <span>Banán</span></label>
+  <button onclick="openIngredientInfo('banán')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="narancs" class="pantry-item-check text-[#556B4E]"> <span>Narancs</span></label>
+  <button onclick="openIngredientInfo('narancs')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="mandarin" class="pantry-item-check text-[#556B4E]"> <span>Mandarin</span></label>
+  <button onclick="openIngredientInfo('mandarin')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="grapefruit" class="pantry-item-check text-[#556B4E]"> <span>Grapefruit</span></label>
+  <button onclick="openIngredientInfo('grapefruit')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="citrom" class="pantry-item-check text-[#556B4E]"> <span>Citrom</span></label>
+  <button onclick="openIngredientInfo('citrom')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="lime" class="pantry-item-check text-[#556B4E]"> <span>Lime</span></label>
+  <button onclick="openIngredientInfo('lime')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="pomelo" class="pantry-item-check text-[#556B4E]"> <span>Pomelo</span></label>
+  <button onclick="openIngredientInfo('pomelo')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kiwi" class="pantry-item-check text-[#556B4E]"> <span>Kiwi</span></label>
+  <button onclick="openIngredientInfo('kiwi')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="ananász" class="pantry-item-check text-[#556B4E]"> <span>Ananász</span></label>
+  <button onclick="openIngredientInfo('ananász')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="mangó" class="pantry-item-check text-[#556B4E]"> <span>Mangó</span></label>
+  <button onclick="openIngredientInfo('mangó')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="papaya" class="pantry-item-check text-[#556B4E]"> <span>Papaya</span></label>
+  <button onclick="openIngredientInfo('papaya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="gránátalma" class="pantry-item-check text-[#556B4E]"> <span>Gránátalma</span></label>
+  <button onclick="openIngredientInfo('gránátalma')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="szőlő" class="pantry-item-check text-[#556B4E]"> <span>Szőlő</span></label>
+  <button onclick="openIngredientInfo('szőlő')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="őszibarack" class="pantry-item-check text-[#556B4E]"> <span>Őszibarack</span></label>
+  <button onclick="openIngredientInfo('őszibarack')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="nektarin" class="pantry-item-check text-[#556B4E]"> <span>Nektarin</span></label>
+  <button onclick="openIngredientInfo('nektarin')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="szilva" class="pantry-item-check text-[#556B4E]"> <span>Szilva</span></label>
+  <button onclick="openIngredientInfo('szilva')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="sárgabarack" class="pantry-item-check text-[#556B4E]"> <span>Sárgabarack</span></label>
+  <button onclick="openIngredientInfo('sárgabarack')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="cseresznye" class="pantry-item-check text-[#556B4E]"> <span>Cseresznye</span></label>
+  <button onclick="openIngredientInfo('cseresznye')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="meggy" class="pantry-item-check text-[#556B4E]"> <span>Meggy</span></label>
+  <button onclick="openIngredientInfo('meggy')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="görögdinnye" class="pantry-item-check text-[#556B4E]"> <span>Görögdinnye</span></label>
+  <button onclick="openIngredientInfo('görögdinnye')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="sárgadinnye" class="pantry-item-check text-[#556B4E]"> <span>Sárgadinnye</span></label>
+  <button onclick="openIngredientInfo('sárgadinnye')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="füge" class="pantry-item-check text-[#556B4E]"> <span>Füge</span></label>
+  <button onclick="openIngredientInfo('füge')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="datolya" class="pantry-item-check text-[#556B4E]"> <span>Datolya</span></label>
+  <button onclick="openIngredientInfo('datolya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kókusz" class="pantry-item-check text-[#556B4E]"> <span>Kókusz</span></label>
+  <button onclick="openIngredientInfo('kókusz')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="áfonya" class="pantry-item-check text-[#556B4E]"> <span>Áfonya</span></label>
+  <button onclick="openIngredientInfo('áfonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="málna" class="pantry-item-check text-[#556B4E]"> <span>Málna</span></label>
+  <button onclick="openIngredientInfo('málna')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="szeder" class="pantry-item-check text-[#556B4E]"> <span>Szeder</span></label>
+  <button onclick="openIngredientInfo('szeder')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="eper" class="pantry-item-check text-[#556B4E]"> <span>Eper</span></label>
+  <button onclick="openIngredientInfo('eper')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="ribizli" class="pantry-item-check text-[#556B4E]"> <span>Ribizli</span></label>
+  <button onclick="openIngredientInfo('ribizli')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="egres" class="pantry-item-check text-[#556B4E]"> <span>Egres</span></label>
+  <button onclick="openIngredientInfo('egres')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="vörösáfonya" class="pantry-item-check text-[#556B4E]"> <span>Vörösáfonya</span></label>
+  <button onclick="openIngredientInfo('vörösáfonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+          </div>
+        </div>
+
+        <!-- 3. Gabonák & Pékáruk -->
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🌾</span> Gabonák, Pékáruk & Tészták (20 elem):</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
-              <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="áfonya" class="pantry-item-check text-[#556B4E]"> <span>Áfonya / Málna</span></label>
-              <button onclick="openIngredientInfo('áfonya')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
-            </div>
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="zabpehely" class="pantry-item-check text-[#556B4E]"> <span>Zabpehely</span></label>
+  <button onclick="openIngredientInfo('zabpehely')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="zabkorpa" class="pantry-item-check text-[#556B4E]"> <span>Zabkorpa</span></label>
+  <button onclick="openIngredientInfo('zabkorpa')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="bulgur" class="pantry-item-check text-[#556B4E]"> <span>Bulgur</span></label>
+  <button onclick="openIngredientInfo('bulgur')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="barna rizs" class="pantry-item-check text-[#556B4E]"> <span>Barna rizs</span></label>
+  <button onclick="openIngredientInfo('barna rizs')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="basmati rizs" class="pantry-item-check text-[#556B4E]"> <span>Basmati rizs</span></label>
+  <button onclick="openIngredientInfo('basmati rizs')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="jázminrizs" class="pantry-item-check text-[#556B4E]"> <span>Jázminrizs</span></label>
+  <button onclick="openIngredientInfo('jázminrizs')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="vadrizs" class="pantry-item-check text-[#556B4E]"> <span>Vadrizs</span></label>
+  <button onclick="openIngredientInfo('vadrizs')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="quinoa" class="pantry-item-check text-[#556B4E]"> <span>Quinoa</span></label>
+  <button onclick="openIngredientInfo('quinoa')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="hajdina" class="pantry-item-check text-[#556B4E]"> <span>Hajdina</span></label>
+  <button onclick="openIngredientInfo('hajdina')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="köles" class="pantry-item-check text-[#556B4E]"> <span>Köles</span></label>
+  <button onclick="openIngredientInfo('köles')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="árpagyöngy" class="pantry-item-check text-[#556B4E]"> <span>Árpagyöngy</span></label>
+  <button onclick="openIngredientInfo('árpagyöngy')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="rozs" class="pantry-item-check text-[#556B4E]"> <span>Rozs</span></label>
+  <button onclick="openIngredientInfo('rozs')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="teljes kiőrlésű kuszkusz" class="pantry-item-check text-[#556B4E]"> <span>Teljes kiőrlésű kuszkusz</span></label>
+  <button onclick="openIngredientInfo('teljes kiőrlésű kuszkusz')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="teljes kiőrlésű tészta" class="pantry-item-check text-[#556B4E]"> <span>Teljes kiőrlésű tészta</span></label>
+  <button onclick="openIngredientInfo('teljes kiőrlésű tészta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="teljes kiőrlésű kenyér" class="pantry-item-check text-[#556B4E]"> <span>Teljes kiőrlésű kenyér</span></label>
+  <button onclick="openIngredientInfo('teljes kiőrlésű kenyér')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="roskenyér" class="pantry-item-check text-[#556B4E]"> <span>Rozskenyér</span></label>
+  <button onclick="openIngredientInfo('roskenyér')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kovászos kenyér" class="pantry-item-check text-[#556B4E]"> <span>Kovászos kenyér</span></label>
+  <button onclick="openIngredientInfo('kovászos kenyér')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="teljes kiőrlésű tortilla" class="pantry-item-check text-[#556B4E]"> <span>Teljes kiőrlésű tortilla</span></label>
+  <button onclick="openIngredientInfo('teljes kiőrlésű tortilla')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="polenta" class="pantry-item-check text-[#556B4E]"> <span>Polenta / Kukoricadara</span></label>
+  <button onclick="openIngredientInfo('polenta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+          </div>
+        </div>
+
+        <!-- 4. Hüvelyesek -->
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🫘</span> Hüvelyesek (11 elem):</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="lencse" class="pantry-item-check text-[#556B4E]"> <span>Lencse</span></label>
+  <button onclick="openIngredientInfo('lencse')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="vöröslencse" class="pantry-item-check text-[#556B4E]"> <span>Vöröslencse</span></label>
+  <button onclick="openIngredientInfo('vöröslencse')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="csicseriborsó" class="pantry-item-check text-[#556B4E]"> <span>Csicseriborsó</span></label>
+  <button onclick="openIngredientInfo('csicseriborsó')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="vörösbab" class="pantry-item-check text-[#556B4E]"> <span>Vörösbab / Fehérbab / Feketebab</span></label>
+  <button onclick="openIngredientInfo('vörösbab')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="szójabab" class="pantry-item-check text-[#556B4E]"> <span>Szójabab / Edamame / Lóbab</span></label>
+  <button onclick="openIngredientInfo('szójabab')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="tofu" class="pantry-item-check text-[#556B4E]"> <span>Tofu / Tempeh</span></label>
+  <button onclick="openIngredientInfo('tofu')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+          </div>
+        </div>
+
+        <!-- 5. Tejtermékek, Sajtok & Tojás -->
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥛</span> Tejtermékek, Sajtok & Tojás (20 elem):</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="natúr joghurt" class="pantry-item-check text-[#556B4E]"> <span>Natúr joghurt</span></label>
+  <button onclick="openIngredientInfo('natúr joghurt')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="görög joghurt" class="pantry-item-check text-[#556B4E]"> <span>Görög joghurt</span></label>
+  <button onclick="openIngredientInfo('görög joghurt')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kefir" class="pantry-item-check text-[#556B4E]"> <span>Kefir / Aludttej / Író</span></label>
+  <button onclick="openIngredientInfo('kefir')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="túró" class="pantry-item-check text-[#556B4E]"> <span>Túró / Cottage cheese / Skyr</span></label>
+  <button onclick="openIngredientInfo('túró')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="mozzarella" class="pantry-item-check text-[#556B4E]"> <span>Mozzarella / Burrata / Natúr sajt</span></label>
+  <button onclick="openIngredientInfo('mozzarella')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="feta" class="pantry-item-check text-[#556B4E]"> <span>Feta / Ricotta</span></label>
+  <button onclick="openIngredientInfo('feta')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="parmezán" class="pantry-item-check text-[#556B4E]"> <span>Parmezán</span></label>
+  <button onclick="openIngredientInfo('parmezán')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kecskesajt" class="pantry-item-check text-[#556B4E]"> <span>Kecskesajt / Juhsajt</span></label>
+  <button onclick="openIngredientInfo('kecskesajt')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="tej" class="pantry-item-check text-[#556B4E]"> <span>Tej / Szójajoghurt</span></label>
+  <button onclick="openIngredientInfo('tej')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="tyúktojás" class="pantry-item-check text-[#556B4E]"> <span>Tyúktojás / Fürjtojás</span></label>
+  <button onclick="openIngredientInfo('tyúktojás')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+          </div>
+        </div>
+
+        <!-- 6. Húsok, Halak & Kamra Alapok -->
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥩</span> Húsok, Halak & Kamra Alapok (32 elem):</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="lazac" class="pantry-item-check text-[#556B4E]"> <span>Lazac / Pisztráng / Tonhal</span></label>
+  <button onclick="openIngredientInfo('lazac')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="szardínia" class="pantry-item-check text-[#556B4E]"> <span>Szardínia / Makréla / Hering / Szardella</span></label>
+  <button onclick="openIngredientInfo('szardínia')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="tőkehal" class="pantry-item-check text-[#556B4E]"> <span>Tőkehal / Hekk</span></label>
+  <button onclick="openIngredientInfo('tőkehal')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="csirkemell" class="pantry-item-check text-[#556B4E]"> <span>Csirkemell / Csirkecomb</span></label>
+  <button onclick="openIngredientInfo('csirkemell')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="pulykamell" class="pantry-item-check text-[#556B4E]"> <span>Pulykamell / Pulykacomb</span></label>
+  <button onclick="openIngredientInfo('pulykamell')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="sovány marhahús" class="pantry-item-check text-[#556B4E]"> <span>Sovány marhahús / Borjú</span></label>
+  <button onclick="openIngredientInfo('sovány marhahús')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="sertésszűz" class="pantry-item-check text-[#556B4E]"> <span>Sertésszűz / Sovány sertéshús / Bárány</span></label>
+  <button onclick="openIngredientInfo('sertésszűz')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="máj" class="pantry-item-check text-[#556B4E]"> <span>Máj / Szív / Vese</span></label>
+  <button onclick="openIngredientInfo('máj')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="hummusz" class="pantry-item-check text-[#556B4E]"> <span>Hummusz / Tahini</span></label>
+  <button onclick="openIngredientInfo('hummusz')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="passata" class="pantry-item-check text-[#556B4E]"> <span>Paradicsompüré / Passata / Konzerv</span></label>
+  <button onclick="openIngredientInfo('passata')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="kókusztej" class="pantry-item-check text-[#556B4E]"> <span>Kókusztej / Miso</span></label>
+  <button onclick="openIngredientInfo('kókusztej')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
+<div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+  <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="mustár" class="pantry-item-check text-[#556B4E]"> <span>Mustár / Citromlé / Savanyúságok / Kapribogyó</span></label>
+  <button onclick="openIngredientInfo('mustár')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition">Mire jó?</button>
+</div>
           </div>
         </div>
 
@@ -426,6 +916,7 @@
         </button>
       </div>
 
+      <!-- KAMRA RECEPTEK EREDMÉNYE -->
       <div id="pantryRecipeResults" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
     </div>
 
@@ -481,7 +972,7 @@
         </div>
         <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
           <p class="font-bold text-[#556B4E] mb-1">❤️ Miben segít a testednek?</p>
-          <p id="ingModalBenefits" class="text-slate-700 leading-relaxed">...</p>
+          <p id="ingModalBenefits" class="text-slate-700 leading-relaxed whitespace-pre-line">...</p>
         </div>
         <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
           <p class="font-bold text-[#556B4E] mb-1">🍳 Hogyan használd a konyhában?</p>
@@ -530,7 +1021,7 @@
     </div>
   </div>
 
-  <!-- AUTOMATIKUS UPSELL MODÁL (FELRUGÓ AJÁNLAT A 30 NAPOS RECEPTKÖNYVHÖZ) -->
+  <!-- AUTOMATIKUS UPSELL MODÁL -->
   <div id="upsellModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative border border-[#F06292]">
       <button onclick="closeUpsellModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -562,7 +1053,6 @@
         <p class="text-[10px] text-rose-600 font-bold mt-1">⏳ Az ajánlat lejár: <span id="countdownTimer">14:59</span> perc múlva!</p>
       </div>
 
-      <!-- STRIPE FIZETÉSI LINK HELYE -->
       <a href="https://buy.stripe.com/test_placeholder" target="_blank" class="w-full py-3.5 bg-[#F06292] text-white font-bold rounded-xl shadow-md hover:bg-[#e05282] transition flex items-center justify-center gap-2 text-xs">
         <span>🛒</span> Kérem a 30 Napos Receptkönyvet 2.990 Ft-ért!
       </a>
@@ -953,6 +1443,7 @@
       } else if (tab === 'workout') {
         workoutSec.classList.remove('hidden');
         workoutBtn.className = "flex-1 min-w-[100px] whitespace-nowrap py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#556B4E] text-white shadow-sm";
+        showWorkoutPhase(1);
       }
     }
 
@@ -1037,7 +1528,7 @@
           closePdfModal();
           btn.innerText = "📥 PDF mintamenü letöltése";
           btn.disabled = false;
-          openUpsellModal(); // AUTOMATIKUS UPSELL FELUGRO
+          openUpsellModal();
         }, 1200);
       });
     }
