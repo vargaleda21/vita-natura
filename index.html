@@ -67,7 +67,7 @@
     </div>
   </header>
 
-  <!-- AKCIÓ- ÉS CÉLORIENTÁLT HERO SZEKCIÓ -->
+  <!-- HERO SZEKCIÓ -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
     <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm text-center max-w-4xl mx-auto">
       <span class="text-[11px] font-bold text-[#556B4E] bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40 uppercase tracking-wider mb-3 inline-block">
@@ -78,7 +78,6 @@
         Válaszd ki a személyes fókuszodat, és mutatjuk a célzott ételeket, a gyógynövényes rituálékat és a kapcsolódó vitamin-szinergiákat!
       </p>
 
-      <!-- 6 AKCIÓ-GOMB -->
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-xs text-center mb-6">
         <button onclick="selectCoreGoal('energia')" class="p-3 bg-[#F7F3ED] hover:bg-[#556B4E] hover:text-white rounded-2xl border border-[#A7B69A]/30 transition font-bold text-[#556B4E]">
           ⚡ Energiaszint & Fókusz növelése
@@ -100,28 +99,21 @@
         </button>
       </div>
 
-      <!-- KINYÍLÓ 4 ELEMŰ ÚTMUTATÓ -->
       <div id="coreGoalResultZone" class="hidden text-left bg-[#F7F3ED] p-6 rounded-3xl border border-[#A7B69A]/40 space-y-4">
         <h3 id="goalResultTitle" class="text-2xl font-bold font-serif-title text-[#556B4E]">Cél neve</h3>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-          <!-- 1. ÉTEL -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
             <div>
               <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> 1. ÉTEL & TÁPANYAGOK:</p>
               <p id="goalFoodText" class="text-slate-700 leading-relaxed font-light">...</p>
             </div>
           </div>
-
-          <!-- 2. GYÓGYNÖVÉNY & RITUÁLÉ -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
             <div>
               <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>☕</span> 2. TEÁK & RITUÁLÉK:</p>
               <p id="goalHerbsText" class="text-slate-700 leading-relaxed font-light">...</p>
             </div>
           </div>
-
-          <!-- 3. BISZTRÓ RECEPT -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200 flex flex-col justify-between">
             <div>
               <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥗</span> 3. RECEPTAJÁNLÓ:</p>
@@ -131,8 +123,6 @@
               Kamra-főző megnyitása →
             </button>
           </div>
-
-          <!-- 4. CÉLZOTT KIEGÉSZÍTÉS -->
           <div class="bg-white p-4 rounded-2xl border border-[#F06292]/30 bg-rose-50/20 flex flex-col justify-between">
             <div>
               <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>💊</span> 4. KORSZERŰ KIEGÉSZÍTŐK:</p>
@@ -173,7 +163,7 @@
 
   <main class="max-w-5xl mx-auto px-4">
 
-    <!-- ==================== 1. TAB: KAMRA-FŐZŐ & ALAPANYAGOK (TELJES 60 ELEM) ==================== -->
+    <!-- ==================== 1. TAB: KAMRA-FŐZŐ & ALAPANYAGOK ==================== -->
     <div id="pantryTabSection">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens receptajánló</span>
@@ -190,7 +180,7 @@
 
       <div class="bg-white/90 backdrop-blur-sm p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
         
-        <!-- 1. Zöldségek & Gombák (18 elem) -->
+        <!-- Zöldségek & Gombák -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák (18 elem):</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -269,7 +259,7 @@
           </div>
         </div>
 
-        <!-- 2. Gyümölcsök (10 elem) -->
+        <!-- Gyümölcsök -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök (10 elem):</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -316,7 +306,7 @@
           </div>
         </div>
 
-        <!-- 3. Gabonák, Magvak & Hüvelyesek (16 elem) -->
+        <!-- Gabonák, Magvak & Hüvelyesek (16 elem) -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🌾</span> Gabonák, Magvak & Hüvelyesek (16 elem):</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -387,7 +377,7 @@
           </div>
         </div>
 
-        <!-- 4. Tejtermékek, Fehérjék & Halak (16 elem) -->
+        <!-- Tejtermékek, Fehérjék & Halak (16 elem) -->
         <div>
           <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥩</span> Tejtermékek, Fehérjék & Halak (16 elem):</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
@@ -498,7 +488,7 @@
     </div>
 
 
-    <!-- ==================== 3. TAB: ÉTRENDTERVEZŐ ==================== -->
+    <!-- ==================== 3. TAB: ÉTRENDTERVEZŐ (HÉTFŐ-VASÁRNAP REGGELI, EBÉD, VACSORA KALÓRIÁKKAL & BEVÁSRLÓLISTÁVAL) ==================== -->
     <div id="lifestyleTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott táplálkozási architektúra</span>
@@ -625,7 +615,7 @@
     </div>
 
 
-    <!-- ==================== 6. TAB: CSOMAGOK ==================== -->
+    <!-- ==================== 6. TAB: CSOMAGOK (VÁLTHATÓ KAPSZULA / KAMRA MÓDDAL) ==================== -->
     <div id="packagesTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Komplex egészség-szinergiák</span>
@@ -707,7 +697,7 @@
     </div>
   </div>
 
-  <!-- CSOMAG MODÁL -->
+  <!-- CSOMAG ADAGOLÁS MODÁL -->
   <div id="packageDosageModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#A7B69A]/40">
       <button onclick="closePackageDosageModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -717,7 +707,7 @@
     </div>
   </div>
 
-  <!-- TÜNETEK RÉSZLETES MODÁL (PRO TIPP, KIVÁLTÓ OK, MIT KERÜLJ EL) -->
+  <!-- TÜNETEK RÉSZLETES MODÁL -->
   <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#A7B69A]/40">
       <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
@@ -754,20 +744,6 @@
         </div>
       </div>
       <p class="text-[10px] text-slate-400 text-center mt-4">⚠️ Tájékoztató jellegű információ, nem helyettesíti az orvosi diagnózist.</p>
-    </div>
-  </div>
-
-  <!-- RECEPT MODÁL -->
-  <div id="recipeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-[#F06292]/30">
-      <button onclick="closeRecipeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 transition">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-      </button>
-      <img id="recipeModalImg" class="w-full h-48 object-cover rounded-2xl mb-4 border border-[#F06292]/30" src="" alt="">
-      <h3 id="recipeModalTitle" class="text-2xl font-bold font-serif-title text-[#556B4E] mb-2"></h3>
-      <p id="recipeModalDesc" class="text-xs text-slate-600 leading-relaxed mb-4 font-light"></p>
-      <div id="recipeModalIngredients" class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 mb-4 text-xs text-[#556B4E]"></div>
-      <div id="recipeModalSteps" class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 text-xs text-slate-700"></div>
     </div>
   </div>
 
@@ -830,7 +806,7 @@
       }
     };
 
-    // KIBŐVÍTETT BISZTRÓ RECEPT MÁTRIX (GARANTÁLT 4+ RECEPT MINDEN ELEMHEZ)
+    // KIBŐVÍTETT BISZTRÓ RECEPT MÁTRIX
     const masterRecipes = [
       { name: "Rozmaringos fokhagymás marharagu szilvás mártással", keys: ["fokhagyma", "cékla", "sárgarépa", "marhahús", "csontlé", "sovány marhahús"], desc: "Hosszan főtt kímélő ragu vasban gazdag gyökérzöldségekkel.", ingredients: "200g marhahús, 100g cékla, 100g sárgarépa, 3 gerezd fokhagyma, csontlé" },
       { name: "Tepsis fűszeres cukkini-hajók tonhalkrémmel & kapribogyóval", keys: ["cukkini", "fokhagyma", "szardínia", "mozzarella", "passata", "mustár"], desc: "Szaftos mediterrán tepsis fogás kapribogyóval.", ingredients: "200g cukkini, 120g tonhal, 2 gerezd fokhagyma, 30g sajt, kapribogyó" },
@@ -858,6 +834,7 @@
       "áfonya": { name: "Áfonya / Málna", nutrients: "Antocianinok, C-vitamin", benefits: "🧠 Sejtek védelme az oxidatív stressztől", usage: "Kásákra, chia pudingra" }
     };
 
+    // CSOMAGOK ADATBÁZISA (VÁLTHATÓ KAPSZULA / KAMRA MÓDDAL)
     const packageData = [
       {
         id: "winter",
@@ -873,53 +850,60 @@
           ]
         },
         pantry: {
-          items: ["Csipkebogyótea", "Pirított tökmag", "Mézes fokhagyma"],
-          dosage: [{ item: "Csipkebogyótea", dose: "2 csésze/nap", time: "Napközben", tip: "Hideg áztatással készítsd!" }]
+          items: ["Csipkebogyótea (hideg áztatással)", "Pirított tökmag (1 marék/nap)", "Zúzott fokhagyma nyers mézben áztatva (1 tk/nap)", "Feketebodza tea"],
+          dosage: [
+            { item: "Csipkebogyótea", dose: "2 csésze/nap", time: "Napközben", tip: "Hideg áztatással készítsd!" },
+            { item: "Mézes fokhagyma", dose: "1 kávéskanál", time: "Reggel vagy este", tip: "Frissen zúzva keverd mézbe!" }
+          ],
+          note: "⚠️ Szakmai megjegyzés: Téli időszakban a D3-vitamint élelmiszerekből nehéz a terápiás szinten bevinni, így a D3-csepp pótlás javasolt!"
         }
       },
       {
         id: "spring",
         icon: "🌱",
         name: "Tavaszi megújulás és vitalitás",
-        desc: "Bélflóra regeneráció és szervezet áthangolása.",
+        desc: "Bélflóra regeneráció és szervezet áthangolása a tél után.",
         activeMode: "supplements",
         supplements: {
-          items: ["Bioaktív B-komplex", "Spórás probiotikum", "Magnézium-malát"],
+          items: ["Bioaktív B-komplex (B6, B9, B12)", "Spórás probiotikum kapszula", "Magnézium-malát"],
           dosage: [{ item: "B-komplex", dose: "Napi 1 kapszula", time: "Reggeli közben", tip: "Délelőtt vedd be!" }]
         },
         pantry: {
-          items: ["Sörélesztőpehely", "Házi kefir", "Csalántea kúra"],
-          dosage: [{ item: "Csalántea", dose: "2 csésze/nap", time: "Délelőtt", tip: "14 napos kúraként!" }]
+          items: ["Sörélesztőpehely (2 ek/nap)", "Házi kefir / savanyú káposzta leve (1 dl/nap)", "Csalántea & mezei zsurlótea kúra (14 nap)"],
+          dosage: [{ item: "Csalán-zsurló teakeverék", dose: "2 csésze/nap", time: "Délelőtt és délután", tip: "14 napos kúraként idd!" }],
+          note: "A fermentált ételek rendszeres fogyasztása 2 hét alatt érezhetően növeli az energiaszintet."
         }
       },
       {
         id: "sport",
         icon: "🏃‍♂️",
         name: "Aktív sportoló és izomrehabilitáció",
-        desc: "Izomgörcsök elkerülése és az ízületek védelme.",
+        desc: "Izomgörcsök elkerülése, gyorsabb regeneráció és ízületvédelem.",
         activeMode: "supplements",
         supplements: {
-          items: ["Magnézium-biszglicinát (400 mg)", "Kollagén peptid (10g)", "Omega-3 halolaj"],
-          dosage: [{ item: "Magnézium", dose: "Napi 400 mg", time: "Lefekvés előtt", tip: "Ellazítja az izmokat." }]
+          items: ["Magnézium-biszglicinát (400 mg)", "Hidrolizált kollagén peptid (10g) + C-vitamin", "Omega-3 halolaj"],
+          dosage: [{ item: "Magnézium-biszglicinát", dose: "Napi 400 mg", time: "Lefekvés előtt", tip: "Ellazítja az izmokat." }]
         },
         pantry: {
-          items: ["Hosszú főzésű csontleves", "Meggylé edzés után", "Tökmagolaj"],
-          dosage: [{ item: "Csontleves", dose: "2 dl/nap", time: "Ebédhez", tip: "Legalább 12 órás főzés." }]
+          items: ["Hosszú főzésű csontleves (2 dl/nap)", "100%-os meggylé edzés után", "Tökmagolaj + banán + étcsoki"],
+          dosage: [{ item: "Csontleves", dose: "2 dl meleg leves", time: "Ebédhez vagy vacsorához", tip: "Legalább 12 órán át főzött alaplé." }],
+          note: "A csontleves és a meggylé párosa a leghatékonyabb természetes sportszerek egyike."
         }
       },
       {
         id: "pregnancy",
         icon: "🌸",
         name: "Kismama és babaváró csomag",
-        desc: "Hormonális feltöltés és magzati fejlődés támogatása.",
+        desc: "Hormonális feltöltés, petesejt-minőség és magzati fejlődés támogatása.",
         activeMode: "supplements",
         supplements: {
-          items: ["Aktív folát (L-metilfolát)", "Vas-biszglicinát + C-vitamin", "DHA + Kolin"],
-          dosage: [{ item: "Aktív folát", dose: "Napi 400-800 mcg", time: "Reggeli közben", tip: "A metilált formát válaszd!" }]
+          items: ["Aktív folát (L-metilfolát)", "Gyomorkímélő vas-biszglicinát + C-vitamin", "Kolin + DHA"],
+          dosage: [{ item: "Aktív folát (B9)", dose: "Napi 400-800 mcg", time: "Reggeli közben", tip: "A metilált formát válaszd!" }]
         },
         pantry: {
-          items: ["Párolt spenót & céklalé", "Tojássárgája", "Palástfűtea"],
-          dosage: [{ item: "Spenót & cékla", dose: "Napi 1 adag", time: "Ebédre", tip: "Locsold meg citromlével!" }]
+          items: ["Párolt spenót & céklalé", "Tojássárgája (Kolinforrás) & szezámmag", "Palástfűtea & cickafarktea"],
+          dosage: [{ item: "Spenót & cékla", dose: "Napi 1 adag", time: "Ebédre", tip: "Locsold meg citromlével a jobb felszívódásért!" }],
+          note: "⚠️ Orvosi figyelmeztetés: A folát bevitelt kiegészítő formájában is kötelező biztosítani!"
         }
       }
     ];
@@ -1006,7 +990,6 @@
       } catch (err) { console.error(err); }
     }
 
-    // TÜNETKERESŐ KÁRTYÁK AZONNALI MEGOLDÁSOKKAL
     function renderCards(data) {
       const grid = document.getElementById('cardsGrid');
       if (!grid) return;
@@ -1043,19 +1026,6 @@
       });
     }
 
-    function filterByHealthGoal(goal) { 
-      document.getElementById('searchInput').value = goal; 
-      const query = goal.toLowerCase();
-      const filtered = symptomsData.filter(i => 
-        i.symptom.toLowerCase().includes(query) || 
-        i.category.toLowerCase().includes(query) ||
-        (i.vitamin && i.vitamin.toLowerCase().includes(query))
-      );
-      renderCards(filtered.length > 0 ? filtered : symptomsData);
-      switchTab('symptoms'); 
-    }
-
-    // DINAMIKUS KAMRA-FŐZŐ RECEPTEK
     function findPantryRecipes() {
       const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
       const userItems = Array.from(checkedBoxes).map(cb => cb.value.toLowerCase().trim());
@@ -1221,6 +1191,7 @@
       }
     }
 
+    // CSOMAGOK MEGJELENÍTÉSE VÁLTHATÓ KAPSZULA / KAMRA MÓDDAL
     function renderPackages() {
       const grid = document.getElementById('packagesGrid');
       if (!grid) return;
@@ -1236,23 +1207,43 @@
         card.className = "bg-white/90 rounded-3xl border p-6 shadow-sm flex flex-col justify-between";
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between mb-3"><span class="text-3xl">${pkg.icon}</span><span class="text-xs font-bold text-[#556B4E] bg-[#F7F3ED] px-3 py-1 rounded-full">Természetes csomag</span></div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-3xl">${pkg.icon}</span>
+              <span class="text-[11px] font-bold text-[#556B4E] bg-[#F7F3ED] px-3 py-1 rounded-full border border-[#A7B69A]/40">Természetes csomag</span>
+            </div>
             <h3 class="text-xl font-bold text-[#556B4E] mb-2 font-serif-title">${pkg.name}</h3>
             <p class="text-xs text-slate-600 mb-4">${pkg.desc}</p>
-            <div class="bg-[#F7F3ED] p-4 rounded-2xl mb-4"><ul class="space-y-2">${itemsListHtml}</ul></div>
+            
+            <div class="flex bg-[#F7F3ED] p-1 rounded-xl border border-[#A7B69A]/40 mb-4 text-xs">
+              <button onclick="togglePackageMode(${index}, 'supplements')" class="flex-1 py-1.5 rounded-lg font-bold transition ${isSupp ? 'bg-[#556B4E] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">💊 Kész kapszulák</button>
+              <button onclick="togglePackageMode(${index}, 'pantry')" class="flex-1 py-1.5 rounded-lg font-bold transition ${!isSupp ? 'bg-[#556B4E] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'}">🌿 Otthoni kamra</button>
+            </div>
+
+            <div class="bg-[#F7F3ED] p-4 rounded-2xl border border-[#A7B69A]/40 mb-4">
+              <p class="text-xs font-bold text-[#556B4E] mb-2 uppercase tracking-wider">${isSupp ? '💊 Csomag összetevői:' : '🥣 Kamra & házipatika elemei:'}</p>
+              <ul class="space-y-2">${itemsListHtml}</ul>
+              ${!isSupp && pkg.pantry.note ? `<p class="mt-3 text-[11px] text-amber-900 italic bg-amber-50 p-2 rounded-lg border border-amber-200/80">${pkg.pantry.note}</p>` : ''}
+            </div>
           </div>
-          <button onclick="openPackageDosageModal(${index})" class="w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl text-xs">📋 Adagolási útmutató →</button>
+          <button onclick="openPackageDosageModal(${index})" class="w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">📋 Adagolási útmutató →</button>
         `;
         grid.appendChild(card);
       });
     }
 
+    function togglePackageMode(index, mode) {
+      packageData[index].activeMode = mode;
+      renderPackages();
+    }
+
     function openPackageDosageModal(index) {
       const pkg = packageData[index];
-      const dosageData = pkg.supplements.dosage;
+      const isSupp = pkg.activeMode === 'supplements';
+      const dosageData = isSupp ? pkg.supplements.dosage : pkg.pantry.dosage;
+
       let dosageHtml = `<h3 class="text-xl font-bold text-[#556B4E] mb-3 font-serif-title">${pkg.name}</h3>`;
       dosageData.forEach(d => {
-        dosageHtml += `<div class="p-3 bg-[#F7F3ED] rounded-xl mb-2 text-xs"><strong>${d.item}:</strong> ${d.dose} (${d.time})<br><span class="italic text-slate-500">${d.tip}</span></div>`;
+        dosageHtml += `<div class="p-3 bg-[#F7F3ED] rounded-xl mb-2 text-xs border border-[#A7B69A]/30"><strong>${d.item}:</strong> ${d.dose} (${d.time})<br><span class="italic text-slate-500">💡 ${d.tip}</span></div>`;
       });
       document.getElementById('pkgModalDosageContent').innerHTML = dosageHtml;
       document.getElementById('packageDosageModal').classList.remove('hidden');
@@ -1279,6 +1270,7 @@
       `;
     }
 
+    // ÉTRENDTERVEZŐ HÉTŐTŐL VASÁRNAPIG (REGGELI, EBÉD, VACSORA KALÓRIÁKKAL & BEVÁSÁRLÓLISTÁVAL)
     function calculateLifestylePlan() {
       const h = parseFloat(document.getElementById('lsHeight').value) / 100;
       const w = parseFloat(document.getElementById('lsWeight').value);
@@ -1295,19 +1287,46 @@
         <p class="text-xs text-slate-700">Napi kalóriaszükséglet a súlytartáshoz: <strong>${tdee} kcal</strong> | Vízigény: <strong>${(w*0.035).toFixed(1)} liter</strong></p>
       `;
 
-      document.getElementById('lsWeeklyMealBox').innerHTML = `
-        <div class="bg-white p-6 rounded-3xl border text-xs space-y-2">
-          <h4 class="font-bold text-sm text-[#556B4E] mb-2 font-serif-title">Mintaétrend 1 napra (Pontos adagokkal):</h4>
-          <p><strong>Reggeli:</strong> Chia-zabkása bogyós gyümölcsökkel (60g zabpehely, 20g chia, 80g málna)</p>
-          <p><strong>Ebéd:</strong> Pácolt csirkemell csíkok quinoával (180g csirkemell, 80g quinoa, 150g brokkoli)</p>
-          <p><strong>Vacsora:</strong> Cukkinikrémleves tökmaggal (200g cukkini, 20g tökmag, 100ml kókusztej)</p>
-        </div>
+      const weeklyDays = [
+        { d: "Hétfő", reg: "Fahéjas chia-zabkása bogyós gyümölcsökkel (60g zabpehely, 20g chia, 80g málna, 200ml mandulatej) — <strong>420 kcal</strong>", ebed: "Pácolt csirkemell csíkok quinoával & fokhagymás brokkolival (180g csirkemell, 80g quinoa, 150g brokkoli) — <strong>610 kcal</strong>", vacs: "Cukkinikrémleves tökmaggal & kókusztejszínnel (200g cukkini, 20g tökmag, 100ml kókusztej) — <strong>380 kcal</strong>" },
+        { d: "Kedd", reg: "Lenmagpelyhes banánkenyér dióval (150g banán, 50g zabliszt, 25g dió, 1tk fahéj) — <strong>450 kcal</strong>", ebed: "Vöröslencse-dhal sárgarépával & gyömbérrel (100g vöröslencse, 120g sárgarépa, 10g gyömbér) — <strong>580 kcal</strong>", vacs: "Tonhalas kevert bisztrósaláta capri öntettel (120g tonhal, 100g uborka, 50g feta, 20g kapribogyó) — <strong>410 kcal</strong>" },
+        { d: "Szerda", reg: "Spenótos zöld smoothie chia maggal (100g banán, 40g spenót, 15g chia, 200ml kókuszvíz) — <strong>390 kcal</strong>", ebed: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahini öntettel (150g csicseriborsó, 150g édesburgonya, 20g tahini) — <strong>640 kcal</strong>", vacs: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával (180g brokkoli, 100ml kefir, 20g dió) — <strong>370 kcal</strong>" },
+        { d: "Csütörtök", reg: "Fahéjas meggyes áztatott zabkása étcsokival (60g zabpehely, 60g meggy, 20g étcsoki, 250ml mandulatej) — <strong>460 kcal</strong>", ebed: "Pácolt lazacfilé barna rizzsel & zöldspárgával (160g lazacfilé, 80g barna rizs, 120g spárga) — <strong>630 kcal</strong>", vacs: "Céklás-gyömbéres krémleves pirított napraforgómaggal (180g cékla, 20g napraforgómag, 100ml kókusztej) — <strong>350 kcal</strong>" },
+        { d: "Péntek", reg: "Lágy tojás avokádóval & lenmaggal (2 db tojás, 60g avokádó, 15g őrölt lenmag) — <strong>410 kcal</strong>", ebed: "Sütőtökös rizottó pirított törökmogyoróval (150g sütőtök, 70g rizs, 20g mogyoró) — <strong>590 kcal</strong>", vacs: "Tepsis fűszeres cukkini-hajók tonhalkrémmel & érlelt sajttal (180g cukkini, 120g tonhal, 30g sajt) — <strong>430 kcal</strong>" },
+        { d: "Szombat", reg: "Édesburgonyás-spenótos omlett (2 db tojás, 80g édesburgonya, 30g spenót) — <strong>430 kcal</strong>", ebed: "Rozmaringos marharagu szilvás mártással & gyökérzöldségekkel (180g marhahús, 100g sárgarépa, 200ml csontlé) — <strong>660 kcal</strong>", vacs: "Sült édesburgonya-bruschetta kecskesajttal & dióval (150g édesburgonya, 50g kecskesajt, 20g dió) — <strong>420 kcal</strong>" },
+        { d: "Vasárnap", reg: "Amerikai zablisztes palacsinta áfonyával (60g zabliszt, 1 db tojás, 60g áfonya) — <strong>440 kcal</strong>", ebed: "Sült citromos-kakukkfüves csirkemell édesburgonya pürével (180g csirkemell, 150g édesburgonya püré) — <strong>610 kcal</strong>", vacs: "Lassan főtt gazdag csontleves marhahússal & zöldségekkel (250ml csontlé, 80g marhahús, zöldségek) — <strong>360 kcal</strong>" }
+      ];
+
+      let weeklyHtml = `
+        <div class="bg-white p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm text-xs">
+          <h4 class="font-bold text-base text-[#556B4E] mb-3 font-serif-title">Személyre szabott 7 napos heti étrend (Hétfőtől Vasárnapig, kalóriaértékekkel):</h4>
+          <div class="space-y-3">
       `;
+
+      weeklyDays.forEach(day => {
+        weeklyHtml += `
+          <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/30">
+            <span class="font-bold text-sm text-[#556B4E] block mb-1.5">${day.d}</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-slate-700">
+              <div><strong>Reggeli:</strong> ${day.reg}</div>
+              <div><strong>Ebéd:</strong> ${day.ebed}</div>
+              <div><strong>Vacsora:</strong> ${day.vacs}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      weeklyHtml += `</div></div>`;
+      document.getElementById('lsWeeklyMealBox').innerHTML = weeklyHtml;
 
       document.getElementById('lsShoppingListBox').innerHTML = `
         <div class="bg-white p-6 rounded-3xl border text-xs">
           <h4 class="font-bold text-sm text-[#556B4E] mb-2 font-serif-title">🛒 Összesített heti bevásárlólista (1 főre):</h4>
-          <p class="text-slate-700">1kg cékla, 800g édesburgonya, 500g brokkoli, 500g zabpehely, 200g quinoa, 800g csirkemell, 10 db tojás, 300ml kefir</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-slate-700">
+            <div class="p-3 bg-[#F7F3ED] rounded-xl"><strong class="text-[#556B4E] block mb-1">Zöldségek & Gyümölcsök:</strong> 1kg cékla, 800g édesburgonya, 500g brokkoli, 300g spenót, 500g cukkini, 1kg banán, 300g meggy, 200g málna/áfonya</div>
+            <div class="p-3 bg-[#F7F3ED] rounded-xl"><strong class="text-[#556B4E] block mb-1">Gabonák, Magvak & Olajok:</strong> 500g zabpehely, 200g quinoa, 200g barna rizs, 100g chia mag, 100g lenmag, 150g dió, 100g tökmag, tahini, kókusztej</div>
+            <div class="p-3 bg-[#F7F3ED] rounded-xl"><strong class="text-[#556B4E] block mb-1">Fehérjék & Tejtermékek:</strong> 800g csirkemell, 360g marhahús, 160g lazac, 240g tonhalkonzerv, 10 db tojás, 300ml kefir, 150g kecskesajt/feta</div>
+          </div>
         </div>
       `;
 
@@ -1315,14 +1334,10 @@
       document.getElementById('lifestyleResultZone').scrollIntoView({ behavior: 'smooth' });
     }
 
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase();
-      const filtered = symptomsData.filter(i => 
-        i.symptom.toLowerCase().includes(query) || 
-        i.category.toLowerCase().includes(query)
-      );
-      renderCards(filtered);
-    });
+    function filterByHealthGoal(goal) { 
+      document.getElementById('searchInput').value = goal; 
+      switchTab('symptoms'); 
+    }
 
     function filterPantryCheckboxes() {
       const q = document.getElementById('pantryQuickSearch').value.toLowerCase();
