@@ -182,7 +182,7 @@
         
         <!-- Zöldségek & Gombák -->
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák (18 elem):</p>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥦</span> Zöldségek & Gombák:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
               <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="brokkoli" class="pantry-item-check text-[#556B4E]"> <span>Brokkoli</span></label>
@@ -261,7 +261,7 @@
 
         <!-- Gyümölcsök -->
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök (10 elem):</p>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🍎</span> Gyümölcsök:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
               <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="alma" class="pantry-item-check text-[#556B4E]"> <span>Alma</span></label>
@@ -306,9 +306,9 @@
           </div>
         </div>
 
-        <!-- Gabonák, Magvak & Hüvelyesek (16 elem) -->
+        <!-- Gabonák, Magvak & Hüvelyesek -->
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🌾</span> Gabonák, Magvak & Hüvelyesek (16 elem):</p>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🌾</span> Gabonák, Magvak & Hüvelyesek:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
               <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="zabpehely" class="pantry-item-check text-[#556B4E]"> <span>Zabpehely</span></label>
@@ -377,9 +377,9 @@
           </div>
         </div>
 
-        <!-- Tejtermékek, Fehérjék & Halak (16 elem) -->
+        <!-- Tejtermékek, Fehérjék & Halak -->
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥩</span> Tejtermékek, Fehérjék & Halak (16 elem):</p>
+          <p class="font-bold text-[#556B4E] mb-2 flex items-center gap-1.5 text-sm"><span>🥩</span> Tejtermékek, Fehérjék & Halak:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
               <label class="flex items-center gap-1.5 cursor-pointer truncate"><input type="checkbox" value="görög joghurt" class="pantry-item-check text-[#556B4E]"> <span>Görög joghurt / Natúr</span></label>
@@ -488,7 +488,7 @@
     </div>
 
 
-    <!-- ==================== 3. TAB: ÉTRENDTERVEZŐ (3 NAPOS MINTA + MÓDOSÍTOTT ELŐFIZETÉSI ÁR: 2990 FT) ==================== -->
+    <!-- ==================== 3. TAB: ÉTRENDTERVEZŐ ==================== -->
     <div id="lifestyleTabSection" class="hidden">
       <div class="bg-white/90 backdrop-blur-sm p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <span class="text-xs font-bold text-[#556B4E] tracking-widest uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott táplálkozási architektúra</span>
@@ -537,7 +537,7 @@
     </div>
 
 
-    <!-- ==================== 4. TAB: NŐI CIKLUS (RÉSZLETES ÉLETTANI MAGYARÁZATOKKAL & TŰPONTOS KÉPEKKEL) ==================== -->
+    <!-- ==================== 4. TAB: NŐI CIKLUS ==================== -->
     <div id="cycleTabSection" class="hidden">
       <div class="bg-gradient-to-b from-[#F7F3ED] to-[#E8DCC6]/40 p-6 md:p-8 rounded-3xl border border-[#F06292]/30 mb-8 text-center max-w-3xl mx-auto shadow-sm">
         <span class="text-xs font-bold text-[#F06292] tracking-widest uppercase bg-white px-3.5 py-1 rounded-full border border-[#F06292]/30">🌸 Női Ciklusszinkron Munkatér</span>
@@ -806,22 +806,22 @@
       }
     };
 
-    // KIBŐVÍTETT Hormonharmonizáló finomságok MÁTRIX
+    // KIBŐVÍTETT MÁTRIX TÁPANYAGOKKAL ÉS ALAPANYAG-ÖSSZEKÖTÉSSEL
     const masterRecipes = [
-      { name: "Rozmaringos fokhagymás marharagu szilvás mártással", keys: ["fokhagyma", "cékla", "sárgarépa", "marhahús", "csontlé", "sovány marhahús"], desc: "Hosszan főtt kímélő ragu vasban gazdag gyökérzöldségekkel.", ingredients: "200g marhahús, 100g cékla, 100g sárgarépa, 3 gerezd fokhagyma, csontlé" },
-      { name: "Tepsis fűszeres cukkini-hajók tonhalkrémmel & kapribogyóval", keys: ["cukkini", "fokhagyma", "szardínia", "mozzarella", "passata", "mustár"], desc: "Szaftos mediterrán tepsis fogás kapribogyóval.", ingredients: "200g cukkini, 120g tonhal, 2 gerezd fokhagyma, 30g sajt, kapribogyó" },
-      { name: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával", keys: ["brokkoli", "karfiol", "fokhagyma", "kefir", "dió", "gránátalma"], desc: "Pörkölt magvakkal és fokhagymás-kefires öntettel megbolondítva.", ingredients: "180g brokkoli, 120ml kefir, 25g dió, gránátalma, 1 gerezd fokhagyma" },
+      { name: "Rozmaringos fokhagymás marharagu szilvás mártással", keys: ["fokhagyma", "cékla", "sárgarépa", "marhahús", "csontlé", "sovány marhahús", "vöröshagyma"], desc: "Hosszan főtt kímélő ragu vasban gazdag gyökérzöldségekkel.", ingredients: "200g marhahús, 100g cékla, 100g sárgarépa, 3 gerezd fokhagyma, csontlé" },
+      { name: "Tepsis fűszeres cukkini-hajók tonhalkrémmel & kapribogyóval", keys: ["cukkini", "fokhagyma", "szardínia", "mozzarella", "passata", "mustár", "vöröshagyma"], desc: "Szaftos mediterrán tepsis fogás kapribogyóval.", ingredients: "200g cukkini, 120g tonhal, 2 gerezd fokhagyma, 30g sajt, kapribogyó" },
+      { name: "Sült brokkolis-kefires saláta pörkölt dióval & gránátalmával", keys: ["brokkoli", "karfiol", "fokhagyma", "kefir", "dió", "gránátalma", "görög joghurt"], desc: "Pörkölt magvakkal és fokhagymás-kefires öntettel megbolondítva.", ingredients: "180g brokkoli, 120ml kefir, 25g dió, gránátalma, 1 gerezd fokhagyma" },
       { name: "Céklás-vöröslencsés krémleves fokhagymás tökmaggal", keys: ["cékla", "fokhagyma", "vöröslencse", "tökmag", "kókusztej"], desc: "Melengető fűszeres krémleves kókusztejszínnel.", ingredients: "200g cékla, 100g vöröslencse, 2 gerezd fokhagyma, tökmag, kókusztej" },
-      { name: "Avokádós-kimchis quinoa tál edamame babbal & rukkolával", keys: ["avokádó", "rukkola", "quinoa", "edamame", "fokhagyma"], desc: "Színes ázsiai bisztró tál fermentált zöldségekkel.", ingredients: "100g quinoa, 80g avokádó, 50g kimchi, 60g edamame bab, rukkola" },
-      { name: "Sült édesburgonya-bruschetta kecskesajttal, dióval & kakukkfűvel", keys: ["édesburgonya", "kecskesajt", "dió", "fokhagyma"], desc: "Tepsis sült karikák meleg kecskesajttal és dióval.", ingredients: "180g édesburgonya, 60g kecskesajt, 25g dió, kakukkfű" },
-      { name: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahinivel", keys: ["édesburgonya", "csicseriborsó", "szezámmag", "fokhagyma"], desc: "Tepsis ropogós fűszeres zöldségtál selymes tahinivel.", ingredients: "150g csicseriborsó, 150g édesburgonya, 20g tahini, fokhagyma" },
-      { name: "Pácolt lazacfilé pirított zöldspárgával & citromos fokhagymával", keys: ["lazac", "spárga", "fokhagyma", "citrom"], desc: "Hirtelen átsütött serpenyős lazacfilé tavaszi spárgával.", ingredients: "180g lazacfilé, 150g spárga, 1/2 citrom, 2 gerezd fokhagyma" },
-      { name: "Édesburgonyás-spenótos tejszínes omlett fokhagymával", keys: ["édesburgonya", "spenót", "tyúktojás", "fokhagyma"], desc: "Szaftos serpenyős reggeli friss bébispenóttal.", ingredients: "2 db tojás, 80g édesburgonya, 40g spenót, 1 gerezd fokhagyma" },
-      { name: "Fahéjas zabkása meleg meggyraguval & étcsokoládéval", keys: ["banán", "áfonya", "málna", "zabpehely", "étcsoki", "meggy", "alma"], desc: "Melengető krémes zabkása olvasztott étcsokival.", ingredients: "60g zabpehely, 250ml mandulatej, 60g meggy, 20g étcsoki" },
-      { name: "Málnás chia puding kókusztejszínnel & kókuszpehellyel", keys: ["banán", "áfonya", "málna", "chia", "kókusztej", "alma"], desc: "Hűsítő zselés chia puding bogyós gyümölcsréteggel.", ingredients: "35g chia mag, 200ml kókusztej, 80g málna, kókuszpehely" },
-      { name: "Lenmagpelyhes banánkenyér szilvával & fahéjjal", keys: ["banán", "szilva", "lenmag", "tyúktojás", "alma"], desc: "Sütőben sült cukormentes kímélő banánkenyér.", ingredients: "150g banán, 1 tojás, 60g zabliszt, 25g őrölt lenmag, szilva" },
-      { name: "Tonhalas kevert bisztrósaláta capri öntettel & uborkával", keys: ["uborka", "paradicsom", "paprika", "szardínia", "mozzarella", "mustár", "fokhagyma"], desc: "Friss ropogós zöldsaláta tonhallal és fetával.", ingredients: "120g tonhal, 100g uborka, 50g feta, kapribogyó, fokhagyma" },
-      { name: "Pácolt csirkemell csíkok quinoával & fokhagymás brokkolival", keys: ["brokkoli", "karfiol", "fokhagyma", "csirkemell", "quinoa"], desc: "Serpenyős fűszeres csirke szaftos brokkolival.", ingredients: "180g csirkemell, 80g quinoa, 150g brokkoli, fokhagyma" }
+      { name: "Avokádós-kimchis quinoa tál edamame babbal & rukkolával", keys: ["avokádó", "rukkola", "quinoa", "edamame", "fokhagyma", "tofu", "szezámmag"], desc: "Színes ázsiai bisztró tál fermentált zöldségekkel.", ingredients: "100g quinoa, 80g avokádó, 50g kimchi, 60g edamame bab, rukkola" },
+      { name: "Sült édesburgonya-bruschetta kecskesajttal, dióval & kakukkfűvel", keys: ["édesburgonya", "kecskesajt", "dió", "fokhagyma", "teljes kiőrlésű kenyér", "túró"], desc: "Tepsis sült karikák meleg kecskesajttal és dióval.", ingredients: "180g édesburgonya, 60g kecskesajt, 25g dió, kakukkfű" },
+      { name: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahinivel", keys: ["édesburgonya", "csicseriborsó", "szezámmag", "fokhagyma", "hummusz", "hajdina", "vörösbab"], desc: "Tepsis ropogós fűszeres zöldségtál selymes tahinivel.", ingredients: "150g csicseriborsó, 150g édesburgonya, 20g tahini, fokhagyma" },
+      { name: "Pácolt lazacfilé pirított zöldspárgával & citromos fokhagymával", keys: ["lazac", "spárga", "fokhagyma", "citrom", "barna rizs"], desc: "Hirtelen átsütött serpenyős lazacfilé tavaszi spárgával.", ingredients: "180g lazacfilé, 150g spárga, 1/2 citrom, 2 gerezd fokhagyma" },
+      { name: "Édesburgonyás-spenótos tejszínes omlett fokhagymával", keys: ["édesburgonya", "spenót", "tyúktojás", "fokhagyma", "máj"], desc: "Szaftos serpenyős reggeli friss bébispenóttal.", ingredients: "2 db tojás, 80g édesburgonya, 40g spenót, 1 gerezd fokhagyma" },
+      { name: "Fahéjas zabkása meleg meggyraguval & étcsokoládéval", keys: ["banán", "áfonya", "málna", "zabpehely", "étcsoki", "meggy", "alma", "datolya"], desc: "Melengető krémes zabkása olvasztott étcsokival.", ingredients: "60g zabpehely, 250ml mandulatej, 60g meggy, 20g étcsoki" },
+      { name: "Málnás chia puding kókusztejszínnel & kókuszpehellyel", keys: ["banán", "áfonya", "málna", "chia", "kókusztej", "alma", "narancs"], desc: "Hűsítő zselés chia puding bogyós gyümölcsréteggel.", ingredients: "35g chia mag, 200ml kókusztej, 80g málna, kókuszpehely" },
+      { name: "Lenmagpelyhes banánkenyér szilvával & fahéjjal", keys: ["banán", "szilva", "lenmag", "tyúktojás", "alma", "datolya"], desc: "Sütőben sült cukormentes kímélő banánkenyér.", ingredients: "150g banán, 1 tojás, 60g zabliszt, 25g őrölt lenmag, szilva" },
+      { name: "Tonhalas kevert bisztrósaláta capri öntettel & uborkával", keys: ["uborka", "paradicsom", "paprika", "szardínia", "mozzarella", "mustár", "fokhagyma", "sertésszűz"], desc: "Friss ropogós zöldsaláta tonhallal és fetával.", ingredients: "120g tonhal, 100g uborka, 50g feta, kapribogyó, fokhagyma" },
+      { name: "Pácolt csirkemell csíkok quinoával & fokhagymás brokkolival", keys: ["brokkoli", "karfiol", "fokhagyma", "csirkemell", "quinoa", "savanyú káposzta", "gomba"], desc: "Serpenyős fűszeres csirke szaftos brokkolival.", ingredients: "180g csirkemell, 80g quinoa, 150g brokkoli, fokhagyma" }
     ];
 
     const ingredientDetails = {
@@ -907,7 +907,6 @@
       }
     ];
 
-    // CIKLUSFÁZISOK RÉSZLETES ÉLETTANI MAGYARÁZATTAL ÉS TŰPONTOS RECEPTKÉPEKKEL (PONTOSAN 2-2 PASSZOLÓ RECEPT)
     const cyclePhases = {
       1: {
         title: "1. Menstruációs fázis (1–5. nap)",
@@ -1077,6 +1076,7 @@
       });
     }
 
+    // PONTOSAN ALAPANYAGRA SZŰRŐ KAMRA-FŐZŐ KERESŐLOGIKA (A TARTALÉK HIBA KIKÜSZÖBÖLÉSÉVEL)
     function findPantryRecipes() {
       const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
       const userItems = Array.from(checkedBoxes).map(cb => cb.value.toLowerCase().trim());
@@ -1089,13 +1089,14 @@
         return;
       }
 
+      // Pontos szűrés a kijelölt alapanyagokra
       let matches = masterRecipes.filter(r => {
-        return userItems.some(ui => r.keys.some(k => k.includes(ui) || ui.includes(k)) || r.ingredients.toLowerCase().includes(ui));
+        return userItems.some(ui => r.keys.includes(ui) || r.ingredients.toLowerCase().includes(ui));
       });
 
-      if (matches.length < 4) {
-        const remaining = masterRecipes.filter(r => !matches.includes(r));
-        matches = matches.concat(remaining.slice(0, 4 - matches.length));
+      if (matches.length === 0) {
+        resGrid.innerHTML = `<div class="col-span-2 text-center p-8 bg-white rounded-3xl text-xs text-slate-600">Ehhez az alapanyag-kombinációhoz jelenleg előkészítés alatt állnak a receptek. Próbáld ki a fokhagyma, cékla, brokkoli, tojás vagy lazac kijelölését!</div>`;
+        return;
       }
 
       matches.forEach(r => {
@@ -1110,19 +1111,20 @@
             </div>
           </div>
           <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg inline-block border border-emerald-200">
-            ✓ Recept a kamrádból
+            ✓ Ajánlott recept a kamrádból
           </span>
         `;
         resGrid.appendChild(card);
       });
     }
 
+    // PONTOS ALAPANYAG PROFIL & HARMÓNIZÁLÓ RECEPTLISTA MODÁLIS ABLAK
     function openIngredientInfo(ingKey) {
       const cleanKey = ingKey.toLowerCase().trim();
       const ing = ingredientDetails[cleanKey] || { 
         name: ingKey.toUpperCase(), 
-        nutrients: "Szerves mikrotápanyagok, béta-glükánok és élelmi rostok", 
-        benefits: "❤️ Támogatja a sejt-regenerációt és az immunrendszer egyensúlyát", 
+        nutrients: "Szerves mikrotápanyagok, antioxidánsok és élelmi rostok", 
+        benefits: "❤️ Támogatja a sejt-regenerációt és a szervezet természetes egyensúlyát", 
         usage: "Párolva, sütőben fűszeresen sütve, vagy frissen salátákhoz"
       };
 
@@ -1131,14 +1133,19 @@
       document.getElementById('ingModalBenefits').innerText = ing.benefits;
       document.getElementById('ingModalUsage').innerText = ing.usage;
 
-      const matched = masterRecipes.filter(r => r.keys.some(k => k.includes(cleanKey) || cleanKey.includes(k)) || r.ingredients.toLowerCase().includes(cleanKey));
-      const recipeList = matched.length >= 4 ? matched.slice(0, 4) : masterRecipes.slice(0, 4);
+      // Kiválasztjuk a kifejezetten az adott alapanyagot tartalmazó recepteket
+      const matched = masterRecipes.filter(r => r.keys.includes(cleanKey) || r.ingredients.toLowerCase().includes(cleanKey));
 
-      let listHtml = '<ul class="space-y-1.5 text-xs text-slate-700">';
-      recipeList.forEach(r => {
-        listHtml += `<li class="flex items-center gap-1.5"><span class="text-[#F06292] font-bold">•</span> <span>${r.name}</span></li>`;
-      });
-      listHtml += '</ul>';
+      let listHtml = '';
+      if (matched.length > 0) {
+        listHtml = '<ul class="space-y-1.5 text-xs text-slate-700">';
+        matched.forEach(r => {
+          listHtml += `<li class="flex items-center gap-1.5"><span class="text-[#F06292] font-bold">•</span> <span>${r.name}</span></li>`;
+        });
+        listHtml += '</ul>';
+      } else {
+        listHtml = `<p class="text-xs text-slate-500 italic">Ehhez az alapanyaghoz a Kamra-főzőben találsz kombinált receptajánlatokat.</p>`;
+      }
 
       document.getElementById('ingModalRecipeList').innerHTML = listHtml;
       document.getElementById('ingredientModal').classList.remove('hidden');
@@ -1250,7 +1257,7 @@
               <div class="p-3.5 bg-rose-50 rounded-2xl border border-rose-200 text-rose-900"><strong>⛔ Kerülendő:</strong> ${phaseData.avoid}</div>
             </div>
           </div>
-          <h4 class="text-xl font-bold text-[#556B4E] mb-4 text-center font-serif-title">Fázis-specifikus ajánlott bisztró receptek (2 fogás)</h4>
+          <h4 class="text-xl font-bold text-[#556B4E] mb-4 text-center font-serif-title">Hormonharmonizáló finomságok (2 fogás)</h4>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">${recipesHtml}</div>
         `;
       }
