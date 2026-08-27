@@ -22,188 +22,227 @@
 </head>
 <body class="antialiased pb-20">
 
-  <!-- HEADER -->
-  <header class="bg-[#556B4E] text-white py-10 px-4 shadow-md mb-6 text-center">
-    <span class="inline-block bg-[#F06292] text-white text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3">Élni. Jobban. Tudatosan.</span>
-    <h1 class="text-4xl md:text-5xl font-bold mb-2 text-[#F7F3ED]">Vita-Natura</h1>
-    <p class="text-[#E8DCC6] text-sm md:text-base max-w-2xl mx-auto italic font-light">„Tápláld a tested. Támogasd az egyensúlyod. Érezd jól magad.”</p>
+  <!-- ORGANIKUS VIZUÁLIS ELEMEK -->
+  <div class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+    <svg class="absolute -top-20 -left-20 w-[500px] h-[500px] opacity-20 text-[#A7B69A]" viewBox="0 0 200 200" fill="currentColor">
+      <path d="M44.7,-59.2C56.9,-48.6,65.2,-33.5,68.4,-17.5C71.6,-1.5,69.7,15.4,61.8,28.8C53.9,42.2,40.1,52,24.8,59.3C9.5,66.6,-7.3,71.4,-23.5,67.3C-39.7,63.2,-55.3,50.2,-63.8,33.8C-72.3,17.4,-73.7,-2.4,-68.2,-20.1C-62.7,-37.8,-50.3,-53.4,-35.6,-62.8C-20.9,-72.2,-3.9,-75.4,11.2,-73.5C26.3,-71.6,32.5,-69.8,44.7,-59.2Z" transform="translate(100 100)" />
+    </svg>
+    <svg class="absolute top-1/2 -right-32 w-[600px] h-[600px] opacity-15 text-[#F06292]" viewBox="0 0 200 200" fill="currentColor">
+      <path d="M38.1,-48.8C49.9,-38.3,60.3,-26.4,63.8,-12.3C67.3,1.8,63.9,18.1,55.1,30.8C46.3,43.5,32.1,52.6,16.5,57.2C0.9,61.8,-16.1,61.9,-30.7,55.2C-45.3,48.5,-57.5,35,-62.4,19.2C-67.3,3.4,-64.9,-14.7,-56.3,-28.5C-47.7,-42.3,-32.9,-51.8,-18.8,-54.6C-4.7,-57.4,8.7,-53.5,38.1,-48.8Z" transform="translate(100 100)" />
+    </svg>
+  </div>
+
+  <!-- LETISZTULT FEJLÉC -->
+  <header class="bg-[#556B4E] text-white py-8 px-4 shadow-sm mb-4 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-left">
+        <span class="inline-block bg-[#F06292] text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-widest mb-1.5 shadow-sm">Vita-Natura</span>
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-[#F7F3ED]">Vita-Natura</h1>
+      </div>
+      <p class="text-[#E8DCC6] text-xs md:text-sm italic font-light text-center md:text-right max-w-sm">
+        „Segítünk eldönteni, mit egyél és mit válassz a saját céljaidhoz.”
+      </p>
+    </div>
   </header>
 
-  <!-- TAB SZEKCIÓK -->
+  <!-- LÉNYEGRE TÖRŐ HERO SZEKCIÓ (FŐ DÖNTÉSI PONT) -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
-    <div class="flex flex-wrap justify-center gap-1.5 bg-[#E8DCC6]/60 backdrop-blur-sm p-2 rounded-2xl border border-[#A7B69A]/40">
-      <button id="tabQuizBtn" onclick="switchTab('quiz')" class="flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold bg-[#556B4E] text-white shadow-sm">🎯 Jólléti Kvíz</button>
-      <button id="tabPantryBtn" onclick="switchTab('pantry')" class="flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">🥦 Kamra-főző</button>
-      <button id="tabSymptomsBtn" onclick="switchTab('symptoms')" class="flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">🌿 Tünetkereső</button>
-      <button id="tabLifestyleBtn" onclick="switchTab('lifestyle')" class="flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">🥗 Étrendtervező</button>
-      <button id="tabCycleBtn" onclick="switchTab('cycle')" class="flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold text-[#556B4E] hover:bg-[#F06292]/10">🌸 Női Ciklus</button>
-      <button id="tabPackagesBtn" onclick="switchTab('packages')" class="flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">📦 Csomagok</button>
+    <div class="bg-white/90 backdrop-blur-sm p-6 md:p-10 rounded-3xl border border-[#A7B69A]/40 shadow-sm text-center max-w-4xl mx-auto">
+      <span class="text-[11px] font-bold text-[#556B4E] bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40 uppercase tracking-wider mb-4 inline-block">
+        🌿 Természetes Jóllét & Tudatos Táplálkozás
+      </span>
+      <h2 class="text-3xl md:text-5xl font-bold font-serif-title text-[#556B4E] mb-4 leading-tight">
+        Tápláld a tested. Találd meg, ami hozzád illik.
+      </h2>
+      <p class="text-slate-600 text-xs md:text-sm max-w-2xl mx-auto font-light leading-relaxed mb-8">
+        Receptek, természetes alapanyagok és személyre szabott ajánlások – az alapján, amit szeretsz, amit otthon találsz és amire most a leginkább figyelni szeretnél.
+      </p>
+
+      <!-- FŐ KÉT BELÉPÉSI GOMB (CTA) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+        <button onclick="scrollToSection('pantrySection')" class="p-4 bg-[#556B4E] text-white rounded-2xl font-bold text-xs md:text-sm hover:bg-[#44563e] transition shadow-md flex items-center justify-center gap-2">
+          <span>🥦</span> Mit főzzek abból, ami otthon van?
+        </button>
+        <button onclick="scrollToSection('quizSection')" class="p-4 bg-[#F06292] text-white rounded-2xl font-bold text-xs md:text-sm hover:bg-[#e05282] transition shadow-md flex items-center justify-center gap-2">
+          <span>🎯</span> Mire szeretnél most jobban figyelni?
+        </button>
+      </div>
     </div>
   </div>
 
-  <main class="max-w-5xl mx-auto px-4">
-
-    <!-- ==================== TAB 0: CÉLALAPÚ KVÍZ (JÓLLÉTI TÉRKÉP) ==================== -->
-    <div id="quizTabSection">
-      <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
-        <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Személyre szabott Diagnosztika</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2 font-serif-title">Miben szeretnéd most leginkább támogatni magad?</h2>
-        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Töltsd ki 1 perces rövid kvízünket! Felmérjük a tested aktuális igényeit, és összeállítjuk a személyes természetes térképedet.</p>
-      </div>
-
-      <!-- KVÍZ KÁRTYA -->
-      <div id="quizCard" class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm max-w-2xl mx-auto text-xs">
-        
-        <!-- FOLYAMATJELZŐ -->
-        <div class="w-full bg-[#F7F3ED] h-2 rounded-full mb-6 overflow-hidden border border-[#A7B69A]/30">
-          <div id="quizProgress" class="bg-[#556B4E] h-full w-[16%] transition-all duration-300"></div>
-        </div>
-
-        <!-- 1. LÉPÉS: CÉLOK -->
-        <div id="quizStep1" class="space-y-4">
-          <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">1/6. Lépés: Válassz ki 1-3 területet, amit támogatni szeretnél!</p>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <button onclick="toggleQuizGoal('energia')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="energia">⚡ Több energia</button>
-            <button onclick="toggleQuizGoal('alvas')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="alvas">🌙 Jobb alvás</button>
-            <button onclick="toggleQuizGoal('fokus')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="fokus">🧠 Mentális fókusz</button>
-            <button onclick="toggleQuizGoal('bor')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="bor">✨ Bőr & haj egészsége</button>
-            <button onclick="toggleQuizGoal('izom')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="izom">💪 Izom & regeneráció</button>
-            <button onclick="toggleQuizGoal('emesztes')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="emesztes">🌿 Emésztés támogatása</button>
-            <button onclick="toggleQuizGoal('ciklus')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="ciklus">🌸 Női ciklus & komfort</button>
-            <button onclick="toggleQuizGoal('immun')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="immun">🛡️ Általános immunitás</button>
-          </div>
-          <button onclick="nextQuizStep(2)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább az életmódra →</button>
-        </div>
-
-        <!-- 2. LÉPÉS: ÉLETKOR & AKTIVITÁS -->
-        <div id="quizStep2" class="space-y-4 hidden">
-          <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">2/6. Lépés: Életkor & Aktivitási szint</p>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Életkorod:</label>
-            <select id="quizAge" class="w-full p-3 rounded-xl border border-[#A7B69A] bg-[#F7F3ED] focus:outline-none">
-              <option value="18-29">18 – 29 év között</option>
-              <option value="30-44" selected>30 – 44 év között</option>
-              <option value="45-59">45 – 59 év között</option>
-              <option value="60+">60 év felett</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Aktivitási szinted:</label>
-            <select id="quizActivity" class="w-full p-3 rounded-xl border border-[#A7B69A] bg-[#F7F3ED] focus:outline-none">
-              <option value="low">Ülőmunka, kevés mozgás</option>
-              <option value="med" selected>Mérsékelten aktív (heti 1-3 edzés)</option>
-              <option value="high">Intenzív sportoló (heti 4+ edzés)</option>
-            </select>
-          </div>
-          <button onclick="nextQuizStep(3)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább a táplálkozásra →</button>
-        </div>
-
-        <!-- 3. LÉPÉS: ÉTKEZÉSI SZOKÁSOK -->
-        <div id="quizStep3" class="space-y-4 hidden">
-          <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">3/6. Lépés: Milyen az átlagos táplálkozásod?</p>
-          <div class="space-y-2">
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizDiet" value="balanced" checked> Kiegyensúlyozott, sok zöldséggel & fehérjével</label>
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizDiet" value="busy"> Rendszertelen, rohanó (sok készétel / kimaradt étkezés)</label>
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizDiet" value="vegan"> Növényi / Vegán / Tejmentes étrend</label>
-          </div>
-          <button onclick="nextQuizStep(4)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább a preferenciákra →</button>
-        </div>
-
-        <!-- 4. LÉPÉS: PREFERÁLT FORMA -->
-        <div id="quizStep4" class="space-y-4 hidden">
-          <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">4/6. Lépés: Milyen formában szereted fogyasztani az étrend-kiegészítőket?</p>
-          <div class="space-y-2">
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizForm" value="capsule" checked> Kapszula / Tabletta</label>
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizForm" value="tea"> Teakeverék / Gyógynövényes infúzió</label>
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizForm" value="food"> Kizárólag természetes élelmiszerek & konyhai alapanyagok</label>
-          </div>
-          <button onclick="nextQuizStep(5)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább az összetevőkre →</button>
-        </div>
-
-        <!-- 5. LÉPÉS: KERÜLENDŐ ÖSSZETEVŐK -->
-        <div id="quizStep5" class="space-y-4 hidden">
-          <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">5/6. Lépés: Van olyan összetevő, amit kerülni szeretnél?</p>
-          <div class="grid grid-cols-2 gap-2">
-            <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidCaffeine"> Koffein / Stimulánsok</label>
-            <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidSoy"> Szója / Allergének</label>
-            <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidSynth"> Szintetikus színezékek</label>
-            <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidDairy"> Laktoz / Tejtermék</label>
-          </div>
-          <button onclick="nextQuizStep(6)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább a jelenlegi rutinra →</button>
-        </div>
-
-        <!-- 6. LÉPÉS: JELENLEGI UTÓKÓR -->
-        <div id="quizStep6" class="space-y-4 hidden">
-          <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">6/6. Lépés: Használsz jelenleg bármilyen vitamint vagy kiegészítőt?</p>
-          <div class="space-y-2">
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizCurrentSupp" value="none" checked> Egyáltalán nem használok semmit</label>
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizCurrentSupp" value="basic"> Csak alap D3 / C-vitamint</label>
-            <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizCurrentSupp" value="complex"> Összetett vitamin/kiegészítő rutinom van</label>
-          </div>
-          <button onclick="evaluateQuizResults()" class="w-full py-3.5 bg-[#F06292] text-white font-bold rounded-xl text-xs hover:bg-[#e05282] transition shadow-md">
-            ✨ Személyes Térkép & Ajánlás Generálása →
-          </button>
-        </div>
-
-      </div>
-
-      <!-- KVÍZ EREDMÉNY ZÓNÁJA -->
-      <div id="quizResultZone" class="hidden max-w-3xl mx-auto space-y-6"></div>
-
+  <!-- MÁSODLAGOS FUNKCIÓK NAVIGÁCIÓJA -->
+  <div class="max-w-5xl mx-auto px-4 mb-10">
+    <div class="flex flex-wrap justify-center gap-1.5 bg-[#E8DCC6]/60 backdrop-blur-sm p-2 rounded-2xl border border-[#A7B69A]/40 max-w-4xl mx-auto shadow-sm">
+      <button id="navPantry" onclick="switchTab('pantry')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold bg-[#556B4E] text-white shadow-sm">🥦 Kamra-főző</button>
+      <button id="navQuiz" onclick="switchTab('quiz')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">🎯 Jólléti Kvíz</button>
+      <button id="navSymptoms" onclick="switchTab('symptoms')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">🌿 Tünetkereső</button>
+      <button id="navLifestyle" onclick="switchTab('lifestyle')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">🥗 Étrendtervező</button>
+      <button id="navCycle" onclick="switchTab('cycle')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold text-[#556B4E] hover:bg-[#F06292]/10">🌸 Női Ciklus</button>
+      <button id="navPackages" onclick="switchTab('packages')" class="flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold text-[#556B4E] hover:bg-[#A7B69A]/20">📦 Csomagok</button>
     </div>
+  </div>
 
-    <!-- ==================== TAB 1: INTELLIGENS KAMRA-FŐZŐ ==================== -->
-    <div id="pantryTabSection" class="hidden">
-      <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
-        <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens Recept & Vásárlási Asszisztens</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2 font-serif-title">Mi van otthon a hűtőben & kamrában?</h2>
-        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Jelöld ki az alapanyagokat! A Vita-Natura megmutatja, mit tudsz főzni belőlük, a hiányzó hozzávalókat pedig egy kattintással beszerezheted.</p>
+  <main class="max-w-5xl mx-auto px-4 space-y-12">
 
-        <div class="relative max-w-md mx-auto mb-2">
-          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Gyorskereső az alapanyagok között..." class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none">
+    <!-- ==================== 1. FŐ BELÉPÉSI PONT: "MI VAN OTTHON?" (KAMRA-FŐZŐ) ==================== -->
+    <section id="pantryTabSection">
+      <div id="pantrySection" class="scroll-mt-6">
+        <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-6 text-center max-w-3xl mx-auto">
+          <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">1. Fő Funkció</span>
+          <h3 class="text-2xl md:text-3xl font-bold text-[#556B4E] mt-3 mb-2 font-serif-title">Nem tudod, mit főzz a hűtődben lévő alapanyagokból?</h3>
+          <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Válassz ki 3–5 alapanyagot, ami otthon van nálad, a Vita-Natura pedig megmutatja, mit készíthetsz belőlük – a hiányzó hozzávalókat pedig egyszerűen beszerezheted!</p>
+
+          <div class="relative max-w-md mx-auto mb-2">
+            <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Gyorskereső az alapanyagok között (pl. csirke, brokkoli, rizs)..." class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none">
+          </div>
         </div>
+
+        <div class="bg-white/90 p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
+          <div>
+            <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🥩</span> Fehérjék, Halak & Tejtermékek:</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="proteinGrid"></div>
+          </div>
+
+          <div>
+            <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🥦</span> Zöldségek, Gombák & Gyümölcsök:</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="vegGrid"></div>
+          </div>
+
+          <div>
+            <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🌾</span> Gabonák, Magvak & Hüvelyesek:</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="grainGrid"></div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <button onclick="clearPantrySelections()" class="text-xs text-rose-600 font-semibold underline hover:text-rose-800 transition">Kijelölések törlése</button>
+            <button onclick="findPantryRecipes()" class="w-full sm:w-auto px-8 py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
+              <span>🍳</span> Mutasd, mit főzhetek belőlük!
+            </button>
+          </div>
+        </div>
+
+        <div id="pantryRecipeResults" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
       </div>
+    </section>
 
-      <div class="bg-white/90 p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
-        <div>
-          <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🥩</span> Fehérjék, Halak & Tejtermékek:</p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="proteinGrid"></div>
+    <!-- ==================== 2. FŐ BELÉPÉSI PONT: "MIRE SZERETNÉL FIGYELNI?" (JÓLLÉTI KVÍZ) ==================== -->
+    <section id="quizTabSection" class="hidden">
+      <div id="quizSection" class="scroll-mt-6">
+        <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-6 text-center max-w-3xl mx-auto">
+          <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">2. Fő Funkció</span>
+          <h3 class="text-2xl md:text-3xl font-bold text-[#556B4E] mt-3 mb-2 font-serif-title">Mire szeretnél most jobban figyelni?</h3>
+          <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Töltsd ki 1 perces rövid kvízünket! Megértjük az igényeidet, és pontosan a te céljaidhoz illeszkedő természetes ajánlásokat kapsz.</p>
         </div>
 
-        <div>
-          <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🥦</span> Zöldségek, Gombák & Gyümölcsök:</p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="vegGrid"></div>
+        <div id="quizCard" class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm max-w-2xl mx-auto text-xs">
+          
+          <div class="w-full bg-[#F7F3ED] h-2 rounded-full mb-6 overflow-hidden border border-[#A7B69A]/30">
+            <div id="quizProgress" class="bg-[#556B4E] h-full w-[16%] transition-all duration-300"></div>
+          </div>
+
+          <!-- 1. LÉPÉS -->
+          <div id="quizStep1" class="space-y-4">
+            <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">1/6. Válassz ki 1-3 fókuszterületet:</p>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button onclick="toggleQuizGoal('energia')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="energia">⚡ Több energia</button>
+              <button onclick="toggleQuizGoal('alvas')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="alvas">🌙 Jobb alvás</button>
+              <button onclick="toggleQuizGoal('fokus')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="fokus">🧠 Koncentráció</button>
+              <button onclick="toggleQuizGoal('bor')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="bor">✨ Bőr és haj</button>
+              <button onclick="toggleQuizGoal('izom')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="izom">💪 Izom & regeneráció</button>
+              <button onclick="toggleQuizGoal('emesztes')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="emesztes">🌿 Emésztés támogatása</button>
+              <button onclick="toggleQuizGoal('ciklus')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="ciklus">🌸 Női ciklus & komfort</button>
+              <button onclick="toggleQuizGoal('immun')" class="quiz-goal-btn p-3 bg-[#F7F3ED] border rounded-2xl font-bold text-left hover:border-[#556B4E] transition" data-goal="immun">🛡️ Általános jóllét</button>
+            </div>
+            <button onclick="nextQuizStep(2)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább az életmódra →</button>
+          </div>
+
+          <!-- 2. LÉPÉS -->
+          <div id="quizStep2" class="space-y-4 hidden">
+            <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">2/6. Életkor & Aktivitási szint</p>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Életkorod:</label>
+              <select id="quizAge" class="w-full p-3 rounded-xl border border-[#A7B69A] bg-[#F7F3ED] focus:outline-none">
+                <option value="18-29">18 – 29 év között</option>
+                <option value="30-44" selected>30 – 44 év között</option>
+                <option value="45-59">45 – 59 év között</option>
+                <option value="60+">60 év felett</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Aktivitási szinted:</label>
+              <select id="quizActivity" class="w-full p-3 rounded-xl border border-[#A7B69A] bg-[#F7F3ED] focus:outline-none">
+                <option value="low">Ülőmunka, kevés mozgás</option>
+                <option value="med" selected>Mérsékelten aktív (heti 1-3 edzés)</option>
+                <option value="high">Intenzív sportoló (heti 4+ edzés)</option>
+              </select>
+            </div>
+            <button onclick="nextQuizStep(3)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább a táplálkozásra →</button>
+          </div>
+
+          <!-- 3. LÉPÉS -->
+          <div id="quizStep3" class="space-y-4 hidden">
+            <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">3/6. Étkezési szokásaid</p>
+            <div class="space-y-2">
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizDiet" value="balanced" checked> Kiegyensúlyozott, zöldség- és fehérjedús</label>
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizDiet" value="busy"> Rendszertelen, rohanó mindennapok</label>
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizDiet" value="vegan"> Vegán / Növényi / Mentes étrend</label>
+            </div>
+            <button onclick="nextQuizStep(4)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább a formátumra →</button>
+          </div>
+
+          <!-- 4. LÉPÉS -->
+          <div id="quizStep4" class="space-y-4 hidden">
+            <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">4/6. Milyen formátumot részesítesz előnyben?</p>
+            <div class="space-y-2">
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizForm" value="capsule" checked> Kapszula / Por</label>
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizForm" value="tea"> Teakeverék / Gyógynövény</label>
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizForm" value="food"> Elsősorban természetes élelmiszerek</label>
+            </div>
+            <button onclick="nextQuizStep(5)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább az összetevőkre →</button>
+          </div>
+
+          <!-- 5. LÉPÉS -->
+          <div id="quizStep5" class="space-y-4 hidden">
+            <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">5/6. Kerülendő összetevők</p>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidCaffeine"> Koffein</label>
+              <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidSoy"> Szója</label>
+              <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidSynth"> Szintetikumok</label>
+              <label class="p-2.5 bg-[#F7F3ED] border rounded-xl flex items-center gap-2 cursor-pointer"><input type="checkbox" id="avoidDairy"> Laktoz / Tej</label>
+            </div>
+            <button onclick="nextQuizStep(6)" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition">Tovább az eddigi rutinra →</button>
+          </div>
+
+          <!-- 6. LÉPÉS -->
+          <div id="quizStep6" class="space-y-4 hidden">
+            <p class="text-sm font-bold text-[#556B4E] uppercase tracking-wider text-center">6/6. Használsz jelenleg bármit?</p>
+            <div class="space-y-2">
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizCurrentSupp" value="none" checked> Jelenleg semmit nem használok</label>
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizCurrentSupp" value="basic"> Csak alap D3 / C-vitamint</label>
+              <label class="p-3 bg-[#F7F3ED] border rounded-2xl flex items-center gap-2 cursor-pointer"><input type="radio" name="quizCurrentSupp" value="complex"> Összetett rutinon vagyok</label>
+            </div>
+            <button onclick="evaluateQuizResults()" class="w-full py-3.5 bg-[#F06292] text-white font-bold rounded-xl text-xs hover:bg-[#e05282] transition shadow-md">
+              ✨ Személyes Ajánlásom Megtekintése →
+            </button>
+          </div>
+
         </div>
 
-        <div>
-          <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🌾</span> Gabonák, Magvak & Hüvelyesek:</p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="grainGrid"></div>
-        </div>
-
-        <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
-          <button onclick="clearPantrySelections()" class="text-xs text-rose-600 font-semibold underline hover:text-rose-800 transition">Kijelölések törlése</button>
-          <button onclick="findPantryRecipes()" class="w-full sm:w-auto px-8 py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
-            <span>🍳</span> Receptajánló & Vásárlási Útvonal
-          </button>
-        </div>
+        <div id="quizResultZone" class="hidden max-w-3xl mx-auto space-y-6"></div>
       </div>
+    </section>
 
-      <div id="pantryRecipeResults" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
-    </div>
-
-    <!-- ==================== TAB 2: TÜNETKERESŐ ==================== -->
-    <div id="symptomsTabSection" class="hidden">
-      <div class="bg-white/90 p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
-        <h3 class="text-xl font-bold text-[#556B4E] mb-2 font-serif-title">Természetes táplálkozási támogatás</h3>
-        <p class="text-xs text-slate-600 mb-4">Válaszd ki a panaszodat vagy célodat!</p>
+    <!-- ==================== MÁSODLAGOS MINTAMODULOK ==================== -->
+    <section id="symptomsTabSection" class="hidden space-y-6">
+      <div class="bg-white/90 p-6 rounded-3xl border border-[#A7B69A]/40 text-center max-w-3xl mx-auto">
+        <h3 class="text-xl font-bold text-[#556B4E] mb-2 font-serif-title">Milyen panaszra keresel természetes támogatást?</h3>
         <input type="text" id="searchInput" placeholder="Keresés pl. lábgörcs, puffadás, fáradtság..." class="w-full max-w-md px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs focus:outline-none">
       </div>
       <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
-    </div>
+    </section>
 
-    <!-- ==================== TAB 3: ÉTRENDTERVEZŐ ==================== -->
-    <div id="lifestyleTabSection" class="hidden">
-      <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
+    <section id="lifestyleTabSection" class="hidden space-y-6">
+      <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 text-center max-w-3xl mx-auto">
         <h2 class="text-3xl font-bold text-[#556B4E] mb-2 font-serif-title">BMI & 3 Napos Mintaétrend</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mt-4">
           <div><label class="block font-semibold mb-1">Magasság (cm):</label><input type="number" id="lsHeight" value="168" class="w-full p-2 border rounded-xl"></div>
@@ -220,13 +259,11 @@
         <div id="lsAnalysisBox" class="bg-white p-6 rounded-3xl border"></div>
         <div id="lsWeeklyMealBox" class="bg-white p-6 rounded-3xl border"></div>
       </div>
-    </div>
+    </section>
 
-    <!-- ==================== TAB 4: CIKLUSSZINKRON ==================== -->
-    <div id="cycleTabSection" class="hidden">
-      <div class="bg-white/90 p-6 rounded-3xl border border-[#F06292]/30 text-center max-w-3xl mx-auto mb-8">
+    <section id="cycleTabSection" class="hidden space-y-6">
+      <div class="bg-white/90 p-6 rounded-3xl border border-[#F06292]/30 text-center max-w-3xl mx-auto">
         <h2 class="text-3xl font-bold text-[#556B4E] mb-2 font-serif-title">Női Ciklusszinkron</h2>
-        <p class="text-xs text-slate-600">Válaszd ki az aktuális fázisodat!</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
           <button onclick="showPhase(1)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white transition">1. Menstruáció</button>
           <button onclick="showPhase(2)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white transition">2. Follikuláris</button>
@@ -235,12 +272,11 @@
         </div>
       </div>
       <div id="phaseContent"></div>
-    </div>
+    </section>
 
-    <!-- ==================== TAB 5: CSOMAGOK ==================== -->
-    <div id="packagesTabSection" class="hidden">
+    <section id="packagesTabSection" class="hidden space-y-6">
       <div id="packagesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-    </div>
+    </section>
 
   </main>
 
@@ -261,51 +297,43 @@
 
   <script>
     // =========================================================================
-    // 1. CÉLALAPÚ KVÍZ LOGIKA & TERMÉKAJÁNLÓ MÁTRIX
+    // NAVIGÁCIÓS ÉS SCROLL LOGIKA
+    // =========================================================================
+    function scrollToSection(secId) {
+      if (secId === 'pantrySection') switchTab('pantry');
+      if (secId === 'quizSection') switchTab('quiz');
+      const el = document.getElementById(secId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function switchTab(tab) {
+      ['pantry', 'quiz', 'symptoms', 'lifestyle', 'cycle', 'packages'].forEach(t => {
+        const sec = document.getElementById(t + 'TabSection');
+        if (sec) sec.classList.add('hidden');
+        const btn = document.getElementById('nav' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (btn) btn.className = "flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold text-[#556B4E] hover:bg-[#A7B69A]/20";
+      });
+
+      const activeSec = document.getElementById(tab + 'TabSection');
+      if (activeSec) activeSec.classList.remove('hidden');
+      const activeBtn = document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (activeBtn) activeBtn.className = "flex-1 min-w-[100px] py-2 px-3 rounded-xl text-xs font-bold bg-[#556B4E] text-white shadow-sm";
+
+      if (tab === 'symptoms') renderSymptoms();
+      if (tab === 'packages') renderPackages();
+    }
+
+    // =========================================================================
+    // KVÍZ ENGINE & BIZALOMÉPÍTŐ "NE VEDD MEG" INTEGRITÁS
     // =========================================================================
     let quizSelectedGoals = [];
 
     const QUIZ_PRODUCTS = {
-      "magnezium": {
-        id: "magnezium",
-        name: "Bioaktív Magnézium-Biszglicinát",
-        category: "🌙 Alvás & 💪 Regeneráció",
-        why: "A kvízben adott válaszaid alapján az izmaid ellazítása és a mély alvási fázisok támogatása a legfontosabb nálad.",
-        price: "4.990 Ft",
-        affiliateUrl: "https://partner-webshop.hu/magnezium"
-      },
-      "omega3": {
-        id: "omega3",
-        name: "Mélytengeri Omega-3 Halolaj (DHA+EPA)",
-        category: "🧠 Mentális funkciók & ❤️ Szív-érrendszer",
-        why: "Támogatja az agyi sejthártyák rugalmasságát, javítja a koncentrációt és csökkenti a gyulladásos folyamatokat.",
-        price: "5.490 Ft",
-        affiliateUrl: "https://partner-webshop.hu/omega3"
-      },
-      "bcomplex": {
-        id: "bcomplex",
-        name: "Bioaktív B-Komplex (MTHFR-barát Foláttal)",
-        category: "⚡ Energia & 🧠 Idegrendszer",
-        why: "Nélkülözhetetlen a sejt-szintű ATP energiatermeléshez és a fáradtság leküzdéséhez.",
-        price: "4.290 Ft",
-        affiliateUrl: "https://partner-webshop.hu/bcomplex"
-      },
-      "ashwagandha": {
-        id: "ashwagandha",
-        name: "Prémium Ashwagandha KSM-66 (Adaptogén)",
-        category: "🌙 Alvás & ⚡ Stressztűrés",
-        why: "Harmonizálja a kortizolszintet, segíti az esti leállást és növeli a mentális állóképességet.",
-        price: "5.990 Ft",
-        affiliateUrl: "https://partner-webshop.hu/ashwagandha"
-      },
-      "kolllagen": {
-        id: "kolllagen",
-        name: "Hidrolizált Kollagén Peptid + C-vitamin",
-        category: "✨ Bőr, Haj & 💪 Ízületek",
-        why: "Feltölti a bőr kötőszöveteit, növeli a hidratáltságot és védi az ízületeket.",
-        price: "6.890 Ft",
-        affiliateUrl: "https://partner-webshop.hu/kollagen"
-      }
+      "magnezium": { id: "magnezium", name: "Bioaktív Magnézium-Biszglicinát", category: "🌙 Alvás & 💪 Regeneráció", why: "A kvízben adott válaszaid alapján az izmaid ellazítása és a mély alvási fázisok támogatása a legfontosabb nálad.", price: "4.990 Ft", affiliateUrl: "https://partner-webshop.hu/magnezium" },
+      "omega3": { id: "omega3", name: "Mélytengeri Omega-3 Halolaj (DHA+EPA)", category: "🧠 Mentális fókusz & ❤️ Szív", why: "Támogatja az agyi sejthártyák rugalmasságát, javítja a koncentrációt és csökkenti a gyulladásokat.", price: "5.490 Ft", affiliateUrl: "https://partner-webshop.hu/omega3" },
+      "bcomplex": { id: "bcomplex", name: "Bioaktív B-Komplex (B6, B9, B12)", category: "⚡ Energia & 🧠 Idegrendszer", why: "Nélkülözhetetlen a sejt-szintű ATP energiatermeléshez és a fáradtság leküzdéséhez.", price: "4.290 Ft", affiliateUrl: "https://partner-webshop.hu/bcomplex" },
+      "ashwagandha": { id: "ashwagandha", name: "Prémium Ashwagandha KSM-66", category: "🌙 Alvás & ⚡ Stressztűrés", why: "Harmonizálja a kortizolszintet, segíti az esti leállást és növeli a mentális állóképességet.", price: "5.990 Ft", affiliateUrl: "https://partner-webshop.hu/ashwagandha" },
+      "kolllagen": { id: "kolllagen", name: "Hidrolizált Kollagén Peptid + C-vitamin", category: "✨ Bőr, Haj & 💪 Ízületek", why: "Feltölti a bőr kötőszöveteit, növeli a hidratáltságot és védi az ízületeket.", price: "6.890 Ft", affiliateUrl: "https://partner-webshop.hu/kollagen" }
     };
 
     function toggleQuizGoal(goalKey) {
@@ -315,7 +343,7 @@
         btn.classList.remove('border-[#556B4E]', 'bg-[#556B4E]', 'text-white');
         btn.classList.add('bg-[#F7F3ED]');
       } else {
-        if (quizSelectedGoals.length >= 3) return; // Max 3
+        if (quizSelectedGoals.length >= 3) return;
         quizSelectedGoals.push(goalKey);
         btn.classList.remove('bg-[#F7F3ED]');
         btn.classList.add('border-[#556B4E]', 'bg-[#556B4E]', 'text-white');
@@ -324,17 +352,14 @@
 
     function nextQuizStep(stepNum) {
       if (stepNum === 2 && quizSelectedGoals.length === 0) {
-        alert("Kérjük, válassz ki legalább 1 célt!");
+        alert("Kérjük, válassz ki legalább 1 célterületet!");
         return;
       }
-      for (let i = 1; i <= 6; i++) {
-        document.getElementById(`quizStep${i}`).classList.add('hidden');
-      }
+      for (let i = 1; i <= 6; i++) document.getElementById(`quizStep${i}`).classList.add('hidden');
       document.getElementById(`quizStep${stepNum}`).classList.remove('hidden');
       document.getElementById('quizProgress').style.width = `${(stepNum / 6) * 100}%`;
     }
 
-    // A CÉLALAPÚ EVALUÁCIÓS ENGINE ("NE VEDD MEG" INTEGRITÁS-LOGIKÁVAL)
     function evaluateQuizResults() {
       const diet = document.querySelector('input[name="quizDiet"]:checked').value;
       const form = document.querySelector('input[name="quizForm"]:checked').value;
@@ -345,40 +370,32 @@
       const resZone = document.getElementById('quizResultZone');
       resZone.classList.remove('hidden');
 
-      // 1. TÉRKEP ÖSSZEFOGLALÓ
-      let goalsTextMap = {
-        energia: "⚡ Energia", alvas: "🌙 Alvás", fokus: "🧠 Fókusz",
-        bor: "✨ Bőr/Haj", izom: "💪 Regeneráció", emesztes: "🌿 Emésztés",
-        ciklus: "🌸 Női Ciklus", immun: "🛡️ Immunitás"
-      };
-
+      let goalsTextMap = { energia: "⚡ Energia", alvas: "🌙 Alvás", fokus: "🧠 Fókusz", bor: "✨ Bőr/Haj", izom: "💪 Regeneráció", emesztes: "🌿 Emésztés", ciklus: "🌸 Női Ciklus", immun: "🛡️ Általános jóllét" };
       let goalsListHtml = quizSelectedGoals.map(g => `<span class="px-3 py-1 bg-white rounded-full border border-[#556B4E] font-bold text-[#556B4E]">${goalsTextMap[g] || g}</span>`).join(" ");
 
-      // 2. INTEGRITÁS-TESZT (VAN-E SZÜKSÉG TERMÉKRE?)
-      // Ha a felhasználó kiegyensúlyozottan étkezik, fiatal, és élelmiszert preferál -> "NE VEDD MEG"
       const isIntegrityMode = (diet === 'balanced' && form === 'food' && supp === 'none' && age === '18-29');
 
       if (isIntegrityMode) {
         resZone.innerHTML = `
           <div class="bg-white p-6 md:p-8 rounded-3xl border-2 border-emerald-500 shadow-sm text-center">
             <span class="text-3xl mb-2 inline-block">🌿</span>
-            <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-2">Jó hírem van! Jelenleg nincs szükséged étrend-kiegészítőre.</h3>
+            <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-2">A válaszaid alapján jelenleg nincs szükséged étrend-kiegészítőre.</h3>
             <p class="text-xs text-slate-600 mb-6 max-w-lg mx-auto font-light leading-relaxed">
-              A válaszaid alapján a táplálkozásod kiegyensúlyozott. A Vita-Natura filozófiája szerint nem adunk el fölösleges vitaminokat. Először próbáld ki ezt a 3 természetes megoldást:
+              A táplálkozásod kiegyensúlyozott. A Vita-Natura filozófiája szerint nem ajánlunk fölösleges kiegészítőket. Először próbáld ki ezt a 3 természetes megoldást:
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-left text-xs mb-6">
               <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
                 <p class="font-bold text-[#556B4E] mb-1">🥗 1. Élelmiszer fókusz</p>
-                <p class="text-slate-700">Fogyassz napi 1 marék tökmagot és friss bébispenótot a természetes magnéziumért.</p>
+                <p class="text-slate-700 font-light">Fogyassz napi 1 marék tökmagot és friss bébispenótot a természetes magnéziumért.</p>
               </div>
               <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
                 <p class="font-bold text-[#556B4E] mb-1">🍵 2. Gyógynövényes tea</p>
-                <p class="text-slate-700">Igyál esténként 1 csésze citromfű-levendula infúziót a mély alvási ciklusért.</p>
+                <p class="text-slate-700 font-light">Igyál esténként 1 csésze citromfű-levendula infúziót a mély alvási ciklusért.</p>
               </div>
               <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
-                <p class="font-bold text-[#556B4E] mb-1">💤 Életmódbeli rutin</p>
-                <p class="text-slate-700">Lefekvés előtt 45 perccel kapcsold ki a kék fényt kibocsátó képernyőket.</p>
+                <p class="font-bold text-[#556B4E] mb-1">💤 3. Életmódbeli rutin</p>
+                <p class="text-slate-700 font-light">Lefekvés előtt 45 perccel kapcsold ki a kék fényt kibocsátó képernyőket.</p>
               </div>
             </div>
 
@@ -390,14 +407,12 @@
         return;
       }
 
-      // 3. NORMÁL TERMÉKAJÁNLÓ LOGIKA
       let recommendedProds = [];
       if (quizSelectedGoals.includes('alvas') || quizSelectedGoals.includes('izom')) recommendedProds.push(QUIZ_PRODUCTS.magnezium);
       if (quizSelectedGoals.includes('fokus') || quizSelectedGoals.includes('energia')) recommendedProds.push(QUIZ_PRODUCTS.omega3);
       if (quizSelectedGoals.includes('energia') || quizSelectedGoals.includes('immun')) recommendedProds.push(QUIZ_PRODUCTS.bcomplex);
       if (quizSelectedGoals.includes('bor')) recommendedProds.push(QUIZ_PRODUCTS.kolllagen);
 
-      // Ha nincs elég match, feltöltjük alapértelmezett B-komplexel/Ashwagandhával
       if (recommendedProds.length < 2) recommendedProds.push(QUIZ_PRODUCTS.ashwagandha);
 
       let productsHtml = "";
@@ -427,13 +442,12 @@
             <div class="flex flex-wrap justify-center gap-2 mt-3">${goalsListHtml}</div>
           </div>
 
-          <p class="text-xs font-bold text-[#556B4E] uppercase tracking-wider mb-3">Ezekhez az alábbi termékeket érdemes megnézned:</p>
+          <p class="text-xs font-bold text-[#556B4E] uppercase tracking-wider mb-3">Ezekhez az alábbi természetes megoldásokat érdemes megnézned:</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">${productsHtml}</div>
 
-          <!-- ÖSSZESÍTETT AJÁNLOTT CSOMAG BLOKK -->
           <div class="p-6 bg-gradient-to-br from-[#F7F3ED] to-[#E8DCC6]/60 rounded-3xl border-2 border-[#F06292]/40 text-center relative overflow-hidden">
             <span class="text-[10px] font-bold text-[#F06292] bg-white px-3 py-1 rounded-full border border-[#F06292]/30 uppercase tracking-widest inline-block mb-2">
-              🌿 A TE SZEMÉLYES VITA-NATURA CSOMAGOD
+              🌿 A TE VITA-NATURA CSOMAGOD
             </span>
             <h4 class="text-xl font-bold font-serif-title text-[#556B4E] mb-2">Komplex Szinergia Csomag</h4>
             <p class="text-xs text-slate-600 mb-4 font-light">
@@ -444,7 +458,7 @@
             </div>
 
             <a href="https://buy.stripe.com/test_placeholder" target="_blank" class="px-8 py-3 bg-[#F06292] text-white font-bold rounded-xl text-xs hover:bg-[#e05282] transition inline-block shadow-md">
-              📦 A teljes csomag megtekintése & megvásárlása egyben →
+              📦 A teljes személyes csomag megtekintése & megvásárlása egyben →
             </a>
           </div>
         </div>
@@ -454,7 +468,7 @@
     }
 
     // =========================================================================
-    // 2. KANONIKUS ALAPANYAG- ÉS TERMÉKADATBÁZIS (KAMRA-FŐZŐ)
+    // 3. KAMRA-FŐZŐ ENGINE ÉS ADATBÁZIS
     // =========================================================================
     const INGREDIENTS = [
       { id: "csirkemell", name: "csirkemell", displayName: "Csirkemell / Pulyka", cat: "protein" },
@@ -651,10 +665,6 @@
       }
     ];
 
-    // =========================================================================
-    // 3. KAMRA-FŐZŐ ENGINE
-    // =========================================================================
-
     function initPantryUI() {
       const vegGrid = document.getElementById('vegGrid');
       const grainGrid = document.getElementById('grainGrid');
@@ -752,7 +762,7 @@
         r.coreIngredients.forEach(ci => {
           if (userSelectedIds.includes(ci.id)) {
             const ing = INGREDIENTS.find(i => i.id === ci.id);
-            presentHtml += `<div class="text-emerald-800 font-bold flex items-center gap-1.5"><span>✓</span> <span>${ing ? ing.name : ci.id}</span></div>`;
+            presentHtml += `<div class="text-emerald-800 font-bold flex items-center gap-1.5"><span>✓</span> <span>${ing ? ing.displayName : ci.id}</span></div>`;
           }
         });
         presentHtml += `</div>`;
@@ -760,11 +770,11 @@
         let missingNames = [];
         item.missingCore.forEach(ci => {
           const ing = INGREDIENTS.find(i => i.id === ci.id);
-          missingNames.push(ing ? ing.name : ci.id);
+          missingNames.push(ing ? ing.displayName : ci.id);
         });
         item.missingExtras.forEach(eid => {
           const ing = INGREDIENTS.find(i => i.id === eid);
-          missingNames.push(ing ? ing.name : eid);
+          missingNames.push(ing ? ing.displayName : eid);
         });
 
         let missingHtml = "";
@@ -810,9 +820,6 @@
       });
     }
 
-    // =========================================================================
-    // 4. BEVÁSÁRLÓ MODÁL ÉS VÁSÁRLÁSI ÚTVONAL (AFFILIATE BEÁGYAZÁSSAL)
-    // =========================================================================
     function openBuyModal(recipeId) {
       const r = MASTER_RECIPES.find(item => item.id === recipeId);
       if (!r) return;
@@ -919,7 +926,7 @@
         <div class="space-y-3 text-xs">
           <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
             <p class="font-bold text-[#556B4E] mb-1">🧪 Fő Tápanyagok:</p>
-            <p class="text-slate-700">Szerves mikrotápanyagok, antioxidánsok és élelmi rostok.</p>
+            <p class="text-slate-700 font-light">Szerves mikrotápanyagok, antioxidánsok és élelmi rostok.</p>
           </div>
         </div>
       `;
@@ -934,23 +941,6 @@
       document.getElementById('detailModal').classList.add('hidden');
     }
 
-    function switchTab(tab) {
-      ['quiz', 'pantry', 'symptoms', 'lifestyle', 'cycle', 'packages'].forEach(t => {
-        const sec = document.getElementById(t + 'TabSection');
-        if (sec) sec.classList.add('hidden');
-        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1) + 'Btn');
-        if (btn) btn.className = "flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold text-[#556B4E] hover:bg-[#A7B69A]/20";
-      });
-
-      const activeSec = document.getElementById(tab + 'TabSection');
-      if (activeSec) activeSec.classList.remove('hidden');
-      const activeBtn = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1) + 'Btn');
-      if (activeBtn) activeBtn.className = "flex-1 min-w-[110px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold bg-[#556B4E] text-white shadow-sm";
-
-      if (tab === 'symptoms') renderSymptoms();
-      if (tab === 'packages') renderPackages();
-    }
-
     function filterPantryCheckboxes() {
       const q = document.getElementById('pantryQuickSearch').value.toLowerCase();
       document.querySelectorAll('.pantry-item-label').forEach(lbl => {
@@ -962,14 +952,14 @@
       const grid = document.getElementById('cardsGrid');
       if (!grid) return;
       grid.innerHTML = `
-        <div class="bg-white p-5 rounded-2xl border text-xs"><h4 class="font-bold text-[#556B4E] mb-1">Izomgörcs & Fáradtság</h4><p class="text-slate-600">Spenót, banán, magnézium-biszglicinát.</p></div>
-        <div class="bg-white p-5 rounded-2xl border text-xs"><h4 class="font-bold text-[#556B4E] mb-1">Puffadás & Nehéz emésztés</h4><p class="text-slate-600">Savanyú káposzta, kefir, édesköménytea.</p></div>
+        <div class="bg-white p-5 rounded-2xl border text-xs"><h4 class="font-bold text-[#556B4E] mb-1 font-serif-title">Izomgörcs & Fáradtság</h4><p class="text-slate-600 font-light">Spenót, banán, magnézium-biszglicinát.</p></div>
+        <div class="bg-white p-5 rounded-2xl border text-xs"><h4 class="font-bold text-[#556B4E] mb-1 font-serif-title">Puffadás & Nehéz emésztés</h4><p class="text-slate-600 font-light">Savanyú káposzta, kefir, édesköménytea.</p></div>
       `;
     }
 
     function calculateLifestylePlan() {
       document.getElementById('lsAnalysisBox').innerHTML = `<h3 class="font-bold text-[#556B4E] text-sm font-serif-title">Metabolikus profil elkészült! (BMI: 24.1 - Egészséges)</h3>`;
-      document.getElementById('lsWeeklyMealBox').innerHTML = `<p class="text-xs text-slate-700">3 napos mintaétrend generálva hajszálpontos gramm-adagokkal.</p>`;
+      document.getElementById('lsWeeklyMealBox').innerHTML = `<p class="text-xs text-slate-700 font-light">3 napos mintaétrend generálva hajszálpontos gramm-adagokkal.</p>`;
       document.getElementById('lifestyleResultZone').classList.remove('hidden');
     }
 
