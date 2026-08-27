@@ -42,12 +42,12 @@
 
   <main class="max-w-5xl mx-auto px-4">
 
-    <!-- ==================== 1. TAB: INTELLIGENS KAMRA-FŐZŐ ==================== -->
+    <!-- ==================== 1. TAB: KAMRA-FŐZŐ & VÁSÁRLÁSI FUNKCIÓ ==================== -->
     <div id="pantryTabSection">
       <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
-        <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens Konyhai Asszisztens</span>
+        <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens Recept & Vásárlási Asszisztens</span>
         <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Mi van otthon a hűtőben & kamrában?</h2>
-        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Jelöld ki az alapanyagokat, a Vita-Natura pedig összeállítja a legfinomabb, célzott fogásokat – kiemelve a hiányzó hozzávalókat!</p>
+        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Jelöld ki az alapanyagokat! A Vita-Natura megmutatja, mit tudsz főzni belőlük, a hiányzó hozzávalókat pedig egy kattintással beszerezheted.</p>
 
         <div class="relative max-w-md mx-auto mb-2">
           <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Gyorskereső az alapanyagok között..." class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none">
@@ -74,7 +74,7 @@
         <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
           <button onclick="clearPantrySelections()" class="text-xs text-rose-600 font-semibold underline hover:text-rose-800 transition">Kijelölések törlése</button>
           <button onclick="findPantryRecipes()" class="w-full sm:w-auto px-8 py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
-            <span>🍳</span> Mit tudok ezekből főzni?
+            <span>🍳</span> Receptajánló & Vásárlási Útvonal
           </button>
         </div>
       </div>
@@ -144,83 +144,96 @@
     </div>
   </div>
 
+  <!-- AFFILIATE / BEVÁSÁRLÓ MODÁL -->
+  <div id="buyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-[#556B4E]/40">
+      <button onclick="closeBuyModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100">✕</button>
+      <div id="buyModalContent"></div>
+    </div>
+  </div>
+
   <script>
     // =========================================================================
-    // 1. KANONIKUS ALAPANYAGOK KATEGÓRIÁVAL ÉS KIÍRÁSSAL
+    // 1. KANONIKUS ALAPANYAG- ÉS TERMÉKADATBÁZIS (AFFILIATE BEÁGYAZÁSRA KÉSZEN)
     // =========================================================================
     const INGREDIENTS = [
-      // Fehérjék
-      { id: "csirkemell", name: "Csirkemell / Pulyka", cat: "protein" },
-      { id: "marhahus", name: "Marhahús / Sovány hús", cat: "protein" },
-      { id: "lazac", name: "Lazacfilé / Pisztráng", cat: "protein" },
-      { id: "tonhal", name: "Tonhal / Szardínia", cat: "protein" },
-      { id: "tojas", name: "Tojás", cat: "protein" },
-      { id: "tofu", name: "Tofu / Tempeh", cat: "protein" },
-      { id: "feta", name: "Feta / Mozzarella / Kecskesajt", cat: "protein" },
-      { id: "kefir", name: "Kefir / Görög joghurt", cat: "protein" },
+      { id: "csirkemell", name: "csirkemell", displayName: "Csirkemell / Pulyka", cat: "protein" },
+      { id: "marhahus", name: "marhahús", displayName: "Marhahús / Sovány hús", cat: "protein" },
+      { id: "lazac", name: "lazac", displayName: "Lazacfilé / Pisztráng", cat: "protein" },
+      { id: "tonhal", name: "tonhal", displayName: "Tonhal / Szardínia", cat: "protein" },
+      { id: "tojas", name: "tojás", displayName: "Tojás", cat: "protein" },
+      { id: "tofu", name: "tofu", displayName: "Tofu / Tempeh", cat: "protein" },
+      { id: "feta", name: "feta", displayName: "Feta / Mozzarella / Kecskesajt", cat: "protein" },
+      { id: "jogurt", name: "görög joghurt", displayName: "Görög joghurt / Kefir", cat: "protein" },
       
-      // Zöldségek & Gyümölcsök
-      { id: "brokkoli", name: "Brokkoli / Karfiol", cat: "veg" },
-      { id: "spenot", name: "Spenót / Bébispenót", cat: "veg" },
-      { id: "cekla", name: "Cékla", cat: "veg" },
-      { id: "cukkini", name: "Cukkini", cat: "veg" },
-      { id: "edesburgonya", name: "Édesburgonya", cat: "veg" },
-      { id: "fokhagyma", name: "Fokhagyma", cat: "veg" },
-      { id: "hagymak", name: "Vöröshagyma / Lilahagyma", cat: "veg" },
-      { id: "avokado", name: "Avokádó", cat: "veg" },
-      { id: "sargarepa", name: "Sárgarépa", cat: "veg" },
-      { id: "sparga", name: "Zöldspárga", cat: "veg" },
-      { id: "uborka", name: "Uborka", cat: "veg" },
-      { id: "paradicsom", name: "Paradicsom / Passata", cat: "veg" },
-      { id: "banan", name: "Banán", cat: "veg" },
-      { id: "citrom", name: "Citrom / Lime", cat: "veg" },
-      { id: "meggy", name: "Meggy / Málna / Áfonya", cat: "veg" },
-      { id: "szilva", name: "Szilva", cat: "veg" },
+      { id: "brokkoli", name: "brokkoli", displayName: "Brokkoli / Karfiol", cat: "veg" },
+      { id: "spenot", name: "spenót", displayName: "Spenót / Bébispenót", cat: "veg" },
+      { id: "cekla", name: "cékla", displayName: "Cékla", cat: "veg" },
+      { id: "cukkini", name: "cukkini", displayName: "Cukkini", cat: "veg" },
+      { id: "edesburgonya", name: "édesburgonya", displayName: "Édesburgonya", cat: "veg" },
+      { id: "fokhagyma", name: "fokhagyma", displayName: "Fokhagyma", cat: "veg" },
+      { id: "hagymak", name: "vöröshagyma", displayName: "Vöröshagyma / Lilahagyma", cat: "veg" },
+      { id: "avokado", name: "avokádó", displayName: "Avokádó", cat: "veg" },
+      { id: "sargarepa", name: "sárgarépa", displayName: "Sárgarépa", cat: "veg" },
+      { id: "sparga", name: "zöldspárga", displayName: "Zöldspárga", cat: "veg" },
+      { id: "uborka", name: "uborka", displayName: "Uborka", cat: "veg" },
+      { id: "paradicsom", name: "paradicsom", displayName: "Paradicsom / Passata", cat: "veg" },
+      { id: "banan", name: "banán", displayName: "Banán", cat: "veg" },
+      { id: "citrom", name: "citrom", displayName: "Citrom / Lime", cat: "veg" },
+      { id: "meggy", name: "meggy", displayName: "Meggy / Málna / Áfonya", cat: "veg" },
 
-      // Gabonák & Hüvelyesek
-      { id: "rizs", name: "Barna rizs / Basmati rizs", cat: "grain" },
-      { id: "quinoa", name: "Quinoa / Bulgur / Hajdina", cat: "grain" },
-      { id: "zabpehely", name: "Zabpehely / Zabliszt", cat: "grain" },
-      { id: "csicseriborsó", name: "Csicseriborsó", cat: "grain" },
-      { id: "voroslencse", name: "Vöröslencse", cat: "grain" },
-      { id: "edamame", name: "Edamame bab", cat: "grain" },
-      { id: "dio", name: "Dió / Mogyoró", cat: "grain" },
-      { id: "tokmag", name: "Tökmag / Lenmag / Chia mag", cat: "grain" },
-      { id: "szezammag", name: "Szezámmag / Tahini", cat: "grain" },
-      { id: "etcsoki", name: "Étcsoki (70%+)", cat: "grain" },
-      { id: "kokusztej", name: "Kókusztej / Tejszín", cat: "grain" }
+      { id: "rizs", name: "rizs", displayName: "Barna rizs / Basmati rizs", cat: "grain" },
+      { id: "quinoa", name: "quinoa", displayName: "Quinoa / Bulgur / Hajdina", cat: "grain" },
+      { id: "zabpehely", name: "zabpehely", displayName: "Zabpehely / Zabliszt", cat: "grain" },
+      { id: "csicseriborsó", name: "csicseriborsó", displayName: "Csicseriborsó", cat: "grain" },
+      { id: "voroslencse", name: "vöröslencse", displayName: "Vöröslencse", cat: "grain" },
+      { id: "edamame", name: "edamame bab", displayName: "Edamame bab", cat: "grain" },
+      { id: "dio", name: "dió", displayName: "Dió / Mogyoró", cat: "grain" },
+      { id: "tokmag", name: "tökmag", displayName: "Tökmag / Lenmag / Chia mag", cat: "grain" },
+      { id: "szezammag", name: "szezámmag", displayName: "Szezámmag / Tahini", cat: "grain" },
+      { id: "etcsoki", name: "étcsoki", displayName: "Étcsoki (70%+)", cat: "grain" },
+      { id: "kokusztej", name: "kókusztej", displayName: "Kókusztej / Tejszín", cat: "grain" }
     ];
 
+    // BESZEREZHETŐ HOZZÁVALÓK AZONOSÍTÓVAL ÉS BEÁGYAZHATÓ AFFILIATE LINKKEL
+    const PRODUCT_CATALOG = {
+      "fokhagyma": { label: "Friss Bio Fokhagyma (1 fej)", price: "290 Ft", affiliateUrl: "https://partner-webshop.hu/fokhagyma" },
+      "citrom": { label: "Lédús Bio Citrom (2 db)", price: "390 Ft", affiliateUrl: "https://partner-webshop.hu/citrom" },
+      "jogurt": { label: "Görög Joghurt 10% (250g)", price: "450 Ft", affiliateUrl: "https://partner-webshop.hu/goreg-joghurt" },
+      "kokusztej": { name: "Kókusztejszín / Kókusztej (200ml)", price: "590 Ft", affiliateUrl: "https://partner-webshop.hu/kokusztej" },
+      "feta": { label: "Krémes Feta / Mozzarella (150g)", price: "690 Ft", affiliateUrl: "https://partner-webshop.hu/feta" },
+      "szezammag": { label: "Pirított Szezámmag / Tahini (100g)", price: "490 Ft", affiliateUrl: "https://partner-webshop.hu/szezammag" },
+      "tokmag": { label: "Hántolt Bio Tökmag (100g)", price: "550 Ft", affiliateUrl: "https://partner-webshop.hu/tokmag" },
+      "dio": { label: "Pörkölt Dióbél (100g)", price: "790 Ft", affiliateUrl: "https://partner-webshop.hu/dio" }
+    };
+
     // =========================================================================
-    // 2. KULINÁRISAN KIGONDOLT, ÉTVÁGYGERJESZTŐ RECEPTBÁZIS
+    // 2. KULINÁRISAN KIGONDOLT RECEPTBÁZIS
     // =========================================================================
     const MASTER_RECIPES = [
-      // CSIRKE + BROKKOLI + RIZS VARIÁCIÓK
       {
         id: "r1",
-        title: "Krémes tejszínes-fokhagymás csirke brokkolival & basmati rizzsel",
-        desc: "Krémes serpenyős csirkemell fokhagymás-tejszínes szószban, gőzölt brokkolival és illatos basmati rizzsel.",
+        title: "Krémes fokhagymás csirke brokkolival & basmati rizzsel",
+        desc: "Krémes serpenyős csirkemell fokhagymás öntettel, gőzölt brokkolival és illatos basmati rizzsel.",
         coreIngredients: [
           { id: "csirkemell", qty: "180g csirkemell filé" },
           { id: "brokkoli", qty: "150g friss brokkoli" },
           { id: "rizs", qty: "80g basmati rizs" }
         ],
-        extraIngredients: ["fokhagyma", "kokusztej"],
-        pantryExtras: ["só", "feketebors", "1 ek olívaolaj"],
-        steps: "1. A basmati rizst kétszeres sós vízben megfőzzük.\n2. A csirkemellet kockára vágjuk, olívaolajon megpirítjuk.\n3. Hozzáadjuk a zúzott fokhagymát és a tejszínt/kókusztejet, rottyantunk rajta egyet.\n4. A brokkolit gőz felett 5 percig roppanósra pároljuk, és a tejszínes csirkével meg a rizzsel tálaljuk."
+        extraIngredients: ["fokhagyma", "citrom", "jogurt"],
+        steps: "1. A basmati rizst sós vízben megfőzzük.\n2. A csirkemellet kockára vágjuk, megpirítjuk.\n3. A görög joghurtból, zúzott fokhagymából és citromléből krémes öntetet keverünk.\n4. A gőzölt brokkolival és a rizzsel összeforgatva tálaljuk."
       },
       {
         id: "r2",
         title: "Ázsiai pirított csirkés-brokkolis rizstál szezámmal",
-        desc: "Gyors Wok-stílusú csirke ropogós brokkolival, pirított szezámmaggal és rizzsel.",
+        desc: "Gyors Wok-stílusú csirke ropogós brokkolival, pirított szezámmaggal és basmati rizzsel.",
         coreIngredients: [
           { id: "csirkemell", qty: "180g csirkemell filé" },
           { id: "brokkoli", qty: "150g brokkolirózsa" },
-          { id: "rizs", qty: "80g barna vagy basmati rizs" }
+          { id: "rizs", qty: "80g rizs" }
         ],
         extraIngredients: ["szezammag", "fokhagyma", "citrom"],
-        pantryExtras: ["1 ek szójaszósz", "1 tk szezámolaj"],
-        steps: "1. A rizst megfőzzük.\n2. Wok serpenyőben forró szezámolajon megpirítjuk a csirkét és a zsenge brokkolit.\n3. Szójaszósszal, fokhagymával, citromlével ízesítjük.\n4. A rizsre halmozzuk és gazdagon megszórjuk pirított szezámmaggal."
+        steps: "1. A rizst megfőzzük.\n2. Forró serpenyőben megpirítjuk a csirkét és a zsenge brokkolit.\n3. Zúzott fokhagymával és citromlével ízesítjük.\n4. Szezámmaggal megszórva tálaljuk."
       },
       {
         id: "r3",
@@ -232,24 +245,20 @@
           { id: "rizs", qty: "80g basmati rizs" }
         ],
         extraIngredients: ["citrom", "fokhagyma"],
-        pantryExtras: ["friss kakukkfű", "1 ek olívaolaj", "só"],
-        steps: "1. A csirkemellet citromlével, kakukkfűvel és olívaolajjal pácoljuk, majd serpenyőben átsütjük.\n2. A brokkolit fokhagymás olívaolajon átpirítjuk.\n3. Pompás, frissítő egytálételként tálaljuk a megfőtt rizzsel."
+        steps: "1. A csirkemellet citromlével és olívaolajjal pácoljuk, majd serpenyőben átsütjük.\n2. A brokkolit fokhagymás olajon átpirítjuk.\n3. Főtt rizzsel tálaljuk."
       },
       {
         id: "r4",
         title: "Sütőben sült sajtos csirke brokkolival & fűszeres rizzsel",
-        desc: "Tepsis omlós csirkemell olvasztott fetával/mozzarellával, brokkolival és párolt rizzsel.",
+        desc: "Tepsis omlós csirkemell olvasztott fetával, brokkolival és párolt rizzsel.",
         coreIngredients: [
           { id: "csirkemell", qty: "180g csirkemell filé" },
           { id: "brokkoli", qty: "150g brokkoli" },
           { id: "rizs", qty: "80g rizs" }
         ],
         extraIngredients: ["feta", "fokhagyma"],
-        pantryExtras: ["só", "bors", "1 ek olívaolaj"],
-        steps: "1. Tepsibe fektetjük a fűszerezett csirkemellet és a brokkolirózsákat.\n2. Tetejére fetát/mozzarellát morzsolunk, 200°C-os sütőben 20 perc alatt készre sütjük.\n3. Párolt fűszeres rizzsel tálaljuk."
+        steps: "1. Tepsibe fektetjük a fűszerezett csirkemellet és a brokkolit.\n2. Tetejére fetát morzsolunk, sütőben 20 perc alatt készre sütjük.\n3. Rizzsel tálaljuk."
       },
-
-      // TÖBBI KLASSZIKUS RECEPT
       {
         id: "r5",
         title: "Pácolt lazacfilé pirított zöldspárgával & citromos rizzsel",
@@ -260,8 +269,7 @@
           { id: "rizs", qty: "80g basmati rizs" }
         ],
         extraIngredients: ["citrom", "fokhagyma"],
-        pantryExtras: ["1 tk vaj", "só", "fehérbors"],
-        steps: "1. A lazacot sózzuk, citromlével meglocsoljuk, vajon serpenyőben átsütjük.\n2. A spárgát fokhagymás vajon megpirítjuk.\n3. Citromlével kifacsart rizzsel tálaljuk."
+        steps: "1. A lazacot sózzuk, citromlével meglocsoljuk, serpenyőben átsütjük.\n2. A spárgát fokhagymás vajon megpirítjuk.\n3. Citromos rizzsel tálaljuk."
       },
       {
         id: "r6",
@@ -272,8 +280,7 @@
           { id: "voroslencse", qty: "100g vöröslencse" }
         ],
         extraIngredients: ["tokmag", "kokusztej", "fokhagyma"],
-        pantryExtras: ["1 tk gyömbér", "só", "római kömény"],
-        steps: "1. A céklát felkockázzuk, fokhagymával átpirítjuk.\n2. Hozzáadjuk a vöröslencsét és felöntve puhára főzzük (20 perc).\n3. Kókusztejjel összeturmixoljuk, tökmaggal szórjuk."
+        steps: "1. A céklát felkockázzuk, fokhagymával átpirítjuk.\n2. A vöröslencsével együtt puhára főzzük (20 perc).\n3. Kókusztejjel összeturmixoljuk, tökmaggal szórjuk."
       },
       {
         id: "r7",
@@ -285,8 +292,7 @@
           { id: "edamame", qty: "60g edamame bab" }
         ],
         extraIngredients: ["szezammag", "citrom"],
-        pantryExtras: ["1 ek szójaszósz", "1 tk szezámolaj"],
-        steps: "1. A quinoát megfőzzük.\n2. Tálba tesszük, mellé szedjük az avokádót és az edamame babot.\n3. Citromos-szójaszószos öntettel meglocsoljuk."
+        steps: "1. A quinoát megfőzzük.\n2. Tálba tesszük, mellé szedjük az avokádót és az edamame babot.\n3. Citromos öntettel meglocsoljuk, szezámmaggal szórjuk."
       },
       {
         id: "r8",
@@ -298,8 +304,7 @@
           { id: "spenot", qty: "50g spenót" }
         ],
         extraIngredients: ["feta", "fokhagyma"],
-        pantryExtras: ["1 ek olívaolaj", "só", "bors"],
-        steps: "1. Az édesburgonyát felkockázva olajon megpirítjuk.\n2. Rádobjuk a spenótot, ráöntjük a felvert tojásokat és fetát morzsolunk rá."
+        steps: "1. Az édesburgonyát felkockázva megpirítjuk.\n2. Rádobjuk a spenótot, ráöntjük a felvert tojásokat és fetát morzsolunk rá."
       },
       {
         id: "r9",
@@ -307,12 +312,11 @@
         desc: "Ropogós édesburgonya karikák meleg kecskesajttal/fetával és pirított dióval.",
         coreIngredients: [
           { id: "edesburgonya", qty: "180g édesburgonya" },
-          { id: "feta", qty: "60g kecskesajt / feta" },
+          { id: "feta", qty: "60g feta / kecskesajt" },
           { id: "dio", qty: "25g dió" }
         ],
         extraIngredients: ["fokhagyma"],
-        pantryExtras: ["1 tk méz", "kakukkfű"],
-        steps: "1. Az édesburgonya szeleteket sütőben 200°C-on 20 percig sütjük.\n2. Rámorzsoljuk a sajtot és diót, 5 percre visszatesszük a sütőbe."
+        steps: "1. Az édesburgonya szeleteket sütőben 200°C-on 20 percig sütjük.\n2. Rámorzsoljuk a fetát és diót, 5 percre visszatesszük a sütőbe."
       },
       {
         id: "r10",
@@ -324,8 +328,7 @@
           { id: "paradicsom", qty: "100g paradicsom" }
         ],
         extraIngredients: ["feta", "fokhagyma", "hagymak"],
-        pantryExtras: ["1 tk mustár", "só", "bazsalikom"],
-        steps: "1. A cukkinit félbevágjuk, kikaparjuk.\n2. A tonhalat összekeverjük a paradicsommal, hagymával, fetával, majd a cukkinibe töltjük és megsütjük."
+        steps: "1. A cukkinit félbevágjuk, kikaparjuk.\n2. A tonhalat összekeverjük a paradicsommal, hagymával, fetával, a cukkinibe töltjük és megsütjük."
       },
       {
         id: "r11",
@@ -336,8 +339,7 @@
           { id: "edesburgonya", qty: "150g édesburgonya" }
         ],
         extraIngredients: ["szezammag", "fokhagyma", "citrom"],
-        pantryExtras: ["1 tk római kömény", "olívaolaj"],
-        steps: "1. A csicseriborsót és édesburgonyát sütőben ropogósra sütjük.\n2. Tahiniből, citromléből és fokhagymából öntetet keverünk és meglocsoljuk."
+        steps: "1. A csicseriborsót és édesburgonyát sütőben ropogósra sütjük.\n2. Citromléből, fokhagymából és tahiniből öntetet keverünk és meglocsoljuk."
       },
       {
         id: "r12",
@@ -345,17 +347,16 @@
         desc: "Melengető, magnéziumban gazdag reggeli olvasztott étcsokoládéval.",
         coreIngredients: [
           { id: "zabpehely", qty: "60g zabpehely" },
-          { id: "meggy", qty: "60g meggy / málna" },
+          { id: "meggy", qty: "60g meggy" },
           { id: "etcsoki", qty: "20g étcsoki (70%+)" }
         ],
         extraIngredients: ["banan"],
-        pantryExtras: ["250ml mandulatej", "1 tk fahéj"],
-        steps: "1. A zabpelyhet tejjel és fahéjjal megfőzzük.\n2. Meggyragut halmozunk rá és rászórjuk az étcsokit."
+        steps: "1. A zabpelyhet megfőzzük.\n2. Meggyragut halmozunk rá és rászórjuk az étcsokit."
       }
     ];
 
     // =========================================================================
-    // 3. ULTRAPRECÍZ RECEPTKERESŐ ÉS RANGSOROLÓ ENGINE
+    // 3. KAMRA-FŐZŐ ENGINE (PONTOS ILLESZKEDÉS ÉS VÁSÁRLÁSI LOGIKA)
     // =========================================================================
 
     function initPantryUI() {
@@ -370,7 +371,7 @@
           <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
             <label class="flex items-center gap-1.5 cursor-pointer truncate w-full">
               <input type="checkbox" value="${item.id}" class="pantry-item-check text-[#556B4E] rounded focus:ring-0">
-              <span class="truncate font-medium">${item.name}</span>
+              <span class="truncate font-medium">${item.displayName}</span>
             </label>
             <button onclick="openIngredientModal('${item.id}')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition ml-1">Mire jó?</button>
           </div>
@@ -386,7 +387,6 @@
       document.getElementById('pantryRecipeResults').innerHTML = '';
     }
 
-    // A KERESŐ ENGINE LÉNYEGE
     function findPantryRecipes() {
       const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
       const userSelectedIds = Array.from(checkedBoxes).map(cb => cb.value);
@@ -406,36 +406,31 @@
       const totalSelectedCount = userSelectedIds.length;
       const scoredRecipes = [];
 
-      // MINTAVÉTELEZÉS ÉS MEGFELELÉS SZÁMÍTÁSA
       MASTER_RECIPES.forEach(recipe => {
-        // A recept FŐ alapanyagai közül melyik van meg a usernek?
         const coreRecipeIds = recipe.coreIngredients.map(ci => ci.id);
         const allRecipeIds = [...coreRecipeIds, ...(recipe.extraIngredients || [])];
 
-        // Hány bejelölt otthoni alapanyagot használ fel ez a recept?
+        // Felhasznált otthoni alapanyagok
         const usedUserIds = userSelectedIds.filter(id => allRecipeIds.includes(id));
         const matchCount = usedUserIds.length;
 
-        // SZIGORÚ SZŰRÉS: Ha 0 egyezés van, KIZÁRJUK! (Soha nem jelenik meg 0/3)
+        // SZIGORÚ SZŰRÉS: 0/N EGYEZÉSNÉL SOHA NEM JELENIK MEG!
         if (matchCount > 0) {
-          // Hiányzó extrák (amiket meg kell vennie)
-          const missingExtraIds = (recipe.extraIngredients || []).filter(id => !userSelectedIds.includes(id));
-          const missingCoreIds = coreRecipeIds.filter(id => !userSelectedIds.includes(id));
+          const missingCore = recipe.coreIngredients.filter(ci => !userSelectedIds.includes(ci.id));
+          const missingExtras = (recipe.extraIngredients || []).filter(id => !userSelectedIds.includes(id));
 
           scoredRecipes.push({
             recipe,
             matchCount,
             totalSelectedCount,
             usedUserIds,
-            missingCoreIds,
-            missingExtraIds,
-            // Relevancia pontszám: Fő alapanyag egyezés + arány
-            relevanceScore: (matchCount * 100) - (missingCoreIds.length * 10) - missingExtraIds.length
+            missingCore,
+            missingExtras,
+            relevanceScore: (matchCount * 100) - (missingCore.length * 15) - missingExtras.length
           });
         }
       });
 
-      // ZÉRÓ TALÁLAT KEZELÉSE
       if (scoredRecipes.length === 0) {
         resGrid.innerHTML = `
           <div class="col-span-2 text-center p-8 bg-white/90 rounded-3xl border border-rose-200 text-xs text-slate-700 space-y-3">
@@ -446,56 +441,50 @@
         return;
       }
 
-      // RANGSOROLÁS
-      // 1. Legtöbb kiválasztott alapanyag felhasználása
-      // 2. Kevesebb hiányzó hozzávaló
+      // RANGSOROLÁS (Legtöbb otthoni alapanyag -> Kevesebb hiányzó)
       scoredRecipes.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
-      // KÁRTYÁK RENDERELÉSE (Legalább 4 recept, ha elérhető)
+      // KÁRTYÁK KIRAJZOLÁSA
       scoredRecipes.forEach(item => {
         const r = item.recipe;
         
-        // UX Badge meghatározása
+        // UX Badge meghatározása (Kért formátum)
         let badgeHtml = "";
-        if (item.matchCount === item.totalSelectedCount && item.missingCoreIds.length === 0 && item.missingExtraIds.length === 0) {
-          badgeHtml = `<span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full border border-emerald-300">🌿 ${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod felhasználva (Minden megvan!)</span>`;
-        } else if (item.matchCount === item.totalSelectedCount) {
-          const buyCount = item.missingExtraIds.length;
-          badgeHtml = `<span class="bg-emerald-50 text-emerald-800 font-bold px-3 py-1 rounded-full border border-emerald-200">🌿 ${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod + ${buyCount} beszerezendő</span>`;
+        const missingTotal = item.missingCore.length + item.missingExtras.length;
+
+        if (item.matchCount === item.totalSelectedCount && missingTotal === 0) {
+          badgeHtml = `<span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full border border-emerald-300">${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod felhasználva 🌿 (Minden megvan!)</span>`;
         } else {
-          const buyCount = item.missingCoreIds.length + item.missingExtraIds.length;
-          badgeHtml = `<span class="bg-amber-50 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-200">⚡ ${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod + ${buyCount} beszerezendő</span>`;
+          badgeHtml = `<span class="bg-[#F7F3ED] text-[#556B4E] font-bold px-3 py-1 rounded-full border border-[#A7B69A]/40">${item.matchCount}/${item.totalSelectedCount} otthoni alapanyag felhasználva ${missingTotal > 0 ? '+ ' + missingTotal + ' beszerezendő' : ''} 🌿</span>`;
         }
 
-        // Otthon lévő hozzávalók kiírása
+        // Otthon van lista
         let presentHtml = `<div class="space-y-1 mb-2">`;
         r.coreIngredients.forEach(ci => {
           if (userSelectedIds.includes(ci.id)) {
-            presentHtml += `<div class="text-emerald-800 font-bold flex items-center gap-1.5"><span>✓</span> <span>${ci.qty}</span> <span class="text-[10px] text-emerald-600 bg-emerald-100 px-1.5 py-0.2 rounded">(Otthon van)</span></div>`;
+            const ing = INGREDIENTS.find(i => i.id === ci.id);
+            presentHtml += `<div class="text-emerald-800 font-bold flex items-center gap-1.5"><span>✓</span> <span>${ing ? ing.name : ci.id}</span></div>`;
           }
         });
         presentHtml += `</div>`;
 
-        // Hiányzó / Megvásárolandó hozzávalók kiírása
-        let missingList = [];
-        r.coreIngredients.forEach(ci => {
-          if (!userSelectedIds.includes(ci.id)) {
-            missingList.push(ci.qty);
-          }
+        // Még szükséges lista
+        let missingNames = [];
+        item.missingCore.forEach(ci => {
+          const ing = INGREDIENTS.find(i => i.id === ci.id);
+          missingNames.push(ing ? ing.name : ci.id);
         });
-        (r.extraIngredients || []).forEach(eid => {
-          if (!userSelectedIds.includes(eid)) {
-            const ing = INGREDIENTS.find(i => i.id === eid);
-            missingList.push(ing ? ing.name : eid);
-          }
+        item.missingExtras.forEach(eid => {
+          const ing = INGREDIENTS.find(i => i.id === eid);
+          missingNames.push(ing ? ing.name : eid);
         });
 
         let missingHtml = "";
-        if (missingList.length > 0) {
+        if (missingNames.length > 0) {
           missingHtml = `
-            <div class="p-3 bg-amber-50/60 rounded-2xl border border-amber-200/80 mb-3 text-amber-900">
-              <p class="font-bold mb-1">🛒 Még szükséges a recepthez:</p>
-              <p class="font-light leading-relaxed">• ${missingList.join("<br>• ")}</p>
+            <div class="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/80 mb-3 text-amber-900 text-xs">
+              <p class="font-bold mb-1">Még szükséges a recepthez:</p>
+              <p class="font-light leading-relaxed">• ${missingNames.join("<br>• ")}</p>
             </div>
           `;
         }
@@ -511,7 +500,7 @@
             <p class="text-slate-600 mb-4 font-light leading-relaxed">${r.desc}</p>
 
             <div class="p-3.5 bg-[#F7F3ED] rounded-2xl mb-3 border border-[#A7B69A]/30">
-              <p class="font-bold text-[#556B4E] mb-1.5">Felhasznált otthoni alapanyagok:</p>
+              <p class="font-bold text-[#556B4E] mb-1.5">Otthon van nálad:</p>
               ${presentHtml}
             </div>
 
@@ -520,12 +509,12 @@
 
           <div class="space-y-2 pt-2">
             <button onclick="openRecipeDetailModal('${r.id}')" class="w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition text-center">
-              👩‍🍳 Teljes recept megtekintése →
+              👩‍🍳 Teljes recept & elkészítés →
             </button>
-            ${missingList.length > 0 ? `
-              <a href="https://buy.stripe.com/test_placeholder" target="_blank" class="w-full py-2 bg-[#F06292] text-white font-bold rounded-xl text-xs hover:bg-[#e05282] transition text-center block">
-                🛒 Hiányzó hozzávalók beszerzése →
-              </a>
+            ${missingNames.length > 0 ? `
+              <button onclick="openBuyModal('${r.id}')" class="w-full py-2.5 bg-[#F06292] text-white font-bold rounded-xl text-xs hover:bg-[#e05282] transition text-center flex items-center justify-center gap-1.5">
+                <span>🛒</span> Hiányzó (${missingNames.length}) hozzávaló megvásárlása →
+              </button>
             ` : ''}
           </div>
         `;
@@ -534,8 +523,65 @@
     }
 
     // =========================================================================
-    // 4. MODÁLIS ABLAKOK ÉS RÉSZLETEK
+    // 4. BEVÁSÁRLÓ MODÁL ÉS VÁSÁRLÁSI ÚTVONAL (AFFILIATE BEÁGYAZÁSSAL)
     // =========================================================================
+    function openBuyModal(recipeId) {
+      const r = MASTER_RECIPES.find(item => item.id === recipeId);
+      if (!r) return;
+
+      const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
+      const userSelectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+
+      // Hiányzó elemek azonosítása
+      const missingExtras = (r.extraIngredients || []).filter(id => !userSelectedIds.includes(id));
+      const missingCore = r.coreIngredients.filter(ci => !userSelectedIds.includes(ci.id)).map(ci => ci.id);
+      const allMissing = [...missingCore, ...missingExtras];
+
+      let itemsHtml = `<div class="space-y-2.5 mb-5 text-xs">`;
+      allMissing.forEach(id => {
+        const prod = PRODUCT_CATALOG[id] || { label: id, price: "390 Ft", affiliateUrl: "https://partner-webshop.hu/alapanyag" };
+        itemsHtml += `
+          <div class="p-3 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-[#556B4E]">${prod.label || id}</p>
+              <p class="text-[10px] text-slate-500">Partneri beszállító által szállítva</p>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-slate-800">${prod.price}</span>
+            </div>
+          </div>
+        `;
+      });
+      itemsHtml += `</div>`;
+
+      const content = `
+        <span class="inline-block bg-[#F7F3ED] text-[#556B4E] text-xs font-bold px-3 py-1 rounded-full mb-2">Vita-Natura Kosár</span>
+        <h3 class="text-xl font-bold font-serif-title text-[#556B4E] mb-2">Már csak ${allMissing.length} hozzávaló hiányzik!</h3>
+        <p class="text-xs text-slate-600 font-light mb-4 leading-relaxed">
+          Szerezd be őket egyszerűen partneri hálózatunkon keresztül, és már főzheted is a receptet:
+        </p>
+
+        ${itemsHtml}
+
+        <p class="text-[11px] text-slate-500 italic mb-4 text-center">
+          „Már csak ${allMissing.length} hozzávaló hiányzik ehhez a fogáshoz. Szerezd be őket egyszerűen!”
+        </p>
+
+        <a href="https://buy.stripe.com/test_placeholder" target="_blank" class="w-full py-3 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition text-center block shadow-md">
+          🛒 Hiányzó termékek kosárba tétele & megrendelése →
+        </a>
+      `;
+
+      document.getElementById('buyModalContent').innerHTML = content;
+      document.getElementById('buyModal').classList.remove('hidden');
+      document.getElementById('buyModal').classList.add('flex');
+    }
+
+    function closeBuyModal() {
+      document.getElementById('buyModal').classList.remove('flex');
+      document.getElementById('buyModal').classList.add('hidden');
+    }
+
     function openRecipeDetailModal(recipeId) {
       const r = MASTER_RECIPES.find(item => item.id === recipeId);
       if (!r) return;
@@ -551,10 +597,7 @@
       (r.extraIngredients || []).forEach(eid => {
         const ing = INGREDIENTS.find(i => i.id === eid);
         const hasIt = userSelectedIds.includes(eid);
-        ingListHtml += `<li class="${hasIt ? 'text-emerald-800 font-bold' : 'text-slate-600'}">• ${ing ? ing.name : eid} ${hasIt ? '✓ (Otthon van)' : ''}</li>`;
-      });
-      (r.pantryExtras || []).forEach(pe => {
-        ingListHtml += `<li class="text-slate-400 italic">• ${pe} (fűszer/alapvíz)</li>`;
+        ingListHtml += `<li class="${hasIt ? 'text-emerald-800 font-bold' : 'text-slate-600'}">• ${ing ? ing.displayName : eid} ${hasIt ? '✓ (Otthon van)' : ''}</li>`;
       });
       ingListHtml += '</ul>';
 
@@ -585,16 +628,11 @@
 
       const content = `
         <span class="inline-block bg-[#F7F3ED] text-[#556B4E] text-xs font-bold px-3 py-1 rounded-full mb-2">Alapanyag profil</span>
-        <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-3">${ing.name}</h3>
-        
+        <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-3">${ing.displayName}</h3>
         <div class="space-y-3 text-xs">
           <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
             <p class="font-bold text-[#556B4E] mb-1">🧪 Fő Tápanyagok:</p>
-            <p class="text-slate-700">Szerves mikrotápanyagok, antioxidánsok, élelmi rostok és esszenciális vitaminok.</p>
-          </div>
-          <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
-            <p class="font-bold text-[#556B4E] mb-1">❤️ Miben segít a testednek?</p>
-            <p class="text-slate-700 leading-relaxed">Támogatja a sejt-regenerációt, az emésztést és a szervezet természetes hormonális egyensúlyát.</p>
+            <p class="text-slate-700">Szerves mikrotápanyagok, antioxidánsok és élelmi rostok.</p>
           </div>
         </div>
       `;
@@ -609,7 +647,6 @@
       document.getElementById('detailModal').classList.add('hidden');
     }
 
-    // TAB VÁLTÁSOK
     function switchTab(tab) {
       ['pantry', 'symptoms', 'lifestyle', 'cycle', 'packages'].forEach(t => {
         const sec = document.getElementById(t + 'TabSection');
@@ -657,7 +694,6 @@
       document.getElementById('packagesGrid').innerHTML = `<div class="bg-white p-6 rounded-3xl border"><h3 class="font-bold text-[#556B4E] font-serif-title">Téli immun-pajzs csomag</h3></div>`;
     }
 
-    // INDÍTÁS
     initPantryUI();
   </script>
 </body>
