@@ -22,13 +22,14 @@
 </head>
 <body class="antialiased pb-20">
 
+  <!-- HEADER -->
   <header class="bg-[#556B4E] text-white py-10 px-4 shadow-md mb-6 text-center">
     <span class="inline-block bg-[#F06292] text-white text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-3">Élni. Jobban. Tudatosan.</span>
     <h1 class="text-4xl md:text-5xl font-bold mb-2 text-[#F7F3ED]">Vita-Natura</h1>
     <p class="text-[#E8DCC6] text-sm md:text-base max-w-2xl mx-auto italic font-light">„Tápláld a tested. Támogasd az egyensúlyod. Érezd jól magad.”</p>
   </header>
 
-  <!-- FŐ NAVIGÁCIÓ -->
+  <!-- TAB SZEKCIÓK -->
   <div class="max-w-5xl mx-auto px-4 mb-8">
     <div class="flex flex-wrap justify-center gap-1.5 bg-[#E8DCC6]/60 backdrop-blur-sm p-2 rounded-2xl border border-[#A7B69A]/40">
       <button id="tabPantryBtn" onclick="switchTab('pantry')" class="flex-1 min-w-[120px] py-2.5 px-3 rounded-xl text-xs md:text-sm font-bold bg-[#556B4E] text-white shadow-sm">🥦 Kamra-főző</button>
@@ -41,44 +42,44 @@
 
   <main class="max-w-5xl mx-auto px-4">
 
-    <!-- ==================== 1. TAB: KAMRA-FŐZŐ & ALAPANYAG-ALAPÚ KERESŐ ==================== -->
+    <!-- ==================== 1. TAB: INTELLIGENS KAMRA-FŐZŐ ==================== -->
     <div id="pantryTabSection">
       <div class="bg-white/90 p-6 md:p-8 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
-        <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens Receptkereső</span>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Mi van otthon a hűtőben?</h2>
-        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Jelöld ki az alapanyagokat, és a rendszer pontosan kiszámítja, melyik recept használja fel a legtöbb otthoni hozzávalót!</p>
+        <span class="text-xs font-bold text-[#556B4E] uppercase bg-[#F7F3ED] px-3.5 py-1 rounded-full border border-[#A7B69A]/40">Intelligens Konyhai Asszisztens</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#556B4E] mt-3 mb-2">Mi van otthon a hűtőben & kamrában?</h2>
+        <p class="text-slate-600 text-xs md:text-sm leading-relaxed font-light mb-4">Jelöld ki az alapanyagokat, a Vita-Natura pedig összeállítja a legfinomabb, célzott fogásokat – kiemelve a hiányzó hozzávalókat!</p>
 
         <div class="relative max-w-md mx-auto mb-2">
-          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Keresés az alapanyagok között (pl. csirke, brokkoli, rizs)..." class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none focus:ring-1 focus:ring-[#556B4E]">
+          <input type="text" id="pantryQuickSearch" oninput="filterPantryCheckboxes()" placeholder="Gyorskereső az alapanyagok között..." class="w-full px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs text-[#556B4E] focus:outline-none">
         </div>
       </div>
 
-      <!-- ALAPANYAG VÁLASZTÓ GRID -->
+      <!-- ALAPANYAG KATEGÓRIÁK GRID -->
       <div class="bg-white/90 p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 max-w-4xl mx-auto text-xs space-y-6">
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 text-sm">🥦 Zöldségek, Gombák & Gyümölcsök:</p>
+          <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🥩</span> Fehérjék, Halak & Tejtermékek:</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="proteinGrid"></div>
+        </div>
+
+        <div>
+          <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🥦</span> Zöldségek, Gombák & Gyümölcsök:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="vegGrid"></div>
         </div>
 
         <div>
-          <p class="font-bold text-[#556B4E] mb-2 text-sm">🌾 Gabonák, Magvak & Hüvelyesek:</p>
+          <p class="font-bold text-[#556B4E] mb-2 text-sm flex items-center gap-1.5"><span>🌾</span> Gabonák, Magvak & Hüvelyesek:</p>
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="grainGrid"></div>
         </div>
 
-        <div>
-          <p class="font-bold text-[#556B4E] mb-2 text-sm">🥩 Fehérjék, Tejtermékek & Halak:</p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2" id="proteinGrid"></div>
-        </div>
-
         <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3 items-center justify-between">
-          <button onclick="clearPantrySelections()" class="text-xs text-rose-600 font-semibold underline">Kijelölések törlése</button>
-          <button onclick="findPantryRecipes()" class="w-full sm:w-auto px-8 py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition">
-            🍳 Keresés: Melyik recept használja fel a legtöbbet?
+          <button onclick="clearPantrySelections()" class="text-xs text-rose-600 font-semibold underline hover:text-rose-800 transition">Kijelölések törlése</button>
+          <button onclick="findPantryRecipes()" class="w-full sm:w-auto px-8 py-3.5 bg-[#556B4E] text-white font-bold text-sm rounded-xl shadow-md hover:bg-[#44563e] transition flex items-center justify-center gap-2">
+            <span>🍳</span> Mit tudok ezekből főzni?
           </button>
         </div>
       </div>
 
-      <!-- TALÁLATI LISTA -->
+      <!-- RECEPT TALÁLATI LISTA -->
       <div id="pantryRecipeResults" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
     </div>
 
@@ -86,7 +87,7 @@
     <div id="symptomsTabSection" class="hidden">
       <div class="bg-white/90 p-6 rounded-3xl border border-[#A7B69A]/40 shadow-sm mb-8 text-center max-w-3xl mx-auto">
         <h3 class="text-xl font-bold text-[#556B4E] mb-2">Természetes táplálkozási támogatás</h3>
-        <p class="text-xs text-slate-600 mb-4">Válaszd ki az életmódbeli célodat vagy a tapasztalt tünetet!</p>
+        <p class="text-xs text-slate-600 mb-4">Válaszd ki a panaszodat vagy célodat!</p>
         <input type="text" id="searchInput" placeholder="Keresés pl. lábgörcs, puffadás, fáradtság..." class="w-full max-w-md px-4 py-2.5 rounded-xl border border-[#A7B69A] text-xs focus:outline-none">
       </div>
       <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
@@ -119,10 +120,10 @@
         <h2 class="text-3xl font-bold text-[#556B4E] mb-2">Női Ciklusszinkron</h2>
         <p class="text-xs text-slate-600">Válaszd ki az aktuális fázisodat!</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
-          <button onclick="showPhase(1)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white">1. Menstruáció</button>
-          <button onclick="showPhase(2)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white">2. Follikuláris</button>
-          <button onclick="showPhase(3)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white">3. Ovuláció</button>
-          <button onclick="showPhase(4)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white">4. Luteális</button>
+          <button onclick="showPhase(1)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white transition">1. Menstruáció</button>
+          <button onclick="showPhase(2)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white transition">2. Follikuláris</button>
+          <button onclick="showPhase(3)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white transition">3. Ovuláció</button>
+          <button onclick="showPhase(4)" class="p-3 bg-[#F7F3ED] rounded-xl font-bold text-xs text-[#556B4E] hover:bg-[#F06292] hover:text-white transition">4. Luteális</button>
         </div>
       </div>
       <div id="phaseContent"></div>
@@ -145,12 +146,12 @@
 
   <script>
     // =========================================================================
-    // 1. KANONIKUS ALAPANYAG ADATBÁZIS (ID-K ALAPJÁN)
+    // 1. KANONIKUS ALAPANYAGOK KATEGÓRIÁVAL ÉS KIÍRÁSSAL
     // =========================================================================
     const INGREDIENTS = [
-      // Zöldségek & Gyümölcsök
+      // Fehérjék
       { id: "csirkemell", name: "Csirkemell / Pulyka", cat: "protein" },
-      { id: "marhahus", name: "Marhahús / Borjú", cat: "protein" },
+      { id: "marhahus", name: "Marhahús / Sovány hús", cat: "protein" },
       { id: "lazac", name: "Lazacfilé / Pisztráng", cat: "protein" },
       { id: "tonhal", name: "Tonhal / Szardínia", cat: "protein" },
       { id: "tojas", name: "Tojás", cat: "protein" },
@@ -158,6 +159,7 @@
       { id: "feta", name: "Feta / Mozzarella / Kecskesajt", cat: "protein" },
       { id: "kefir", name: "Kefir / Görög joghurt", cat: "protein" },
       
+      // Zöldségek & Gyümölcsök
       { id: "brokkoli", name: "Brokkoli / Karfiol", cat: "veg" },
       { id: "spenot", name: "Spenót / Bébispenót", cat: "veg" },
       { id: "cekla", name: "Cékla", cat: "veg" },
@@ -175,131 +177,191 @@
       { id: "meggy", name: "Meggy / Málna / Áfonya", cat: "veg" },
       { id: "szilva", name: "Szilva", cat: "veg" },
 
+      // Gabonák & Hüvelyesek
       { id: "rizs", name: "Barna rizs / Basmati rizs", cat: "grain" },
       { id: "quinoa", name: "Quinoa / Bulgur / Hajdina", cat: "grain" },
       { id: "zabpehely", name: "Zabpehely / Zabliszt", cat: "grain" },
-      { id: "csicseriborsó", name: "Csicseriborsó / Hummusz", cat: "grain" },
-      { id: "voroslencse", name: "Vöröslencse / Lencse", cat: "grain" },
+      { id: "csicseriborsó", name: "Csicseriborsó", cat: "grain" },
+      { id: "voroslencse", name: "Vöröslencse", cat: "grain" },
       { id: "edamame", name: "Edamame bab", cat: "grain" },
       { id: "dio", name: "Dió / Mogyoró", cat: "grain" },
       { id: "tokmag", name: "Tökmag / Lenmag / Chia mag", cat: "grain" },
       { id: "szezammag", name: "Szezámmag / Tahini", cat: "grain" },
       { id: "etcsoki", name: "Étcsoki (70%+)", cat: "grain" },
-      { id: "kokusztej", name: "Kókusztej", cat: "grain" }
+      { id: "kokusztej", name: "Kókusztej / Tejszín", cat: "grain" }
     ];
 
     // =========================================================================
-    // 2. VALÓDI, STRUCTURÁLT RECEPT ADATBÁZIS
+    // 2. KULINÁRISAN KIGONDOLT, ÉTVÁGYGERJESZTŐ RECEPTBÁZIS
     // =========================================================================
     const MASTER_RECIPES = [
+      // CSIRKE + BROKKOLI + RIZS VARIÁCIÓK
       {
         id: "r1",
-        title: "Citromos-fokhagymás csirkemell brokkolival & basmati rizzsel",
-        desc: "Klasszikus, kiegyensúlyozott fittségi tál tiszta fehérjével, lassan felszívódó szénhidráttal és párolt brokkolival.",
-        ingredientIds: ["csirkemell", "brokkoli", "rizs", "citrom", "fokhagyma"],
-        extraIngredients: ["1 ek olívaolaj", "só", "bors", "friss kakukkfű"],
-        steps: "1. A basmati rizst kétszeres sós vízben megfőzzük.\n2. A csirkemellet kockára vágjuk, fokhagymával, sóval, borssal serpenyőben megpirítjuk.\n3. A brokkolit rózsáira szedjük, gőz felett 6 perc alatt roppanósra pároljuk.\n4. Tálaláskor meglocsoljuk friss citromlével és olívaolajjal."
+        title: "Krémes tejszínes-fokhagymás csirke brokkolival & basmati rizzsel",
+        desc: "Krémes serpenyős csirkemell fokhagymás-tejszínes szószban, gőzölt brokkolival és illatos basmati rizzsel.",
+        coreIngredients: [
+          { id: "csirkemell", qty: "180g csirkemell filé" },
+          { id: "brokkoli", qty: "150g friss brokkoli" },
+          { id: "rizs", qty: "80g basmati rizs" }
+        ],
+        extraIngredients: ["fokhagyma", "kokusztej"],
+        pantryExtras: ["só", "feketebors", "1 ek olívaolaj"],
+        steps: "1. A basmati rizst kétszeres sós vízben megfőzzük.\n2. A csirkemellet kockára vágjuk, olívaolajon megpirítjuk.\n3. Hozzáadjuk a zúzott fokhagymát és a tejszínt/kókusztejet, rottyantunk rajta egyet.\n4. A brokkolit gőz felett 5 percig roppanósra pároljuk, és a tejszínes csirkével meg a rizzsel tálaljuk."
       },
       {
         id: "r2",
-        title: "Pácolt lazacfilé pirított zöldspárgával & citromos rizzsel",
-        desc: "Omega-3 zsírsavakban gazdag bisztró fogás ropogós spárgával.",
-        ingredientIds: ["lazac", "sparga", "citrom", "fokhagyma", "rizs"],
-        extraIngredients: ["1 tk vaj", "só", "fehérbors"],
-        steps: "1. A lazacot sózzuk, borsozzuk, citromlével meglocsoljuk.\n2. Serpenyőben kevés vajon 3-4 perc alatt oldalanként kíméletesen megsütjük.\n3. A zöldspárga fás végeit lepattintjuk, fokhagymás vajon átsütjük 5 perc alatt.\n4. Főtt rizzsel tálaljuk."
+        title: "Ázsiai pirított csirkés-brokkolis rizstál szezámmal",
+        desc: "Gyors Wok-stílusú csirke ropogós brokkolival, pirított szezámmaggal és rizzsel.",
+        coreIngredients: [
+          { id: "csirkemell", qty: "180g csirkemell filé" },
+          { id: "brokkoli", qty: "150g brokkolirózsa" },
+          { id: "rizs", qty: "80g barna vagy basmati rizs" }
+        ],
+        extraIngredients: ["szezammag", "fokhagyma", "citrom"],
+        pantryExtras: ["1 ek szójaszósz", "1 tk szezámolaj"],
+        steps: "1. A rizst megfőzzük.\n2. Wok serpenyőben forró szezámolajon megpirítjuk a csirkét és a zsenge brokkolit.\n3. Szójaszósszal, fokhagymával, citromlével ízesítjük.\n4. A rizsre halmozzuk és gazdagon megszórjuk pirított szezámmaggal."
       },
       {
         id: "r3",
-        title: "Céklás-vöröslencsés krémleves pirított tökmaggal",
-        desc: "Vasban és folsavban gazdag melengető krémleves kókusztejszínnel.",
-        ingredientIds: ["cekla", "voroslencse", "tokmag", "kokusztej", "fokhagyma"],
-        extraIngredients: ["1 tk gyömbér", "só", "római kömény"],
-        steps: "1. A céklát felkockázzuk, fokhagymával és reszelt gyömbérrel átpirítjuk.\n2. Hozzáadjuk a vöröslencsét, felöntjük vízzel és 20 perc alatt puhára főzzük.\n3. Kókusztejjel krémesre turmixoljuk, tetejét szárazon pirított tökmaggal szórjuk meg."
+        title: "Sült csirkemell citromos-zöldfűszeres brokkolival és rizzsel",
+        desc: "Könnyű, frissítő mediterrán fittségi tál hirtelen átsütött csirkemellel és citromos zöldségekkel.",
+        coreIngredients: [
+          { id: "csirkemell", qty: "180g csirkemell filé" },
+          { id: "brokkoli", qty: "150g brokkoli" },
+          { id: "rizs", qty: "80g basmati rizs" }
+        ],
+        extraIngredients: ["citrom", "fokhagyma"],
+        pantryExtras: ["friss kakukkfű", "1 ek olívaolaj", "só"],
+        steps: "1. A csirkemellet citromlével, kakukkfűvel és olívaolajjal pácoljuk, majd serpenyőben átsütjük.\n2. A brokkolit fokhagymás olívaolajon átpirítjuk.\n3. Pompás, frissítő egytálételként tálaljuk a megfőtt rizzsel."
       },
       {
         id: "r4",
-        title: "Avokádós-kimchis quinoa tál edamame babbal & rukkolával",
-        desc: "Tápláló ázsiai ihletésű tál fermentált zöldségekkel és növényi fehérjével.",
-        ingredientIds: ["quinoa", "avokado", "edamame", "rukkola", "szezammag", "citrom"],
-        extraIngredients: ["1 ek szójaszósz", "1 tk szezámolaj"],
-        steps: "1. A quinoát megfőzzük, hagyjuk kihűlni.\n2. Tálba halmozzuk a quinoát, mellé rendezzük a szeletelt avokádót, edamame babot és friss rukkolát.\n3. Citromos-szójaszószos öntettel meglocsoljuk, szezámmaggal szórjuk."
+        title: "Sütőben sült sajtos csirke brokkolival & fűszeres rizzsel",
+        desc: "Tepsis omlós csirkemell olvasztott fetával/mozzarellával, brokkolival és párolt rizzsel.",
+        coreIngredients: [
+          { id: "csirkemell", qty: "180g csirkemell filé" },
+          { id: "brokkoli", qty: "150g brokkoli" },
+          { id: "rizs", qty: "80g rizs" }
+        ],
+        extraIngredients: ["feta", "fokhagyma"],
+        pantryExtras: ["só", "bors", "1 ek olívaolaj"],
+        steps: "1. Tepsibe fektetjük a fűszerezett csirkemellet és a brokkolirózsákat.\n2. Tetejére fetát/mozzarellát morzsolunk, 200°C-os sütőben 20 perc alatt készre sütjük.\n3. Párolt fűszeres rizzsel tálaljuk."
       },
+
+      // TÖBBI KLASSZIKUS RECEPT
       {
         id: "r5",
-        title: "Édesburgonyás-spenótos serpenyős omlett fetával",
-        desc: "Laktató, fehérjedús reggeli vagy könnyű vacsora sült édesburgonyával.",
-        ingredientIds: ["tojas", "edesburgonya", "spenot", "feta", "fokhagyma"],
-        extraIngredients: ["1 ek olívaolaj", "só", "bors"],
-        steps: "1. Az édesburgonyát apró kockákra vágjuk, serpenyőben kevés olajon puhára sütjük.\n2. Hozzáadjuk a zúzott fokhagymát és a spenótot, amíg összeesik.\n3. Ráöntjük a felvert tojásokat, morzsolt fetával megszórjuk, lefedve készre sütjük."
+        title: "Pácolt lazacfilé pirított zöldspárgával & citromos rizzsel",
+        desc: "Omega-3 zsírsavakban gazdag bisztró fogás ropogós spárgával és citromos rizzsel.",
+        coreIngredients: [
+          { id: "lazac", qty: "180g lazacfilé" },
+          { id: "sparga", qty: "150g zöldspárga" },
+          { id: "rizs", qty: "80g basmati rizs" }
+        ],
+        extraIngredients: ["citrom", "fokhagyma"],
+        pantryExtras: ["1 tk vaj", "só", "fehérbors"],
+        steps: "1. A lazacot sózzuk, citromlével meglocsoljuk, vajon serpenyőben átsütjük.\n2. A spárgát fokhagymás vajon megpirítjuk.\n3. Citromlével kifacsart rizzsel tálaljuk."
       },
       {
         id: "r6",
-        title: "Sült édesburgonya-bruschetta kecskesajttal & pirított dióval",
-        desc: "Ropogós édesburgonya szeletek meleg sajttal és rozmaringos dióval.",
-        ingredientIds: ["edesburgonya", "feta", "dio", "fokhagyma"],
-        extraIngredients: ["friss rozmaring", "1 tk méz"],
-        steps: "1. Az édesburgonyát 1 cm-es karikákra vágjuk, sütőben 200°C-on 20 percig sütjük.\n2. Rámorzsoljuk a kecskesajtot/fetát és a durvára vágott diót.\n3. További 5 percre visszatesszük a sütőbe, mézzel csöpögtetve tálaljuk."
+        title: "Céklás-vöröslencsés krémleves fokhagymás tökmaggal",
+        desc: "Vasban és folsavban gazdag melengető krémleves kókusztejszínnel és pirított tökmaggal.",
+        coreIngredients: [
+          { id: "cekla", qty: "200g cékla" },
+          { id: "voroslencse", qty: "100g vöröslencse" }
+        ],
+        extraIngredients: ["tokmag", "kokusztej", "fokhagyma"],
+        pantryExtras: ["1 tk gyömbér", "só", "római kömény"],
+        steps: "1. A céklát felkockázzuk, fokhagymával átpirítjuk.\n2. Hozzáadjuk a vöröslencsét és felöntve puhára főzzük (20 perc).\n3. Kókusztejjel összeturmixoljuk, tökmaggal szórjuk."
       },
       {
         id: "r7",
-        title: "Tepsis cukkini-hajók tonhalkrémmel & paradicsommal",
-        desc: "Szaftos mediterrán tepsis fogás fehérjében gazdag tonhaltöltelékkel.",
-        ingredientIds: ["cukkini", "tonhal", "paradicsom", "feta", "fokhagyma", "hagymak"],
-        extraIngredients: ["1 tk mustár", "só", "bazsalikom"],
-        steps: "1. A cukkiniket félbevágjuk, belsejüket kikaparjuk.\n2. A tonhalat kikeverjük a kockázott paradicsommal, hagymával, fokhagymával és fetával.\n3. A cukkinikbe töltjük, sütőben 190°C-on 25 percig sütjük."
+        title: "Avokádós-kimchis quinoa tál edamame babbal & rukkolával",
+        desc: "Tápláló ázsiai ihletésű tál fermentált zöldségekkel és növényi fehérjével.",
+        coreIngredients: [
+          { id: "quinoa", qty: "100g quinoa" },
+          { id: "avokado", qty: "80g avokádó" },
+          { id: "edamame", qty: "60g edamame bab" }
+        ],
+        extraIngredients: ["szezammag", "citrom"],
+        pantryExtras: ["1 ek szójaszósz", "1 tk szezámolaj"],
+        steps: "1. A quinoát megfőzzük.\n2. Tálba tesszük, mellé szedjük az avokádót és az edamame babot.\n3. Citromos-szójaszószos öntettel meglocsoljuk."
       },
       {
         id: "r8",
-        title: "Rozmaringos fokhagymás marharagu gyökérzöldségekkel",
-        desc: "Lassan főtt kímélő ragu szerves vasban és B12-vitaminban gazdag marhahúsból.",
-        ingredientIds: ["marhahus", "sargarepa", "cekla", "fokhagyma", "hagymak"],
-        extraIngredients: ["2 dl alaplé", "babérlevél", "rozmaring"],
-        steps: "1. A marhahúst kockára vágjuk, fokhagymán és hagymán megpirítjuk.\n2. Hozzáadjuk a sárgarépát és céklát, felöntjük alaplével.\n3. Lefedve, lassú tűzön 1.5 órán át puhára pároljuk."
+        title: "Édesburgonyás-spenótos serpenyős omlett fetával",
+        desc: "Laktató, fehérjedús serpenyős reggeli édesburgonyával és krémes fetával.",
+        coreIngredients: [
+          { id: "tojas", qty: "2 db tojás" },
+          { id: "edesburgonya", qty: "100g édesburgonya" },
+          { id: "spenot", qty: "50g spenót" }
+        ],
+        extraIngredients: ["feta", "fokhagyma"],
+        pantryExtras: ["1 ek olívaolaj", "só", "bors"],
+        steps: "1. Az édesburgonyát felkockázva olajon megpirítjuk.\n2. Rádobjuk a spenótot, ráöntjük a felvert tojásokat és fetát morzsolunk rá."
       },
       {
         id: "r9",
-        title: "Ropogós csicseriborsó tál sült édesburgonyával & tahini öntettel",
-        desc: "Fűszeres tepsis zöldségtál selymes szezámmagos öntettel.",
-        ingredientIds: ["csicseriborsó", "edesburgonya", "szezammag", "fokhagyma", "citrom"],
-        extraIngredients: ["1 tk római kömény", "1 tk pirospaprika", "olívaolaj"],
-        steps: "1. A csicseriborsót és édesburgonyát fűszerekkel és olívaolajjal összeforgatjuk.\n2. Sütőben 200°C-on 25 perc alatt ropogósra sütjük.\n3. Tahiniből, citromléből és fokhagymából öntetet keverünk, tálaláskor meglocsoljuk."
+        title: "Sült édesburgonya-bruschetta kecskesajttal & dióval",
+        desc: "Ropogós édesburgonya karikák meleg kecskesajttal/fetával és pirított dióval.",
+        coreIngredients: [
+          { id: "edesburgonya", qty: "180g édesburgonya" },
+          { id: "feta", qty: "60g kecskesajt / feta" },
+          { id: "dio", qty: "25g dió" }
+        ],
+        extraIngredients: ["fokhagyma"],
+        pantryExtras: ["1 tk méz", "kakukkfű"],
+        steps: "1. Az édesburgonya szeleteket sütőben 200°C-on 20 percig sütjük.\n2. Rámorzsoljuk a sajtot és diót, 5 percre visszatesszük a sütőbe."
       },
       {
         id: "r10",
-        title: "Sült brokkolis saláta fokhagymás kefíröntettel & dióval",
-        desc: "Pörkölt magvakkal és hűsítő fokhagymás öntettel készült méregtelenítő saláta.",
-        ingredientIds: ["brokkoli", "kefir", "dio", "fokhagyma", "citrom"],
-        extraIngredients: ["só", "bors", "1 tk olívaolaj"],
-        steps: "1. A brokkolirózsákat sütőben 15 perc alatt enyhén megpirítjuk.\n2. A kefirt összekeverjük zúzott fokhagymával, citromlével és sóval.\n3. A brokkolit a kefíres öntettel összeforgatjuk, tetejét pirított dióval szórjuk."
+        title: "Tepsis cukkini-hajók tonhalkrémmel & paradicsommal",
+        desc: "Szaftos mediterrán tepsis fogás fehérjében gazdag tonhaltöltelékkel.",
+        coreIngredients: [
+          { id: "cukkini", qty: "200g cukkini" },
+          { id: "tonhal", qty: "120g tonhalkonzerv" },
+          { id: "paradicsom", qty: "100g paradicsom" }
+        ],
+        extraIngredients: ["feta", "fokhagyma", "hagymak"],
+        pantryExtras: ["1 tk mustár", "só", "bazsalikom"],
+        steps: "1. A cukkinit félbevágjuk, kikaparjuk.\n2. A tonhalat összekeverjük a paradicsommal, hagymával, fetával, majd a cukkinibe töltjük és megsütjük."
       },
       {
         id: "r11",
-        title: "Fahéjas zabkása meleg meggyraguval & étcsokoládéval",
-        desc: "Melengető, magnéziumban gazdag reggeli olvasztott étcsokoládéval.",
-        ingredientIds: ["zabpehely", "meggy", "etcsoki", "banán"],
-        extraIngredients: ["250ml növényi tej", "1 tk fahéj"],
-        steps: "1. A zabpelyhet és karikázott banánt tejjel és fahéjjal krémesre főzzük.\n2. A meggyet pár perc alatt átmelegítjük.\n3. A kására halmozzuk a meggyet, tetejére étcsokit morzsolunk."
+        title: "Ropogós fűszeres csicseriborsó tál sült édesburgonyával & tahinivel",
+        desc: "Tepsis ropogós fűszeres zöldségtál selymes szezámmagos tahini öntettel.",
+        coreIngredients: [
+          { id: "csicseriborsó", qty: "150g csicseriborsó" },
+          { id: "edesburgonya", qty: "150g édesburgonya" }
+        ],
+        extraIngredients: ["szezammag", "fokhagyma", "citrom"],
+        pantryExtras: ["1 tk római kömény", "olívaolaj"],
+        steps: "1. A csicseriborsót és édesburgonyát sütőben ropogósra sütjük.\n2. Tahiniből, citromléből és fokhagymából öntetet keverünk és meglocsoljuk."
       },
       {
         id: "r12",
-        title: "Málnás chia puding kókusztejszínnel & pörkölt kókuszpehellyel",
-        desc: "Hűsítő, rostokban dús chia puding friss bogyós gyümölccsel.",
-        ingredientIds: ["chia", "kokusztej", "meggy", "banán"],
-        extraIngredients: ["1 tk méz", "kókuszpehely"],
-        steps: "1. A chia magot kókusztejjel és mézzel elkeverjük, hűtőben 2 órát állni hagyjuk.\n2. A málnát/meggyet villaágyon összenyomjuk.\n3. Rétegezve pohárba töltjük, kókuszpehellyel díszítjük."
+        title: "Fahéjas zabkása meleg meggyraguval & étcsokoládéval",
+        desc: "Melengető, magnéziumban gazdag reggeli olvasztott étcsokoládéval.",
+        coreIngredients: [
+          { id: "zabpehely", qty: "60g zabpehely" },
+          { id: "meggy", qty: "60g meggy / málna" },
+          { id: "etcsoki", qty: "20g étcsoki (70%+)" }
+        ],
+        extraIngredients: ["banan"],
+        pantryExtras: ["250ml mandulatej", "1 tk fahéj"],
+        steps: "1. A zabpelyhet tejjel és fahéjjal megfőzzük.\n2. Meggyragut halmozunk rá és rászórjuk az étcsokit."
       }
     ];
 
     // =========================================================================
-    // 3. DINAMIKUS FELÜLET GENERÁLÁS ÉS SZŰRÉS LOGIKA
+    // 3. ULTRAPRECÍZ RECEPTKERESŐ ÉS RANGSOROLÓ ENGINE
     // =========================================================================
-    
-    // Felület inicializálása
+
     function initPantryUI() {
       const vegGrid = document.getElementById('vegGrid');
       const grainGrid = document.getElementById('grainGrid');
       const proteinGrid = document.getElementById('proteinGrid');
-      
       if (!vegGrid) return;
       vegGrid.innerHTML = ''; grainGrid.innerHTML = ''; proteinGrid.innerHTML = '';
 
@@ -308,7 +370,7 @@
           <div class="pantry-item-label p-2 bg-[#F7F3ED] rounded-xl border border-[#A7B69A]/30 flex items-center justify-between">
             <label class="flex items-center gap-1.5 cursor-pointer truncate w-full">
               <input type="checkbox" value="${item.id}" class="pantry-item-check text-[#556B4E] rounded focus:ring-0">
-              <span class="truncate">${item.name}</span>
+              <span class="truncate font-medium">${item.name}</span>
             </label>
             <button onclick="openIngredientModal('${item.id}')" class="text-[10px] font-bold text-[#F06292] bg-white px-1.5 py-0.5 rounded border border-[#F06292]/30 hover:bg-[#F06292] hover:text-white transition ml-1">Mire jó?</button>
           </div>
@@ -324,15 +386,15 @@
       document.getElementById('pantryRecipeResults').innerHTML = '';
     }
 
-    // A MAGJA: PONTOS, SZIGORÚ RECEPTKERESŐ ÉS RANGSOROLÓ ENGINE
+    // A KERESŐ ENGINE LÉNYEGE
     function findPantryRecipes() {
       const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
-      const selectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+      const userSelectedIds = Array.from(checkedBoxes).map(cb => cb.value);
       const resGrid = document.getElementById('pantryRecipeResults');
       if (!resGrid) return;
       resGrid.innerHTML = '';
 
-      if (selectedIds.length === 0) {
+      if (userSelectedIds.length === 0) {
         resGrid.innerHTML = `
           <div class="col-span-2 text-center p-8 bg-white/90 rounded-3xl border border-[#A7B69A]/40 text-xs text-slate-600">
             💡 <strong>Kérjük, jelölj ki legalább 1 alapanyagot</strong> a fenti listából a kereséshez!
@@ -341,89 +403,100 @@
         return;
       }
 
-      // 1. LÉPÉS: Minden receptre kiszámítjuk a pontos matchet
+      const totalSelectedCount = userSelectedIds.length;
       const scoredRecipes = [];
 
+      // MINTAVÉTELEZÉS ÉS MEGFELELÉS SZÁMÍTÁSA
       MASTER_RECIPES.forEach(recipe => {
-        // Mely bepipált elemek vannak meg ebben a receptben?
-        const usedSelectedIds = recipe.ingredientIds.filter(id => selectedIds.includes(id));
-        
-        // Mely bepipált elemeket NEM használja ez a recept?
-        const unusedSelectedIds = selectedIds.filter(id => !recipe.ingredientIds.includes(id));
+        // A recept FŐ alapanyagai közül melyik van meg a usernek?
+        const coreRecipeIds = recipe.coreIngredients.map(ci => ci.id);
+        const allRecipeIds = [...coreRecipeIds, ...(recipe.extraIngredients || [])];
 
-        // Mely elemek kellenek még a recepthez, amik nincsenek bepipálva?
-        const missingRecipeIds = recipe.ingredientIds.filter(id => !selectedIds.includes(id));
+        // Hány bejelölt otthoni alapanyagot használ fel ez a recept?
+        const usedUserIds = userSelectedIds.filter(id => allRecipeIds.includes(id));
+        const matchCount = usedUserIds.length;
 
-        const matchCount = usedSelectedIds.length;
-
-        // SZIGORÚ SZŰRÉS: Ha egyetlen bepipált elemet sem tartalmaz, KIZÁRJUK!
+        // SZIGORÚ SZŰRÉS: Ha 0 egyezés van, KIZÁRJUK! (Soha nem jelenik meg 0/3)
         if (matchCount > 0) {
+          // Hiányzó extrák (amiket meg kell vennie)
+          const missingExtraIds = (recipe.extraIngredients || []).filter(id => !userSelectedIds.includes(id));
+          const missingCoreIds = coreRecipeIds.filter(id => !userSelectedIds.includes(id));
+
           scoredRecipes.push({
             recipe,
             matchCount,
-            usedSelectedIds,
-            unusedSelectedIds,
-            missingRecipeIds
+            totalSelectedCount,
+            usedUserIds,
+            missingCoreIds,
+            missingExtraIds,
+            // Relevancia pontszám: Fő alapanyag egyezés + arány
+            relevanceScore: (matchCount * 100) - (missingCoreIds.length * 10) - missingExtraIds.length
           });
         }
       });
 
-      // 2. LÉPÉS: Ha nincs 1 egyezés sem
+      // ZÉRÓ TALÁLAT KEZELÉSE
       if (scoredRecipes.length === 0) {
         resGrid.innerHTML = `
           <div class="col-span-2 text-center p-8 bg-white/90 rounded-3xl border border-rose-200 text-xs text-slate-700 space-y-3">
-            <p class="font-bold text-rose-800 text-sm">Nem találtam olyan receptet, amely felhasználná ezeket az alapanyagokat.</p>
-            <p class="text-slate-600 font-light">Próbálj meg kevesebb vagy általánosabb alapanyagot kijelölni (pl. tojás, csirkemell, brokkoli, édesburgonya)!</p>
+            <p class="font-bold text-rose-800 text-sm">Sajnos nem találtam olyan receptet, amely felhasználná a kiválasztott alapanyagokat.</p>
+            <p class="text-slate-600 font-light">Próbálj meg kevesebb vagy általánosabb alapanyagot kijelölni (pl. csirkemell, rizs, brokkoli, tojás)!</p>
           </div>
         `;
         return;
       }
 
-      // 3. LÉPÉS: RANGSOROLÁS (Minél több otthoni alapanyagot használ fel, annál előbb legyen)
-      scoredRecipes.sort((a, b) => b.matchCount - a.matchCount);
+      // RANGSOROLÁS
+      // 1. Legtöbb kiválasztott alapanyag felhasználása
+      // 2. Kevesebb hiányzó hozzávaló
+      scoredRecipes.sort((a, b) => b.relevanceScore - a.relevanceScore);
 
-      // 4. LÉPÉS: KÁRTYÁK KIRAJZOLÁSA
+      // KÁRTYÁK RENDERELÉSE (Legalább 4 recept, ha elérhető)
       scoredRecipes.forEach(item => {
         const r = item.recipe;
-        const totalSelected = selectedIds.length;
         
-        // Kártya fejléc jelvény
-        let statusBadge = "";
-        if (item.matchCount === totalSelected && item.missingRecipeIds.length === 0) {
-          statusBadge = `<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full border border-emerald-300">🎉 Tökéletes egyezés (Minden megvan!)</span>`;
-        } else if (item.matchCount === totalSelected) {
-          statusBadge = `<span class="bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">✓ Minden bejelöltet felhasznál</span>`;
+        // UX Badge meghatározása
+        let badgeHtml = "";
+        if (item.matchCount === item.totalSelectedCount && item.missingCoreIds.length === 0 && item.missingExtraIds.length === 0) {
+          badgeHtml = `<span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full border border-emerald-300">🌿 ${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod felhasználva (Minden megvan!)</span>`;
+        } else if (item.matchCount === item.totalSelectedCount) {
+          const buyCount = item.missingExtraIds.length;
+          badgeHtml = `<span class="bg-emerald-50 text-emerald-800 font-bold px-3 py-1 rounded-full border border-emerald-200">🌿 ${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod + ${buyCount} beszerezendő</span>`;
         } else {
-          statusBadge = `<span class="bg-amber-50 text-amber-800 font-bold px-2.5 py-0.5 rounded-full border border-amber-200">⚡ ${totalSelected} kiválasztottból ${item.matchCount}-öt felhasznál</span>`;
+          const buyCount = item.missingCoreIds.length + item.missingExtraIds.length;
+          badgeHtml = `<span class="bg-amber-50 text-amber-900 font-bold px-3 py-1 rounded-full border border-amber-200">⚡ ${item.matchCount}/${item.totalSelectedCount} otthoni alapanyagod + ${buyCount} beszerezendő</span>`;
         }
 
-        // Kiválasztott alapanyagok státuszlistája
-        let selectedListHtml = `<div class="p-3 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/30 space-y-1 mb-3">`;
-        selectedListHtml += `<p class="font-bold text-[#556B4E] mb-1">Kiválasztott alapanyagok állapota:</p>`;
-        
-        // Használtak
-        item.usedSelectedIds.forEach(id => {
-          const ing = INGREDIENTS.find(i => i.id === id);
-          selectedListHtml += `<div class="text-emerald-800 font-bold flex items-center gap-1.5"><span>✓</span> <span>${ing ? ing.name : id}</span></div>`;
+        // Otthon lévő hozzávalók kiírása
+        let presentHtml = `<div class="space-y-1 mb-2">`;
+        r.coreIngredients.forEach(ci => {
+          if (userSelectedIds.includes(ci.id)) {
+            presentHtml += `<div class="text-emerald-800 font-bold flex items-center gap-1.5"><span>✓</span> <span>${ci.qty}</span> <span class="text-[10px] text-emerald-600 bg-emerald-100 px-1.5 py-0.2 rounded">(Otthon van)</span></div>`;
+          }
         });
-        // Bepipált, de ebben a receptben nem használtak
-        item.unusedSelectedIds.forEach(id => {
-          const ing = INGREDIENTS.find(i => i.id === id);
-          selectedListHtml += `<div class="text-rose-600 font-normal flex items-center gap-1.5 opacity-70"><span>✕</span> <span>${ing ? ing.name : id}</span> <span class="text-[10px] text-slate-400">(ebben nem kell)</span></div>`;
-        });
-        selectedListHtml += `</div>`;
+        presentHtml += `</div>`;
 
-        // Hiányzó egyéb hozzávalók
+        // Hiányzó / Megvásárolandó hozzávalók kiírása
+        let missingList = [];
+        r.coreIngredients.forEach(ci => {
+          if (!userSelectedIds.includes(ci.id)) {
+            missingList.push(ci.qty);
+          }
+        });
+        (r.extraIngredients || []).forEach(eid => {
+          if (!userSelectedIds.includes(eid)) {
+            const ing = INGREDIENTS.find(i => i.id === eid);
+            missingList.push(ing ? ing.name : eid);
+          }
+        });
+
         let missingHtml = "";
-        if (item.missingRecipeIds.length > 0) {
-          const missingNames = item.missingRecipeIds.map(id => {
-            const ing = INGREDIENTS.find(i => i.id === id);
-            return ing ? ing.name : id;
-          });
+        if (missingList.length > 0) {
           missingHtml = `
-            <p class="text-[11px] text-slate-600 font-light mt-1">
-              <strong>🛒 Egyéb szükséges hozzávalók:</strong> ${missingNames.join(", ")} ${r.extraIngredients ? ' + ' + r.extraIngredients.join(", ") : ''}
-            </p>
+            <div class="p-3 bg-amber-50/60 rounded-2xl border border-amber-200/80 mb-3 text-amber-900">
+              <p class="font-bold mb-1">🛒 Még szükséges a recepthez:</p>
+              <p class="font-light leading-relaxed">• ${missingList.join("<br>• ")}</p>
+            </div>
           `;
         }
 
@@ -431,17 +504,30 @@
         card.className = "bg-white rounded-3xl border border-[#A7B69A]/40 p-6 text-xs shadow-sm hover:shadow-md transition flex flex-col justify-between";
         card.innerHTML = `
           <div>
-            <div class="flex items-center justify-between mb-3 text-[10px]">
-              ${statusBadge}
+            <div class="mb-3 text-[11px]">
+              ${badgeHtml}
             </div>
             <h4 class="font-bold text-lg text-[#556B4E] mb-2 font-serif-title">${r.title}</h4>
             <p class="text-slate-600 mb-4 font-light leading-relaxed">${r.desc}</p>
-            ${selectedListHtml}
+
+            <div class="p-3.5 bg-[#F7F3ED] rounded-2xl mb-3 border border-[#A7B69A]/30">
+              <p class="font-bold text-[#556B4E] mb-1.5">Felhasznált otthoni alapanyagok:</p>
+              ${presentHtml}
+            </div>
+
             ${missingHtml}
           </div>
-          <button onclick="openRecipeDetailModal('${r.id}')" class="mt-4 w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition text-center">
-            👩‍🍳 Teljes recept & elkészítés →
-          </button>
+
+          <div class="space-y-2 pt-2">
+            <button onclick="openRecipeDetailModal('${r.id}')" class="w-full py-2.5 bg-[#556B4E] text-white font-bold rounded-xl text-xs hover:bg-[#44563e] transition text-center">
+              👩‍🍳 Teljes recept megtekintése →
+            </button>
+            ${missingList.length > 0 ? `
+              <a href="https://buy.stripe.com/test_placeholder" target="_blank" class="w-full py-2 bg-[#F06292] text-white font-bold rounded-xl text-xs hover:bg-[#e05282] transition text-center block">
+                🛒 Hiányzó hozzávalók beszerzése →
+              </a>
+            ` : ''}
+          </div>
         `;
         resGrid.appendChild(card);
       });
@@ -454,24 +540,36 @@
       const r = MASTER_RECIPES.find(item => item.id === recipeId);
       if (!r) return;
 
-      const ingNames = r.ingredientIds.map(id => {
-        const ing = INGREDIENTS.find(i => i.id === id);
-        return ing ? ing.name : id;
+      const checkedBoxes = document.querySelectorAll('.pantry-item-check:checked');
+      const userSelectedIds = Array.from(checkedBoxes).map(cb => cb.value);
+
+      let ingListHtml = '<ul class="space-y-1 text-slate-700 font-light">';
+      r.coreIngredients.forEach(ci => {
+        const hasIt = userSelectedIds.includes(ci.id);
+        ingListHtml += `<li class="${hasIt ? 'text-emerald-800 font-bold' : 'text-slate-700'}">• ${ci.qty} ${hasIt ? '✓ (Otthon van)' : ''}</li>`;
       });
+      (r.extraIngredients || []).forEach(eid => {
+        const ing = INGREDIENTS.find(i => i.id === eid);
+        const hasIt = userSelectedIds.includes(eid);
+        ingListHtml += `<li class="${hasIt ? 'text-emerald-800 font-bold' : 'text-slate-600'}">• ${ing ? ing.name : eid} ${hasIt ? '✓ (Otthon van)' : ''}</li>`;
+      });
+      (r.pantryExtras || []).forEach(pe => {
+        ingListHtml += `<li class="text-slate-400 italic">• ${pe} (fűszer/alapvíz)</li>`;
+      });
+      ingListHtml += '</ul>';
 
       const content = `
-        <span class="inline-block bg-[#F7F3ED] text-[#556B4E] text-xs font-bold px-3 py-1 rounded-full mb-2">Recept kártya</span>
+        <span class="inline-block bg-[#F7F3ED] text-[#556B4E] text-xs font-bold px-3 py-1 rounded-full mb-2">Vita-Natura Receptkártya</span>
         <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-3">${r.title}</h3>
         <p class="text-xs text-slate-600 font-light mb-4 leading-relaxed">${r.desc}</p>
         
         <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 mb-4 text-xs">
-          <p class="font-bold text-[#556B4E] mb-1">🥣 Összes Hozzávaló (1 adag):</p>
-          <p class="text-slate-700 leading-relaxed">• ${ingNames.join("<br>• ")}</p>
-          ${r.extraIngredients ? `<p class="text-slate-500 mt-2 italic">• ${r.extraIngredients.join("<br>• ")}</p>` : ''}
+          <p class="font-bold text-[#556B4E] mb-2">🥣 Pontos Hozzávalók & Adagok:</p>
+          ${ingListHtml}
         </div>
 
         <div class="p-4 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40 text-xs">
-          <p class="font-bold text-[#556B4E] mb-1">👩‍🍳 Elkészítés lépésről lépésre:</p>
+          <p class="font-bold text-[#556B4E] mb-2">👩‍🍳 Elkészítés lépésről lépésre:</p>
           <p class="text-slate-700 whitespace-pre-line leading-relaxed font-light">${r.steps}</p>
         </div>
       `;
@@ -485,15 +583,6 @@
       const ing = INGREDIENTS.find(i => i.id === ingId);
       if (!ing) return;
 
-      // Megkeressük azokat a recepteket, amikben ez az alapanyag szerepel
-      const matched = MASTER_RECIPES.filter(r => r.ingredientIds.includes(ingId));
-
-      let recipeListHtml = '<ul class="space-y-1 text-slate-700 font-medium mt-1">';
-      matched.forEach(r => {
-        recipeListHtml += `<li>• ${r.title}</li>`;
-      });
-      recipeListHtml += '</ul>';
-
       const content = `
         <span class="inline-block bg-[#F7F3ED] text-[#556B4E] text-xs font-bold px-3 py-1 rounded-full mb-2">Alapanyag profil</span>
         <h3 class="text-2xl font-bold font-serif-title text-[#556B4E] mb-3">${ing.name}</h3>
@@ -505,11 +594,7 @@
           </div>
           <div class="p-3.5 bg-[#F7F3ED] rounded-2xl border border-[#A7B69A]/40">
             <p class="font-bold text-[#556B4E] mb-1">❤️ Miben segít a testednek?</p>
-            <p class="text-slate-700 leading-relaxed">Támogatja a sejtképződést, a természetes emésztést és a szervezet energiaháztartását.</p>
-          </div>
-          <div class="p-3.5 bg-[#F06292]/10 rounded-2xl border border-[#F06292]/30">
-            <p class="font-bold text-[#556B4E] mb-1">🍳 Receptek a Vita-Naturán ezzel az alapanyaggal:</p>
-            ${recipeListHtml}
+            <p class="text-slate-700 leading-relaxed">Támogatja a sejt-regenerációt, az emésztést és a szervezet természetes hormonális egyensúlyát.</p>
           </div>
         </div>
       `;
@@ -524,9 +609,7 @@
       document.getElementById('detailModal').classList.add('hidden');
     }
 
-    // =========================================================================
-    // 5. NÉZET ÉS TAB VÁLTÁSOK
-    // =========================================================================
+    // TAB VÁLTÁSOK
     function switchTab(tab) {
       ['pantry', 'symptoms', 'lifestyle', 'cycle', 'packages'].forEach(t => {
         const sec = document.getElementById(t + 'TabSection');
@@ -551,7 +634,6 @@
       });
     }
 
-    // Tünetkereső
     function renderSymptoms() {
       const grid = document.getElementById('cardsGrid');
       if (!grid) return;
@@ -561,24 +643,21 @@
       `;
     }
 
-    // Étrendtervező
     function calculateLifestylePlan() {
-      document.getElementById('lsAnalysisBox').innerHTML = `<h3 class="font-bold text-[#556B4E] text-sm">Metabolikus profil elkészült! (BMI: 24.1 - Egészséges)</h3>`;
+      document.getElementById('lsAnalysisBox').innerHTML = `<h3 class="font-bold text-[#556B4E] text-sm font-serif-title">Metabolikus profil elkészült! (BMI: 24.1 - Egészséges)</h3>`;
       document.getElementById('lsWeeklyMealBox').innerHTML = `<p class="text-xs text-slate-700">3 napos mintaétrend generálva hajszálpontos gramm-adagokkal.</p>`;
       document.getElementById('lifestyleResultZone').classList.remove('hidden');
     }
 
-    // Ciklusszinkron
     function showPhase(p) {
-      document.getElementById('phaseContent').innerHTML = `<div class="bg-white p-6 rounded-3xl border"><h3 class="font-bold text-[#556B4E]">${p}. Fázis útmutatója betöltve.</h3></div>`;
+      document.getElementById('phaseContent').innerHTML = `<div class="bg-white p-6 rounded-3xl border"><h3 class="font-bold text-[#556B4E] font-serif-title">${p}. Fázis útmutatója betöltve.</h3></div>`;
     }
 
-    // Csomagok
     function renderPackages() {
-      document.getElementById('packagesGrid').innerHTML = `<div class="bg-white p-6 rounded-3xl border"><h3 class="font-bold text-[#556B4E]">Téli immun-pajzs csomag</h3></div>`;
+      document.getElementById('packagesGrid').innerHTML = `<div class="bg-white p-6 rounded-3xl border"><h3 class="font-bold text-[#556B4E] font-serif-title">Téli immun-pajzs csomag</h3></div>`;
     }
 
-    // Inicializálás
+    // INDÍTÁS
     initPantryUI();
   </script>
 </body>
