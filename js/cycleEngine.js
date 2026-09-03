@@ -30,6 +30,7 @@ export function calculateEstimatedPhase(lastPeriodDateStr, cycleLengthDays, isIr
   return { phase, source: "date_estimated" };
 }
 
+// JAVÍTVA: Nem kényszeríti ki a Follikuláris fázist, ha semmilyen adatot nem adott meg a felhasználó!
 export function buildWomenWellnessResult(rawProfile) {
   const profile = validateAndSanitizeWomenProfile(rawProfile);
   
@@ -40,13 +41,15 @@ export function buildWomenWellnessResult(rawProfile) {
     headline = `Megadott szakasz: ${phaseObj.title}`;
   } else if (profile.phaseSource === "date_estimated" && phaseObj) {
     headline = `Becsült szakasz: ${phaseObj.title}`;
+  } else {
+    headline = "Általános női jólléti útmutató";
   }
 
   const energyText = profile.currentEnergy === "low" 
     ? "Most pihentetőbb, kímélő tempóra van szükséged." 
     : profile.currentEnergy === "high" 
       ? "Aktív, lendületes szakaszban vagy." 
-      : "A mindennapi egyensúly megőrzése a fő fókusz.";
+      : "Engedd meg magadnak a saját tempódat a mindennapokban.";
 
   return {
     meta: {
