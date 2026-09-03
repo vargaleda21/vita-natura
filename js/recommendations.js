@@ -7,7 +7,6 @@ export function buildRecommendations(profile, products, bundles, ingredients) {
 
   const eligibleProducts = products.filter(product => {
     if (product.status !== CONTENT_STATUS.ACTIVE) return false;
-
     if (profile.dietType && !product.dietCompatible.includes(profile.dietType)) return false;
 
     if (profile.avoidAllergens && profile.avoidAllergens.length > 0) {
@@ -119,11 +118,25 @@ function createFallbackRecommendation(reason) {
   };
 }
 
+// JAVÍTVA: Tiszta, magyar nyelvű címsor generálása duplázott szavak nélkül!
 function generateFocusAreas(profile) {
+  const goalNames = {
+    [GOALS.ENERGY]: "Energia és vitalitás",
+    [GOALS.SLEEP]: "Pihentető alvás",
+    [GOALS.FOCUS]: "Mentális fókusz",
+    [GOALS.DIGESTION]: "Emésztési komfort",
+    [GOALS.BEAUTY]: "Ragyogás és szépség",
+    [GOALS.RECOVERY]: "Aktív regeneráció",
+    [GOALS.WOMEN]: "Női jóllét",
+    [GOALS.GENERAL_VITALITY]: "Általános vitalitás"
+  };
+
+  const name = goalNames[profile.primaryGoal] || "Mindennapi egyensúly";
+
   return [
     {
       goal: profile.primaryGoal,
-      title: `A(z) ${profile.primaryGoal} fókusz támogatása`,
+      title: name,
       explanation: "A válaszaid alapján ez a terület élvez elsőbbséget a mindennapi rutinodban."
     }
   ];
@@ -137,14 +150,23 @@ function generateDailyRoutine(profile) {
   ];
 }
 
+// JAVÍTVA: Csak a céloknak és étrendnek megfelelő, értelmes konyhai elemeket ajánlja!
 function buildFoodSuggestions(profile, ingredients) {
   if (!ingredients) return [];
+  
+  // Kizárja a felhasználó által jelölt kerülendő tényezőket és allergéneket
   const validIngredients = ingredients.filter(ing => {
     if (profile.avoidIngredients && profile.avoidIngredients.includes(ing.id)) return false;
+    if (profile.avoidAllergens && ing.allergens && ing.allergens.some(a => profile.avoidAllergens.includes(a))) return false;
+    if (profile.avoidFactors && ing.avoidFactors && ing.avoidFactors.some(f => profile.avoidFactors.includes(f))) return false;
     return true;
   });
 
-  return validIngredients.slice(0, profile.complexity === "simple" ? 2 : 3).map(ing => ({
+  // Kiválaszt 2–3 releváns zöldséget / gabonát a véletlenszerű húsok helyett
+  const plantBased = validIngredients.filter(ing => ["cruciferous", "greens", "tubers", "grains"].includes(ing.group));
+  const selection = plantBased.length >= 2 ? plantBased : validIngredients;
+
+  return selection.slice(0, profile.complexity === "simple" ? 2 : 3).map(ing => ({
     ingredientId: ing.id,
     displayName: ing.displayName,
     matchFactors: { goalMatch: true, dietCompatible: true }
