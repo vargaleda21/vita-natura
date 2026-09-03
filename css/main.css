@@ -1,1 +1,395 @@
 
+/* ==========================================================================
+   VITA-NATURA – QUIET LUXURY & NATURAL WELLNESS STYLESHEET
+   Keretrendszer-mentes, tiszta Vanilla CSS
+   ========================================================================== */
+
+:root {
+  --bg-base: #FBF9F5;          /* Törtfehér alapháttér */
+  --bg-surface: #F4EFE6;       /* Meleg krém / bézs szekcióháttér */
+  --bg-card: #FFFFFF;          /* Tiszta fehér kártyaháttér */
+  --text-main: #2A2827;        /* Mély természetes szürke/fekete */
+  --text-muted: #6F6A67;       /* Középszürke másodlagos szöveg */
+  --text-light: #8C8784;       /* Halvány szürke feliratok */
+  --color-sage: #4A5D3E;       /* Mély zsályazöld (fő márkaszín) */
+  --color-sage-hover: #3B4A31; /* Zsályazöld hover állapot */
+  --color-mauve: #C88A95;      /* Visszafogott mályva akcentus */
+  --border-subtle: rgba(42, 40, 39, 0.1); /* Vékony, elegáns keret */
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.max-w-narrow {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* HEADER ÉS NAVIGÁCIÓ */
+.site-header {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: rgba(251, 249, 245, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(8px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--text-main);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.main-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover { color: var(--text-main); }
+.nav-link.active { color: var(--color-sage); font-weight: 600; }
+
+/* HERO SZEKCIÓ */
+.hero-section {
+  padding: 5rem 0 3rem 0;
+  text-align: center;
+}
+
+.hero-subtitle {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.hero-title {
+  font-size: 2.75rem;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+}
+
+.section-title-sm { font-size: 2rem; }
+
+.hero-description {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* GOMBOK ÉS CTA-K */
+.btn {
+  display: inline-block;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary { background-color: var(--color-sage); color: #FFFFFF; }
+.btn-primary:hover { background-color: var(--color-sage-hover); }
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  border-color: var(--border-subtle);
+  color: var(--text-main);
+}
+.btn-secondary:hover { background-color: var(--bg-surface); }
+
+/* GRID ÉS KÁRTYÁK */
+.entry-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .hero-title { font-size: 3.5rem; }
+  .entry-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+
+.entry-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-sans);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.entry-card:hover {
+  border-color: var(--color-sage);
+  transform: translateY(-2px);
+}
+
+.entry-card-tag {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-mauve);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.entry-card-title {
+  font-size: 1.25rem;
+  font-family: var(--font-serif);
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.entry-card-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+/* QUIZ KONTÉNER */
+.quiz-container {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 4rem;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.quiz-progress-bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--bg-surface);
+  margin-bottom: 2rem;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background-color: var(--color-sage);
+  width: 12.5%;
+  transition: width 0.3s ease;
+}
+
+.quiz-options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+@media (min-width: 576px) {
+  .quiz-options-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.quiz-option-btn {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.quiz-option-btn:hover { border-color: var(--text-light); }
+.quiz-option-btn.selected {
+  border-color: var(--color-sage);
+  background-color: var(--bg-surface);
+  font-weight: 500;
+}
+
+/* EDITORIAL STÍLUSOK */
+.editorial-result {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  margin-bottom: 4rem;
+}
+
+.editorial-header {
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto 3rem auto;
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .editorial-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.editorial-card {
+  padding: 1.5rem;
+  background-color: var(--bg-base);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bundle-box {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.bundle-role-item {
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.match-reason-text {
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.card-action-wrapper {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+/* UTILS */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-8 { margin-top: 2rem; }
+
+/* MODAL */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(42, 40, 39, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 50;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  max-width: 480px;
+  width: 100%;
+  padding: 2rem;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
