@@ -167,9 +167,10 @@ function initPantryGrid() {
     <button class="quiz-option-btn" data-ing-id="${ing.id}">${ing.displayName}</button>
   `).join("");
 
+  // JAVÍTVA: dataset.ingId használata kötőjeles ing-id helyett!
   container.querySelectorAll("[data-ing-id]").forEach(btn => {
     btn.addEventListener("click", () => {
-      const id = btn.dataset.ing-id;
+      const id = btn.dataset.ingId;
       btn.classList.toggle("selected");
       if (activeSelectedPantryIngredients.includes(id)) {
         activeSelectedPantryIngredients = activeSelectedPantryIngredients.filter(x => x !== id);
