@@ -10,278 +10,134 @@
   <meta property="og:description" content="Személyre szabott táplálkozási és életmódbeli ajánlások.">
   <meta property="og:type" content="website">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Quiet Luxury Vanilla CSS -->
+  <link rel="stylesheet" href="css/main.css">
   
-  <!-- Premium Google Fonts: Playfair Display + Plus Jakarta Sans -->
+  <!-- Premium Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #FBF9F5;
-      color: #2C2A29;
-    }
-    h1, h2, h3, .font-serif-title {
-      font-family: 'Playfair Display', serif;
-    }
-  </style>
 </head>
-<body class="antialiased selection:bg-[#E8E2D5] selection:text-[#2C2A29]">
+<body>
 
   <!-- HEADER -->
-  <header class="py-8 px-6 border-b border-stone-200/60 bg-[#FBF9F5]/90 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <a href="#" class="font-serif-title text-2xl tracking-wide text-stone-800">Vita-Natura</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="site-logo">Vita-Natura</a>
       
-      <nav class="hidden md:flex items-center gap-8 text-xs tracking-wider uppercase text-stone-600 font-medium">
-        <button onclick="switchTab('quiz')" class="hover:text-stone-900 transition">Személyes Ajánlás</button>
-        <button onclick="switchTab('pantry')" class="hover:text-stone-900 transition">Mit főzzek ma?</button>
-        <button onclick="switchTab('cycle')" class="hover:text-stone-900 transition">Női Jóllét</button>
+      <nav class="main-nav">
+        <button id="navQuiz" class="nav-link active" data-tab="quiz">Személyes Ajánlás</button>
+        <button id="navPantry" class="nav-link" data-tab="pantry">Mit főzzek ma?</button>
+        <button id="navCycle" class="nav-link" data-tab="cycle">Női Jóllét</button>
       </nav>
 
-      <button onclick="switchTab('quiz')" class="text-xs font-semibold text-[#556B4E] border border-[#556B4E]/30 px-4 py-2 rounded-full hover:bg-[#556B4E] hover:text-white transition">
-        A te rutinod
-      </button>
+      <button class="btn btn-secondary" data-action="start-quiz">A te rutinod</button>
     </div>
   </header>
 
   <!-- HERO SZEKCIÓ -->
-  <section class="py-20 px-6 max-w-4xl mx-auto text-center">
-    <span class="text-[11px] uppercase tracking-widest text-stone-400 font-medium block mb-4">Quiet Luxury Wellness</span>
-    <h1 class="text-4xl md:text-6xl font-serif-title text-stone-800 mb-6 leading-tight">
-      Találd meg, mi támogat téged most.
-    </h1>
-    <p class="text-stone-600 text-sm md:text-base font-light max-w-xl mx-auto mb-10 leading-relaxed">
+  <section class="hero-section container">
+    <span class="hero-subtitle">Quiet Luxury Wellness</span>
+    <h1 class="hero-title">Találd meg, mi támogat téged most.</h1>
+    <p class="hero-description max-w-narrow">
       Személyre szabott táplálkozási, életmódbeli és természetes jólléti ajánlások – egyszerűen, érthetően.
     </p>
 
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <button onclick="switchTab('quiz')" class="w-full sm:w-auto px-8 py-4 bg-[#556B4E] text-white text-xs font-semibold rounded-xl hover:bg-[#44563e] transition shadow-sm">
-        Megnézem, mire van most szükségem →
-      </button>
-      <button onclick="switchTab('pantry')" class="w-full sm:w-auto px-8 py-4 bg-white border border-stone-200 text-stone-700 text-xs font-semibold rounded-xl hover:bg-stone-50 transition">
-        Mit főzzek abból, ami otthon van? →
-      </button>
+    <div class="hero-actions">
+      <button class="btn btn-primary" data-action="start-quiz">Megnézem, mire van most szükségem →</button>
+      <button class="btn btn-secondary" data-tab="pantry">Mit főzzek abból, ami otthon van? →</button>
     </div>
   </section>
 
-  <!-- 3 FŐ BELÉPÉSI PONT NAVIGÁCIÓ -->
-  <div class="max-w-4xl mx-auto px-6 mb-12">
-    <div class="bg-stone-200/40 p-1.5 rounded-2xl flex items-center gap-1 text-xs">
-      <button id="navQuiz" onclick="switchTab('quiz')" class="flex-1 py-3 rounded-xl font-semibold transition bg-[#556B4E] text-white shadow-sm">
-        Személyes Ajánlás
+  <!-- 3 BELÉPÉSI PONT GRID -->
+  <div class="container">
+    <div class="entry-grid">
+      <button class="entry-card" data-action="start-quiz">
+        <span>
+          <span class="entry-card-tag">Fő Belépési Pont</span>
+          <span class="entry-card-title">Személyes Ajánlás</span>
+          <span class="entry-card-desc">Célalapú digitális konzultáció a saját életmódodra szabva.</span>
+        </span>
+        <span class="btn btn-secondary">Indítás →</span>
       </button>
-      <button id="navCycle" onclick="switchTab('cycle')" class="flex-1 py-3 rounded-xl font-semibold text-stone-600 hover:bg-stone-200/50 transition">
-        Női Jóllét
+
+      <button class="entry-card" data-tab="cycle">
+        <span>
+          <span class="entry-card-tag">Edukáció</span>
+          <span class="entry-card-title">Női Jóllét</span>
+          <span class="entry-card-desc">A ciklus szakaszaihoz kapcsolódó életmódbeli szempontok.</span>
+        </span>
+        <span class="btn btn-secondary">Megnézem →</span>
       </button>
-      <button id="navPantry" onclick="switchTab('pantry')" class="flex-1 py-3 rounded-xl font-semibold text-stone-600 hover:bg-stone-200/50 transition">
-        Mit főzzek ma?
+
+      <button class="entry-card" data-tab="pantry">
+        <span>
+          <span class="entry-card-tag">Konyhai Támogatás</span>
+          <span class="entry-card-title">Mit főzzek ma?</span>
+          <span class="entry-card-desc">Receptötletek abból, ami a hűtődben van.</span>
+        </span>
+        <span class="btn btn-secondary">Keresés →</span>
       </button>
     </div>
   </div>
 
-  <main class="max-w-4xl mx-auto px-6 mb-24">
+  <!-- FŐ TARTALMI ZÓNÁK -->
+  <main class="container">
 
     <!-- 1. FŐ MODUL: JÓLLÉTI KÉRDŐÍV -->
     <section id="quizTabSection">
-      <div id="quizCard" class="bg-white p-8 md:p-12 rounded-3xl border border-stone-200/80 shadow-sm max-w-2xl mx-auto">
-        
-        <!-- Progress Bar -->
-        <div class="flex items-center justify-between text-xs text-stone-400 font-light mb-6">
-          <span>Konzultáció</span>
-          <span id="quizProgressText">1 / 8</span>
+      <div id="quizCard" class="quiz-container max-w-narrow">
+        <div class="quiz-header">
+          <span>Személyes konzultáció</span>
+          <span id="quizProgressText">01 / 08</span>
         </div>
-        <div class="w-full bg-stone-100 h-1 rounded-full mb-8 overflow-hidden">
-          <div id="quizProgressBar" class="bg-[#556B4E] h-full w-[12.5%] transition-all duration-300"></div>
+        <div class="quiz-progress-bar">
+          <div id="quizProgressBar" class="quiz-progress-fill"></div>
         </div>
 
-        <!-- 1. Kérdés -->
-        <div id="quizStep1" class="space-y-6">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Mire szeretnél most leginkább figyelni?</h3>
-          <p class="text-xs text-stone-400 text-center font-light -mt-4">Válassz legfeljebb 2 fókuszterületet</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <button onclick="selectQuizGoal('energy', this)" class="p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition">⚡ Energia és vitalitás</button>
-            <button onclick="selectQuizGoal('sleep', this)" class="p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition">🌙 Pihentetőbb alvás</button>
-            <button onclick="selectQuizGoal('focus', this)" class="p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition">🧠 Fókusz és koncentráció</button>
-            <button onclick="selectQuizGoal('beauty', this)" class="p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition">✨ Bőr, haj és szépség</button>
-            <button onclick="selectQuizGoal('digestion', this)" class="p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition">🌿 Emésztés és komfort</button>
-            <button onclick="selectQuizGoal('recovery', this)" class="p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition">💪 Regeneráció</button>
-          </div>
-          <button onclick="goToQuizStep(2)" class="w-full py-4 bg-[#556B4E] text-white text-xs font-semibold rounded-xl hover:bg-[#44563e] transition">Tovább →</button>
-        </div>
-
-        <!-- 2. Kérdés -->
-        <div id="quizStep2" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Mennyire szeretnél természetes megoldásokra támaszkodni?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="selectSingleOption('naturalLevel', 'food', 3)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">🌱 Elsősorban élelmiszerekből</button>
-            <button onclick="selectSingleOption('naturalLevel', 'herbs', 3)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">🍵 Élelmiszerek + gyógynövények/teák</button>
-            <button onclick="selectSingleOption('naturalLevel', 'supplements', 3)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">💊 Élelmiszerek + étrend-kiegészítők</button>
-          </div>
-        </div>
-
-        <!-- 3. Kérdés -->
-        <div id="quizStep3" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Milyen típusú ajánlás érdekel?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="selectSingleOption('recommendationType', 'all', 4)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">🥗 Élelmiszer + 🍵 Tea + 💊 Kiegészítő opciók</button>
-            <button onclick="selectSingleOption('recommendationType', 'foodOnly', 4)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Kizárólag élelmiszer és konyhai megoldások</button>
-          </div>
-        </div>
-
-        <!-- 4. Kérdés -->
-        <div id="quizStep4" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Milyen az étrended?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="selectSingleOption('diet', 'balanced', 5)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Vegyes étrend</button>
-            <button onclick="selectSingleOption('diet', 'plant', 5)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Vegetáriánus / Vegán</button>
-          </div>
-        </div>
-
-        <!-- 5. Kérdés -->
-        <div id="quizStep5" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Van olyan összetevő, amit kerülni szeretnél?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="selectSingleOption('avoid', 'none', 6)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Nincs ilyen</button>
-            <button onclick="selectSingleOption('avoid', 'caffeine', 6)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Koffein / Stimulánsok</button>
-          </div>
-        </div>
-
-        <!-- 6. Kérdés -->
-        <div id="quizStep6" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Mennyire szeretnél egyszerű megoldást?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="selectSingleOption('simplicity', 'simple', 7)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Csak a legfontosabb 2–3 dolgot szeretném</button>
-            <button onclick="selectSingleOption('simplicity', 'detailed', 7)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Jöhet egy részletesebb rutin</button>
-          </div>
-        </div>
-
-        <!-- 7. Kérdés -->
-        <div id="quizStep7" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Szeretnél konkrét termékajánlást is?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="selectSingleOption('wantsProductRecs', true, 8)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Igen, nyitott vagyok rá</button>
-            <button onclick="selectSingleOption('wantsProductRecs', false, 8)" class="w-full p-4 bg-white border border-stone-200 rounded-xl text-left hover:border-stone-400 transition block">Nem, csak élelmiszerből szeretnék ajánlást</button>
-          </div>
-        </div>
-
-        <!-- 8. Kérdés -->
-        <div id="quizStep8" class="space-y-6 hidden">
-          <h3 class="text-2xl font-serif-title text-stone-800 text-center">Milyen gyakran szeretnél ezzel foglalkozni?</h3>
-          <div class="space-y-3 text-xs">
-            <button onclick="finishQuiz()" class="w-full p-4 bg-[#556B4E] text-white rounded-xl text-center hover:bg-[#44563e] transition block font-semibold">
-              Kérem a személyes ajánlásomat →
-            </button>
-          </div>
-        </div>
-
+        <div id="quizQuestionsWrapper"></div>
       </div>
 
-      <!-- KÉRDŐÍV EREDMÉNY MÁTRIX ZÓNA -->
+      <!-- EDITORIAL EREDMÉNYOLDAL ZÓNA -->
       <div id="quizResultZone" class="hidden"></div>
     </section>
 
     <!-- 2. FŐ MODUL: MIT FŐZZEK MA? (KAMRA ENGINE) -->
     <section id="pantryTabSection" class="hidden">
-      <div class="bg-white p-8 md:p-12 rounded-3xl border border-stone-200/80 shadow-sm">
-        <div class="text-center max-w-xl mx-auto mb-8">
-          <span class="text-[10px] font-semibold text-stone-400 uppercase tracking-widest block mb-1">Döntéstámogató Konyha</span>
-          <h3 class="text-2xl md:text-3xl font-serif-title text-stone-800 mb-2">Mit főzzek ma?</h3>
-          <p class="text-xs text-stone-600 font-light leading-relaxed">Válaszd ki, mi van otthon a hűtődben, és megmutatjuk, mit készíthetsz belőle.</p>
+      <div class="editorial-result">
+        <div class="editorial-header">
+          <span class="hero-subtitle">Döntéstámogató Konyha</span>
+          <h2 class="hero-title section-title-sm">Mit főzzek ma?</h2>
+          <p class="hero-description">Válaszd ki, mi van otthon a hűtődben, és megmutatjuk, mit készíthetsz belőle.</p>
         </div>
 
-        <div id="pantryGridContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8"></div>
+        <div id="pantryGridContainer" class="quiz-options-grid mb-8"></div>
 
-        <button onclick="findRecipesFromPantry()" class="w-full py-4 bg-[#556B4E] text-white text-xs font-semibold rounded-xl hover:bg-[#44563e] transition mb-10">
-          Receptek keresése →
-        </button>
+        <div class="text-center mb-8">
+          <button id="findRecipesBtn" class="btn btn-primary">Receptek keresése →</button>
+        </div>
 
-        <div id="pantryRecipeResults" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        <div id="pantryRecipeResults" class="editorial-grid"></div>
       </div>
     </section>
 
-    <!-- 3. FŐ MODUL: NŐI JÓLLÉTI STRUKTÚRA -->
+    <!-- 3. FŐ MODUL: NŐI WELLNESS (EDUKÁCIÓ) -->
     <section id="cycleTabSection" class="hidden">
-      <div class="bg-white p-8 md:p-12 rounded-3xl border border-stone-200/80 shadow-sm text-center">
-        <span class="text-[11px] uppercase tracking-widest text-[#F06292] font-semibold block mb-2">Ciklusszinkronizált életmód</span>
-        <h3 class="text-3xl font-serif-title text-stone-800 mb-4">Női jóllét</h3>
-        <p class="text-stone-600 text-xs font-light max-w-md mx-auto mb-8 leading-relaxed">
-          A ciklusod különböző szakaszaihoz kapcsolódó táplálkozási és életmódbeli rituálék az egyensúly megőrzéséért.
-        </p>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-          <div class="p-6 bg-[#F7F3ED] rounded-2xl border border-stone-200/60">
-            <span class="text-lg block mb-1">🌸</span>
-            <span class="font-semibold text-stone-800 block">Menstruáció</span>
-            <span class="text-[10px] text-stone-500 font-light">Pihenés & Vaspótlás</span>
-          </div>
-          <div class="p-6 bg-[#F7F3ED] rounded-2xl border border-stone-200/60">
-            <span class="text-lg block mb-1">🌱</span>
-            <span class="font-semibold text-stone-800 block">Follikuláris</span>
-            <span class="text-[10px] text-stone-500 font-light">Újraépülés & Energia</span>
-          </div>
-          <div class="p-6 bg-[#F7F3ED] rounded-2xl border border-stone-200/60">
-            <span class="text-lg block mb-1">✨</span>
-            <span class="font-semibold text-stone-800 block">Ovuláció</span>
-            <span class="text-[10px] text-stone-500 font-light">Csúcsforma & Máj-fókusz</span>
-          </div>
-          <div class="p-6 bg-[#F7F3ED] rounded-2xl border border-stone-200/60">
-            <span class="text-lg block mb-1">🌙</span>
-            <span class="font-semibold text-stone-800 block">Luteális</span>
-            <span class="text-[10px] text-stone-500 font-light">Lassítás & Vércukor</span>
-          </div>
-        </div>
-      </div>
+      <div id="cycleContainer"></div>
     </section>
 
   </main>
 
-  <!-- BIZALOMÉPÍTŐ BLOKK -->
-  <section class="py-16 px-6 bg-stone-100/60 border-t border-stone-200/60">
-    <div class="max-w-4xl mx-auto text-center">
-      <h3 class="font-serif-title text-2xl text-stone-800 mb-8">Miért Vita-Natura?</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs text-stone-600 font-light">
-        <div>
-          <h4 class="font-semibold text-stone-800 text-sm mb-2">🌿 Természetes szemlélet</h4>
-          <p class="leading-relaxed">Nem hiszünk a mesterséges, túlbonyolított megoldásokban. A természetes alapanyagokra építünk.</p>
-        </div>
-        <div>
-          <h4 class="font-semibold text-stone-800 text-sm mb-2">🥗 Táplálkozásból indulunk</h4>
-          <p class="leading-relaxed">Az első lépés mindig az, ami a tányérodra kerül. A kiegészítők csak ezután következnek.</p>
-        </div>
-        <div>
-          <h4 class="font-semibold text-stone-800 text-sm mb-2">✨ Személyes fókusz</h4>
-          <p class="leading-relaxed">Nem mindenkinek ugyanarra van szüksége. Segítünk megtalálni a te saját utadat.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="py-12 px-6 text-center text-xs text-stone-400 font-light border-t border-stone-200/60">
-    <p class="mb-2">© 2026 Vita-Natura. Minden jog fenntartva.</p>
-    <p class="max-w-md mx-auto leading-relaxed">
-      A Vita-Natura nem nyújt orvosi diagnózist vagy kezelést. Tartalmaink és ajánlásaink a tudatos életmód és táplálkozás támogatását szolgálják.
-    </p>
-  </footer>
-
-  <!-- MODÁLIS ABLAK -->
-  <div id="detailModal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-xl relative border border-stone-200">
-      <button onclick="closeDetailModal()" class="absolute top-6 right-6 text-stone-400 hover:text-stone-700 text-lg">✕</button>
+  <!-- MODÁLIS ABLAK STRUCTURA -->
+  <div id="detailModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button id="modalCloseBtn" class="modal-close" aria-label="Bezárás">✕</button>
       <div id="modalInnerContent"></div>
     </div>
   </div>
 
-  <!-- JAVASCRIPT MODULOK BETÖLTÉSE -->
-  <script src="js/products.js"></script>
-  <script src="js/recipes.js"></script>
-  <script src="js/quiz.js"></script>
-  <script src="js/recommendations.js"></script>
-  <script src="js/app.js"></script>
+  <!-- ES6 MODULÁRIS SCRIPT IMPORT -->
+  <script type="module" src="js/app.js"></script>
 
 </body>
 </html>
