@@ -11,6 +11,7 @@ function escapeHtml(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
+// JAVÍTVA: Megszüntettük a "A(z) A(z) fókusz támogatása támogatása" duplikációt!
 export function renderHeaderSection(meta, focusAreas) {
   const primary = focusAreas[0];
   const goalTitle = primary ? escapeHtml(primary.title) : 'mindennapi egyensúly';
@@ -20,7 +21,7 @@ export function renderHeaderSection(meta, focusAreas) {
       <span class="hero-subtitle">Személyes útmutató</span>
       <h2 id="resultMainHeading" tabindex="-1" class="hero-title section-title-sm">A te Vita-Natura rutinod</h2>
       <p class="hero-description max-w-narrow mx-auto">
-        A válaszaid alapján most elsősorban a(z) <strong>${goalTitle}</strong> támogatása lehet számodra a legfontosabb.
+        A válaszaid alapján most elsősorban a(z) <strong>${goalTitle}</strong> megőrzése lehet számodra a legfontosabb.
       </p>
     </div>
   `;
