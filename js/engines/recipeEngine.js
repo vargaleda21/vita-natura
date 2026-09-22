@@ -194,7 +194,10 @@ const RecipeEngine = {
       );
     };
 
-    RECIPES.forEach(recipe => {
+    RECIPES.forEach(recipe => {      
+      // Apply the same filters in fallback mode as in normal matching.
+      if (filters.maxTime && filters.maxTime !== "any" && recipe.prepTime > parseInt(filters.maxTime)) return;
+      if (filters.mealType && filters.mealType !== "any" && recipe.mealType !== filters.mealType) return;
       const matchedCore = recipe.requiredCoreIngredients.filter(coreReq => matchSelection(coreReq));
       const matchedMains = recipe.mainIngredients.filter(mainReq => matchSelection(mainReq));
       const totalCoherentMatched = matchedCore.length + matchedMains.length;
