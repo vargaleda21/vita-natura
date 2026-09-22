@@ -24,13 +24,16 @@ const RecipeEngine = {
 
     // Form-Aware Matching Helper
     const matchSelection = (reqItem) => {
-      return validSelections.find(sel => 
-        sel.concept === reqItem.concept && 
-        (!reqItem.acceptedForms || reqItem.acceptedForms.length === 0 || reqItem.acceptedForms.includes(sel.form))
-      );
-    };
+  return validSelections.find(sel => 
+    sel.concept === reqItem.concept && 
+    (!reqItem.acceptedForms || reqItem.acceptedForms.length === 0 || sel.form === "any" || reqItem.acceptedForms.includes(sel.form))
+  );
+};
 
     RECIPES.forEach(recipe => {
+      // FILTER CHECK IN FALLBACK
+if (filters.maxTime && filters.maxTime !== "any" && recipe.prepTime > parseInt(filters.maxTime)) return;
+if (filters.mealType && filters.mealType !== "any" && recipe.mealType !== filters.mealType) return;
       // A) CHECK REQUIRED CORE INGREDIENTS (STRICT GATE)
       let coreFailed = false;
       const actuallyMatchedCoreConcepts = new Set();
@@ -188,11 +191,11 @@ const RecipeEngine = {
     const splitFallbacks = [];
 
     const matchSelection = (reqItem) => {
-      return validSelections.find(sel => 
-        sel.concept === reqItem.concept && 
-        (!reqItem.acceptedForms || reqItem.acceptedForms.length === 0 || reqItem.acceptedForms.includes(sel.form))
-      );
-    };
+  return validSelections.find(sel => 
+    sel.concept === reqItem.concept && 
+    (!reqItem.acceptedForms || reqItem.acceptedForms.length === 0 || sel.form === "any" || reqItem.acceptedForms.includes(sel.form))
+  );
+};
 
     RECIPES.forEach(recipe => {      
       // Apply the same filters in fallback mode as in normal matching.
