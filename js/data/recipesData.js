@@ -685,7 +685,7 @@ const RECIPES = [
     },
     quantities: ["300g darált hús", "160g durum tészta", "200g paradicsompüré / passata", "40g trappista sajt", "1 gerezd fokhagyma"],
     instructions: [
-      "Főzd kifőtt tésztát bő, sós, forró vízben a csomagolási idő szerint (kb. 8-10 perc).",
+      "Főzd ki a tésztát bő, sós, forró vízben a csomagolási idő szerint (kb. 8-10 perc).",
       "Pirítsd meg a darált húst kevés olívaolajon 6-8 percig, amíg megbarnul.",
       "Öntsd rá a paradicsomot/passatát, fűszerezd sóval, borssal, zúzott fokhagymával, és főzd kis lángon 10-12 percig.",
       "Keverd össze a kifőtt tésztát a szaftos raguval.",
@@ -783,7 +783,7 @@ const RECIPES = [
     substitutions: {},
     quantities: ["2 db tonhal steak (kb. 300g)", "1 db cukkini", "1/2 db citrom"],
     instructions: [
-      "Szeleteld fels a cukkinit karikákra. Forró serpenyőben, kevés olívaolajon pirítsd 2-3 percig oldalanként sóval, borssal, hogy roppanós maradjon.",
+      "Szeleteld fel a cukkinit karikákra. Forró serpenyőben, kevés olívaolajon pirítsd 2-3 percig oldalanként sóval, borssal, hogy roppanós maradjon.",
       "Itasd szárazra a tonhal steakeket papírtörlővel, majd sózd és borsozd mindkét oldalát.",
       "Nagyon forró serpenyőben, kevés olívaolajon süsd a tonhal steakeket pontosan 2-2.5 percig oldalanként (ne süsd túl, hogy szaftos maradjon a közepe).",
       "Helyezd a tonhal steaket a pirított cukkinire, és facsarj rá friss citromlevet tálaláskor."
@@ -819,7 +819,7 @@ const RECIPES = [
     },
     quantities: ["160g tonhalkonzerv", "160g durum tészta", "200g paradicsompüré / passata", "1 gerezd fokhagyma"],
     instructions: [
-      "Főzd kifőtt tésztát sós vízben al dente állagúra (kb. 8-9 perc).",
+      "Főzd ki a tésztát sós vízben al dente állagúra (kb. 8-9 perc).",
       "Futtasd meg a zúzott fokhagymát olívaolajon, öntsd rá a paradicsomot/passatát, fűszerezd sóval, és rotyogtasd 5 percig.",
       "Add a szószhoz az alaposan lecsöpögtetett tonhalkonzervet, és óvatosan keverd át, hogy a hal darabos maradjon (1 percig melegítsd).",
       "Forgasd össze a főtt tésztát a tonhalas paradicsomszósszal.",
