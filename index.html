@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vita-Natura – Kevesebb keresgélés. Több jó döntés.</title>
+  <title>Vita-Natura – Intelligens Receptkereső</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <!-- HERO + IMMEDIATE PANTRY BUILDER (B-VERSION ABOVE THE FOLD) -->
+  <!-- MAIN SEARCH SECTION -->
   <main class="container">
     <section class="hero-pantry-section">
       <div class="hero-content">
@@ -30,80 +30,83 @@
       <!-- PANTRY BUILDER -->
       <div class="pantry-builder">
         <div class="pantry-header-row">
-          <label class="pantry-label">1. Válassz az otthoni alapanyagokból:</label>
-          <button id="reset-pantry-btn" class="btn-text">Új keresés / Alaphelyzet</button>
+          <label for="ingredient-input" class="pantry-label">1. Írd be az otthoni alapanyagokat:</label>
         </div>
         
-        <div id="ingredient-chips" class="chip-group"></div>
-        
-        <div class="pantry-custom-input">
-          <input type="text" id="custom-ingredient-input" placeholder="+ Egyéb alapanyag hozzáadása (pl. brokkoli, citrom)">
-          <button id="add-custom-ingredient-btn" class="btn-small">Hozzáadás</button>
+        <div class="pantry-custom-input" style="display: flex; gap: 10px; margin-bottom: 15px;">
+          <input type="text" id="ingredient-input" placeholder="pl. csirkemell, rizs, cukkini..." autocomplete="off" style="flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px;">
+          <button id="search-btn" class="btn btn-primary">Keresés</button>
         </div>
+
+        <div id="unrecognized-warning" class="custom-warning" style="display: none; background: #fff3cd; color: #856404; padding: 10px; border-radius: 6px; margin-bottom: 15px;"></div>
 
         <div class="selected-summary">
           <span class="summary-label">Kiválasztott alapanyagok:</span>
-          <div id="selected-ingredients-list" class="chip-group-selected"></div>
-          <p id="custom-warning-text" class="custom-warning hidden"></p>
+          <div id="ingredient-tags" class="chip-group-selected" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;"></div>
         </div>
 
-        <div class="divider"></div>
+        <div class="divider" style="margin: 20px 0; border-bottom: 1px solid #eee;"></div>
 
         <label class="pantry-label">2. Opcionális szűrők:</label>
-        <div class="filters-grid">
+        <div class="filters-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
           <div class="filter-group">
-            <label for="time-filter">Mennyi időd van?</label>
-            <select id="time-filter">
+            <label for="filter-time">Mennyi időd van?</label>
+            <select id="filter-time" style="width: 100%; padding: 10px; border-radius: 6px;">
               <option value="any">Mindegy</option>
               <option value="15">Max 15 perc</option>
-              <option value="30">Max 30 perc</option>
+              <option value="25">Max 25 perc</option>
+              <option value="35">Max 35 perc</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label for="meal-filter">Melyik étkezés?</label>
-            <select id="meal-filter">
+            <label for="filter-meal">Melyik étkezés?</label>
+            <select id="filter-meal" style="width: 100%; padding: 10px; border-radius: 6px;">
               <option value="any">Mindegy</option>
               <option value="reggeli">Reggeli</option>
               <option value="ebed">Ebéd</option>
               <option value="vacsora">Vacsora</option>
+              <option value="snack">Snack</option>
             </select>
           </div>
         </div>
-
-        <button id="search-recipes-btn" class="btn btn-primary btn-full">MIT TUDOK EBBŐL FŐZNI?</button>
       </div>
 
       <!-- RESULTS SECTION -->
-      <div id="recipe-results-container" class="results-container hidden">
-        <h2 id="results-title" class="results-title">Releváns találatok</h2>
-        <p id="results-subtitle" class="results-subtitle hidden"></p>
-        <div id="recipe-cards-grid" class="cards-grid"></div>
-      </div>
+      <div id="recipe-results-container" class="results-container" style="margin-top: 30px;"></div>
     </section>
   </main>
 
   <!-- MODAL: RECEPT RÉSZLETEK -->
-  <div id="recipe-modal" class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Bezárás">&times;</button>
-      <div id="modal-body"></div>
+  <div id="recipe-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+    <div class="modal-content" style="background: #fff; padding: 25px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; margin: 5% auto;">
+      <span class="modal-close" onclick="UIController.closeModal()" style="position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer;">&times;</span>
+      <div id="modal-content-container"></div>
     </div>
   </div>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" style="margin-top: 50px; padding: 20px 0; text-align: center; border-top: 1px solid #eee;">
     <div class="container text-center">
-      <p>Vita-Natura 2.0 MVP &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
+      <p>Vita-Natura MVP &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
     </div>
   </footer>
 
-  <script src="js/analytics.js"></script>
-  <script src="js/data/recipesData.js"></script>
+  <!-- SCRIPT LOAD ORDER (SZIGORÚ FÜGGŐSÉGI LÁNC) -->
+  <!-- 1. Adatmodellek -->
   <script src="js/data/demoProductsData.js"></script>
+  <script src="js/data/recipesData.js"></script>
+
+  <!-- 2. Recipe Engine -->
   <script src="js/engines/recipeEngine.js"></script>
+
+  <!-- 3. UI Controller -->
   <script src="js/ui/uiController.js"></script>
+
+  <!-- 4. Analytics -->
+  <script src="js/analytics.js"></script>
+
+  <!-- 5. App belépési pont (Legutoljára!) -->
   <script src="js/app.js"></script>
 </body>
 </html>
