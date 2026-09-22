@@ -3,141 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vita-Natura – Személyre szabott természetes jóllét</title>
-  
-  <meta name="description" content="Személyre szabott táplálkozási, életmódbeli és természetes jólléti ajánlások. Találd meg, mi támogat téged most.">
-  <meta property="og:title" content="Vita-Natura – Személyre szabott természetes jóllét">
-  <meta property="og:description" content="Személyre szabott táplálkozási és életmódbeli ajánlások.">
-  <meta property="og:type" content="website">
-
-  <!-- Quiet Luxury Vanilla CSS -->
-  <link rel="stylesheet" href="css/main.css">
-  
-  <!-- Premium Google Fonts -->
+  <title>Vita-Natura – Kevesebb keresgélés. Több jó döntés.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
   <!-- HEADER -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="site-logo">Vita-Natura</a>
-      
-      <nav class="main-nav">
-        <button id="navQuiz" class="nav-link active" data-tab="quiz">Személyes Ajánlás</button>
-        <button id="navPantry" class="nav-link" data-tab="pantry">Mit főzzek ma?</button>
-        <button id="navCycle" class="nav-link" data-tab="cycle">Női Jóllét</button>
-      </nav>
-
-      <button class="btn btn-secondary" data-action="start-quiz">A te rutinod</button>
+  <header class="header">
+    <div class="container header-container">
+      <a href="#" class="brand">Vita-Natura</a>
+      <span class="header-tagline">Döntéstámogató Konyha</span>
     </div>
   </header>
 
-  <!-- HERO SZEKCIÓ -->
-  <section class="hero-section container">
-    <span class="hero-subtitle">Quiet Luxury Wellness</span>
-    <h1 class="hero-title">Találd meg, mi támogat téged most.</h1>
-    <p class="hero-description max-w-narrow">
-      Személyre szabott táplálkozási, életmódbeli és természetes jólléti ajánlások – egyszerűen, érthetően.
-    </p>
-
-    <div class="hero-actions">
-      <button class="btn btn-primary" data-action="start-quiz">Megnézem, mire van most szükségem →</button>
-      <button class="btn btn-secondary" data-tab="pantry">Mit főzzek abból, ami otthon van? →</button>
-    </div>
-  </section>
-
-  <!-- 3 BELÉPÉSI PONT GRID -->
-  <div class="container">
-    <div class="entry-grid">
-      <button class="entry-card" data-action="start-quiz">
-        <span>
-          <span class="entry-card-tag">Fő Belépési Pont</span>
-          <span class="entry-card-title">Személyes Ajánlás</span>
-          <span class="entry-card-desc">Célalapú digitális konzultáció a saját életmódodra szabva.</span>
-        </span>
-        <span class="btn btn-secondary">Indítás →</span>
-      </button>
-
-      <button class="entry-card" data-tab="cycle">
-        <span>
-          <span class="entry-card-tag">Edukáció</span>
-          <span class="entry-card-title">Női Jóllét</span>
-          <span class="entry-card-desc">A ciklus szakaszaihoz kapcsolódó életmódbeli szempontok.</span>
-        </span>
-        <span class="btn btn-secondary">Megnézem →</span>
-      </button>
-
-      <button class="entry-card" data-tab="pantry">
-        <span>
-          <span class="entry-card-tag">Konyhai Támogatás</span>
-          <span class="entry-card-title">Mit főzzek ma?</span>
-          <span class="entry-card-desc">Receptötletek abból, ami a hűtődben van.</span>
-        </span>
-        <span class="btn btn-secondary">Keresés →</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- FŐ TARTALMI ZÓNÁK -->
+  <!-- HERO + IMMEDIATE PANTRY BUILDER (B-VERSION ABOVE THE FOLD) -->
   <main class="container">
-
-    <!-- 1. FŐ MODUL: JÓLLÉTI KÉRDŐÍV -->
-    <section id="quizTabSection">
-      <div id="quizCard" class="quiz-container max-w-narrow">
-        <div class="quiz-header">
-          <span>Személyes konzultáció</span>
-          <span id="quizProgressText">01 / 08</span>
-        </div>
-        <div class="quiz-progress-bar">
-          <div id="quizProgressBar" class="quiz-progress-fill"></div>
-        </div>
-
-        <div id="quizQuestionsWrapper"></div>
+    <section class="hero-pantry-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Kevesebb keresgélés.<br>Több jó döntés.</h1>
+        <p class="hero-subtitle">Te mondd meg, mid van otthon. Mi megmutatjuk, mit főzhetsz belőle.</p>
       </div>
 
-      <!-- EDITORIAL EREDMÉNYOLDAL ZÓNA -->
-      <div id="quizResultZone" class="hidden"></div>
-    </section>
-
-    <!-- 2. FŐ MODUL: MIT FŐZZEK MA? (KAMRA ENGINE) -->
-    <section id="pantryTabSection" class="hidden">
-      <div class="editorial-result">
-        <div class="editorial-header">
-          <span class="hero-subtitle">Döntéstámogató Konyha</span>
-          <h2 class="hero-title section-title-sm">Mit főzzek ma?</h2>
-          <p class="hero-description">Válaszd ki, mi van otthon a hűtődben, és megmutatjuk, mit készíthetsz belőle.</p>
+      <!-- PANTRY BUILDER -->
+      <div class="pantry-builder">
+        <div class="pantry-header-row">
+          <label class="pantry-label">1. Válassz az otthoni alapanyagokból:</label>
+          <button id="reset-pantry-btn" class="btn-text">Új keresés / Alaphelyzet</button>
+        </div>
+        
+        <div id="ingredient-chips" class="chip-group"></div>
+        
+        <div class="pantry-custom-input">
+          <input type="text" id="custom-ingredient-input" placeholder="+ Egyéb alapanyag hozzáadása (pl. brokkoli, citrom)">
+          <button id="add-custom-ingredient-btn" class="btn-small">Hozzáadás</button>
         </div>
 
-        <div id="pantryGridContainer" class="quiz-options-grid mb-8"></div>
-
-        <div class="text-center mb-8">
-          <button id="findRecipesBtn" class="btn btn-primary">Receptek keresése →</button>
+        <div class="selected-summary">
+          <span class="summary-label">Kiválasztott alapanyagok:</span>
+          <div id="selected-ingredients-list" class="chip-group-selected"></div>
+          <p id="custom-warning-text" class="custom-warning hidden"></p>
         </div>
 
-        <div id="pantryRecipeResults" class="editorial-grid"></div>
+        <div class="divider"></div>
+
+        <label class="pantry-label">2. Opcionális szűrők:</label>
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="time-filter">Mennyi időd van?</label>
+            <select id="time-filter">
+              <option value="any">Mindegy</option>
+              <option value="15">Max 15 perc</option>
+              <option value="30">Max 30 perc</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="meal-filter">Melyik étkezés?</label>
+            <select id="meal-filter">
+              <option value="any">Mindegy</option>
+              <option value="reggeli">Reggeli</option>
+              <option value="ebed">Ebéd</option>
+              <option value="vacsora">Vacsora</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="search-recipes-btn" class="btn btn-primary btn-full">MIT TUDOK EBBŐL FŐZNI?</button>
+      </div>
+
+      <!-- RESULTS SECTION -->
+      <div id="recipe-results-container" class="results-container hidden">
+        <h2 id="results-title" class="results-title">Releváns találatok</h2>
+        <p id="results-subtitle" class="results-subtitle hidden"></p>
+        <div id="recipe-cards-grid" class="cards-grid"></div>
       </div>
     </section>
-
-    <!-- 3. FŐ MODUL: NŐI WELLNESS (EDUKÁCIÓ) -->
-    <section id="cycleTabSection" class="hidden">
-      <div id="cycleContainer"></div>
-    </section>
-
   </main>
 
-  <!-- MODÁLIS ABLAK STRUCTURA -->
-  <div id="detailModal" class="modal-backdrop hidden" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button id="modalCloseBtn" class="modal-close" aria-label="Bezárás">✕</button>
-      <div id="modalInnerContent"></div>
+  <!-- MODAL: RECEPT RÉSZLETEK -->
+  <div id="recipe-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Bezárás">&times;</button>
+      <div id="modal-body"></div>
     </div>
   </div>
 
-  <!-- ES6 MODULÁRIS SCRIPT IMPORT -->
-  <script type="module" src="js/app.js"></script>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p>Vita-Natura 2.0 MVP &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
+    </div>
+  </footer>
 
+  <script src="js/analytics.js"></script>
+  <script src="js/data/recipesData.js"></script>
+  <script src="js/data/demoProductsData.js"></script>
+  <script src="js/engines/recipeEngine.js"></script>
+  <script src="js/ui/uiController.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
