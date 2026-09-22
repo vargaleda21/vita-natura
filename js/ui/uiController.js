@@ -78,9 +78,14 @@ const UIController = {
     const warningBox = document.getElementById("unrecognized-warning");
 
     if (concept) {
-      if (warningBox) warningBox.style.display = "none";
-      this.addIngredientTag(rawValue, concept);
-    } else {
+  if (warningBox) warningBox.style.display = "none";
+
+  if (concept === "TONHAL") {
+    this.promptDisambiguation(rawValue, concept);
+  } else {
+    this.addIngredientTag(rawValue, concept, "any");
+  }
+} else {
       // Unrecognized Custom Ingredient
       if (warningBox) {
         warningBox.innerText = `💡 A(z) "${rawValue}" alapanyagot még nem ismerjük a szótárunkban, de a többi ismert alapanyagoddal keressük a recepteket!`;
