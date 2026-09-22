@@ -97,12 +97,12 @@ const UIController = {
     inputField.value = "";
   },
 
-  addIngredientTag(displayName, concept, form = null) {
-    if (this.selectedIngredients.some(i => i.concept === concept)) return;
+  addIngredientTag(displayName, concept, form = "any") {
+  if (this.selectedIngredients.some(i => i.concept === concept)) return;
 
-    this.selectedIngredients.push({ displayName, concept, form });
-    this.renderIngredientTags();
-  },
+  this.selectedIngredients.push({ displayName, concept, form });
+  this.renderIngredientTags();
+},
 
   removeIngredientTag(concept) {
     this.selectedIngredients = this.selectedIngredients.filter(i => i.concept !== concept);
