@@ -255,7 +255,7 @@ const UIController = {
     this.executeSearch();
   },
 
-  promptDisambiguation(displayName, concept) {
+  promptDisambiguation(displayName, concept) {promptDisambiguation(displayName, concept) {
     const modal = document.getElementById("recipe-modal");
     const modalContent = document.getElementById("modal-content-container");
 
@@ -264,6 +264,28 @@ const UIController = {
       this.executeSearch();
       return;
     }
+
+    modalContent.innerHTML = `
+      <h3 class="serif-heading" style="font-size: 1.8rem; margin-bottom: 10px; color: var(--color-charcoal-warm);">${displayName} választó</h3>
+      <p style="margin-bottom: 20px; color: var(--color-charcoal-warm); opacity: 0.85;">Válassz a pontosabb recepttalálatokhoz:</p>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="btn-couture" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'canned_tuna')">
+          🥫 Konzerv tonhal
+        </button>
+
+        <button class="btn-couture" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'tuna_steak')">
+          🥩 Tonhal steak / filé
+        </button>
+
+        <button class="btn-couture" style="background: var(--color-ivory-satin); color: var(--color-charcoal-warm); border: 1px solid var(--color-input-border);" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'any')">
+          ❓ Nem tudom / mindegy
+        </button>
+      </div>
+    `;
+
+    modal.style.display = "flex";
+  }
 
     modalContent.innerHTML = `
       <h3 class="serif-heading" style="font-size: 1.8rem; margin-bottom: 10px;">Milyen ${displayName} van otthon?</h3>
