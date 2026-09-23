@@ -1,15 +1,22 @@
 /* ==========================================================================
-   VITA-NATURA — QUIET LUXURY / EDITORIAL WELLNESS DESIGN SYSTEM (v2.2)
+   VITA-NATURA — SOFT EDITORIAL & ROSE PALETTE (v3.0)
    ========================================================================== */
 
 :root {
-  /* Color Tokens - Classic Mode */
-  --color-forest: #17352D;
-  --color-ink: #202522;
-  --color-burgundy: #742F3D;
-  --color-champagne: #C49A6C;
-  --color-ivory: #F8F5EF;
-  --color-stone: #D9CDBD;
+  /* Color Tokens - Új vidám, púderes paletta */
+  --color-diamond-dust: #FCF5F3;  /* Fő háttérszeny */
+  --color-rose-silk: #F6DED9;     /* Kártyák, dobozok lágy háttere */
+  --color-satin-sand: #C7AEAE;    /* Keretek, elválasztók */
+  --color-mauve-orchid: #A8638F;  /* Fő hangsúlyszín / Gombok */
+  --color-antique-bronze: #6C5C53;/* Szövegek, mély tónusok */
+  
+  /* Aliasok a meglévő kódhoz */
+  --color-forest: #6C5C53;
+  --color-ink: #4A3E38;
+  --color-burgundy: #A8638F;
+  --color-champagne: #C7AEAE;
+  --color-ivory: #FCF5F3;
+  --color-stone: #E8D8D5;
   --color-white: #FFFFFF;
 
   /* Typography Tokens */
@@ -17,18 +24,17 @@
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Layout & Radius */
-  --radius-sm: 2px;
-  --radius-md: 6px;
-  --transition-base: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --transition-base: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* NŐI CIKLUS TÉMA OVERRIDE */
+/* NŐI CIKLUS TÉMA OVERRIDE (Warm Mauve/Rose Accent) */
 body.cycle-mode {
-  --color-forest: #4A282D;
-  --color-ivory: #FAF4F0;
-  --color-stone: #E8D5CE;
-  --color-burgundy: #A3485E;
-  --color-champagne: #D4A373;
+  --color-ivory: #F8EFEF;
+  --color-burgundy: #944D7C;
+  --color-forest: #5C4C44;
   background-color: var(--color-ivory);
 }
 
@@ -40,8 +46,8 @@ body.cycle-mode {
 }
 
 body {
-  background-color: var(--color-ivory);
-  color: var(--color-ink);
+  background-color: var(--color-diamond-dust);
+  color: var(--color-antique-bronze);
   font-family: var(--font-sans);
   font-size: 17px;
   line-height: 1.65;
@@ -59,8 +65,9 @@ body {
 h1, h2, h3, .serif-heading {
   font-family: var(--font-serif);
   font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-antique-bronze);
 }
 
 .eyebrow {
@@ -70,14 +77,15 @@ h1, h2, h3, .serif-heading {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--color-burgundy);
+  color: var(--color-mauve-orchid);
   margin-bottom: 12px;
 }
 
 /* Header & Tabs */
 .header {
-  background: var(--color-ivory);
-  border-bottom: 1px solid var(--color-stone);
+  background: rgba(252, 245, 243, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-rose-silk);
   padding: 20px 0;
   position: sticky;
   top: 0;
@@ -95,9 +103,9 @@ h1, h2, h3, .serif-heading {
 
 .brand {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 600;
-  color: var(--color-forest);
+  color: var(--color-antique-bronze);
   text-decoration: none;
   letter-spacing: -0.03em;
 }
@@ -105,40 +113,40 @@ h1, h2, h3, .serif-heading {
 .mode-tabs {
   display: flex;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.04);
-  padding: 4px;
-  border-radius: 4px;
-  border: 1px solid var(--color-stone);
+  background: var(--color-rose-silk);
+  padding: 5px;
+  border-radius: var(--radius-lg);
 }
 
 .tab-btn {
   background: none;
   border: none;
-  padding: 8px 18px;
+  padding: 8px 20px;
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-ink);
+  color: var(--color-antique-bronze);
   cursor: pointer;
-  border-radius: var(--radius-sm);
+  border-radius: 16px;
   transition: var(--transition-base);
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .tab-btn.active {
-  background: var(--color-forest);
-  color: var(--color-ivory);
+  background: var(--color-mauve-orchid);
+  color: var(--color-white);
   opacity: 1;
+  box-shadow: 0 4px 12px rgba(168, 99, 143, 0.25);
 }
 
 /* Hero Section */
 .hero-pantry-section {
-  background-color: var(--color-forest);
-  color: var(--color-ivory);
+  background-color: #584A43; /* Mélyebb meleg barna kontraszt */
+  color: var(--color-diamond-dust);
   padding: 60px 0;
-  margin-bottom: 60px;
-  border-bottom: 1px solid var(--color-champagne);
-  transition: background-color 0.4s ease;
+  margin-bottom: 50px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(108, 92, 83, 0.08);
 }
 
 .hero-content {
@@ -147,31 +155,32 @@ h1, h2, h3, .serif-heading {
 }
 
 .hero-title {
-  font-size: 3.8rem;
-  color: var(--color-ivory);
+  font-size: 3.6rem;
+  color: var(--color-diamond-dust);
   margin-bottom: 16px;
 }
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: var(--color-stone);
+  color: var(--color-rose-silk);
   font-weight: 300;
   max-width: 580px;
 }
 
 /* Pantry Builder Surface */
 .pantry-builder {
-  background: var(--color-ivory);
-  color: var(--color-ink);
+  background: var(--color-white);
+  color: var(--color-antique-bronze);
   padding: 40px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-stone);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-rose-silk);
+  box-shadow: 0 12px 32px rgba(168, 99, 143, 0.06);
 }
 
 .pantry-label {
   font-family: var(--font-serif);
   font-size: 1.35rem;
-  color: var(--color-forest);
+  color: var(--color-antique-bronze);
   display: block;
   margin-bottom: 16px;
 }
@@ -179,132 +188,158 @@ h1, h2, h3, .serif-heading {
 .pantry-custom-input input[type="text"],
 .cycle-calculator-box input {
   width: 100%;
-  padding: 14px 18px;
-  background: var(--color-white);
-  border: 1px solid var(--color-stone);
-  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  background: var(--color-diamond-dust);
+  border: 1px solid var(--color-rose-silk);
+  border-radius: var(--radius-md);
   font-family: var(--font-sans);
   font-size: 1rem;
-  color: var(--color-ink);
+  color: var(--color-antique-bronze);
+  transition: var(--transition-base);
 }
 
 .pantry-custom-input input[type="text"]:focus {
   outline: none;
-  border-color: var(--color-burgundy);
-}
-
-/* Cycle Calculator Box */
-.cycle-calculator-box {
+  border-color: var(--color-mauve-orchid);
   background: var(--color-white);
-  border: 1px solid var(--color-champagne);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  margin-bottom: 24px;
 }
 
-.cycle-result-card {
-  margin-top: 16px;
-  padding: 16px;
-  background: #F5EAE6;
-  border-left: 3px solid var(--color-burgundy);
-  border-radius: 2px;
-}
+/* ==========================================================================
+   ELEGÁNS ÉS EGYEDI STÍLUS A GÖRDÜLŐMENÜKHÖZ (SELECT BOXES)
+   ========================================================================== */
 
-/* Button System & Quick Collection Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 24px;
+.filter-group label {
+  display: block;
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-radius: var(--radius-sm);
+  letter-spacing: 0.06em;
+  color: var(--color-antique-bronze);
+  margin-bottom: 8px;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 12px 18px;
+  background-color: var(--color-diamond-dust);
+  border: 1px solid var(--color-rose-silk);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-antique-bronze);
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition-base);
+  
+  /* Egyedi nyíl ikon az elavult böngészős nyíl helyett */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23A8638F' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 40px;
+}
+
+.filter-group select:hover {
+  background-color: var(--color-rose-silk);
+  border-color: var(--color-satin-sand);
+}
+
+.filter-group select:focus {
+  border-color: var(--color-mauve-orchid);
+  box-shadow: 0 0 0 3px rgba(168, 99, 143, 0.15);
+}
+
+/* Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 26px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: var(--transition-base);
   border: none;
 }
 
 .btn-primary {
-  background-color: var(--color-burgundy);
-  color: var(--color-ivory);
+  background-color: var(--color-mauve-orchid);
+  color: var(--color-white);
+  box-shadow: 0 4px 14px rgba(168, 99, 143, 0.2);
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 99, 143, 0.3);
 }
 
 .collection-btn {
-  background: var(--color-white);
-  border: 1px solid var(--color-stone);
-  color: var(--color-ink);
+  background: var(--color-diamond-dust);
+  border: 1px solid var(--color-rose-silk);
+  color: var(--color-antique-bronze);
   text-transform: none;
   font-weight: 500;
+  border-radius: var(--radius-md);
 }
 
 .collection-btn:hover {
-  border-color: var(--color-burgundy);
-  background: #FAF5F2;
+  border-color: var(--color-mauve-orchid);
+  background: var(--color-rose-silk);
 }
 
-/* AKTÍV KOLLEKCIÓ GOMB SZÍN (KATTINTÁS UTÁN) */
 .collection-btn.active-collection {
-  background-color: var(--color-burgundy) !important;
-  color: var(--color-ivory) !important;
-  border-color: var(--color-burgundy) !important;
+  background-color: var(--color-mauve-orchid) !important;
+  color: var(--color-white) !important;
+  border-color: var(--color-mauve-orchid) !important;
 }
 
-/* Chips & Tags */
-.chip-group-selected {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
+/* Tag Chips */
 .tag-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--color-forest);
-  color: var(--color-ivory);
-  padding: 6px 14px;
-  border-radius: var(--radius-sm);
+  background: var(--color-mauve-orchid);
+  color: var(--color-white);
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
   font-size: 0.9rem;
 }
 
 .tag-item button {
   background: none;
   border: none;
-  color: var(--color-champagne);
+  color: var(--color-rose-silk);
   cursor: pointer;
   font-size: 1.1rem;
 }
 
 .divider {
   height: 1px;
-  background: var(--color-stone);
+  background: var(--color-rose-silk);
   margin: 28px 0;
 }
 
 /* Recipe Cards */
-.results-container {
-  margin-top: 48px;
-}
-
 .recipe-card {
   background: var(--color-white);
-  border: 1px solid var(--color-stone);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-rose-silk);
+  border-radius: var(--radius-lg);
   padding: 32px;
   margin-bottom: 24px;
   transition: var(--transition-base);
+  box-shadow: 0 6px 20px rgba(108, 92, 83, 0.03);
 }
 
 .recipe-card:hover {
-  border-color: var(--color-champagne);
+  border-color: var(--color-satin-sand);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(108, 92, 83, 0.08);
 }
 
 .badge-status {
@@ -313,20 +348,20 @@ h1, h2, h3, .serif-heading {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  border-radius: 12px;
 }
 
-.badge-100 { background: #E2ECE9; color: var(--color-forest); }
-.badge-sub { background: #EDE8F0; color: var(--color-burgundy); }
+.badge-100 { background: var(--color-rose-silk); color: var(--color-antique-bronze); }
+.badge-sub { background: #EFE2EC; color: var(--color-mauve-orchid); }
 .badge-missing { background: #FAF0E6; color: #8A5A2B; }
 
 /* Modal */
 .modal {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(108, 92, 83, 0.4);
+  backdrop-filter: blur(6px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -334,15 +369,15 @@ h1, h2, h3, .serif-heading {
 }
 
 .modal-content {
-  background: var(--color-ivory);
+  background: var(--color-white);
   padding: 40px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   max-width: 640px;
   width: 90%;
   max-height: 85vh;
   overflow-y: auto;
-  border: 1px solid var(--color-champagne);
-  position: relative;
+  border: 1px solid var(--color-rose-silk);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .modal-close {
@@ -350,19 +385,17 @@ h1, h2, h3, .serif-heading {
   top: 20px; right: 24px;
   font-size: 2rem;
   cursor: pointer;
-  color: var(--color-forest);
+  color: var(--color-antique-bronze);
 }
 
 /* Footer */
 .footer {
-  background-color: var(--color-forest);
-  color: var(--color-stone);
+  background-color: var(--color-antique-bronze);
+  color: var(--color-rose-silk);
   padding: 60px 0;
   margin-top: 80px;
-  border-top: 1px solid var(--color-champagne);
   text-align: center;
   font-size: 0.9rem;
-  transition: background-color 0.4s ease;
 }
 
 @media (max-width: 768px) {
