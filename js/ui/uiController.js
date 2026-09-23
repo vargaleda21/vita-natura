@@ -1,5 +1,5 @@
 /**
- * Vita-Natura UI Controller v1.3 (Editorial & Feature Extensions)
+ * Vita-Natura UI Controller v1.4 (Sensory Mood Filters & Intolerance Adaptor)
  */
 
 const UIController = {
@@ -51,6 +51,7 @@ const UIController = {
   bindEvents() {
     const searchBtn = document.getElementById("search-btn");
     const inputField = document.getElementById("ingredient-input");
+    const moodFilter = document.getElementById("filter-mood");
 
     if (searchBtn) {
       searchBtn.addEventListener("click", () => this.handleSearch());
@@ -63,6 +64,10 @@ const UIController = {
           this.handleSearch();
         }
       });
+    }
+
+    if (moodFilter) {
+      moodFilter.addEventListener("change", () => this.executeSearch());
     }
   },
 
@@ -105,22 +110,25 @@ const UIController = {
 
     const maxTime = document.getElementById("filter-time") ? document.getElementById("filter-time").value : "any";
     const mealType = document.getElementById("filter-meal") ? document.getElementById("filter-meal").value : "any";
+    const moodType = document.getElementById("filter-mood") ? document.getElementById("filter-mood").value : "any";
 
-    const results = RecipeEngine.findMatchingRecipes(this.selectedIngredients, { maxTime, mealType });
+    const results = RecipeEngine.findMatchingRecipes(this.selectedIngredients, { maxTime, mealType, moodType });
     this.renderResults(results);
   },
 
-  /* --- FEATURE 1: GYORS-KOLLEKCIÓK --- */
   selectQuickCollection(type) {
     const timeFilter = document.getElementById("filter-time");
     const mealFilter = document.getElementById("filter-meal");
+    const moodFilter = document.getElementById("filter-mood");
 
     if (type === 'quick_20') {
       if (timeFilter) timeFilter.value = "25";
       if (mealFilter) mealFilter.value = "vacsora";
+      if (moodFilter) moodFilter.value = "any";
     } else if (type === 'breakfast') {
       if (timeFilter) timeFilter.value = "any";
       if (mealFilter) mealFilter.value = "reggeli";
+      if (moodFilter) moodFilter.value = "any";
     } else if (type === 'gut_health') {
       this.addIngredientTag("cukkini", "CUKKINI", "any");
     }
@@ -128,7 +136,6 @@ const UIController = {
     this.executeSearch();
   },
 
-  /* --- FEATURE 2: EDITORIAL MICRO-FEATURE --- */
   addIngredientFromEditorial(displayName, concept) {
     this.addIngredientTag(displayName, concept, "any");
     this.executeSearch();
@@ -248,9 +255,12 @@ const UIController = {
         badgeClass = "badge-100";
       }
 
-      /* --- FEATURE 3: PANTRY RESCUE COUNTER (Kamramentő Hatás) --- */
+      /* PANTRY RESCUE COUNTER */
       let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
       let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
+
+      /* INTOLERANCE ADAPTOR TIP */
+      let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Szelídített lehetőség: Tejtermékek esetén növényi alternatívákkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
 
       card.innerHTML = `
         <div class="recipe-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
@@ -263,6 +273,7 @@ const UIController = {
           <span>🍽️ ${recipe.servings} adag</span>
         </div>
         ${rescueHtml}
+        ${intoleranceTip}
         ${subHtml}
         <button class="btn btn-primary" onclick="UIController.openRecipeModal('${recipe.id}')" style="margin-top: 16px;">Recept megtekintése</button>
       `;
