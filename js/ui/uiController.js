@@ -1,6 +1,5 @@
 /**
- * Vita-Natura UI Controller v1.1 (FINAL LOCKED & VERIFIED)
- * Ingredient Master Dictionary v1.1 (36 Concepts) & Event Management
+ * Vita-Natura UI Controller v1.2 (Editorial Luxury Alignment)
  */
 
 const UIController = {
@@ -122,25 +121,25 @@ const UIController = {
     }
 
     modalContent.innerHTML = `
-      <h3>Milyen ${displayName} van otthon?</h3>
-      <p>Válassz a pontosabb recepttalálatokhoz:</p>
+      <h3 class="serif-heading" style="font-size: 1.8rem; margin-bottom: 10px;">Milyen ${displayName} van otthon?</h3>
+      <p style="margin-bottom: 20px;">Válassz a pontosabb recepttalálatokhoz:</p>
 
-      <div class="disambiguation-options" style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-        <button class="btn-primary" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'canned_tuna')">
+      <div class="disambiguation-options" style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="btn btn-primary" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'canned_tuna')">
           🥫 Konzerv tonhal
         </button>
 
-        <button class="btn-primary" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'tuna_steak')">
+        <button class="btn btn-primary" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'tuna_steak')">
           🥩 Tonhal steak / filé
         </button>
 
-        <button class="btn-secondary" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'any')">
+        <button class="btn" style="background: var(--color-stone); color: var(--color-ink);" onclick="UIController.confirmDisambiguation('${displayName}', '${concept}', 'any')">
           ❓ Nem tudom / Mindegy
         </button>
       </div>
     `;
 
-    modal.style.display = "block";
+    modal.style.display = "flex";
   },
 
   confirmDisambiguation(displayName, concept, chosenForm) {
@@ -148,13 +147,8 @@ const UIController = {
 
     let updatedDisplayName = displayName;
 
-    if (chosenForm === "canned_tuna") {
-      updatedDisplayName = "konzerv tonhal";
-    }
-
-    if (chosenForm === "tuna_steak") {
-      updatedDisplayName = "tonhal steak/filé";
-    }
+    if (chosenForm === "canned_tuna") updatedDisplayName = "konzerv tonhal";
+    if (chosenForm === "tuna_steak") updatedDisplayName = "tonhal steak/filé";
 
     this.addIngredientTag(updatedDisplayName, concept, chosenForm);
     this.executeSearch();
@@ -193,7 +187,7 @@ const UIController = {
     container.innerHTML = "";
 
     if (!results.matches || results.matches.length === 0) {
-      container.innerHTML = `<div class="no-results"><p>Sajnos nem találtunk közös receptet ezekhez az alapanyagokhoz.</p></div>`;
+      container.innerHTML = `<div class="no-results" style="padding: 40px; text-align: center;"><p class="serif-heading" style="font-size: 1.4rem;">Sajnos nem találtunk közös receptet ezekhez az alapanyagokhoz.</p></div>`;
       this.trackAnalytics("recipe_results_viewed", { result_count: 0, top_status: "NO_COMMON_RECIPE" });
       return;
     }
@@ -209,17 +203,10 @@ const UIController = {
       if (substitutionsApplied && substitutionsApplied.length > 0) {
         subHtml = substitutionsApplied.map(sub => {
           let prefix = "↪ Helyettesítheted ezzel:";
-          let cssClass = "status-substitute-direct";
+          if (sub.type === "Alternative") prefix = "↪ Más karakterű lesz, de működik:";
+          if (sub.type === "Enhancement") prefix = "💡 Tálalási ötlet:";
 
-          if (sub.type === "Alternative") {
-            prefix = "↪ Más karakterű lesz, de működik:";
-            cssClass = "status-substitute-alt";
-          } else if (sub.type === "Enhancement") {
-            prefix = "💡 Tálalási ötlet:";
-            cssClass = "status-enhancement";
-          }
-
-          return `<div class="${cssClass}"><strong>${prefix}</strong> ${sub.note}</div>`;
+          return `<div style="margin: 12px 0; font-size: 0.9rem; color: var(--color-ink);"><strong>${prefix}</strong> ${sub.note}</div>`;
         }).join("");
       }
 
@@ -234,21 +221,21 @@ const UIController = {
         badgeClass = "badge-missing";
       } else if (statusType === "STRONG_FALLBACK" || statusType === "SPLIT_FALLBACK") {
         badgeLabel = "💡 Ajánlott recept";
-        badgeClass = "badge-fallback";
+        badgeClass = "badge-100";
       }
 
       card.innerHTML = `
-        <div class="recipe-card-header">
+        <div class="recipe-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
           <h3>${recipe.title}</h3>
           <span class="badge-status ${badgeClass}">${badgeLabel}</span>
         </div>
-        <p class="recipe-desc">${recipe.description}</p>
-        <div class="recipe-meta">
+        <p class="recipe-desc" style="color: var(--color-ink); opacity: 0.8; margin-bottom: 16px;">${recipe.description}</p>
+        <div class="recipe-meta" style="display: flex; gap: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; color: var(--color-burgundy);">
           <span>⏱️ ${recipe.prepTime} perc</span>
           <span>🍽️ ${recipe.servings} adag</span>
         </div>
         ${subHtml}
-        <button class="btn-open-recipe" onclick="UIController.openRecipeModal('${recipe.id}')">Recept megtekintése</button>
+        <button class="btn btn-primary" onclick="UIController.openRecipeModal('${recipe.id}')" style="margin-top: 12px;">Recept megtekintése</button>
       `;
 
       container.appendChild(card);
@@ -271,32 +258,32 @@ const UIController = {
     if (affiliateProduct) {
       this.trackAnalytics("affiliate_offer_viewed", { product_id: affiliateProduct.id, category: affiliateProduct.category });
       affiliateHtml = `
-        <div class="affiliate-box" style="background: #fdf8f0; border: 1px solid #e0c8a0; padding: 15px; border-radius: 8px; margin-top: 20px;">
-          <h4 style="margin-top:0;">🛒 Hiányzik a(z) ${affiliateProduct.name}?</h4>
-          <p>Rendeld meg közvetlenül a kamrádba szállítási kedvezménnyel:</p>
-          <a href="${affiliateProduct.affiliate_url || '#'}" target="_blank" class="btn-primary" style="display: inline-block; text-decoration: none; padding: 8px 16px; margin-top: 5px;">Ajánlat megtekintése &rarr;</a>
+        <div class="affiliate-box" style="background: #FAF0E6; border: 1px solid var(--color-champagne); padding: 20px; border-radius: var(--radius-sm); margin-top: 24px;">
+          <h4 class="serif-heading" style="font-size: 1.2rem; margin-bottom: 6px;">🛒 Hiányzik a(z) ${affiliateProduct.name}?</h4>
+          <p style="font-size: 0.9rem; margin-bottom: 12px;">Rendeld meg közvetlenül a kamrádba szállítási kedvezménnyel:</p>
+          <a href="${affiliateProduct.affiliate_url || '#'}" target="_blank" class="btn btn-primary" style="text-decoration: none;">Ajánlat megtekintése &rarr;</a>
         </div>
       `;
     }
 
     modalContent.innerHTML = `
-      <h2>${recipe.title}</h2>
-      <p class="modal-desc">${recipe.description}</p>
+      <h2 class="serif-heading" style="font-size: 2.2rem; margin-bottom: 12px;">${recipe.title}</h2>
+      <p class="modal-desc" style="margin-bottom: 24px; color: var(--color-ink);">${recipe.description}</p>
       
-      <h3>Hozzávalók:</h3>
-      <ul>
-        ${recipe.quantities ? recipe.quantities.map(q => `<li>${q}</li>`).join("") : ""}
+      <h3 class="serif-heading" style="font-size: 1.4rem; margin-bottom: 12px;">Hozzávalók:</h3>
+      <ul style="margin-bottom: 24px; padding-left: 20px;">
+        ${recipe.quantities ? recipe.quantities.map(q => `<li style="margin-bottom: 6px;">${q}</li>`).join("") : ""}
       </ul>
 
-      <h3>Elkészítés:</h3>
-      <ol>
-        ${recipe.instructions.map(step => `<li>${step}</li>`).join("")}
+      <h3 class="serif-heading" style="font-size: 1.4rem; margin-bottom: 12px;">Elkészítés:</h3>
+      <ol style="padding-left: 20px;">
+        ${recipe.instructions.map(step => `<li style="margin-bottom: 10px;">${step}</li>`).join("")}
       </ol>
 
       ${affiliateHtml}
     `;
 
-    modal.style.display = "block";
+    modal.style.display = "flex";
   },
 
   closeModal() {
