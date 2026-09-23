@@ -1,5 +1,5 @@
 /**
- * Vita-Natura UI Controller v1.6 (Refined Copy & Active Button States)
+ * Vita-Natura UI Controller v1.7 (Quiet Meal Prep & Editorial Quotes)
  */
 
 const UIController = {
@@ -42,8 +42,25 @@ const UIController = {
     "mogyoróvaj": "MOGYORÓVAJ"
   },
 
+  /* SZAKÉRTŐI MIKRO-JEGYZETEK MAF-BÓL & TÁPLÁLKOZÁSTUDOMÁNYBÓL */
+  editorialQuotes: [
+    {
+      title: "💡 HORMONBARÁT FŰSZEREZÉS",
+      text: "A gyömbér és a kurkuma szinergiában működnek: nemcsak gyulladáscsökkentők, de segítik a máj ösztrogén-kiválasztását is a luteális fázisban."
+    },
+    {
+      title: "🌿 SZIMBIOTIKUS BÉLFLÓRA",
+      text: "A hüvelyesek és a keresztesvirágúak (pl. cukkini, brokkoli) lassú felszívódású rostjai a bélbaktériumok első számú tápanyagai. A jó emésztés a nyugodt idegrendszer alapja."
+    },
+    {
+      title: "🕯️ CSENDES RITUÁLÉ A KONYHÁBAN",
+      text: "Az este 6 órás főzés lehet lassulás is: az alapanyagok előkészítése és az illatok felébresztése átállítja az agyat a napi stresszből a pihenésre."
+    }
+  ],
+
   selectedIngredients: [],
   currentMode: 'pantry',
+  lastSearchResults: [],
 
   init() {
     this.bindEvents();
@@ -193,16 +210,14 @@ const UIController = {
     const moodType = document.getElementById("filter-mood") ? document.getElementById("filter-mood").value : "any";
 
     const results = RecipeEngine.findMatchingRecipes(this.selectedIngredients, { maxTime, mealType, moodType });
+    this.lastSearchResults = results;
     this.renderResults(results);
   },
 
-  /* GYORS-KOLLEKCIÓK SZÍN- ÉS AKTÍV ÁLLAPOT KEZELÉSSELEL */
   selectQuickCollection(type, btnElement) {
-    // Összes gomb aktív osztályának eltávolítása
     const allCollectionBtns = document.querySelectorAll('.collection-btn');
     allCollectionBtns.forEach(btn => btn.classList.remove('active-collection'));
 
-    // Kattintott gomb kiemelése
     if (btnElement) {
       btnElement.classList.add('active-collection');
     }
@@ -301,6 +316,44 @@ const UIController = {
     });
   },
 
+  /* FEATURE: CSENDES MENÜTERVEZŐ NÉZET */
+  renderMealPrepPlan() {
+    const container = document.getElementById("recipe-results-container");
+    if (!container || !this.lastSearchResults || !this.lastSearchResults.matches || this.lastSearchResults.matches.length < 2) return;
+
+    const recipe1 = this.lastSearchResults.matches[0].recipe;
+    const recipe2 = this.lastSearchResults.matches[1].recipe;
+
+    container.innerHTML = `
+      <div class="prep-plan-box" style="background: var(--color-white); border: 2px solid var(--color-mauve-orchid); border-radius: var(--radius-lg); padding: 36px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(168, 99, 143, 0.15);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <span class="eyebrow" style="color: var(--color-mauve-orchid);">CSENDES MENÜTERVEZŐ</span>
+            <h3 class="serif-heading" style="font-size: 2rem;">2 Napos Kombinált Vacsora-Terv</h3>
+          </div>
+          <button class="btn collection-btn" onclick="UIController.renderResults(UIController.lastSearchResults)" style="border-color: var(--color-mauve-orchid);">← Vissza a lista nézethez</button>
+        </div>
+        <p style="margin-bottom: 24px; color: var(--color-antique-bronze); opacity: 0.9;">Ezekből az alapanyagokból egyetlen előkészítéssel letudhatod a hét közepét 0% pazarolt étellel:</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+          <div style="background: var(--color-diamond-dust); padding: 24px; border-radius: var(--radius-md); border-left: 4px solid var(--color-mauve-orchid);">
+            <span style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: var(--color-mauve-orchid);">1. NAP VACSORA</span>
+            <h4 class="serif-heading" style="font-size: 1.4rem; margin: 8px 0;">${recipe1.title}</h4>
+            <p style="font-size: 0.9rem; margin-bottom: 12px;">${recipe1.description}</p>
+            <span style="font-size: 0.85rem; font-weight: 600;">⏱️ ${recipe1.prepTime} perc</span>
+          </div>
+
+          <div style="background: var(--color-diamond-dust); padding: 24px; border-radius: var(--radius-md); border-left: 4px solid var(--color-mauve-orchid);">
+            <span style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: var(--color-mauve-orchid);">2. NAP VACSORA</span>
+            <h4 class="serif-heading" style="font-size: 1.4rem; margin: 8px 0;">${recipe2.title}</h4>
+            <p style="font-size: 0.9rem; margin-bottom: 12px;">${recipe2.description}</p>
+            <span style="font-size: 0.85rem; font-weight: 600;">⏱️ ${recipe2.prepTime} perc</span>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
   renderResults(results) {
     const container = document.getElementById("recipe-results-container");
     if (!container) return;
@@ -316,7 +369,35 @@ const UIController = {
     const topStatus = results.matches[0].statusType;
     this.trackAnalytics("recipe_results_viewed", { result_count: results.matches.length, top_status: topStatus });
 
-    results.matches.forEach(({ recipe, substitutionsApplied, statusType }) => {
+    /* BANNER A CSENDES MENÜTERVEZŐNEK, HA LEGALÁBB 2 RECEPT VAN */
+    if (results.matches.length >= 2) {
+      const prepBanner = document.createElement("div");
+      prepBanner.style.cssText = "background: var(--color-rose-silk); padding: 18px 24px; border-radius: var(--radius-md); margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;";
+      prepBanner.innerHTML = `
+        <div>
+          <strong style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-antique-bronze);">🗓️ Szeretnél 2 napra előre tervezni?</strong>
+          <p style="font-size: 0.85rem; margin: 0;">Ezekből az alapanyagokból kombinált 2 napos vacsora-tervet készítünk neked.</p>
+        </div>
+        <button class="btn btn-primary" onclick="UIController.renderMealPrepPlan()" style="padding: 8px 18px; font-size: 0.75rem;">2 Napos Terv Generálása</button>
+      `;
+      container.appendChild(prepBanner);
+    }
+
+    /* KÁRTYÁK RENDERELÉSE BEÉPÍTETT SZAKÉRTŐI JEGYZETEKKEL */
+    results.matches.forEach(({ recipe, substitutionsApplied, statusType }, index) => {
+      
+      /* FEAT 2: SZAKÉRTŐI MIKRO-JEGYZET SÁV BEÉPÍTÉSE MINDEN 2. KÁRTYA UTÁN */
+      if (index > 0 && index % 2 === 0) {
+        const quoteObj = this.editorialQuotes[(index / 2 - 1) % this.editorialQuotes.length];
+        const quoteCard = document.createElement("div");
+        quoteCard.style.cssText = "background: var(--color-diamond-dust); border-left: 3px solid var(--color-mauve-orchid); padding: 24px; border-radius: var(--radius-md); margin: 32px 0; font-style: italic;";
+        quoteCard.innerHTML = `
+          <span style="display: block; font-style: normal; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--color-mauve-orchid); margin-bottom: 6px;">${quoteObj.title}</span>
+          <p style="font-size: 0.95rem; color: var(--color-antique-bronze); margin: 0;">"${quoteObj.text}"</p>
+        `;
+        container.appendChild(quoteCard);
+      }
+
       const card = document.createElement("div");
       card.className = `recipe-card status-${statusType.toLowerCase()}`;
 
@@ -344,9 +425,10 @@ const UIController = {
         badgeLabel = "💡 Ajánlott recept";
         badgeClass = "badge-100";
       }
-     let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
-let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
-let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Mentes alternatíva: Tejtermékek esetén növényi opciókkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
+
+      let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
+      let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
+      let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Mentes alternatíva: Tejtermékek esetén növényi opciókkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
 
       card.innerHTML = `
         <div class="recipe-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
