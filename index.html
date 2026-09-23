@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <!-- HERO + PANTRY BUILDER -->
+  <!-- HERO SECTION -->
   <section class="hero-pantry-section">
     <div class="container">
       <div class="hero-content">
@@ -48,6 +48,14 @@
 
         <div class="divider"></div>
 
+        <!-- FEATURE 1: CURATED COLLECTIONS (Gyors-kollekciók egy kattintásra) -->
+        <label class="pantry-label">Nincs kedved gépelni? Válassz a kollekciókból:</label>
+        <div class="collections-grid" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
+          <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('quick_20')">⚡ 20 perces gyors vacsorák</button>
+          <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('breakfast')">🧘 Tápláló reggelik</button>
+          <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('gut_health')">🌿 Bélflóra-barát opciók</button>
+        </div>
+
         <label class="pantry-label">2. Opcionális szűrők:</label>
         <div class="filters-grid">
           <div class="filter-group">
@@ -75,8 +83,19 @@
     </div>
   </section>
 
-  <!-- RESULTS SECTION -->
+  <!-- MAIN CONTENT -->
   <main class="container">
+    <!-- FEATURE 2: MICRO-EDITORIAL FEATURE (A nap mikronutriens fókusz) -->
+    <section class="editorial-feature-box" style="background: var(--color-white); border: 1px solid var(--color-champagne); border-radius: var(--radius-md); padding: 32px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div style="max-width: 650px;">
+        <span class="eyebrow">MIKROBIOM & GYULLADÁSCSÖKKENTÉS</span>
+        <h3 class="serif-heading" style="font-size: 1.8rem; color: var(--color-forest); margin-bottom: 8px;">A nap alapanyaga: Cukkini</h3>
+        <p style="font-size: 0.95rem; color: var(--color-ink); opacity: 0.85;">A cukkini magas víz- és oldható rosttartalma kíméletesen támogatja a bélflóra egyensúlyát anélkül, hogy megterhelné az emésztést. Ráadásul rendkívül sokoldalúan kombinálható.</p>
+      </div>
+      <button class="btn btn-primary" onclick="UIController.addIngredientFromEditorial('cukkini', 'CUKKINI')">+ Cukkini hozzáadása</button>
+    </section>
+
+    <!-- RESULTS SECTION -->
     <div id="recipe-results-container" class="results-container"></div>
   </main>
 
