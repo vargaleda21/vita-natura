@@ -1,5 +1,5 @@
 /**
- * Vita-Natura UI Controller v2.0 (Haute Couture Edition - Fully Integrated)
+ * Vita-Natura UI Controller v2.1 (Warm Spa & Editorial Care Edition)
  */
 
 const UIController = {
@@ -44,7 +44,7 @@ const UIController = {
 
   editorialQuotes: [
     {
-      title: "💡 HORMONBARÁT FŰSZEREZÉS",
+      title: "🕯️ HORMONBARÁT FŰSZEREZÉS",
       text: "A gyömbér és a kurkuma szinergiában működnek: nemcsak gyulladáscsökkentők, de segítik a máj ösztrogén-kiválasztását is a luteális fázisban."
     },
     {
@@ -52,7 +52,7 @@ const UIController = {
       text: "A hüvelyesek és a keresztesvirágúak (pl. cukkini, brokkoli) lassú felszívódású rostjai a bélbaktériumok első számú tápanyagai. A jó emésztés a nyugodt idegrendszer alapja."
     },
     {
-      title: "🕯️ CSENDES RITUÁLÉ A KONYHÁBAN",
+      title: "🍵 CSENDES RITUÁLÉ A KONYHÁBAN",
       text: "Az este 6 órás főzés lehet lassulás is: az alapanyagok előkészítése és az illatok felébresztése átállítja az agyat a napi stresszből a pihenésre."
     }
   ],
@@ -72,9 +72,7 @@ const UIController = {
     const timeFilter = document.getElementById("filter-time");
     const mealFilter = document.getElementById("filter-meal");
 
-    if (searchBtn) {
-      searchBtn.addEventListener("click", () => this.handleSearch());
-    }
+    if (searchBtn) searchBtn.addEventListener("click", () => this.handleSearch());
 
     if (inputField) {
       inputField.addEventListener("keypress", (e) => {
@@ -122,6 +120,7 @@ const UIController = {
     }
   },
 
+  /* 9. GONDOSKODÓ PASZTELL FÁZIS-SZÍNKÓDOLÁS CALCULATOR */
   calculateCyclePhase() {
     const startDateInput = document.getElementById("cycle-start-date");
     const cycleLengthInput = document.getElementById("cycle-length");
@@ -141,30 +140,38 @@ const UIController = {
     let phaseName = "";
     let phaseDesc = "";
     let recommendedIngredient = "";
+    let phaseBg = "var(--phase-menstrual)";
 
     if (diffDays >= 1 && diffDays <= 5) {
       phaseName = "Menstruációs fázis";
       phaseDesc = "A testednek most vasra, pihenésre és meleget adó, könnyen emészthető ételekre van szüksége.";
       recommendedIngredient = "spenót";
+      phaseBg = "var(--phase-menstrual)";
     } else if (diffDays >= 6 && diffDays <= 13) {
       phaseName = "Follikuláris fázis";
       phaseDesc = "Emelkedik az energiaszinted! Friss, erjesztett és ropogós zöldségek támogatják a petefészek működését.";
       recommendedIngredient = "brokkoli";
+      phaseBg = "var(--phase-follicular)";
     } else if (diffDays >= 14 && diffDays <= 17) {
       phaseName = "Ovulációs fázis";
       phaseDesc = "A csúcsértékeden vagy. Rostban gazdag, cinkben és B-vitaminban dús alapanyagok segítik a hormonlebontást.";
       recommendedIngredient = "cukkini";
+      phaseBg = "var(--phase-ovulatory)";
     } else {
       phaseName = "Luteális fázis";
       phaseDesc = "A menstruáció előtti napok. A testednek több magnéziumra, B6-vitaminra és lassú szénhidrátra van szüksége a puffadás és a sóvárgás ellen.";
       recommendedIngredient = "édesburgonya";
+      phaseBg = "var(--phase-luteal)";
     }
 
     if (resultCard) {
       resultCard.style.display = "block";
+      resultCard.style.background = phaseBg;
+      resultCard.style.padding = "20px";
+      resultCard.style.borderRadius = "12px";
       resultCard.innerHTML = `
-        <h4 style="color: var(--color-bordeaux); font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 4px;">Ma a ciklusod <strong>${diffDays}. napján</strong> vagy (${phaseName})</h4>
-        <p style="font-size: 0.85rem; margin-bottom: 12px; opacity: 0.9;">${phaseDesc}</p>
+        <h4 style="color: var(--color-bordeaux-cta); font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 6px;">Ma a ciklusod <strong>${diffDays}. napján</strong> vagy (${phaseName})</h4>
+        <p style="font-size: 0.88rem; margin-bottom: 12px; opacity: 0.9;">${phaseDesc}</p>
         <button class="btn-couture" onclick="UIController.addIngredientFromEditorial('${recommendedIngredient}', '${recommendedIngredient.toUpperCase()}')">+ Ajánlott alapanyag (${recommendedIngredient}) hozzáadása</button>
       `;
     }
@@ -314,7 +321,7 @@ const UIController = {
       const tag = document.createElement("span");
       tag.className = "capsule-btn active-collection";
       tag.style.cursor = "default";
-      tag.innerHTML = `${item.displayName} <button onclick="UIController.removeIngredientTag('${item.concept}')" style="background:none; border:none; color:var(--color-ivory); margin-left:6px; cursor:pointer;">×</button>`;
+      tag.innerHTML = `${item.displayName} <button onclick="UIController.removeIngredientTag('${item.concept}')" style="background:none; border:none; color:var(--color-white); margin-left:6px; cursor:pointer;">×</button>`;
       container.appendChild(tag);
     });
   },
@@ -327,26 +334,26 @@ const UIController = {
     const recipe2 = this.lastSearchResults.matches[1].recipe;
 
     container.innerHTML = `
-      <div style="background: var(--color-powder-rose); border: 1px solid var(--color-bordeaux); border-radius: var(--radius-lg); padding: 36px; margin-bottom: 40px;">
+      <div style="background: var(--color-cloud-pink); border: 1px solid var(--color-bordeaux-cta); border-radius: var(--radius-card); padding: 36px; margin-bottom: 40px; box-shadow: var(--shadow-soft-cloud);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
           <div>
             <span class="eyebrow">CSENDES MENÜTERVEZŐ</span>
-            <h3 class="serif-heading" style="font-size: 2rem; color: var(--color-bordeaux);">2 Napos Kombinált Vacsora-Terv</h3>
+            <h3 class="serif-heading" style="font-size: 2rem; color: var(--color-bordeaux-cta);">2 Napos Kombinált Vacsora-Terv</h3>
           </div>
           <button class="capsule-btn" onclick="UIController.renderResults(UIController.lastSearchResults)">← Vissza a listához</button>
         </div>
-        <p style="margin-bottom: 24px; color: var(--color-charcoal); opacity: 0.85;">Ezekből az alapanyagokból egyetlen előkészítéssel letudhatod a hét közepe vacsoráit:</p>
+        <p style="margin-bottom: 24px; color: var(--color-charcoal-warm); opacity: 0.85;">Ezekből az alapanyagokból egyetlen előkészítéssel letudhatod a hét közepe vacsoráit:</p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-          <div style="background: var(--color-ivory); padding: 24px; border-radius: var(--radius-md); border-left: 3px solid var(--color-bordeaux);">
-            <span style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing:0.15em; color: var(--color-bordeaux);">1. NAP VACSORA</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div style="background: var(--color-ivory-satin); padding: 24px; border-radius: 12px; border-left: 3px solid var(--color-bordeaux-cta);">
+            <span style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing:0.15em; color: var(--color-bordeaux-cta);">1. NAP VACSORA</span>
             <h4 class="serif-heading" style="font-size: 1.5rem; margin: 8px 0;">${recipe1.title}</h4>
             <p style="font-size: 0.85rem; margin-bottom: 12px; opacity: 0.8;">${recipe1.description}</p>
             <span style="font-size: 0.8rem; font-weight: 600;">⏱️ ${recipe1.prepTime} perc</span>
           </div>
 
-          <div style="background: var(--color-ivory); padding: 24px; border-radius: var(--radius-md); border-left: 3px solid var(--color-bordeaux);">
-            <span style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing:0.15em; color: var(--color-bordeaux);">2. NAP VACSORA</span>
+          <div style="background: var(--color-ivory-satin); padding: 24px; border-radius: 12px; border-left: 3px solid var(--color-bordeaux-cta);">
+            <span style="font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing:0.15em; color: var(--color-bordeaux-cta);">2. NAP VACSORA</span>
             <h4 class="serif-heading" style="font-size: 1.5rem; margin: 8px 0;">${recipe2.title}</h4>
             <p style="font-size: 0.85rem; margin-bottom: 12px; opacity: 0.8;">${recipe2.description}</p>
             <span style="font-size: 0.8rem; font-weight: 600;">⏱️ ${recipe2.prepTime} perc</span>
@@ -371,30 +378,28 @@ const UIController = {
     const topStatus = results.matches[0].statusType;
     this.trackAnalytics("recipe_results_viewed", { result_count: results.matches.length, top_status: topStatus });
 
-    /* 2 NAPOS TERV BANNER */
     if (results.matches.length >= 2) {
       const prepBanner = document.createElement("div");
-      prepBanner.style.cssText = "background: var(--color-powder-rose); padding: 18px 24px; border-radius: var(--radius-md); margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;";
+      prepBanner.style.cssText = "background: var(--color-cloud-pink); padding: 20px 24px; border-radius: 12px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; box-shadow: var(--shadow-soft-cloud);";
       prepBanner.innerHTML = `
         <div>
-          <strong style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-bordeaux);">🗓️ Szeretnél 2 napra előre tervezni?</strong>
-          <p style="font-size: 0.85rem; opacity: 0.8; margin: 0;">Ezekből az alapanyagokból kombinált 2 napos vacsora-tervet készítünk neked.</p>
+          <strong style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--color-bordeaux-cta);">🗓️ Szeretnél 2 napra előre tervezni?</strong>
+          <p style="font-size: 0.85rem; opacity: 0.85; margin: 0;">Ezekből az alapanyagokból kombinált 2 napos vacsora-tervet készítünk neked.</p>
         </div>
-        <button class="btn-couture" onclick="UIController.renderMealPrepPlan()" style="padding: 8px 16px; font-size: 0.68rem;">2 Napos Terv Generálása</button>
+        <button class="btn-couture" onclick="UIController.renderMealPrepPlan()" style="padding: 8px 18px; font-size: 0.68rem;">2 Napos Terv Generálása</button>
       `;
       container.appendChild(prepBanner);
     }
 
-    /* RECEPTEK ÉS SZAKÉRTŐI IDEZETEK */
     results.matches.forEach(({ recipe, substitutionsApplied, statusType }, index) => {
       
       if (index > 0 && index % 2 === 0) {
         const quoteObj = this.editorialQuotes[(index / 2 - 1) % this.editorialQuotes.length];
         const quoteCard = document.createElement("div");
-        quoteCard.style.cssText = "background: var(--color-powder-rose); border-left: 2px solid var(--color-bordeaux); padding: 24px; border-radius: var(--radius-md); margin: 32px 0;";
+        quoteCard.style.cssText = "background: var(--color-cloud-pink); border-left: 2px solid var(--color-bordeaux-cta); padding: 24px; border-radius: 12px; margin: 32px 0;";
         quoteCard.innerHTML = `
-          <span style="display: block; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--color-bordeaux); margin-bottom: 6px;">${quoteObj.title}</span>
-          <p style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-charcoal); font-style: italic; margin: 0;">"${quoteObj.text}"</p>
+          <span style="display: block; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--color-bordeaux-cta); margin-bottom: 6px;">${quoteObj.title}</span>
+          <p style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-charcoal-warm); font-style: italic; margin: 0;">"${quoteObj.text}"</p>
         `;
         container.appendChild(quoteCard);
       }
@@ -409,7 +414,7 @@ const UIController = {
           if (sub.type === "Alternative") prefix = "↪ Más karakterű lesz, de működik:";
           if (sub.type === "Enhancement") prefix = "💡 Tálalási ötlet:";
 
-          return `<div style="margin: 12px 0; font-size: 0.85rem; color: var(--color-charcoal);"><strong>${prefix}</strong> ${sub.note}</div>`;
+          return `<div style="margin: 12px 0; font-size: 0.85rem; color: var(--color-charcoal-warm);"><strong>${prefix}</strong> ${sub.note}</div>`;
         }).join("");
       }
 
@@ -424,16 +429,16 @@ const UIController = {
       }
 
       let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
-      let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-border-subtle); font-size: 0.78rem; color: var(--color-bordeaux); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
-      let intoleranceTip = `<div style="margin-top: 6px; font-size: 0.78rem; color: var(--color-terracotta); font-style: italic;">🌱 Mentes alternatíva: Tejtermékek esetén növényi opciókkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
+      let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-input-border); font-size: 0.78rem; color: var(--color-bordeaux-cta); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
+      let intoleranceTip = `<div style="margin-top: 6px; font-size: 0.78rem; color: var(--color-terracotta-warm); font-style: italic;">🌱 Mentes alternatíva: Tejtermékek esetén növényi opciókkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
 
       card.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
           <h3>${recipe.title}</h3>
-          <span class="badge-status">${badgeLabel}</span>
+          <span style="font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 4px 12px; border-radius: 12px; background: var(--color-cloud-pink); color: var(--color-bordeaux-cta);">${badgeLabel}</span>
         </div>
-        <p style="color: var(--color-charcoal); opacity: 0.8; margin-bottom: 16px; font-size: 0.9rem;">${recipe.description}</p>
-        <div style="display: flex; gap: 20px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; color: var(--color-bordeaux); font-weight:600;">
+        <p style="color: var(--color-charcoal-warm); opacity: 0.82; margin-bottom: 16px; font-size: 0.92rem;">${recipe.description}</p>
+        <div style="display: flex; gap: 20px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; color: var(--color-bordeaux-cta); font-weight:600;">
           <span>⏱️ ${recipe.prepTime} perc</span>
           <span>🍽️ ${recipe.servings} adag</span>
         </div>
@@ -463,7 +468,7 @@ const UIController = {
     if (affiliateProduct) {
       this.trackAnalytics("affiliate_offer_viewed", { product_id: affiliateProduct.id, category: affiliateProduct.category });
       affiliateHtml = `
-        <div style="background: var(--color-powder-rose); border: 1px solid var(--color-bordeaux); padding: 20px; border-radius: var(--radius-md); margin-top: 24px;">
+        <div style="background: var(--color-cloud-pink); border: 1px solid var(--color-bordeaux-cta); padding: 20px; border-radius: 12px; margin-top: 24px;">
           <h4 class="serif-heading" style="font-size: 1.3rem; margin-bottom: 6px;">🛒 Hiányzik a(z) ${affiliateProduct.name}?</h4>
           <p style="font-size: 0.85rem; margin-bottom: 12px;">Rendeld meg közvetlenül a kamrádba szállítási kedvezménnyel:</p>
           <a href="${affiliateProduct.affiliate_url || '#'}" target="_blank" class="btn-couture" style="text-decoration: none; display:inline-block;">Ajánlat megtekintése &rarr;</a>
@@ -472,8 +477,8 @@ const UIController = {
     }
 
     modalContent.innerHTML = `
-      <h2 class="serif-heading" style="font-size: 2.2rem; margin-bottom: 12px; color:var(--color-bordeaux);">${recipe.title}</h2>
-      <p style="margin-bottom: 24px; color: var(--color-charcoal); opacity:0.85;">${recipe.description}</p>
+      <h2 class="serif-heading" style="font-size: 2.2rem; margin-bottom: 12px; color:var(--color-bordeaux-cta);">${recipe.title}</h2>
+      <p style="margin-bottom: 24px; color: var(--color-charcoal-warm); opacity:0.85;">${recipe.description}</p>
       
       <h3 class="serif-heading" style="font-size: 1.4rem; margin-bottom: 12px;">Hozzávalók:</h3>
       <ul style="margin-bottom: 24px; padding-left: 20px; font-size:0.9rem;">
