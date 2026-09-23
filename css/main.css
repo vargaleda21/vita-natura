@@ -1,36 +1,29 @@
 /* ==========================================================================
-   VITA-NATURA — WARM EDITORIAL LUXURY & SPA DESIGN SYSTEM (v6.0)
+   VITA-NATURA — STUDIO TERRA INSPIRED EDITORIAL DESIGN (v7.0)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+/* Behozzuk a képen látható dőlt, elegáns Playfair Display-t és a letisztult Plus Jakarta Sans-t */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  /* 1. Meleg, selymes tónusok */
-  --color-ivory-satin: #FDFBF7;      /* Fő háttérszeny */
-  --color-cloud-pink: #F8ECE9;       /* Puhított felhő-kártya háttér */
-  --color-powder-capsule: #F3E3E0;   /* Interaktív kapszula alap */
-  --color-bordeaux-cta: #80232A;     /* Mély bordeaux / mahagóni gombok */
-  --color-terracotta-warm: #B85D4B;  /* Meleg terrakotta akcentus */
-  --color-input-border: #E5D3D0;     /* Receptkártya input szegély */
-  --color-charcoal-warm: #2C2627;    /* Mély sötétbarna faszén szöveg */
+  /* Színek a csatolt kép alapján */
+  --color-ivory-satin: #F7F4EE;      /* Meleg törtfehér háttér */
+  --color-cloud-pink: #EFE8DF;       /* Kártya háttér */
+  --color-powder-capsule: #EAE1D5;   /* Kapszula gombok */
+  --color-bordeaux-cta: #80232A;     /* Mély bordó gombok */
+  --color-terracotta-warm: #B85D4B;  
+  --color-input-border: #E0D6C8;     /* Vékony keret */
+  --color-charcoal-warm: #202020;    /* Tiszta, sötét szövegszín */
   --color-white: #FFFFFF;
 
-  /* Pasztell fázis-színkódok */
-  --phase-menstrual: #F5E3E0;
-  --phase-follicular: #EBF3E8;
-  --phase-ovulatory: #FBF0E3;
-  --phase-luteal: #F2E8E3;
-
   /* Tipográfia */
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Rádiuszok & Árnyékok */
-  --radius-card: 16px;
+  /* Rádiuszok */
+  --radius-card: 0px;                /* A képen szögletesebb, letisztultabb terek vannak */
   --radius-capsule: 24px;
-  --radius-input: 8px;
-  --shadow-soft-cloud: 0 10px 30px rgba(180, 100, 90, 0.08);
-  --shadow-hover: 0 14px 36px rgba(128, 35, 42, 0.12);
+  --radius-input: 2px;
   --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -51,37 +44,38 @@ body {
 }
 
 .container {
-  max-width: 980px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* Tipográfia */
+/* A KÉPEN LÁTHATÓ EGYEDI TIPOGRÁFIA */
 h1, h2, h3, h4, .serif-heading {
   font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-style: italic;                /* Dőlt Didone/Playfair betűstílus */
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--color-charcoal-warm);
   line-height: 1.15;
 }
 
+/* Kisfeliratok a képen látható ritkított, csupa nagybetűs stílusban */
 .eyebrow {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--color-bordeaux-cta);
+  letter-spacing: 0.25em;            /* Ritkított betűköz */
+  color: var(--color-terracotta-warm);
   margin-bottom: 12px;
 }
 
 /* Header */
 .header {
-  background: rgba(253, 251, 247, 0.92);
-  backdrop-filter: blur(10px);
+  background: var(--color-ivory-satin);
   border-bottom: 1px solid var(--color-input-border);
-  padding: 20px 0;
+  padding: 24px 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -95,69 +89,51 @@ h1, h2, h3, h4, .serif-heading {
 
 .brand {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--color-bordeaux-cta);
+  font-style: italic;
+  font-size: 2.3rem;
+  font-weight: 600;
+  color: var(--color-charcoal-warm);
   text-decoration: none;
-  text-transform: uppercase;
 }
 
 .mode-tabs {
   display: flex;
-  gap: 8px;
-  background: var(--color-cloud-pink);
-  padding: 4px;
-  border-radius: var(--radius-capsule);
+  gap: 12px;
 }
 
 .tab-btn {
   background: none;
   border: none;
-  padding: 8px 18px;
+  padding: 8px 16px;
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.2em;
   color: var(--color-charcoal-warm);
   cursor: pointer;
-  border-radius: 20px;
+  border-bottom: 1px solid transparent;
   transition: var(--transition-smooth);
-  opacity: 0.75;
+  opacity: 0.6;
 }
 
 .tab-btn.active {
-  background: var(--color-bordeaux-cta);
-  color: var(--color-white);
   opacity: 1;
+  color: var(--color-bordeaux-cta);
+  border-bottom-color: var(--color-bordeaux-cta);
 }
 
-/* Hero Section + 7. Botanikai díszítő motívum background */
+/* Hero Section */
 .hero-pantry-section {
-  padding: 50px 0 30px 0;
-  position: relative;
-}
-
-.hero-pantry-section::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 10px;
-  width: 180px;
-  height: 180px;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%23B85D4B' opacity='0.12' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/></svg>");
-  background-repeat: no-repeat;
-  background-size: contain;
-  pointer-events: none;
+  padding: 60px 0 40px 0;
 }
 
 .hero-title {
-  font-size: 3.2rem;
+  font-size: 3.8rem;
+  font-style: italic;
   font-weight: 400;
   color: var(--color-charcoal-warm);
-  margin-bottom: 12px;
-  font-style: italic;
+  margin-bottom: 16px;
 }
 
 .hero-subtitle {
@@ -168,45 +144,26 @@ h1, h2, h3, h4, .serif-heading {
   max-width: 520px;
 }
 
-/* 2. Puhított, Felhőszerű Kártya (Ciklusszámláló) */
+/* Ciklus Kártya */
 .cycle-card-standalone {
   background: var(--color-cloud-pink);
-  padding: 36px;
-  border-radius: var(--radius-card);
+  padding: 40px;
   margin-bottom: 40px;
-  box-shadow: var(--shadow-soft-cloud);
-  border: 1px solid rgba(229, 211, 208, 0.6);
-  position: relative;
-  overflow: hidden;
+  border: 1px solid var(--color-input-border);
 }
 
 .cycle-card-standalone h3 {
-  font-size: 1.9rem;
-  margin-bottom: 6px;
-  color: var(--color-bordeaux-cta);
-}
-
-.cycle-inputs-row {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  margin-top: 24px;
-}
-
-/* 10. „Receptkártya” stílusú Input Mezők */
-.couture-input-group {
-  flex: 1;
-  min-width: 200px;
+  font-size: 2.2rem;
+  margin-bottom: 8px;
 }
 
 .couture-input-group label {
   display: block;
   font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   font-weight: 600;
-  color: var(--color-bordeaux-cta);
+  color: var(--color-charcoal-warm);
   margin-bottom: 8px;
 }
 
@@ -216,172 +173,119 @@ h1, h2, h3, h4, .serif-heading {
   padding: 12px 16px;
   background: var(--color-ivory-satin);
   border: 1px solid var(--color-input-border);
-  border-radius: var(--radius-input);
   font-family: var(--font-sans);
   font-size: 0.95rem;
   color: var(--color-charcoal-warm);
   outline: none;
-  transition: var(--transition-smooth);
 }
 
-.couture-input-group input:focus,
-.pantry-input-wrapper input:focus {
-  border-color: var(--color-bordeaux-cta);
-  box-shadow: 0 0 0 3px rgba(128, 35, 42, 0.08);
-}
-
-/* 6. Sötét Bordeaux / Mahagóni CTA Gombok */
+/* A képen látható keretes gomb stílus (FOGLALÁS gomb mintájára) */
 .btn-couture {
-  background: var(--color-bordeaux-cta);
-  color: var(--color-ivory-satin);
-  border: none;
-  padding: 12px 26px;
+  background: transparent;
+  color: var(--color-charcoal-warm);
+  border: 1px solid var(--color-charcoal-warm);
+  padding: 12px 28px;
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  border-radius: var(--radius-input);
+  letter-spacing: 0.25em;
   cursor: pointer;
   transition: var(--transition-smooth);
 }
 
 .btn-couture:hover {
-  background: var(--color-terracotta-warm);
-  transform: translateY(-1px);
+  background: var(--color-bordeaux-cta);
+  color: var(--color-white);
+  border-color: var(--color-bordeaux-cta);
 }
 
-/* 4. Interaktív „Kapszula” Szűrők (Púder rózsaszín -> Bordeaux) */
+/* Kapszulák */
 .collection-capsules {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 32px;
 }
 
 .capsule-btn {
-  background: var(--color-powder-capsule);
-  border: 1px solid transparent;
-  padding: 9px 20px;
+  background: var(--color-cloud-pink);
+  border: 1px solid var(--color-input-border);
+  padding: 8px 20px;
   border-radius: var(--radius-capsule);
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: var(--color-charcoal-warm);
   cursor: pointer;
   transition: var(--transition-smooth);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .capsule-btn:hover, .capsule-btn.active-collection {
   background: var(--color-bordeaux-cta);
   color: var(--color-white);
+  border-color: var(--color-bordeaux-cta);
 }
 
-.capsule-btn svg {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  fill: none;
-  stroke-width: 1.8;
-}
-
-/* 8. Hangulatalapú vizuális tagek & Szűrők */
+/* Szűrők */
 .filters-editorial-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 24px;
   padding-top: 24px;
   border-top: 1px solid var(--color-input-border);
 }
 
 .filter-editorial-group label {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   font-weight: 600;
   color: var(--color-charcoal-warm);
-  opacity: 0.75;
   margin-bottom: 8px;
 }
 
 .filter-editorial-group select {
   width: 100%;
-  padding: 10px 14px;
+  padding: 10px;
   background-color: var(--color-ivory-satin);
   border: 1px solid var(--color-input-border);
-  border-radius: var(--radius-input);
   font-family: var(--font-sans);
   font-size: 0.88rem;
   color: var(--color-charcoal-warm);
-  cursor: pointer;
   outline: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%2380232A' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
 }
 
 /* Recept Kártyák */
 .recipe-card {
   background: var(--color-white);
   border: 1px solid var(--color-input-border);
-  padding: 32px;
-  border-radius: var(--radius-card);
+  padding: 36px;
   margin-bottom: 24px;
-  box-shadow: var(--shadow-soft-cloud);
   transition: var(--transition-smooth);
 }
 
 .recipe-card:hover {
   border-color: var(--color-bordeaux-cta);
-  box-shadow: var(--shadow-hover);
 }
 
 .recipe-card h3 {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   margin-bottom: 8px;
 }
 
-/* Modal */
-.modal {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(44, 38, 39, 0.45);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Modal & Footer */
 .modal-content {
   background: var(--color-ivory-satin);
   padding: 44px;
-  border-radius: var(--radius-card);
-  max-width: 580px;
-  width: 90%;
   border: 1px solid var(--color-input-border);
-  position: relative;
 }
 
-.modal-close {
-  position: absolute;
-  top: 18px; right: 22px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--color-bordeaux-cta);
-}
-
-/* Footer */
 .footer {
   padding: 60px 0;
   margin-top: 80px;
   border-top: 1px solid var(--color-input-border);
   text-align: center;
   font-size: 0.85rem;
-  color: var(--color-charcoal-warm);
 }
