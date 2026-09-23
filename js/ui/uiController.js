@@ -1,5 +1,5 @@
 /**
- * Vita-Natura UI Controller v1.2 (Editorial Luxury Alignment)
+ * Vita-Natura UI Controller v1.3 (Editorial & Feature Extensions)
  */
 
 const UIController = {
@@ -108,6 +108,30 @@ const UIController = {
 
     const results = RecipeEngine.findMatchingRecipes(this.selectedIngredients, { maxTime, mealType });
     this.renderResults(results);
+  },
+
+  /* --- FEATURE 1: GYORS-KOLLEKCIÓK --- */
+  selectQuickCollection(type) {
+    const timeFilter = document.getElementById("filter-time");
+    const mealFilter = document.getElementById("filter-meal");
+
+    if (type === 'quick_20') {
+      if (timeFilter) timeFilter.value = "25";
+      if (mealFilter) mealFilter.value = "vacsora";
+    } else if (type === 'breakfast') {
+      if (timeFilter) timeFilter.value = "any";
+      if (mealFilter) mealFilter.value = "reggeli";
+    } else if (type === 'gut_health') {
+      this.addIngredientTag("cukkini", "CUKKINI", "any");
+    }
+
+    this.executeSearch();
+  },
+
+  /* --- FEATURE 2: EDITORIAL MICRO-FEATURE --- */
+  addIngredientFromEditorial(displayName, concept) {
+    this.addIngredientTag(displayName, concept, "any");
+    this.executeSearch();
   },
 
   promptDisambiguation(displayName, concept) {
@@ -224,18 +248,23 @@ const UIController = {
         badgeClass = "badge-100";
       }
 
+      /* --- FEATURE 3: PANTRY RESCUE COUNTER (Kamramentő Hatás) --- */
+      let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
+      let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
+
       card.innerHTML = `
         <div class="recipe-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
           <h3>${recipe.title}</h3>
           <span class="badge-status ${badgeClass}">${badgeLabel}</span>
         </div>
         <p class="recipe-desc" style="color: var(--color-ink); opacity: 0.8; margin-bottom: 16px;">${recipe.description}</p>
-        <div class="recipe-meta" style="display: flex; gap: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; color: var(--color-burgundy);">
+        <div class="recipe-meta" style="display: flex; gap: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; color: var(--color-burgundy);">
           <span>⏱️ ${recipe.prepTime} perc</span>
           <span>🍽️ ${recipe.servings} adag</span>
         </div>
+        ${rescueHtml}
         ${subHtml}
-        <button class="btn btn-primary" onclick="UIController.openRecipeModal('${recipe.id}')" style="margin-top: 12px;">Recept megtekintése</button>
+        <button class="btn btn-primary" onclick="UIController.openRecipeModal('${recipe.id}')" style="margin-top: 16px;">Recept megtekintése</button>
       `;
 
       container.appendChild(card);
