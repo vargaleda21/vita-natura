@@ -1,5 +1,5 @@
 /* ==========================================================================
-   VITA-NATURA — QUIET LUXURY / EDITORIAL WELLNESS DESIGN SYSTEM (v2.1)
+   VITA-NATURA — QUIET LUXURY / EDITORIAL WELLNESS DESIGN SYSTEM (v2.2)
    ========================================================================== */
 
 :root {
@@ -22,13 +22,13 @@
   --transition-base: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* NŐI CIKLUS TÉMA OVERRIDE (Soft Nude / Rose / Terracotta) */
+/* NŐI CIKLUS TÉMA OVERRIDE */
 body.cycle-mode {
-  --color-forest: #4A282D;      /* Meleg mély borvörös/terrakotta */
-  --color-ivory: #FAF4F0;       /* Lányos krémszín */
-  --color-stone: #E8D5CE;       /* Púderes elválasztó */
-  --color-burgundy: #A3485E;    /* Rózsaszínes-piros accent */
-  --color-champagne: #D4A373;   /* Meleg nude-arany */
+  --color-forest: #4A282D;
+  --color-ivory: #FAF4F0;
+  --color-stone: #E8D5CE;
+  --color-burgundy: #A3485E;
+  --color-champagne: #D4A373;
   background-color: var(--color-ivory);
 }
 
@@ -74,7 +74,7 @@ h1, h2, h3, .serif-heading {
   margin-bottom: 12px;
 }
 
-/* Navigation Tabs */
+/* Header & Tabs */
 .header {
   background: var(--color-ivory);
   border-bottom: 1px solid var(--color-stone);
@@ -210,7 +210,7 @@ h1, h2, h3, .serif-heading {
   border-radius: 2px;
 }
 
-/* Button System */
+/* Button System & Quick Collection Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -237,7 +237,27 @@ h1, h2, h3, .serif-heading {
   transform: translateY(-1px);
 }
 
-/* Ingredient Chips / Tags */
+.collection-btn {
+  background: var(--color-white);
+  border: 1px solid var(--color-stone);
+  color: var(--color-ink);
+  text-transform: none;
+  font-weight: 500;
+}
+
+.collection-btn:hover {
+  border-color: var(--color-burgundy);
+  background: #FAF5F2;
+}
+
+/* AKTÍV KOLLEKCIÓ GOMB SZÍN (KATTINTÁS UTÁN) */
+.collection-btn.active-collection {
+  background-color: var(--color-burgundy) !important;
+  color: var(--color-ivory) !important;
+  border-color: var(--color-burgundy) !important;
+}
+
+/* Chips & Tags */
 .chip-group-selected {
   display: flex;
   flex-wrap: wrap;
