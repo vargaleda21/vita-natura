@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vita-Natura – Kevesebb keresgélés. Több jó döntés.</title>
+  <title>Vita-Natura – Decision Support Kitchen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-  <!-- HEADER + NAVIGATION TABS -->
+  <!-- HEADER -->
   <header class="header">
     <div class="container header-container">
       <a href="#" class="brand">Vita-Natura</a>
       
-      <!-- FELSŐ MÓDVÁLASZTÓ FÜLEK -->
       <div class="mode-tabs">
-        <button id="tab-pantry" class="tab-btn active" onclick="UIController.switchMode('pantry')">🌱 Kamramentő</button>
-        <button id="tab-cycle" class="tab-btn" onclick="UIController.switchMode('cycle')">🌸 Ciklus & Hormonális Jóllét</button>
+        <button id="tab-pantry" class="tab-btn active" onclick="UIController.switchMode('pantry')">Kamramentő</button>
+        <button id="tab-cycle" class="tab-btn" onclick="UIController.switchMode('cycle')">Ciklus & Jóllét</button>
       </div>
     </div>
   </header>
@@ -27,117 +26,98 @@
   <!-- HERO SECTION -->
   <section class="hero-pantry-section">
     <div class="container">
-      <div class="hero-content">
-        <span id="hero-eyebrow" class="eyebrow" style="color: var(--color-champagne);">MINDENNAPI JÓLLÉT</span>
-        <h1 id="hero-title" class="hero-title">Kevesebb keresgélés.<br>Több jó döntés.</h1>
-        <p id="hero-subtitle" class="hero-subtitle">Döntési fáradtság a hétköznap este 6 órakor? Te mondd meg, mid van otthon, mi megmutatjuk, mit főzhetsz belőle.</p>
-      </div>
-
-      <!-- PANTRY BUILDER SURFACE -->
-      <div class="pantry-builder">
-        
-        <!-- NŐI CIKLUS KALKULÁTOR (Alapértelmezésben rejtve) -->
-        <div id="cycle-calculator-section" class="cycle-calculator-box" style="display: none;">
-          <h3 class="serif-heading" style="font-size: 1.4rem; color: var(--color-forest); margin-bottom: 8px;">Ciklusszámláló & Hormonális fázis</h3>
-          <p style="font-size: 0.9rem; margin-bottom: 16px;">Add meg az utolsó menstruációd első napját, és kiszámoljuk, mire van szüksége a testednek:</p>
-          
-          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
-            <div style="flex: 1; min-width: 200px;">
-              <label style="display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px;">Utolsó menstruáció dátuma:</label>
-              <input type="date" id="cycle-start-date">
-            </div>
-            <div style="flex: 1; min-width: 160px;">
-              <label style="display: block; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px;">Ciklus hossza (nap):</label>
-              <input type="number" id="cycle-length" value="28" min="20" max="40">
-            </div>
-            <button class="btn btn-primary" onclick="UIController.calculateCyclePhase()">Fázis meghatározása</button>
-          </div>
-
-          <!-- AUTOMATIKUS FÁZIS KÁRTYA -->
-          <div id="cycle-result" class="cycle-result-card" style="display: none;"></div>
-        </div>
-
-        <!-- ALAPANYAG BEVITEL -->
-        <div class="pantry-header-row">
-          <label for="ingredient-input" class="pantry-label">1. Írd be az otthoni alapanyagokat:</label>
-        </div>
-        
-        <div class="pantry-custom-input" style="display: flex; gap: 12px; margin-bottom: 20px;">
-          <input type="text" id="ingredient-input" placeholder="pl. csirkemell, rizs, cukkini..." autocomplete="off">
-          <button id="search-btn" class="btn btn-primary">Keresés</button>
-        </div>
-
-        <div id="unrecognized-warning" class="custom-warning" style="display: none; background: #FAF0E6; color: #8A5A2B; padding: 12px; border-radius: 4px; margin-bottom: 15px;"></div>
-
-        <div class="selected-summary">
-          <span class="summary-label" style="display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">Kiválasztott alapanyagok:</span>
-          <div id="ingredient-tags" class="chip-group-selected"></div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- GYORS-KOLLEKCIÓK -->
-        <label class="pantry-label">Nincs kedved gépelni? Válassz a kollekciókból:</label>
-        <div class="collections-grid" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
-          <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('quick_20')">⚡ 20 perces gyors vacsorák</button>
-          <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('breakfast')">🧘 Tápláló reggelik</button>
-          <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('gut_health')">🌿 Bélflóra-barát opciók</button>
-        </div>
-
-        <!-- SZŰRŐK GRID -->
-        <label class="pantry-label">2. Opcionális szűrők & Érzékszervi hangulat:</label>
-        <div class="filters-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-          <div class="filter-group">
-            <label for="filter-time">Mennyi időd van?</label>
-            <select id="filter-time">
-              <option value="any">Mindegy</option>
-              <option value="15">Max 15 perc</option>
-              <option value="25">Max 25 perc</option>
-              <option value="35">Max 35 perc</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="filter-meal">Melyik étkezés?</label>
-            <select id="filter-meal">
-              <option value="any">Mindegy</option>
-              <option value="reggeli">Reggeli</option>
-              <option value="ebed">Ebéd</option>
-              <option value="vacsora">Vacsora</option>
-              <option value="snack">Snack</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="filter-mood">Milyen hangulatban vagy?</label>
-            <select id="filter-mood">
-              <option value="any">Mindegy</option>
-              <option value="comfort">🍵 Krémes & Melengető (Comfort Food)</option>
-              <option value="crunchy">🥨 Ropogós & Sós (Snack érzet)</option>
-              <option value="fresh">🥗 Friss & Könnyű (Maradékmentő saláta)</option>
-              <option value="low_energy">⚡ Low Energy (Minimális mosogatás)</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      <span id="hero-eyebrow" class="eyebrow">Döntéstámogató Konyha</span>
+      <h1 id="hero-title" class="hero-title">Kevesebb keresgélés.<br>Több jó döntés.</h1>
+      <p id="hero-subtitle" class="hero-subtitle">Te mondd meg, mid van otthon, mi megmutatjuk, mit főzhetsz belőle csendben, stresszmentesen.</p>
     </div>
   </section>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN FORM SECTION -->
   <main class="container">
-    <section class="editorial-feature-box" style="background: var(--color-white); border: 1px solid var(--color-champagne); border-radius: var(--radius-md); padding: 32px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-      <div style="max-width: 650px;">
-        <span class="eyebrow">MIKROBIOM & GYULLADÁSCSÖKKENTÉS</span>
-        <h3 class="serif-heading" style="font-size: 1.8rem; color: var(--color-forest); margin-bottom: 8px;">A nap alapanyaga: Cukkini</h3>
-        <p style="font-size: 0.95rem; color: var(--color-ink); opacity: 0.85;">A cukkini magas víz- és oldható rosttartalma kíméletesen támogatja a bélflóra egyensúlyát anélkül, hogy megterhelné az emésztést. Ráadásul rendkívül sokoldalúan kombinálható.</p>
+    
+    <!-- 1. LEVÁLASZTOTT CIKLUSSZÁMLÁLÓ PÚDER KÁRTYA -->
+    <div id="cycle-calculator-section" class="cycle-card-standalone" style="display: none;">
+      <span class="eyebrow">Hormonális Étel-Szinkronizáció</span>
+      <h3>Ciklusszámláló & Fázis</h3>
+      <p style="font-size: 0.85rem; opacity: 0.85; margin-bottom: 16px;">Add meg az utolsó menstruációd első napját a személyre szabott tápanyag-ajánláshoz:</p>
+      
+      <div class="cycle-inputs-row">
+        <div class="couture-input-group">
+          <label for="cycle-start-date">Utolsó menstruáció napja</label>
+          <input type="date" id="cycle-start-date">
+        </div>
+        <div class="couture-input-group" style="max-width: 140px;">
+          <label for="cycle-length">Ciklus hossza</label>
+          <input type="number" id="cycle-length" value="28" min="20" max="40">
+        </div>
+        <button class="btn-couture" onclick="UIController.calculateCyclePhase()">Fázis Meghatározása</button>
       </div>
-      <button class="btn btn-primary" onclick="UIController.addIngredientFromEditorial('cukkini', 'CUKKINI')">+ Cukkini hozzáadása</button>
+
+      <div id="cycle-result" style="display: none; margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--color-bordeaux);"></div>
+    </div>
+
+    <!-- 2. LÉGIES KAMRA-KERESŐ & SZŰRŐK -->
+    <section class="pantry-air-section">
+      <span class="eyebrow">01 / Alapanyagok</span>
+      
+      <div class="pantry-input-wrapper">
+        <input type="text" id="ingredient-input" placeholder="Írd be az otthoni alapanyagokat (pl. csirkemell, rizs...)" autocomplete="off">
+        <button id="search-btn" class="btn-couture">Keresés</button>
+      </div>
+
+      <div id="unrecognized-warning" style="display: none; margin-bottom: 20px; font-size: 0.85rem; color: var(--color-terracotta);"></div>
+
+      <div id="ingredient-tags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;"></div>
+
+      <!-- KAPSZULA GOMBOK (EMOJI-MENTES, HAUTE COUTURE) -->
+      <span class="eyebrow">Gyors Kollekciók</span>
+      <div class="collection-capsules">
+        <button class="capsule-btn" onclick="UIController.selectQuickCollection('quick_20', this)">20 Perces Vacsorák</button>
+        <button class="capsule-btn" onclick="UIController.selectQuickCollection('breakfast', this)">Tápláló Reggelik</button>
+        <button class="capsule-btn" onclick="UIController.selectQuickCollection('gut_health', this)">Bélflóra-barát Opciók</button>
+      </div>
+
+      <!-- EDITORIAL SZŰRŐ GRID -->
+      <div class="filters-editorial-grid">
+        <div class="filter-editorial-group">
+          <label for="filter-time">Elkészítési Idő</label>
+          <select id="filter-time">
+            <option value="any">Összes opció</option>
+            <option value="15">Max 15 perc</option>
+            <option value="25">Max 25 perc</option>
+            <option value="35">Max 35 perc</option>
+          </select>
+        </div>
+
+        <div class="filter-editorial-group">
+          <label for="filter-meal">Étkezés Típusa</label>
+          <select id="filter-meal">
+            <option value="any">Összes étkezés</option>
+            <option value="reggeli">Reggeli</option>
+            <option value="ebed">Ebéd</option>
+            <option value="vacsora">Vacsora</option>
+            <option value="snack">Snack</option>
+          </select>
+        </div>
+
+        <div class="filter-editorial-group">
+          <label for="filter-mood">Érzékszervi Hangulat</label>
+          <select id="filter-mood">
+            <option value="any">Mindegy</option>
+            <option value="comfort">Krémes & Melengető</option>
+            <option value="crunchy">Ropogós & Sós</option>
+            <option value="fresh">Friss & Könnyű</option>
+            <option value="low_energy">Minimális Mosogatás</option>
+          </select>
+        </div>
+      </div>
     </section>
 
-    <div id="recipe-results-container" class="results-container"></div>
+    <!-- RESULTS CONTAINER -->
+    <div id="recipe-results-container" style="margin-top: 60px;"></div>
   </main>
 
-  <!-- MODAL: RECEPT RÉSZLETEK -->
+  <!-- MODAL -->
   <div id="recipe-modal" class="modal" style="display: none;">
     <div class="modal-content">
       <span class="modal-close" onclick="UIController.closeModal()">&times;</span>
@@ -147,9 +127,9 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="container text-center">
-      <p class="serif-heading" style="font-size: 1.5rem; color: var(--color-ivory); margin-bottom: 12px;">A jóllét nem egy újabb teendőlista.</p>
-      <p>Vita-Natura MVP &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
+    <div class="container">
+      <p style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-bordeaux); margin-bottom: 8px;">A jóllét nem egy újabb teendőlista.</p>
+      <p>Vita-Natura &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
     </div>
   </footer>
 
