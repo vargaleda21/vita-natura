@@ -344,12 +344,9 @@ const UIController = {
         badgeLabel = "💡 Ajánlott recept";
         badgeClass = "badge-100";
       }
-
-      let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
-      let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
-
-      /* FRISSÍTETT ELEGÁNS KÍMÉLŐ OPCIÓ FELIRAT */
-      let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Kímélő opció: Tejtermékek esetén növényi alternatívákkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
+     let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
+let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
+let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Mentes alternatíva: Tejtermékek esetén növényi opciókkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
 
       card.innerHTML = `
         <div class="recipe-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
