@@ -25,7 +25,7 @@
       <div class="hero-content">
         <span class="eyebrow" style="color: var(--color-champagne);">MINDENNAPI JÓLLÉT</span>
         <h1 class="hero-title">Kevesebb keresgélés.<br>Több jó döntés.</h1>
-        <p class="hero-subtitle">Te mondd meg, mid van otthon. Mi megmutatjuk, mit főzhetsz belőle.</p>
+        <p class="hero-subtitle">Döntési fáradtság a hétköznap este 6 órakor? Te mondd meg, mid van otthon, mi megmutatjuk, mit főzhetsz belőle.</p>
       </div>
 
       <!-- PANTRY BUILDER -->
@@ -48,7 +48,7 @@
 
         <div class="divider"></div>
 
-        <!-- FEATURE 1: CURATED COLLECTIONS (Gyors-kollekciók egy kattintásra) -->
+        <!-- GYORS-KOLLEKCIÓK -->
         <label class="pantry-label">Nincs kedved gépelni? Válassz a kollekciókból:</label>
         <div class="collections-grid" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
           <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('quick_20')">⚡ 20 perces gyors vacsorák</button>
@@ -56,8 +56,9 @@
           <button class="btn btn-secondary" style="background: var(--color-white); border: 1px solid var(--color-stone); text-transform: none; font-weight: 500;" onclick="UIController.selectQuickCollection('gut_health')">🌿 Bélflóra-barát opciók</button>
         </div>
 
-        <label class="pantry-label">2. Opcionális szűrők:</label>
-        <div class="filters-grid">
+        <!-- SZŰRŐK GRID (3-ra bővítve) -->
+        <label class="pantry-label">2. Opcionális szűrők & Érzékszervi hangulat:</label>
+        <div class="filters-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
           <div class="filter-group">
             <label for="filter-time">Mennyi időd van?</label>
             <select id="filter-time">
@@ -78,6 +79,17 @@
               <option value="snack">Snack</option>
             </select>
           </div>
+
+          <div class="filter-group">
+            <label for="filter-mood">Milyen hangulatban vagy?</label>
+            <select id="filter-mood">
+              <option value="any">Mindegy</option>
+              <option value="comfort">🍵 Krémes & Melengető (Comfort Food)</option>
+              <option value="crunchy">🥨 Ropogós & Sós (Snack érzet)</option>
+              <option value="fresh">🥗 Friss & Könnyű (Maradékmentő saláta)</option>
+              <option value="low_energy">⚡ Low Energy (Minimális mosogatás)</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -85,7 +97,7 @@
 
   <!-- MAIN CONTENT -->
   <main class="container">
-    <!-- FEATURE 2: MICRO-EDITORIAL FEATURE (A nap mikronutriens fókusz) -->
+    <!-- EDITORIAL FEATURE BOX -->
     <section class="editorial-feature-box" style="background: var(--color-white); border: 1px solid var(--color-champagne); border-radius: var(--radius-md); padding: 32px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
       <div style="max-width: 650px;">
         <span class="eyebrow">MIKROBIOM & GYULLADÁSCSÖKKENTÉS</span>
