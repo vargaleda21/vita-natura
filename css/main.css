@@ -1,44 +1,45 @@
 /* ==========================================================================
-   VITA-NATURA — SOFT EDITORIAL & ROSE PALETTE (v3.0)
+   VITA-NATURA — REFINED ELEGANCE & WARM TERRACOTTA PALETTE (v4.0)
    ========================================================================== */
 
 :root {
-  /* Color Tokens - Új vidám, púderes paletta */
-  --color-diamond-dust: #FCF5F3;  /* Fő háttérszeny */
-  --color-rose-silk: #F6DED9;     /* Kártyák, dobozok lágy háttere */
-  --color-satin-sand: #C7AEAE;    /* Keretek, elválasztók */
-  --color-mauve-orchid: #A8638F;  /* Fő hangsúlyszín / Gombok */
-  --color-antique-bronze: #6C5C53;/* Szövegek, mély tónusok */
+  /* Color Tokens - Új terrakotta / mély bordó paletta */
+  --color-diamond-dust: #FCF5F3;   /* Háttér */
+  --color-rose-silk: #F6DED9;      /* Lágy rózsaszín kártyák */
+  --color-warm-terracotta: #B85D4B;/* Meleg terrakotta accent */
+  --color-dusty-rosemarry: #C28D7F;/* Púderes átmenet */
+  --color-soothing-clay: #A3796D;  /* Elegáns földszín */
+  --color-deep-mahogany: #85493A;  /* Mély bordó / fő gombok */
   
-  /* Aliasok a meglévő kódhoz */
-  --color-forest: #6C5C53;
-  --color-ink: #4A3E38;
-  --color-burgundy: #A8638F;
-  --color-champagne: #C7AEAE;
+  /* Aliasok */
+  --color-forest: #85493A;
+  --color-ink: #3D2924;
+  --color-burgundy: #B85D4B;
+  --color-champagne: #C28D7F;
   --color-ivory: #FCF5F3;
-  --color-stone: #E8D8D5;
+  --color-stone: #E8D5CE;
   --color-white: #FFFFFF;
 
-  /* Typography Tokens */
+  /* Typo Tokens - Finomított, kisebb betűméretek */
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Layout & Radius */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --transition-base: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --transition-base: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* NŐI CIKLUS TÉMA OVERRIDE (Warm Mauve/Rose Accent) */
+/* NŐI CIKLUS TÉMA + CSILLOGÁS HATÁS */
 body.cycle-mode {
-  --color-ivory: #F8EFEF;
-  --color-burgundy: #944D7C;
-  --color-forest: #5C4C44;
+  --color-ivory: #FAF0EC;
+  --color-burgundy: #85493A;
+  --color-forest: #6B3428;
   background-color: var(--color-ivory);
 }
 
-/* Base Styles */
+/* Base Styles - Kisebb, átláthatóbb betűtípusok */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -47,50 +48,48 @@ body.cycle-mode {
 
 body {
   background-color: var(--color-diamond-dust);
-  color: var(--color-antique-bronze);
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 15px; /* Kisebb, finomabb alapméret */
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .container {
-  max-width: 1140px;
+  max-width: 1040px; /* Kompaktabb szélesség a jobb olvashatóságért */
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
-/* Typography Hierarchy */
+/* Typo Hierarchy - Csökkentett címsorméretek */
 h1, h2, h3, .serif-heading {
   font-family: var(--font-serif);
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.01em;
-  color: var(--color-antique-bronze);
+  color: var(--color-deep-mahogany);
 }
 
 .eyebrow {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--color-mauve-orchid);
-  margin-bottom: 12px;
+  letter-spacing: 0.15em;
+  color: var(--color-warm-terracotta);
+  margin-bottom: 8px;
 }
 
 /* Header & Tabs */
 .header {
-  background: rgba(252, 245, 243, 0.9);
+  background: rgba(252, 245, 243, 0.95);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--color-rose-silk);
-  padding: 20px 0;
+  padding: 14px 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: var(--transition-base);
 }
 
 .header-container {
@@ -98,173 +97,162 @@ h1, h2, h3, .serif-heading {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
 }
 
 .brand {
   font-family: var(--font-serif);
-  font-size: 1.9rem;
+  font-size: 1.6rem;
   font-weight: 600;
-  color: var(--color-antique-bronze);
+  color: var(--color-deep-mahogany);
   text-decoration: none;
-  letter-spacing: -0.03em;
 }
 
 .mode-tabs {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   background: var(--color-rose-silk);
-  padding: 5px;
+  padding: 4px;
   border-radius: var(--radius-lg);
 }
 
 .tab-btn {
   background: none;
   border: none;
-  padding: 8px 20px;
+  padding: 6px 16px;
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-antique-bronze);
+  color: var(--color-ink);
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 12px;
   transition: var(--transition-base);
   opacity: 0.8;
 }
 
 .tab-btn.active {
-  background: var(--color-mauve-orchid);
+  background: var(--color-deep-mahogany);
   color: var(--color-white);
   opacity: 1;
-  box-shadow: 0 4px 12px rgba(168, 99, 143, 0.25);
 }
 
-/* Hero Section */
+/* HERO SECTION + CSILLOGÁS (GLIMMER) A BORDÓ RÉSZBEN */
 .hero-pantry-section {
-  background-color: #584A43; /* Mélyebb meleg barna kontraszt */
+  background: linear-gradient(135deg, #6B3428 0%, #85493A 50%, #B85D4B 100%);
   color: var(--color-diamond-dust);
-  padding: 60px 0;
-  margin-bottom: 50px;
+  padding: 40px 0;
+  margin-bottom: 36px;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  box-shadow: 0 10px 30px rgba(108, 92, 83, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Finom csillogó por-effektus overlay */
+.hero-pantry-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 235, 225, 0.8), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.9), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 220, 200, 0.6), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, rgba(255, 255, 255, 0.8), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .hero-content {
-  max-width: 760px;
-  margin-bottom: 36px;
+  max-width: 680px;
+  margin-bottom: 24px;
 }
 
 .hero-title {
-  font-size: 3.6rem;
+  font-size: 2.5rem; /* Kisebb, elegánsabb hero címsor */
   color: var(--color-diamond-dust);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--color-rose-silk);
   font-weight: 300;
-  max-width: 580px;
+  max-width: 520px;
 }
 
-/* Pantry Builder Surface */
+/* Pantry Builder Box */
 .pantry-builder {
   background: var(--color-white);
-  color: var(--color-antique-bronze);
-  padding: 40px;
+  color: var(--color-ink);
+  padding: 28px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-rose-silk);
-  box-shadow: 0 12px 32px rgba(168, 99, 143, 0.06);
+  box-shadow: 0 8px 24px rgba(133, 73, 58, 0.05);
 }
 
 .pantry-label {
   font-family: var(--font-serif);
-  font-size: 1.35rem;
-  color: var(--color-antique-bronze);
+  font-size: 1.15rem;
+  color: var(--color-deep-mahogany);
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .pantry-custom-input input[type="text"],
 .cycle-calculator-box input {
   width: 100%;
-  padding: 14px 20px;
+  padding: 10px 14px;
   background: var(--color-diamond-dust);
   border: 1px solid var(--color-rose-silk);
   border-radius: var(--radius-md);
   font-family: var(--font-sans);
-  font-size: 1rem;
-  color: var(--color-antique-bronze);
-  transition: var(--transition-base);
+  font-size: 0.9rem;
+  color: var(--color-ink);
 }
 
-.pantry-custom-input input[type="text"]:focus {
-  outline: none;
-  border-color: var(--color-mauve-orchid);
-  background: var(--color-white);
-}
-
-/* ==========================================================================
-   ELEGÁNS ÉS EGYEDI STÍLUS A GÖRDÜLŐMENÜKHÖZ (SELECT BOXES)
-   ========================================================================== */
-
+/* Finomított Select Boxok */
 .filter-group label {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-antique-bronze);
-  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  color: var(--color-deep-mahogany);
+  margin-bottom: 6px;
 }
 
 .filter-group select {
   width: 100%;
-  padding: 12px 18px;
+  padding: 8px 12px;
   background-color: var(--color-diamond-dust);
   border: 1px solid var(--color-rose-silk);
   border-radius: var(--radius-md);
   font-family: var(--font-sans);
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--color-antique-bronze);
+  font-size: 0.85rem;
+  color: var(--color-ink);
   cursor: pointer;
   outline: none;
-  transition: var(--transition-base);
-  
-  /* Egyedi nyíl ikon az elavult böngészős nyíl helyett */
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%23A8638F' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2385493A' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 18px;
-  padding-right: 40px;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 32px;
 }
 
-.filter-group select:hover {
-  background-color: var(--color-rose-silk);
-  border-color: var(--color-satin-sand);
-}
-
-.filter-group select:focus {
-  border-color: var(--color-mauve-orchid);
-  box-shadow: 0 0 0 3px rgba(168, 99, 143, 0.15);
-}
-
-/* Button System */
+/* Gombok csillogó hatással (Glimmer Hover) */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 26px;
+  padding: 10px 20px;
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: var(--transition-base);
@@ -272,43 +260,40 @@ h1, h2, h3, .serif-heading {
 }
 
 .btn-primary {
-  background-color: var(--color-mauve-orchid);
+  background: linear-gradient(135deg, #85493A 0%, #B85D4B 100%);
   color: var(--color-white);
-  box-shadow: 0 4px 14px rgba(168, 99, 143, 0.2);
+  box-shadow: 0 4px 12px rgba(133, 73, 58, 0.2);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(168, 99, 143, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(184, 93, 75, 0.3);
 }
 
 .collection-btn {
   background: var(--color-diamond-dust);
   border: 1px solid var(--color-rose-silk);
-  color: var(--color-antique-bronze);
+  color: var(--color-ink);
   text-transform: none;
   font-weight: 500;
   border-radius: var(--radius-md);
-}
-
-.collection-btn:hover {
-  border-color: var(--color-mauve-orchid);
-  background: var(--color-rose-silk);
+  padding: 8px 14px;
+  font-size: 0.85rem;
 }
 
 .collection-btn.active-collection {
-  background-color: var(--color-mauve-orchid) !important;
+  background-color: var(--color-deep-mahogany) !important;
   color: var(--color-white) !important;
-  border-color: var(--color-mauve-orchid) !important;
+  border-color: var(--color-deep-mahogany) !important;
 }
 
-/* Tag Chips */
+/* Tags & Chips */
 .tag-item {
-  background: var(--color-mauve-orchid);
+  background: var(--color-deep-mahogany);
   color: var(--color-white);
-  padding: 6px 16px;
-  border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
 }
 
 .tag-item button {
@@ -316,13 +301,13 @@ h1, h2, h3, .serif-heading {
   border: none;
   color: var(--color-rose-silk);
   cursor: pointer;
-  font-size: 1.1rem;
+  margin-left: 4px;
 }
 
 .divider {
   height: 1px;
   background: var(--color-rose-silk);
-  margin: 28px 0;
+  margin: 20px 0;
 }
 
 /* Recipe Cards */
@@ -330,38 +315,30 @@ h1, h2, h3, .serif-heading {
   background: var(--color-white);
   border: 1px solid var(--color-rose-silk);
   border-radius: var(--radius-lg);
-  padding: 32px;
-  margin-bottom: 24px;
+  padding: 24px;
+  margin-bottom: 18px;
   transition: var(--transition-base);
-  box-shadow: 0 6px 20px rgba(108, 92, 83, 0.03);
 }
 
-.recipe-card:hover {
-  border-color: var(--color-satin-sand);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(108, 92, 83, 0.08);
+.recipe-card h3 {
+  font-size: 1.4rem;
 }
 
 .badge-status {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 6px 12px;
-  border-radius: 12px;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 8px;
 }
 
-.badge-100 { background: var(--color-rose-silk); color: var(--color-antique-bronze); }
-.badge-sub { background: #EFE2EC; color: var(--color-mauve-orchid); }
-.badge-missing { background: #FAF0E6; color: #8A5A2B; }
+.badge-100 { background: var(--color-rose-silk); color: var(--color-deep-mahogany); }
+.badge-sub { background: #F3E5E1; color: var(--color-warm-terracotta); }
 
 /* Modal */
 .modal {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(108, 92, 83, 0.4);
-  backdrop-filter: blur(6px);
+  background: rgba(61, 41, 36, 0.5);
+  backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -370,36 +347,34 @@ h1, h2, h3, .serif-heading {
 
 .modal-content {
   background: var(--color-white);
-  padding: 40px;
+  padding: 32px;
   border-radius: var(--radius-lg);
-  max-width: 640px;
+  max-width: 580px;
   width: 90%;
   max-height: 85vh;
   overflow-y: auto;
   border: 1px solid var(--color-rose-silk);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .modal-close {
   position: absolute;
-  top: 20px; right: 24px;
-  font-size: 2rem;
+  top: 16px; right: 20px;
+  font-size: 1.6rem;
   cursor: pointer;
-  color: var(--color-antique-bronze);
+  color: var(--color-deep-mahogany);
 }
 
 /* Footer */
 .footer {
-  background-color: var(--color-antique-bronze);
+  background-color: var(--color-deep-mahogany);
   color: var(--color-rose-silk);
-  padding: 60px 0;
-  margin-top: 80px;
+  padding: 40px 0;
+  margin-top: 60px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .hero-title { font-size: 2.6rem; }
-  .pantry-builder { padding: 24px; }
-  .header-container { flex-direction: column; align-items: flex-start; }
+  .hero-title { font-size: 2rem; }
+  .pantry-builder { padding: 20px; }
 }
