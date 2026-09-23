@@ -1,9 +1,9 @@
 /* ==========================================================================
-   VITA-NATURA — QUIET LUXURY / EDITORIAL WELLNESS DESIGN SYSTEM (v2.0)
+   VITA-NATURA — QUIET LUXURY / EDITORIAL WELLNESS DESIGN SYSTEM (v2.1)
    ========================================================================== */
 
 :root {
-  /* Color Tokens */
+  /* Color Tokens - Classic Mode */
   --color-forest: #17352D;
   --color-ink: #202522;
   --color-burgundy: #742F3D;
@@ -22,6 +22,16 @@
   --transition-base: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* NŐI CIKLUS TÉMA OVERRIDE (Soft Nude / Rose / Terracotta) */
+body.cycle-mode {
+  --color-forest: #4A282D;      /* Meleg mély borvörös/terrakotta */
+  --color-ivory: #FAF4F0;       /* Lányos krémszín */
+  --color-stone: #E8D5CE;       /* Púderes elválasztó */
+  --color-burgundy: #A3485E;    /* Rózsaszínes-piros accent */
+  --color-champagne: #D4A373;   /* Meleg nude-arany */
+  background-color: var(--color-ivory);
+}
+
 /* Base Styles */
 * {
   box-sizing: border-box;
@@ -36,6 +46,7 @@ body {
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .container {
@@ -63,20 +74,23 @@ h1, h2, h3, .serif-heading {
   margin-bottom: 12px;
 }
 
-/* Header & Navigation */
+/* Navigation Tabs */
 .header {
   background: var(--color-ivory);
   border-bottom: 1px solid var(--color-stone);
-  padding: 24px 0;
+  padding: 20px 0;
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: var(--transition-base);
 }
 
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .brand {
@@ -88,36 +102,58 @@ h1, h2, h3, .serif-heading {
   letter-spacing: -0.03em;
 }
 
-.header-tagline {
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--color-stone);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 8px 18px;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-weight: 600;
   color: var(--color-ink);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-base);
   opacity: 0.7;
 }
 
-/* Hero Section (Deep Forest Dark Block) */
+.tab-btn.active {
+  background: var(--color-forest);
+  color: var(--color-ivory);
+  opacity: 1;
+}
+
+/* Hero Section */
 .hero-pantry-section {
   background-color: var(--color-forest);
   color: var(--color-ivory);
-  padding: 80px 0 60px 0;
+  padding: 60px 0;
   margin-bottom: 60px;
   border-bottom: 1px solid var(--color-champagne);
+  transition: background-color 0.4s ease;
 }
 
 .hero-content {
   max-width: 760px;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 3.8rem;
   color: var(--color-ivory);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: var(--color-stone);
   font-weight: 300;
   max-width: 580px;
@@ -140,16 +176,16 @@ h1, h2, h3, .serif-heading {
   margin-bottom: 16px;
 }
 
-.pantry-custom-input input[type="text"] {
+.pantry-custom-input input[type="text"],
+.cycle-calculator-box input {
   width: 100%;
-  padding: 16px 20px;
+  padding: 14px 18px;
   background: var(--color-white);
   border: 1px solid var(--color-stone);
   border-radius: var(--radius-sm);
   font-family: var(--font-sans);
   font-size: 1rem;
   color: var(--color-ink);
-  transition: var(--transition-base);
 }
 
 .pantry-custom-input input[type="text"]:focus {
@@ -157,12 +193,29 @@ h1, h2, h3, .serif-heading {
   border-color: var(--color-burgundy);
 }
 
+/* Cycle Calculator Box */
+.cycle-calculator-box {
+  background: var(--color-white);
+  border: 1px solid var(--color-champagne);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.cycle-result-card {
+  margin-top: 16px;
+  padding: 16px;
+  background: #F5EAE6;
+  border-left: 3px solid var(--color-burgundy);
+  border-radius: 2px;
+}
+
 /* Button System */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
+  padding: 12px 24px;
   font-family: var(--font-sans);
   font-size: 0.85rem;
   font-weight: 600;
@@ -180,7 +233,7 @@ h1, h2, h3, .serif-heading {
 }
 
 .btn-primary:hover {
-  background-color: #5c2430;
+  opacity: 0.9;
   transform: translateY(-1px);
 }
 
@@ -210,39 +263,13 @@ h1, h2, h3, .serif-heading {
   font-size: 1.1rem;
 }
 
-/* Filters Layout */
-.filters-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 16px;
-}
-
-.filter-group label {
-  display: block;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
-}
-
-.filter-group select {
-  width: 100%;
-  padding: 12px;
-  background: var(--color-white);
-  border: 1px solid var(--color-stone);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-sans);
-}
-
-/* Divider Line */
 .divider {
   height: 1px;
   background: var(--color-stone);
-  margin: 32px 0;
+  margin: 28px 0;
 }
 
-/* Recipe Cards & Results */
+/* Recipe Cards */
 .results-container {
   margin-top: 48px;
 }
@@ -260,11 +287,6 @@ h1, h2, h3, .serif-heading {
   border-color: var(--color-champagne);
 }
 
-.recipe-card-header h3 {
-  font-size: 1.8rem;
-  color: var(--color-forest);
-}
-
 .badge-status {
   font-family: var(--font-sans);
   font-size: 0.75rem;
@@ -279,11 +301,11 @@ h1, h2, h3, .serif-heading {
 .badge-sub { background: #EDE8F0; color: var(--color-burgundy); }
 .badge-missing { background: #FAF0E6; color: #8A5A2B; }
 
-/* Modal Presentation */
+/* Modal */
 .modal {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(23, 53, 45, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
@@ -293,7 +315,7 @@ h1, h2, h3, .serif-heading {
 
 .modal-content {
   background: var(--color-ivory);
-  padding: 48px;
+  padding: 40px;
   border-radius: var(--radius-md);
   max-width: 640px;
   width: 90%;
@@ -311,7 +333,7 @@ h1, h2, h3, .serif-heading {
   color: var(--color-forest);
 }
 
-/* Footer (Deep Forest Statement Block) */
+/* Footer */
 .footer {
   background-color: var(--color-forest);
   color: var(--color-stone);
@@ -320,11 +342,11 @@ h1, h2, h3, .serif-heading {
   border-top: 1px solid var(--color-champagne);
   text-align: center;
   font-size: 0.9rem;
+  transition: background-color 0.4s ease;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .hero-title { font-size: 2.6rem; }
-  .filters-grid { grid-template-columns: 1fr; }
   .pantry-builder { padding: 24px; }
+  .header-container { flex-direction: column; align-items: flex-start; }
 }
