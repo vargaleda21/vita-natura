@@ -20,9 +20,10 @@
   </header>
 
   <!-- HERO + PANTRY BUILDER -->
-  <main class="container">
-    <section class="hero-pantry-section">
+  <section class="hero-pantry-section">
+    <div class="container">
       <div class="hero-content">
+        <span class="eyebrow" style="color: var(--color-champagne);">MINDENNAPI JÓLLÉT</span>
         <h1 class="hero-title">Kevesebb keresgélés.<br>Több jó döntés.</h1>
         <p class="hero-subtitle">Te mondd meg, mid van otthon. Mi megmutatjuk, mit főzhetsz belőle.</p>
       </div>
@@ -33,16 +34,16 @@
           <label for="ingredient-input" class="pantry-label">1. Írd be az otthoni alapanyagokat:</label>
         </div>
         
-        <div class="pantry-custom-input" style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <div class="pantry-custom-input" style="display: flex; gap: 12px; margin-bottom: 20px;">
           <input type="text" id="ingredient-input" placeholder="pl. csirkemell, rizs, cukkini..." autocomplete="off">
           <button id="search-btn" class="btn btn-primary">Keresés</button>
         </div>
 
-        <div id="unrecognized-warning" class="custom-warning" style="display: none;"></div>
+        <div id="unrecognized-warning" class="custom-warning" style="display: none; background: #FAF0E6; color: #8A5A2B; padding: 12px; border-radius: 4px; margin-bottom: 15px;"></div>
 
         <div class="selected-summary">
-          <span class="summary-label">Kiválasztott alapanyagok:</span>
-          <div id="ingredient-tags" class="chip-group-selected" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;"></div>
+          <span class="summary-label" style="display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">Kiválasztott alapanyagok:</span>
+          <div id="ingredient-tags" class="chip-group-selected"></div>
         </div>
 
         <div class="divider"></div>
@@ -71,15 +72,16 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- RESULTS SECTION -->
-      <div id="recipe-results-container" class="results-container"></div>
-    </section>
+  <!-- RESULTS SECTION -->
+  <main class="container">
+    <div id="recipe-results-container" class="results-container"></div>
   </main>
 
   <!-- MODAL: RECEPT RÉSZLETEK -->
-  <div id="recipe-modal" class="modal hidden">
-    <div class="modal-overlay"></div>
+  <div id="recipe-modal" class="modal" style="display: none;">
     <div class="modal-content">
       <span class="modal-close" onclick="UIController.closeModal()">&times;</span>
       <div id="modal-content-container"></div>
@@ -89,7 +91,8 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container text-center">
-      <p>Vita-Natura 2.0 MVP &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
+      <p class="serif-heading" style="font-size: 1.5rem; color: var(--color-ivory); margin-bottom: 12px;">A jóllét nem egy újabb teendőlista.</p>
+      <p>Vita-Natura MVP &copy; 2026 – Csendes döntéstámogatás a mindennapokban.</p>
     </div>
   </footer>
 
