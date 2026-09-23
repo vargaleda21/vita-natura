@@ -1,5 +1,5 @@
 /**
- * Vita-Natura UI Controller v1.4 (Sensory Mood Filters & Intolerance Adaptor)
+ * Vita-Natura UI Controller v1.6 (Refined Copy & Active Button States)
  */
 
 const UIController = {
@@ -43,6 +43,7 @@ const UIController = {
   },
 
   selectedIngredients: [],
+  currentMode: 'pantry',
 
   init() {
     this.bindEvents();
@@ -68,6 +69,85 @@ const UIController = {
 
     if (moodFilter) {
       moodFilter.addEventListener("change", () => this.executeSearch());
+    }
+  },
+
+  switchMode(mode) {
+    this.currentMode = mode;
+    const body = document.body;
+    const tabPantry = document.getElementById("tab-pantry");
+    const tabCycle = document.getElementById("tab-cycle");
+    const cycleBox = document.getElementById("cycle-calculator-section");
+
+    const heroEyebrow = document.getElementById("hero-eyebrow");
+    const heroTitle = document.getElementById("hero-title");
+    const heroSubtitle = document.getElementById("hero-subtitle");
+
+    if (mode === 'cycle') {
+      body.classList.add("cycle-mode");
+      tabCycle.classList.add("active");
+      tabPantry.classList.remove("active");
+      if (cycleBox) cycleBox.style.display = "block";
+
+      if (heroEyebrow) heroEyebrow.innerText = "NŐI EGÉSZSÉG & HARMONÓGIA";
+      if (heroTitle) heroTitle.innerHTML = "Étel-szinkronizáció<br>a ciklusoddal.";
+      if (heroSubtitle) heroSubtitle.innerText = "Támogasd a testedet az aktuális hormonális fázisodban. Mi megmutatjuk, miből főzz ma.";
+    } else {
+      body.classList.remove("cycle-mode");
+      tabPantry.classList.add("active");
+      tabCycle.classList.remove("active");
+      if (cycleBox) cycleBox.style.display = "none";
+
+      if (heroEyebrow) heroEyebrow.innerText = "MINDENNAPI JÓLLÉT";
+      if (heroTitle) heroTitle.innerHTML = "Kevesebb keresgélés.<br>Több jó döntés.";
+      if (heroSubtitle) heroSubtitle.innerText = "Döntési fáradtság a hétköznap este 6 órakor? Te mondd meg, mid van otthon, mi megmutatjuk, mit főzhetsz belőle.";
+    }
+  },
+
+  calculateCyclePhase() {
+    const startDateVal = document.getElementById("cycle-start-date").value;
+    const cycleLengthVal = parseInt(document.getElementById("cycle-length").value) || 28;
+    const resultCard = document.getElementById("cycle-result");
+
+    if (!startDateVal) {
+      alert("Kérjük, válaszd ki az utolsó menstruációd kezdő napját!");
+      return;
+    }
+
+    const startDate = new Date(startDateVal);
+    const today = new Date();
+    const diffTime = Math.abs(today - startDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) % cycleLengthVal + 1;
+
+    let phaseName = "";
+    let phaseDesc = "";
+    let recommendedIngredient = "";
+
+    if (diffDays >= 1 && diffDays <= 5) {
+      phaseName = "Menstruációs fázis";
+      phaseDesc = "A testednek most vasra, pihenésre és meleget adó, könnyen emészthető ételekre van szüksége.";
+      recommendedIngredient = "spenót";
+    } else if (diffDays >= 6 && diffDays <= 13) {
+      phaseName = "Follikuláris fázis";
+      phaseDesc = "Emelkedik az energiaszinted! Friss, erjesztett és ropogós zöldségek támogatják a petefészek működését.";
+      recommendedIngredient = "brokkoli";
+    } else if (diffDays >= 14 && diffDays <= 17) {
+      phaseName = "Ovulációs fázis";
+      phaseDesc = "A csúcsértékeden vagy. Rostban gazdag, cinkben és B-vitaminban dús alapanyagok segítik a hormonlebontást.";
+      recommendedIngredient = "cukkini";
+    } else {
+      phaseName = "Luteális fázis";
+      phaseDesc = "A menstruáció előtti napok. A testednek több magnéziumra, B6-vitaminra és lassú szénhidrátra van szüksége a puffadás és a sóvárgás ellen.";
+      recommendedIngredient = "édesburgonya";
+    }
+
+    if (resultCard) {
+      resultCard.style.display = "block";
+      resultCard.innerHTML = `
+        <h4 style="color: var(--color-forest); font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 4px;">Ma a ciklusod <strong>${diffDays}. napján</strong> vagy (${phaseName})</h4>
+        <p style="font-size: 0.9rem; margin-bottom: 10px;">${phaseDesc}</p>
+        <button class="btn btn-primary" onclick="UIController.addIngredientFromEditorial('${recommendedIngredient}', '${recommendedIngredient.toUpperCase()}')">+ Ajánlott alapanyag (${recommendedIngredient}) hozzáadása</button>
+      `;
     }
   },
 
@@ -116,7 +196,17 @@ const UIController = {
     this.renderResults(results);
   },
 
-  selectQuickCollection(type) {
+  /* GYORS-KOLLEKCIÓK SZÍN- ÉS AKTÍV ÁLLAPOT KEZELÉSSELEL */
+  selectQuickCollection(type, btnElement) {
+    // Összes gomb aktív osztályának eltávolítása
+    const allCollectionBtns = document.querySelectorAll('.collection-btn');
+    allCollectionBtns.forEach(btn => btn.classList.remove('active-collection'));
+
+    // Kattintott gomb kiemelése
+    if (btnElement) {
+      btnElement.classList.add('active-collection');
+    }
+
     const timeFilter = document.getElementById("filter-time");
     const mealFilter = document.getElementById("filter-meal");
     const moodFilter = document.getElementById("filter-mood");
@@ -255,12 +345,11 @@ const UIController = {
         badgeClass = "badge-100";
       }
 
-      /* PANTRY RESCUE COUNTER */
       let rescueCount = this.selectedIngredients.length > 0 ? this.selectedIngredients.length : 1;
       let rescueHtml = `<div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed var(--color-stone); font-size: 0.8rem; color: var(--color-forest); font-weight: 600;">🌱 Kamramentés: ${rescueCount} meglévő alapanyagodat használtad fel ehhez a fogáshoz.</div>`;
 
-      /* INTOLERANCE ADAPTOR TIP */
-      let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Szelídített lehetőség: Tejtermékek esetén növényi alternatívákkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
+      /* FRISSÍTETT ELEGÁNS KÍMÉLŐ OPCIÓ FELIRAT */
+      let intoleranceTip = `<div style="margin-top: 8px; font-size: 0.8rem; color: var(--color-burgundy); font-style: italic;">🌱 Kímélő opció: Tejtermékek esetén növényi alternatívákkal (pl. zabtejszín, kókuszjoghurt) is 100%-ban működik.</div>`;
 
       card.innerHTML = `
         <div class="recipe-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
