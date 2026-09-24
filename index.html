@@ -1,302 +1,948 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" data-theme="kamra">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DaleDay - Ciklusszinkron & Tiszta Receptek</title>
+    <title>DaleDay - Ciklusszinkron & Kamra</title>
+    <!-- Google Fonts Tipografia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & DYNAMIC THEMING (CSS Variables)
+           ========================================================================== */
         :root {
-            --bg-color: #fcf8f5;
-            --card-bg: #ffffff;
-            --accent-color: #8a9a86;
-            --accent-hover: #73836f;
-            --text-color: #333333;
-            --border-color: #e5dec9;
-            --vilgain-color: #e07a5f;
+            --transition-speed: 0.35s;
+            --font-heading: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.06);
+        }
+
+        /* KAMRA THEME (Earth Tone & Natural) */
+        [data-theme="kamra"] {
+            --bg-main: #FCF8F5;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F7F3EE;
+            --primary: #8A9A86;
+            --primary-hover: #73836F;
+            --primary-light: #EBF0EA;
+            --accent-vilgain: #E07A5F;
+            --accent-vilgain-bg: #FDF0ED;
+            --accent-vilgain-border: #F7D1C8;
+            --text-main: #333333;
+            --text-muted: #6B7280;
+            --text-heading: #4A5746;
+            --border-color: #E5DEC9;
+        }
+
+        /* CIKLUSSZINKRON THEME (Feminine & Deep Tones) */
+        [data-theme="cycle"] {
+            --bg-main: #FAF4F4;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F9EBEA;
+            --primary: #9E2A2B;
+            --primary-hover: #7D2122;
+            --primary-light: #F4E3E3;
+            --accent-vilgain: #E07A5F;
+            --accent-vilgain-bg: #FDF0ED;
+            --accent-vilgain-border: #F7D1C8;
+            --text-main: #2B1E1E;
+            --text-muted: #7A6363;
+            --text-heading: #541718;
+            --border-color: #EAC8C8;
+        }
+
+        /* ==========================================================================
+           2. BASE RESETS & LAYOUT
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color var(--transition-speed) ease,
+                        border-color var(--transition-speed) ease,
+                        color var(--transition-speed) ease;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 24px 16px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 640px;
             width: 100%;
+            margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            color: #4a5746;
+        .brand-title {
+            font-family: var(--font-heading);
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+            line-height: 1;
         }
 
-        p.subtitle {
-            color: #777;
+        .brand-subtitle {
             font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        /* ==========================================================================
+           3. MODULE SWITCHER (Tab System)
+           ========================================================================== */
+        .module-switch-container {
+            background: var(--bg-card-alt);
+            padding: 6px;
+            border-radius: 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 28px;
             border: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 100px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ==========================================================================
+           4. CARDS & UI COMPONENTS
+           ========================================================================== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
-        h2 {
-            font-size: 1.2rem;
-            margin-top: 0;
-            color: #4a5746;
-        }
-
-        h3 {
-            font-size: 1rem;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            color: #4a5746;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .btn-option {
-            background: #f7f3ee;
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .btn-option:hover {
-            background: #ede6dc;
-        }
-
-        .btn-option.active {
-            background: var(--accent-color);
-            color: white;
-            border-color: var(--accent-color);
-        }
-
-        .ingredient-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .ingredient-list li {
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--border-color);
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-light);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
         }
 
-        .steps-list {
-            padding-left: 20px;
-            margin: 0;
-            color: #555;
+        .card-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.2;
+        }
+
+        /* ==========================================================================
+           5. CIKLUSSZINKRON MODULE SPECIFIC STYLES
+           ========================================================================== */
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .form-group { grid-template-columns: 1fr; }
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            height: 46px;
+        }
+
+        .custom-input:focus {
+            border-color: var(--primary);
+        }
+
+        .cycle-visualizer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 0;
+            margin-bottom: 20px;
+            background: var(--bg-card-alt);
+            border-radius: var(--radius-md);
+        }
+
+        .cycle-ring-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+
+        .cycle-ring-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .cycle-ring-bg {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 12;
+        }
+
+        .cycle-ring-progress {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 0.8s ease;
+        }
+
+        .cycle-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .day-counter {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .day-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .phase-badge-container {
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 100px;
+        }
+
+        .phase-badge svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* ==========================================================================
+           6. KAMRA MODULE SPECIFIC STYLES
+           ========================================================================== */
+        .pantry-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .pantry-tag {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pantry-tag.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+        }
+
+        .pantry-tag svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* ==========================================================================
+           7. RECIPE DISPLAY & VILGAIN INTEGRATION
+           ========================================================================== */
+        .recipe-title-group {
+            margin-bottom: 12px;
+        }
+
+        .recipe-name {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .recipe-desc {
             font-size: 0.9rem;
-            line-height: 1.5;
+            color: var(--text-muted);
         }
 
-        .steps-list li {
-            margin-bottom: 6px;
+        .ingredients-list {
+            list-style: none;
+            margin: 16px 0;
+            border-top: 1px dashed var(--border-color);
         }
 
-        .vilgain-tag {
-            background-color: #fdf0ed;
-            color: var(--vilgain-color);
-            border: 1px solid #f7d1c8;
-            padding: 4px 8px;
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .ingredient-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+        }
+
+        .status-dot.has {
+            background: var(--primary);
+        }
+
+        .status-dot.missing {
+            background: var(--accent-vilgain);
+        }
+
+        .vilgain-nudge-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-vilgain-bg);
+            color: var(--accent-vilgain);
+            border: 1px solid var(--accent-vilgain-border);
+            padding: 4px 10px;
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.8rem;
-            font-weight: bold;
-            transition: background 0.2s;
+            font-weight: 700;
+            transition: transform 0.15s ease;
         }
 
-        .vilgain-tag:hover {
-            background-color: #f9e2dc;
+        .vilgain-nudge-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .vilgain-nudge-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .steps-container {
+            margin-top: 20px;
+        }
+
+        .steps-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .steps-title svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .steps-ol {
+            padding-left: 20px;
+            font-size: 0.88rem;
+            color: var(--text-main);
+        }
+
+        .steps-ol li {
+            margin-bottom: 8px;
+            padding-left: 4px;
         }
 
         .booster-box {
-            background: #f4f6f3;
-            border-left: 4px solid var(--accent-color);
-            padding: 12px;
-            border-radius: 4px;
-            margin-top: 20px;
+            background: var(--bg-card-alt);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin-top: 24px;
+            position: relative;
+        }
+
+        .booster-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
             font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .booster-header svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .booster-text {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .booster-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    
+    <!-- HEADER -->
     <header>
-        <h1>daleday</h1>
-        <p class="subtitle">Tápláld a tested a ciklusod szerint, abból ami itthon van.</p>
+        <h1 class="brand-title">daleday</h1>
+        <p class="brand-subtitle">Tudatos táplálkozás a ciklusod és a kamrád ritmusában.</p>
     </header>
 
-    <!-- 1. CIKLUS FÁZIS -->
-    <div class="card">
-        <h2>1. Melyik fázisban vagy?</h2>
-        <div class="options-grid" id="phase-selector">
-            <div class="btn-option" data-phase="menstrual" onclick="selectPhase(this)">Menstruáció</div>
-            <div class="btn-option" data-phase="follicular" onclick="selectPhase(this)">Follikuláris</div>
-            <div class="btn-option" data-phase="ovulatory" onclick="selectPhase(this)">Ovuláció</div>
-            <div class="btn-option active" data-phase="luteal" onclick="selectPhase(this)">Luteális</div>
-        </div>
+    <!-- MODULVÁLASZTÓ SWITCH -->
+    <div class="module-switch-container">
+        <button class="tab-btn active" id="tab-kamra" onclick="switchModule('kamra')">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
+            Kamra - Mi van otthon?
+        </button>
+        <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 4a8 8 0 0 0 0 16 8 8 0 0 0 0-16z" opacity="0.3"/></svg>
+            Ciklusszinkron
+        </button>
     </div>
 
-    <!-- 2. HŰTŐ ALAPANYAG -->
-    <div class="card">
-        <h2>2. Mi van otthon?</h2>
-        <div class="options-grid">
-            <div class="btn-option active">Zabpehely & Magvajak</div>
-            <div class="btn-option" style="opacity: 0.5; cursor: not-allowed;">Tojás & Zöldségek (Hamarosan)</div>
+    <!-- CIKLUSSZINKRON MODUL -->
+    <div id="module-cycle" class="hidden">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                </div>
+                <div>
+                    <div class="card-title">Ciklus-Kalkulátor</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Számold ki a jelenlegi hormonális fázisodat</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label class="input-label">Utolsó menstruáció első napja</label>
+                    <input type="date" id="last-period-date" class="custom-input" onchange="calculateCycle()">
+                </div>
+                <div class="input-wrapper">
+                    <label class="input-label">Átlagos ciklushossz (nap)</label>
+                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" onchange="calculateCycle()">
+                </div>
+            </div>
+
+            <div class="cycle-visualizer">
+                <div class="cycle-ring-container">
+                    <svg class="cycle-ring-svg" viewBox="0 0 160 160">
+                        <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
+                        <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
+                    </svg>
+                    <div class="cycle-ring-text">
+                        <div class="day-counter" id="cycle-day-text">18.</div>
+                        <div class="day-label">napja</div>
+                    </div>
+                </div>
+                <div class="phase-badge-container">
+                    <div class="phase-badge">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                        <span id="phase-name-text">Luteális fázis</span>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="card" id="cycle-recipe-card"></div>
     </div>
 
-    <!-- 3. RECEPT TALÁLAT -->
-    <div class="card" id="recipe-card">
-        <!-- A JS tölti be az adatokat -->
+    <!-- KAMRA MODUL -->
+    <div id="module-kamra">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5zm-12.12-20c-.28 0-.5.22-.5.5v17c0 .28.22.5.5.5h12.12c.28 0 .5-.22.5-.5v-17c0-.28-.22-.5-.5-.5h-12.12z"/><path d="M8 6h8v2h-8zm0 4h8v2h-8z"/></svg>
+                </div>
+                <div>
+                    <div class="card-title">Mi van a kamrádban?</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Jelöld be a meglévő alapanyagokat a szűréshez</div>
+                </div>
+            </div>
+
+            <div class="pantry-tags-container" id="pantry-tags"></div>
+        </div>
+
+        <div class="card" id="pantry-recipe-card"></div>
     </div>
+
 </div>
 
 <script>
-    const recipes = {
-        luteal: {
-            title: "✨ Ajánlott Recept: Luteális Krémes Zabkása",
-            desc: "Segít leküzdeni az édességvágyat és feltölti a magnéziumraktáraidat a vérzés előtti napokban.",
-            ingredients: [
-                { name: "50g Finomszemű Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
-                { name: "1 ek Mogyoróvaj", link: "https://vilgain.hu", tag: "Vilgain 100% Magvaj →" },
-                { name: "1 adag Tejsavófehérje", link: "https://vilgain.hu", tag: "Vilgain Grass-Fed Whey →" },
-                { name: "100ml Növényi tej / Víz", link: null, tag: "Otthoni alapanyag" }
-            ],
-            steps: [
-                "A zabpelyhet öntsd le 1,5 dl forró vízzel vagy növényi tejjel, és hagyd állni 3 percig.",
-                "Keverd hozzá a tejsavófehérjét és a mogyoróvajat, amíg selymes, krémessé nem válik.",
-                "Tetejét szórd meg egy csipet fahéjjal, és fogyaszd melegen!"
-            ],
-            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>A Luteális fázisban a test több magnéziumot használ el. Próbáld ki a <a href='https://vilgain.hu' target='_blank' rel='noopener noreferrer' style='color: var(--accent-color); font-weight: bold;'>Vilgain Magnesium Chelate</a>-et a görcsök és az édességvágy megelőzésére!"
-        },
+    /* ==========================================
+       1. DATA STRUCTURES (Recipes & Deep-linked Vilgain URLs)
+       ========================================== */
+    const PANTRY_INGREDIENTS = [
+        { id: "zabpehely", name: "Zabpehely" },
+        { id: "mogyorovaj", name: "Mogyoróvaj" },
+        { id: "feherje", name: "Fehérjepor" },
+        { id: "chia", name: "Chia mag" },
+        { id: "kakao", name: "Kakaópor" },
+        { id: "tojas", name: "Tojás" }
+    ];
+
+    const VILGAIN_BASE_URL = "https://vilgain.hu?utm_source=daleday&utm_medium=affiliate";
+
+    const CYCLE_RECIPES = {
         menstrual: {
-            title: "✨ Ajánlott Recept: Melegítő Fahéjas Zabkása",
-            desc: "Könnyen emészthető, melegítő étel a vérzés első napjaira, ami pótolja a tápanyagokat.",
+            title: "Melegítő Fahéjas Kakaós Zabkása",
+            desc: "Könnyen emészthető, melegítő tál a vérzés első napjaira, amely pótolja az ásványi anyagokat.",
             ingredients: [
-                { name: "50g Finomszemű Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
-                { name: "1 tk Kakaópor", link: "https://vilgain.hu", tag: "Vilgain Bio Kakaó →" },
-                { name: "1 ek Chia mag", link: "https://vilgain.hu", tag: "Vilgain Chia Mag →" },
-                { name: "200ml Meleg növényi tej", link: null, tag: "Otthoni alapanyag" }
+                { name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
+                { name: "1 tk Bio Kakaópor", isVilgain: true, link: "https://vilgain.hu/v/bio-kakao", tag: "Vilgain Kakaó →" },
+                { name: "1 ek Chia mag", isVilgain: true, link: "https://vilgain.hu/v/chia-seeds", tag: "Vilgain Chia →" },
+                { name: "200ml Meleg növényi tej", isVilgain: false, tag: "Otthoni alapanyag" }
             ],
             steps: [
-                "Főzd össze a zabot, a chia magot és a kakaóport a meleg növényi tejben alacsony lángon 4-5 percig.",
-                "Öntsd tálba, és hagyd hűlni 2 percig a fogyasztás előtt."
+                "Főzd össze a zabot, a chia magot és a kakaóport a növényi tejjel 4 percig alacsony lángon.",
+                "Hagyd állni 2 percig, majd melegen fogyaszd."
             ],
-            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>A menstruáció alatt a vas- és C-vitamin pótláson van a hangsúly. Keverj hozzá egy kanál <a href='https://vilgain.hu' target='_blank' rel='noopener noreferrer' style='color: var(--accent-color); font-weight: bold;'>Vilgain Greens Mix</a>-et!"
+            booster: "A menstruáció alatt a vas- és C-vitamin pótláson van a hangsúly. Keverj a kásádba egy adag <a class='booster-link' href='https://vilgain.hu/v/greens-mix' target='_blank' rel='noopener'>Vilgain Greens Mix-et</a>!"
         },
         follicular: {
-            title: "✨ Ajánlott Recept: Proteines Energiatál",
-            desc: "Frissítő, emelkedő energiaszinthez igazított reggeli az új ciklus kezdetére.",
+            title: "Proteines Energiatál Matcha-val",
+            desc: "Frissítő, emelkedő ösztrogénszinthez igazított reggeli az új ciklus dinamikus kezdetére.",
             ingredients: [
-                { name: "40g Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
-                { name: "1 adag Matcha por", link: "https://vilgain.hu", tag: "Vilgain Organic Matcha →" },
-                { name: "1 ek Granola", link: "https://vilgain.hu", tag: "Vilgain Granola →" }
+                { name: "40g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
+                { name: "1 adag Organic Matcha por", isVilgain: true, link: "https://vilgain.hu/v/organic-matcha", tag: "Vilgain Matcha →" },
+                { name: "1 ek Ropogós Granola", isVilgain: true, link: "https://vilgain.hu/v/granola", tag: "Vilgain Granola →" },
+                { name: "150g Görög joghurt", isVilgain: false, tag: "Otthoni alapanyag" }
             ],
             steps: [
-                "Készítsd el az alap zabkását, majd keverd bele a matcha port.",
-                "A tetejét szórjad meg ropogós granolával a textúra és energiatöbblet miatt."
+                "Keverd el a matcha port a joghurtban, majd rétegezd rá a zabpelyhet.",
+                "Tetejét szórd meg a ropogós granolával."
             ],
-            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>A Follikuláris fázisban az ösztrogén szintje emelkedik. Támogasd a bőröd <a href='https://vilgain.hu' target='_blank' rel='noopener noreferrer' style='color: var(--accent-color); font-weight: bold;'>Vilgain Kollagénnel</a>!"
+            booster: "A Follikuláris fázisban az ösztrogénszint emelkedik. Támogasd a bőröd ragyogását <a class='booster-link' href='https://vilgain.hu/v/collagen' target='_blank' rel='noopener'>Vilgain Kollagénnel</a>!"
         },
         ovulatory: {
-            title: "✨ Ajánlott Recept: Ragyogás Zab-Bowl",
-            desc: "Rostban és antioxidánsokban gazdag tál az energiád csúcspontjára.",
+            title: "Ragyogás Magvas Zab-Bowl",
+            desc: "Rostban és antioxidánsokban gazdag tál a csúcsenergiájú ovulációs napokra.",
             ingredients: [
-                { name: "50g Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
-                { name: "1 ek Tökmag / Szezámmag", link: "https://vilgain.hu", tag: "Vilgain Bio Tökmag →" }
+                { name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
+                { name: "1 ek Bio Tökmag", isVilgain: true, link: "https://vilgain.hu/v/tokmag", tag: "Vilgain Tökmag →" },
+                { name: "1 ek Szezámmag", isVilgain: true, link: "https://vilgain.hu/v/szezammag", tag: "Vilgain Szezámmag →" },
+                { name: "Friss bogyós gyümölcsök", isVilgain: false, tag: "Otthoni alapanyag" }
             ],
             steps: [
-                "Öntsd le a zabot forró vízzel, majd keverd el a magvakkal.",
-                "Azonnal fogyasztható, tápláló reggeli tál."
+                "Öntsd le a zabot forró vízzel, és keverd el a pirított magvakkal.",
+                "Díszítsd a friss bogyós gyümölcsökkel."
             ],
-            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>Az ovuláció idején a cink és az omega-3 zsírsavak a legfontosabbak a peteérés támogatására."
+            booster: "Az ovuláció idején a cink és az omega-3 zsírsavak a legfontosabbak a peteérés támogatására."
+        },
+        luteal: {
+            title: "Krémes Mogyoróvajas Zabkása",
+            desc: "Segít leküzdeni az édességvágyat és feltölti a magnéziumraktáraidat a vérzés előtti napokban.",
+            ingredients: [
+                { name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
+                { name: "1 ek 100% Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" },
+                { name: "1 adag Grass-Fed Tejsavófehérje", isVilgain: true, link: "https://vilgain.hu/v/grass-fed-whey", tag: "Vilgain Whey →" },
+                { name: "100ml Növényi tej", isVilgain: false, tag: "Otthoni alapanyag" }
+            ],
+            steps: [
+                "A zabpelyhet forrázd le 1.5 dl meleg vízzel vagy tejjel, és hagyd állni 3 percig.",
+                "Keverd hozzá a fehérjeport és a krémes mogyoróvajat."
+            ],
+            booster: "A Luteális fázisban a test több magnéziumot használ el. Próbáld ki a <a class='booster-link' href='https://vilgain.hu/v/magnesium-chelate' target='_blank' rel='noopener'>Vilgain Magnesium Chelate-et</a> a görcsök megelőzésére!"
         }
     };
 
-    let currentPhase = 'luteal';
+    const PANTRY_RECIPES = [
+        {
+            title: "Proteines Mogyoróvajas Zabkása",
+            desc: "Gyors, tápláló reggeli magas fehérjetartalommal.",
+            requiredIngredients: ["zabpehely", "mogyorovaj", "feherje"],
+            ingredientsDetail: [
+                { id: "zabpehely", name: "50g Zabpehely", isVilgainHero: true, link: "https://vilgain.hu/v/minute-oats" },
+                { id: "mogyorovaj", name: "1 ek Mogyoróvaj", isVilgainHero: true, link: "https://vilgain.hu/v/mogyorovaj-100" },
+                { id: "feherje", name: "1 adag Fehérjepor", isVilgainHero: true, link: "https://vilgain.hu/v/grass-fed-whey" }
+            ],
+            steps: [
+                "Forrázd le a zabot meleg vízzel.",
+                "Keverd bele a mogyoróvajat és a fehérjeport selymesre."
+            ]
+        },
+        {
+            title: "Csokis Chia Puding",
+            desc: "Rostban dús, szupergyors desszert vagy reggeli.",
+            requiredIngredients: ["chia", "kakao"],
+            ingredientsDetail: [
+                { id: "chia", name: "2 ek Chia mag", isVilgainHero: true, link: "https://vilgain.hu/v/chia-seeds" },
+                { id: "kakao", name: "1 tk Kakaópor", isVilgainHero: true, link: "https://vilgain.hu/v/bio-kakao" }
+            ],
+            steps: [
+                "Keverd el a chia magot és a kakaóport 1.5 dl tejben.",
+                "Hagyd állni a hűtőben legalább 15 percig."
+            ]
+        }
+    ];
 
-    function selectPhase(element) {
-        let buttons = document.querySelectorAll('#phase-selector .btn-option');
-        buttons.forEach(btn => btn.classList.remove('active'));
-        
-        element.classList.add('active');
-        currentPhase = element.getAttribute('data-phase');
-        renderRecipe();
+    /* ==========================================
+       2. STATE MANAGEMENT
+       ========================================== */
+    let currentModule = "kamra";
+    let selectedPantryIngredients = ["zabpehely", "mogyorovaj"];
+
+    /* ==========================================
+       3. CORE FUNCTIONS
+       ========================================== */
+    function switchModule(moduleName) {
+        currentModule = moduleName;
+        document.documentElement.setAttribute("data-theme", moduleName);
+
+        document.getElementById("tab-kamra").classList.toggle("active", moduleName === "kamra");
+        document.getElementById("tab-cycle").classList.toggle("active", moduleName === "cycle");
+
+        document.getElementById("module-kamra").classList.toggle("hidden", moduleName !== "kamra");
+        document.getElementById("module-cycle").classList.toggle("hidden", moduleName !== "cycle");
+
+        if (moduleName === "cycle") {
+            calculateCycle();
+        } else {
+            renderPantryRecipes();
+        }
     }
 
-    function renderRecipe() {
-        const data = recipes[currentPhase] || recipes['luteal'];
-        const container = document.getElementById('recipe-card');
+    // Javított Ciklus Kalkulátor
+    function calculateCycle() {
+        const dateInput = document.getElementById("last-period-date").value;
+        const cycleLength = parseInt(document.getElementById("cycle-length").value) || 28;
 
-        let ingredientsHTML = data.ingredients.map(ing => {
-            if (ing.link) {
-                return `<li>
-                    <span>${ing.name}</span>
-                    <a href="${ing.link}" target="_blank" rel="noopener noreferrer" class="vilgain-tag">${ing.tag}</a>
-                </li>`;
-            } else {
-                return `<li>
-                    <span>${ing.name}</span>
-                    <span style="color: #aaa; font-size: 0.8rem;">${ing.tag}</span>
-                </li>`;
-            }
-        }).join('');
+        if (!dateInput) return;
 
-        let stepsHTML = data.steps.map(step => `<li>${step}</li>`).join('');
+        const lastPeriod = new Date(dateInput);
+        const today = new Date();
+        
+        // Időzóna korrekció éjfélre
+        lastPeriod.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        const diffTime = today - lastPeriod;
+        let currentDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+        // Érvényes tartomány ellenőrzése
+        if (currentDay < 1) currentDay = 1;
+        if (currentDay > cycleLength) {
+            currentDay = ((currentDay - 1) % cycleLength) + 1;
+        }
+
+        document.getElementById("cycle-day-text").innerText = `${currentDay}.`;
+
+        // SVG progress korrekció
+        const progressCircle = document.getElementById("cycle-progress");
+        const maxStroke = 440;
+        const offset = maxStroke - (currentDay / cycleLength) * maxStroke;
+        progressCircle.style.strokeDashoffset = offset;
+
+        // Fázis meghatározása
+        let phaseKey = "luteal";
+        let phaseName = "Luteális fázis";
+
+        if (currentDay >= 1 && currentDay <= 5) {
+            phaseKey = "menstrual";
+            phaseName = "Menstruációs fázis";
+        } else if (currentDay >= 6 && currentDay <= 11) {
+            phaseKey = "follicular";
+            phaseName = "Follikuláris fázis";
+        } else if (currentDay >= 12 && currentDay <= 16) {
+            phaseKey = "ovulatory";
+            phaseName = "Ovulációs fázis";
+        } else {
+            phaseKey = "luteal";
+            phaseName = "Luteális fázis";
+        }
+
+        document.getElementById("phase-name-text").innerText = phaseName;
+        renderCycleRecipe(phaseKey);
+    }
+
+    function renderCycleRecipe(phaseKey) {
+        const recipe = CYCLE_RECIPES[phaseKey];
+        const container = document.getElementById("cycle-recipe-card");
+
+        let ingredientsHTML = recipe.ingredients.map(ing => `
+            <li class="ingredient-item">
+                <span class="ingredient-name">
+                    <span class="status-dot has"></span>
+                    ${ing.name}
+                </span>
+                ${ing.isVilgain ? `
+                    <a href="${ing.link}?utm_source=daleday&utm_medium=cycle" target="_blank" rel="noopener" class="vilgain-nudge-btn">
+                        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                        ${ing.tag}
+                    </a>
+                ` : `<span style="color: var(--text-muted); font-size: 0.8rem;">${ing.tag}</span>`}
+            </li>
+        `).join('');
+
+        let stepsHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
 
         container.innerHTML = `
-            <h2>${data.title}</h2>
-            <p style="font-size: 0.85rem; color: #666;">${data.desc}</p>
+            <div class="recipe-title-group">
+                <div class="recipe-name">${recipe.title}</div>
+                <div class="recipe-desc">${recipe.desc}</div>
+            </div>
             
-            <h3>Hozzávalók:</h3>
-            <ul class="ingredient-list">
+            <ul class="ingredients-list">
                 ${ingredientsHTML}
             </ul>
 
-            <h3>🥣 Elkészítés:</h3>
-            <ol class="steps-list">
-                ${stepsHTML}
-            </ol>
+            <div class="steps-container">
+                <div class="steps-title">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                    Elkészítés
+                </div>
+                <ol class="steps-ol">
+                    ${stepsHTML}
+                </ol>
+            </div>
 
             <div class="booster-box">
-                ${data.booster}
+                <div class="booster-header">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z"/></svg>
+                    Ciklus-Turbó Booster
+                </div>
+                <div class="booster-text">${recipe.booster}</div>
             </div>
         `;
     }
 
-    renderRecipe();
+    // Kamra Engine
+    function renderPantryTags() {
+        const container = document.getElementById("pantry-tags");
+        container.innerHTML = PANTRY_INGREDIENTS.map(ing => {
+            const isActive = selectedPantryIngredients.includes(ing.id);
+            return `
+                <div class="pantry-tag ${isActive ? 'active' : ''}" onclick="togglePantryTag('${ing.id}')">
+                    <svg viewBox="0 0 24 24"><path d="${isActive ? 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z' : 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'}"/></svg>
+                    ${ing.name}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function togglePantryTag(id) {
+        if (selectedPantryIngredients.includes(id)) {
+            selectedPantryIngredients = selectedPantryIngredients.filter(item => item !== id);
+        } else {
+            selectedPantryIngredients.push(id);
+        }
+        renderPantryTags();
+        renderPantryRecipes();
+    }
+
+    function renderPantryRecipes() {
+        const container = document.getElementById("pantry-recipe-card");
+
+        const matchedRecipes = PANTRY_RECIPES.filter(recipe => {
+            return recipe.requiredIngredients.some(ing => selectedPantryIngredients.includes(ing));
+        });
+
+        if (matchedRecipes.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                    Nincs találat a kiválasztott alapanyagokra. Jelölj be több elemet!
+                </div>
+            `;
+            return;
+        }
+
+        const recipe = matchedRecipes[0];
+
+        let ingredientsHTML = recipe.ingredientsDetail.map(ing => {
+            const hasIt = selectedPantryIngredients.includes(ing.id);
+            return `
+                <li class="ingredient-item">
+                    <span class="ingredient-name">
+                        <span class="status-dot ${hasIt ? 'has' : 'missing'}"></span>
+                        ${ing.name}
+                    </span>
+                    ${(!hasIt && ing.isVilgainHero) ? `
+                        <a href="${ing.link}?utm_source=daleday&utm_medium=pantry" target="_blank" rel="noopener" class="vilgain-nudge-btn">
+                            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            Hiányzik? Rendeld meg a Vilgain-től →
+                        </a>
+                    ` : (hasIt ? `<span style="color: var(--primary); font-size: 0.8rem; font-weight: 700;">Otthon van</span>` : `<span style="color: var(--text-muted); font-size: 0.8rem;">Hiányzik</span>`)}
+                </li>
+            `;
+        }).join('');
+
+        let stepsHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
+
+        container.innerHTML = `
+            <div class="recipe-title-group">
+                <div class="recipe-name">${recipe.title}</div>
+                <div class="recipe-desc">${recipe.desc}</div>
+            </div>
+            
+            <ul class="ingredients-list">
+                ${ingredientsHTML}
+            </ul>
+
+            <div class="steps-container">
+                <div class="steps-title">
+                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                    Elkészítés
+                </div>
+                <ol class="steps-ol">
+                    ${stepsHTML}
+                </ol>
+            </div>
+        `;
+    }
+
+    /* ==========================================
+       4. INITIALIZATION
+       ========================================== */
+    window.addEventListener("DOMContentLoaded", () => {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("last-period-date").value = today;
+
+        renderPantryTags();
+        switchModule("kamra");
+    });
 </script>
 
 </body>
