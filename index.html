@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DaleDay – Ciklusszinkron & Tiszta Receptek</title>
+    <title>DaleDay - Ciklusszinkron & Tiszta Receptek</title>
     <style>
         :root {
             --bg-color: #fcf8f5;
@@ -62,6 +62,13 @@
             color: #4a5746;
         }
 
+        h3 {
+            font-size: 1rem;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #4a5746;
+        }
+
         .options-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -90,17 +97,10 @@
             border-color: var(--accent-color);
         }
 
-        .recipe-result {
-            display: none;
-        }
-
-        .recipe-result.active {
-            display: block;
-        }
-
         .ingredient-list {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         .ingredient-list li {
@@ -109,6 +109,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .steps-list {
+            padding-left: 20px;
+            margin: 0;
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .steps-list li {
+            margin-bottom: 6px;
         }
 
         .vilgain-tag {
@@ -132,7 +144,7 @@
             border-left: 4px solid var(--accent-color);
             padding: 12px;
             border-radius: 4px;
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 0.9rem;
         }
     </style>
@@ -149,64 +161,142 @@
     <div class="card">
         <h2>1. Melyik fázisban vagy?</h2>
         <div class="options-grid" id="phase-selector">
-            <div class="btn-option" onclick="selectPhase(this)">Menstruáció</div>
-            <div class="btn-option" onclick="selectPhase(this)">Follikuláris</div>
-            <div class="btn-option" onclick="selectPhase(this)">Ovuláció</div>
-            <div class="btn-option active" onclick="selectPhase(this)">Luteális</div>
+            <div class="btn-option" data-phase="menstrual" onclick="selectPhase(this)">Menstruáció</div>
+            <div class="btn-option" data-phase="follicular" onclick="selectPhase(this)">Follikuláris</div>
+            <div class="btn-option" data-phase="ovulatory" onclick="selectPhase(this)">Ovuláció</div>
+            <div class="btn-option active" data-phase="luteal" onclick="selectPhase(this)">Luteális</div>
         </div>
     </div>
 
     <!-- 2. HŰTŐ ALAPANYAG -->
     <div class="card">
-        <h2>2. Mi van otthon? (Válassz egyet)</h2>
+        <h2>2. Mi van otthon?</h2>
         <div class="options-grid">
-            <div class="btn-option active" onclick="showRecipe()">Zabpehely & Mogyoróvaj</div>
+            <div class="btn-option active">Zabpehely & Magvajak</div>
             <div class="btn-option" style="opacity: 0.5; cursor: not-allowed;">Tojás & Zöldségek (Hamarosan)</div>
         </div>
     </div>
 
     <!-- 3. RECEPT TALÁLAT -->
-    <div class="card recipe-result active" id="recipe-card">
-        <h2>✨ Ajánlott Recept: Luteális Krémes Zabkása</h2>
-        <p style="font-size: 0.85rem; color: #666;">Segít leküzdeni az édességvágyat és feltölti a magnéziumraktáraidat.</p>
-        
-        <h3>Hozzávalók:</h3>
-        <ul class="ingredient-list">
-            <li>
-                <span>50g Finomszemű Zabpehely</span>
-                <a href="https://vilgain.hu" target="_blank" class="vilgain-tag">Vilgain Tiszta Zab →</a>
-            </li>
-            <li>
-                <span>1 ek Mogyoróvaj</span>
-                <a href="https://vilgain.hu" target="_blank" class="vilgain-tag">Vilgain 100% Magvaj →</a>
-            </li>
-            <li>
-                <span>1 adag Tejsavófehérje</span>
-                <a href="https://vilgain.hu" target="_blank" class="vilgain-tag">Vilgain Grass-Fed Whey →</a>
-            </li>
-            <li>
-                <span>100ml Növényi tej / Víz</span>
-                <span style="color: #aaa; font-size: 0.8rem;">Otthoni alapanyag</span>
-            </li>
-        </ul>
-
-        <div class="booster-box">
-            <strong>💡 Ciklus-Turbó Tipp:</strong><br>
-            A Luteális fázisban a test több magnéziumot használ el. Próbáld ki a <a href="https://vilgain.hu" target="_blank" style="color: var(--accent-color); font-weight: bold;">Vilgain Magnesium Chelate</a>-et a görcsök megelőzésére!
-        </div>
+    <div class="card" id="recipe-card">
+        <!-- A JS tölti be az adatokat -->
     </div>
 </div>
 
 <script>
+    const recipes = {
+        luteal: {
+            title: "✨ Ajánlott Recept: Luteális Krémes Zabkása",
+            desc: "Segít leküzdeni az édességvágyat és feltölti a magnéziumraktáraidat a vérzés előtti napokban.",
+            ingredients: [
+                { name: "50g Finomszemű Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
+                { name: "1 ek Mogyoróvaj", link: "https://vilgain.hu", tag: "Vilgain 100% Magvaj →" },
+                { name: "1 adag Tejsavófehérje", link: "https://vilgain.hu", tag: "Vilgain Grass-Fed Whey →" },
+                { name: "100ml Növényi tej / Víz", link: null, tag: "Otthoni alapanyag" }
+            ],
+            steps: [
+                "A zabpelyhet öntsd le 1,5 dl forró vízzel vagy növényi tejjel, és hagyd állni 3 percig.",
+                "Keverd hozzá a tejsavófehérjét és a mogyoróvajat, amíg selymes, krémessé nem válik.",
+                "Tetejét szórd meg egy csipet fahéjjal, és fogyaszd melegen!"
+            ],
+            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>A Luteális fázisban a test több magnéziumot használ el. Próbáld ki a <a href='https://vilgain.hu' target='_blank' rel='noopener noreferrer' style='color: var(--accent-color); font-weight: bold;'>Vilgain Magnesium Chelate</a>-et a görcsök és az édességvágy megelőzésére!"
+        },
+        menstrual: {
+            title: "✨ Ajánlott Recept: Melegítő Fahéjas Zabkása",
+            desc: "Könnyen emészthető, melegítő étel a vérzés első napjaira, ami pótolja a tápanyagokat.",
+            ingredients: [
+                { name: "50g Finomszemű Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
+                { name: "1 tk Kakaópor", link: "https://vilgain.hu", tag: "Vilgain Bio Kakaó →" },
+                { name: "1 ek Chia mag", link: "https://vilgain.hu", tag: "Vilgain Chia Mag →" },
+                { name: "200ml Meleg növényi tej", link: null, tag: "Otthoni alapanyag" }
+            ],
+            steps: [
+                "Főzd össze a zabot, a chia magot és a kakaóport a meleg növényi tejben alacsony lángon 4-5 percig.",
+                "Öntsd tálba, és hagyd hűlni 2 percig a fogyasztás előtt."
+            ],
+            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>A menstruáció alatt a vas- és C-vitamin pótláson van a hangsúly. Keverj hozzá egy kanál <a href='https://vilgain.hu' target='_blank' rel='noopener noreferrer' style='color: var(--accent-color); font-weight: bold;'>Vilgain Greens Mix</a>-et!"
+        },
+        follicular: {
+            title: "✨ Ajánlott Recept: Proteines Energiatál",
+            desc: "Frissítő, emelkedő energiaszinthez igazított reggeli az új ciklus kezdetére.",
+            ingredients: [
+                { name: "40g Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
+                { name: "1 adag Matcha por", link: "https://vilgain.hu", tag: "Vilgain Organic Matcha →" },
+                { name: "1 ek Granola", link: "https://vilgain.hu", tag: "Vilgain Granola →" }
+            ],
+            steps: [
+                "Készítsd el az alap zabkását, majd keverd bele a matcha port.",
+                "A tetejét szórjad meg ropogós granolával a textúra és energiatöbblet miatt."
+            ],
+            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>A Follikuláris fázisban az ösztrogén szintje emelkedik. Támogasd a bőröd <a href='https://vilgain.hu' target='_blank' rel='noopener noreferrer' style='color: var(--accent-color); font-weight: bold;'>Vilgain Kollagénnel</a>!"
+        },
+        ovulatory: {
+            title: "✨ Ajánlott Recept: Ragyogás Zab-Bowl",
+            desc: "Rostban és antioxidánsokban gazdag tál az energiád csúcspontjára.",
+            ingredients: [
+                { name: "50g Zabpehely", link: "https://vilgain.hu", tag: "Vilgain Tiszta Zab →" },
+                { name: "1 ek Tökmag / Szezámmag", link: "https://vilgain.hu", tag: "Vilgain Bio Tökmag →" }
+            ],
+            steps: [
+                "Öntsd le a zabot forró vízzel, majd keverd el a magvakkal.",
+                "Azonnal fogyasztható, tápláló reggeli tál."
+            ],
+            booster: "<strong>💡 Ciklus-Turbó Tipp:</strong><br>Az ovuláció idején a cink és az omega-3 zsírsavak a legfontosabbak a peteérés támogatására."
+        }
+    };
+
+    let currentPhase = 'luteal';
+
     function selectPhase(element) {
         let buttons = document.querySelectorAll('#phase-selector .btn-option');
         buttons.forEach(btn => btn.classList.remove('active'));
+        
         element.classList.add('active');
+        currentPhase = element.getAttribute('data-phase');
+        renderRecipe();
     }
 
-    function showRecipe() {
-        document.getElementById('recipe-card').classList.add('active');
+    function renderRecipe() {
+        const data = recipes[currentPhase] || recipes['luteal'];
+        const container = document.getElementById('recipe-card');
+
+        let ingredientsHTML = data.ingredients.map(ing => {
+            if (ing.link) {
+                return `<li>
+                    <span>${ing.name}</span>
+                    <a href="${ing.link}" target="_blank" rel="noopener noreferrer" class="vilgain-tag">${ing.tag}</a>
+                </li>`;
+            } else {
+                return `<li>
+                    <span>${ing.name}</span>
+                    <span style="color: #aaa; font-size: 0.8rem;">${ing.tag}</span>
+                </li>`;
+            }
+        }).join('');
+
+        let stepsHTML = data.steps.map(step => `<li>${step}</li>`).join('');
+
+        container.innerHTML = `
+            <h2>${data.title}</h2>
+            <p style="font-size: 0.85rem; color: #666;">${data.desc}</p>
+            
+            <h3>Hozzávalók:</h3>
+            <ul class="ingredient-list">
+                ${ingredientsHTML}
+            </ul>
+
+            <h3>🥣 Elkészítés:</h3>
+            <ol class="steps-list">
+                ${stepsHTML}
+            </ol>
+
+            <div class="booster-box">
+                ${data.booster}
+            </div>
+        `;
     }
+
+    renderRecipe();
 </script>
 
 </body>
