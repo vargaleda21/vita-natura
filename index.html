@@ -1,147 +1,213 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vita-Natura – Döntéstámogató konyha</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaleDay – Ciklusszinkron & Tiszta Receptek</title>
+    <style>
+        :root {
+            --bg-color: #fcf8f5;
+            --card-bg: #ffffff;
+            --accent-color: #8a9a86;
+            --accent-hover: #73836f;
+            --text-color: #333333;
+            --border-color: #e5dec9;
+            --vilgain-color: #e07a5f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            color: #4a5746;
+        }
+
+        p.subtitle {
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            color: #4a5746;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-option {
+            background: #f7f3ee;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-option:hover {
+            background: #ede6dc;
+        }
+
+        .btn-option.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .recipe-result {
+            display: none;
+        }
+
+        .recipe-result.active {
+            display: block;
+        }
+
+        .ingredient-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ingredient-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vilgain-tag {
+            background-color: #fdf0ed;
+            color: var(--vilgain-color);
+            border: 1px solid #f7d1c8;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .vilgain-tag:hover {
+            background-color: #f9e2dc;
+        }
+
+        .booster-box {
+            background: #f4f6f3;
+            border-left: 4px solid var(--accent-color);
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-container">
-      <a href="#" class="brand">Vita-Natura</a>
-      
-      <div class="mode-tabs">
-        <button id="tab-pantry" class="tab-btn active" onclick="UIController.switchMode('pantry')">Kamramentő</button>
-        <button id="tab-cycle" class="tab-btn" onclick="UIController.switchMode('cycle')">Ciklus & jóllét</button>
-      </div>
-    </div>
-  </header>
+<div class="container">
+    <header>
+        <h1>daleday</h1>
+        <p class="subtitle">Tápláld a tested a ciklusod szerint, abból ami itthon van.</p>
+    </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero-pantry-section">
-    <div class="container">
-      <span id="hero-eyebrow" class="eyebrow">Döntéstámogató konyha</span>
-      <h1 id="hero-title" class="hero-title">Kevesebb keresgélés.<br>Több jó döntés.</h1>
-      <p id="hero-subtitle" class="hero-subtitle">Te mondd meg, mid van otthon, mi megmutatjuk, mit főzhetsz belőle csendben, stresszmentesen.</p>
+    <!-- 1. CIKLUS FÁZIS -->
+    <div class="card">
+        <h2>1. Melyik fázisban vagy?</h2>
+        <div class="options-grid" id="phase-selector">
+            <div class="btn-option" onclick="selectPhase(this)">Menstruáció</div>
+            <div class="btn-option" onclick="selectPhase(this)">Follikuláris</div>
+            <div class="btn-option" onclick="selectPhase(this)">Ovuláció</div>
+            <div class="btn-option active" onclick="selectPhase(this)">Luteális</div>
+        </div>
     </div>
-  </section>
 
-  <!-- MAIN FORM SECTION - SÖTÉT MELEG HÁTTÉRSÁVBAN -->
-  <main class="container">
-    
-    <div class="dark-pantry-container">
-      
-      <!-- 1. CIKLUSSZÁMLÁLÓ KÁRTYA -->
-      <div id="cycle-calculator-section" class="cycle-card-standalone" style="display: none;">
-        <span class="eyebrow">Hormonális étel-szinkronizáció</span>
-        <h3>Ciklusszámláló & fázis</h3>
-        <p style="font-size: 0.88rem; opacity: 0.88; margin-bottom: 16px;">Add meg az utolsó menstruációd első napját a személyre szabott tápanyag-ajánláshoz:</p>
+    <!-- 2. HŰTŐ ALAPANYAG -->
+    <div class="card">
+        <h2>2. Mi van otthon? (Válassz egyet)</h2>
+        <div class="options-grid">
+            <div class="btn-option active" onclick="showRecipe()">Zabpehely & Mogyoróvaj</div>
+            <div class="btn-option" style="opacity: 0.5; cursor: not-allowed;">Tojás & Zöldségek (Hamarosan)</div>
+        </div>
+    </div>
+
+    <!-- 3. RECEPT TALÁLAT -->
+    <div class="card recipe-result active" id="recipe-card">
+        <h2>✨ Ajánlott Recept: Luteális Krémes Zabkása</h2>
+        <p style="font-size: 0.85rem; color: #666;">Segít leküzdeni az édességvágyat és feltölti a magnéziumraktáraidat.</p>
         
-        <div class="cycle-inputs-row" style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end;">
-          <div class="couture-input-group">
-            <label for="cycle-start-date">Utolsó menstruáció napja</label>
-            <input type="date" id="cycle-start-date">
-          </div>
-          <div class="couture-input-group" style="max-width: 140px;">
-            <label for="cycle-length">Ciklus hossza</label>
-            <input type="number" id="cycle-length" value="28" min="20" max="40">
-          </div>
-          <button class="btn-couture" onclick="UIController.calculateCyclePhase()">Fázis meghatározása</button>
+        <h3>Hozzávalók:</h3>
+        <ul class="ingredient-list">
+            <li>
+                <span>50g Finomszemű Zabpehely</span>
+                <a href="https://vilgain.hu" target="_blank" class="vilgain-tag">Vilgain Tiszta Zab →</a>
+            </li>
+            <li>
+                <span>1 ek Mogyoróvaj</span>
+                <a href="https://vilgain.hu" target="_blank" class="vilgain-tag">Vilgain 100% Magvaj →</a>
+            </li>
+            <li>
+                <span>1 adag Tejsavófehérje</span>
+                <a href="https://vilgain.hu" target="_blank" class="vilgain-tag">Vilgain Grass-Fed Whey →</a>
+            </li>
+            <li>
+                <span>100ml Növényi tej / Víz</span>
+                <span style="color: #aaa; font-size: 0.8rem;">Otthoni alapanyag</span>
+            </li>
+        </ul>
+
+        <div class="booster-box">
+            <strong>💡 Ciklus-Turbó Tipp:</strong><br>
+            A Luteális fázisban a test több magnéziumot használ el. Próbáld ki a <a href="https://vilgain.hu" target="_blank" style="color: var(--accent-color); font-weight: bold;">Vilgain Magnesium Chelate</a>-et a görcsök megelőzésére!
         </div>
-
-        <div id="cycle-result" style="display: none; margin-top: 20px; padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.2);"></div>
-      </div>
-
-      <!-- 2. ALAPANYAG KERESŐ -->
-      <section>
-        <span class="eyebrow">01 / Alapanyagok</span>
-        
-        <div class="pantry-input-wrapper" style="display: flex; gap: 12px; margin-bottom: 24px;">
-          <input type="text" id="ingredient-input" placeholder="Írd be az otthoni alapanyagokat (pl. csirkemell, rizs...)" autocomplete="off">
-          <button id="search-btn" class="btn-couture">Keresés</button>
-        </div>
-
-        <div id="unrecognized-warning" style="display: none; margin-bottom: 20px; font-size: 0.85rem; color: var(--color-terracotta-warm);"></div>
-
-        <div id="ingredient-tags" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;"></div>
-
-        <!-- GYORS KOLLEKCIÓK (KISBETŰS JAVÍTÁSSAL) -->
-        <span class="eyebrow">Gyors kollekciók</span>
-        <div class="collection-capsules">
-          <button class="capsule-btn" onclick="UIController.selectQuickCollection('quick_20', this)">20 perces vacsorák</button>
-          <button class="capsule-btn" onclick="UIController.selectQuickCollection('breakfast', this)">Tápláló reggelik</button>
-          <button class="capsule-btn" onclick="UIController.selectQuickCollection('gut_health', this)">Bélflóra-barát opciók</button>
-        </div>
-
-        <!-- SZŰRŐ GRID (KISBETŰS JAVÍTÁSSAL) -->
-        <div class="filters-editorial-grid">
-          <div class="filter-editorial-group">
-            <label for="filter-time">Elkészítési idő</label>
-            <select id="filter-time">
-              <option value="any">Összes opció</option>
-              <option value="15">Max 15 perc</option>
-              <option value="25">Max 25 perc</option>
-              <option value="35">Max 35 perc</option>
-            </select>
-          </div>
-
-          <div class="filter-editorial-group">
-            <label for="filter-meal">Étkezés típusa</label>
-            <select id="filter-meal">
-              <option value="any">Összes étkezés</option>
-              <option value="reggeli">Reggeli</option>
-              <option value="ebed">Ebéd</option>
-              <option value="vacsora">Vacsora</option>
-              <option value="snack">Snack</option>
-            </select>
-          </div>
-
-          <div class="filter-editorial-group">
-            <label for="filter-mood">Érzékszervi hangulat</label>
-            <select id="filter-mood">
-              <option value="any">Mindegy</option>
-              <option value="comfort">🍵 Megnyugtató (krémes & melengető)</option>
-              <option value="crunchy">🥨 Energizáló (ropogós & sós)</option>
-              <option value="fresh">🥗 Feltöltő (friss & könnyű)</option>
-              <option value="low_energy">⚡ Csendes (minimális mosogatás)</option>
-            </select>
-          </div>
-        </div>
-      </section>
-
     </div>
+</div>
 
-    <!-- TALÁLATI LISTA CONTAINER -->
-    <div id="recipe-results-container" style="margin-top: 40px;"></div>
-  </main>
+<script>
+    function selectPhase(element) {
+        let buttons = document.querySelectorAll('#phase-selector .btn-option');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+    }
 
-  <!-- MODAL -->
-  <div id="recipe-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-      <span class="modal-close" onclick="UIController.closeModal()">&times;</span>
-      <div id="modal-content-container"></div>
-    </div>
-  </div>
+    function showRecipe() {
+        document.getElementById('recipe-card').classList.add('active');
+    }
+</script>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <p style="font-family: var(--font-serif); font-style: italic; font-size: 1.5rem; color: var(--color-bordeaux-cta); margin-bottom: 8px;">A jóllét nem egy újabb teendőlista.</p>
-      <p>Vita-Natura &copy; 2026 – Csendes döntéstámogatás a mindennapokban</p>
-    </div>
-  </footer>
-
-  <script src="js/data/demoProductsData.js"></script>
-  <script src="js/data/recipesData.js"></script>
-  <script src="js/engines/recipeEngine.js"></script>
-  <script src="js/ui/uiController.js"></script>
-  <script src="js/analytics.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>
