@@ -214,6 +214,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            position: relative;
         }
 
         .input-label {
@@ -327,45 +328,98 @@
         }
 
         /* ==========================================================================
-           6. KAMRA MODULE SPECIFIC STYLES
+           6. KAMRA MODULE & AUTOCOMPLETE STYLES
            ========================================================================== */
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-hover);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            margin-top: 4px;
+        }
+
+        .autocomplete-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--bg-card-alt);
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
         .pantry-tags-container {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-top: 16px;
         }
 
         .pantry-tag {
-            background: var(--bg-card-alt);
-            border: 1px solid var(--border-color);
-            padding: 8px 14px;
+            background: var(--primary);
+            color: #FFFFFF;
+            border: 1px solid var(--primary);
+            padding: 6px 12px;
             border-radius: 100px;
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text-main);
-            cursor: pointer;
             user-select: none;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .pantry-tag.active {
-            background: var(--primary);
-            color: #FFFFFF;
-            border-color: var(--primary);
+        .pantry-tag .remove-btn {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: background 0.2s ease;
         }
 
-        .pantry-tag svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
+        .pantry-tag .remove-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .pantry-tag .remove-btn svg {
+            width: 10px;
+            height: 10px;
+            fill: #FFFFFF;
         }
 
         /* ==========================================================================
            7. RECIPE DISPLAY & VILGAIN INTEGRATION
            ========================================================================== */
+        .recipe-card-item {
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .recipe-card-item:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
         .recipe-title-group {
             margin-bottom: 12px;
         }
@@ -599,10 +653,17 @@
                 </div>
                 <div>
                     <div class="card-title">Mi van a kamrádban?</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Jelöld be a meglévő alapanyagokat a szűréshez</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Keress és válassz alapanyagokat a szűréshez</div>
                 </div>
             </div>
 
+            <!-- Autocomplete / Search Input Field -->
+            <div class="input-wrapper">
+                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
+                <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
+            </div>
+
+            <!-- Kijelölt Tagek -->
             <div class="pantry-tags-container" id="pantry-tags"></div>
         </div>
 
@@ -613,18 +674,85 @@
 
 <script>
     /* ==========================================
-       1. DATA STRUCTURES (Recipes & Deep-linked Vilgain URLs)
+       1. DATA STRUCTURES (60 Ingredients & Recipes)
        ========================================== */
-    const PANTRY_INGREDIENTS = [
+    const ALL_PANTRY_INGREDIENTS = [
+        // Zöldségek, gombák, fűszerek
+        { id: "burgonya", name: "Burgonya" },
+        { id: "voroshagymak", name: "Vöröshagyma" },
+        { id: "lilahagyma", name: "Lilahagyma" },
+        { id: "fokhagyma", name: "Fokhagyma" },
+        { id: "sargarepa", name: "Sárgarépa" },
+        { id: "petrezselyemgyoker", name: "Petrezselyemgyökér" },
+        { id: "porehagyma", name: "Póréhagyma" },
+        { id: "ujhagyma", name: "Újhagyma" },
+        { id: "paradicsom", name: "Paradicsom" },
+        { id: "tv_paprika", name: "Tölteni való paprika (TV)" },
+        { id: "kigyouborka", name: "Kígyóuborka" },
+        { id: "cukkini", name: "Cukkini" },
+        { id: "brokkoli", name: "Brokkoli" },
+        { id: "csiperkegomba", name: "Csiperkegomba" },
+        { id: "spenot", name: "Spenót" },
+        
+        // Gabonafélék, szárazáruk
+        { id: "buzaliszt", name: "Búzaliszt" },
         { id: "zabpehely", name: "Zabpehely" },
+        { id: "rizs", name: "Rizs" },
+        { id: "szarazteszta", name: "Száraztészta" },
+        { id: "kenyér", name: "Kenyér" },
+        { id: "zsemle_kifli", name: "Zsemle / Kifli" },
+        { id: "zsemlemorzsak", name: "Zsemlemorzsa" },
+        { id: "buzadara", name: "Búzadara" },
+        { id: "kukoricadara", name: "Kukoricadara" },
+        { id: "kukoricakemenyito", name: "Kukoricakeményítő" },
+        { id: "zabpehelyliszt", name: "Zabpehelyliszt" },
+        { id: "kuszkusz", name: "Kuszkusz" },
+        
+        // Tejtermékek, tojás
+        { id: "tojas", name: "Tojás" },
+        { id: "tej", name: "Tej" },
+        { id: "tejfol", name: "Tejföl" },
+        { id: "trappista_sajt", name: "Trappista sajt" },
+        { id: "turo", name: "Túró" },
+        { id: "vaj", name: "Vaj" },
+        { id: "gorog_joghurt", name: "Görög joghurt" },
+        { id: "kefir", name: "Kefir" },
+        { id: "habtejszin", name: "Habtejszín" },
+        { id: "fozotejszin", name: "Főzőtejszín" },
+        { id: "mozzarella", name: "Mozzarella" },
+        { id: "novényi_tej", name: "Növényi tej" },
+        { id: "mascarpone", name: "Mascarpone" },
+        
+        // Húsok, halak
+        { id: "csirkemell", name: "Csirkemell" },
+        { id: "csirkecomb", name: "Csirkecomb" },
+        { id: "daralt_serteshus", name: "Darált sertéshús" },
+        { id: "sertestarja", name: "Sertéstarja / Sertéskaraj" },
+        { id: "bacon_szalonna", name: "Bacon / Szalonna" },
+        { id: "gepsonka", name: "Gépsonka / Pulykamellsonka" },
+        { id: "kolbasz", name: "Kolbász" },
+        { id: "virsli", name: "Virsli" },
+        { id: "tonhalkonzerv", name: "Tonhalkonzerv" },
+        { id: "lazacfile", name: "Lazacfilé" },
+
+        // Hűtött, konzervek, hüvelyesek
+        { id: "leveles_teszta", name: "Leveles tészta" },
+        { id: "csemegekukorica", name: "Csemegekukorica (konzerv)" },
+        { id: "suritett_paradicsom", name: "Sűrített paradicsom / Passata" },
+        { id: "csemegeuborka", name: "Csemegeuborka" },
+        { id: "szarazbab", name: "Szárazbab / Fehérbab (konzerv)" },
+        { id: "vorosbab", name: "Vörösbab (konzerv)" },
+        { id: "lencse", name: "Lencse" },
+        { id: "csicseriborso", name: "Csicseriborsó (konzerv)" },
+        { id: "tofu", name: "Tofu" },
+        { id: "savanyukaposzta", name: "Savanyú káposzta" },
+
+        // Egyéb Vilgain speciálisok
         { id: "mogyorovaj", name: "Mogyoróvaj" },
         { id: "feherje", name: "Fehérjepor" },
         { id: "chia", name: "Chia mag" },
-        { id: "kakao", name: "Kakaópor" },
-        { id: "tojas", name: "Tojás" }
+        { id: "kakao", name: "Kakaópor" }
     ];
-
-    const VILGAIN_BASE_URL = "https://vilgain.hu?utm_source=daleday&utm_medium=affiliate";
 
     const CYCLE_RECIPES = {
         menstrual: {
@@ -691,30 +819,228 @@
 
     const PANTRY_RECIPES = [
         {
-            title: "Proteines Mogyoróvajas Zabkása",
-            desc: "Gyors, tápláló reggeli magas fehérjetartalommal.",
-            requiredIngredients: ["zabpehely", "mogyorovaj", "feherje"],
+            title: "Pirított Csirkemell Párolt Rizzsel",
+            desc: "Klasszikus, letisztult fehérjedús főétel zöldségekkel.",
+            requiredIngredients: ["csirkemell", "rizs", "sargarepa", "fokhagymak"],
+            ingredientsDetail: [
+                { id: "csirkemell", name: "200g Csirkemell", isVilgainHero: false },
+                { id: "rizs", name: "100g Rizs", isVilgainHero: true, link: "https://vilgain.hu/v/basmati-rizs" },
+                { id: "sargarepa", name: "1 db Sárgarépa", isVilgainHero: false },
+                { id: "fokhagymak", name: "1 gerezd Fokhagyma", isVilgainHero: false }
+            ],
+            steps: [
+                "A rizs kétszeres mennyiségű sós vízben párold puhára.",
+                "A csirkemellet kockázd fel, fűszerezd és pirítsd meg serpenyőben a reszelt sárgarépával és fokhagymával."
+            ]
+        },
+        {
+            title: "Magyaros Paprikás Krumpli",
+            desc: "Laktató, hagyományos egytálétel kolbásszal és szalonnával.",
+            requiredIngredients: ["burgonya", "voroshagymak", "kolbasz", "bacon_szalonna"],
+            ingredientsDetail: [
+                { id: "burgonya", name: "500g Burgonya", isVilgainHero: false },
+                { id: "voroshagymak", name: "1 fej Vöröshagyma", isVilgainHero: false },
+                { id: "kolbasz", name: "100g Kolbász", isVilgainHero: false },
+                { id: "bacon_szalonna", name: "50g Bacon / Szalonna", isVilgainHero: false }
+            ],
+            steps: [
+                "Ppirítsd meg a szalonnát és a hagymát, majd add hozzá a felkockázott burgonyát és felkarikázott kolbászt.",
+                "Fűszerezd pirospaprikával, öntsd fel annyi vízzel ami ellepi, és főzd puhára."
+            ]
+        },
+        {
+            title: "Tejszínes Gombás Tészta",
+            desc: "Selymes, gyors olaszos tésztaétel friss csiperkével.",
+            requiredIngredients: ["szarazteszta", "csiperkegomba", "fozotejszin", "fokhagymak"],
+            ingredientsDetail: [
+                { id: "szarazteszta", name: "200g Száraztészta", isVilgainHero: true, link: "https://vilgain.hu/v/protein-pasta" },
+                { id: "csiperkegomba", name: "150g Csiperkegomba", isVilgainHero: false },
+                { id: "fozotejszin", name: "150ml Főzőtejszín", isVilgainHero: false },
+                { id: "fokhagymak", name: "2 gerezd Fokhagyma", isVilgainHero: false }
+            ],
+            steps: [
+                "Főzd ki a tésztát sós vízben.",
+                "A szeletelt gombát és fokhagymát pirítsd meg, öntsd fel tejszínnel, majd forgasd össze a tésztával."
+            ]
+        },
+        {
+            title: "Krémes Mogyoróvajas Zabkása",
+            desc: "Proteindús meleg reggeli az energikus kezdéshez.",
+            requiredIngredients: ["zabpehely", "mogyorovaj", "feherje", "tej"],
             ingredientsDetail: [
                 { id: "zabpehely", name: "50g Zabpehely", isVilgainHero: true, link: "https://vilgain.hu/v/minute-oats" },
                 { id: "mogyorovaj", name: "1 ek Mogyoróvaj", isVilgainHero: true, link: "https://vilgain.hu/v/mogyorovaj-100" },
-                { id: "feherje", name: "1 adag Fehérjepor", isVilgainHero: true, link: "https://vilgain.hu/v/grass-fed-whey" }
+                { id: "feherje", name: "1 adag Fehérjepor", isVilgainHero: true, link: "https://vilgain.hu/v/grass-fed-whey" },
+                { id: "tej", name: "150ml Tej", isVilgainHero: false }
             ],
             steps: [
-                "Forrázd le a zabot meleg vízzel.",
+                "Forrázd le a zabot meleg tejjel.",
                 "Keverd bele a mogyoróvajat és a fehérjeport selymesre."
             ]
         },
         {
-            title: "Csokis Chia Puding",
-            desc: "Rostban dús, szupergyors desszert vagy reggeli.",
-            requiredIngredients: ["chia", "kakao"],
+            title: "Tükörtojás Baconnel és Friss Zöldségekkel",
+            desc: "Klasszikus, kiadós reggeli pár perc alatt.",
+            requiredIngredients: ["tojas", "bacon_szalonna", "paradicsom", "kigyouborka"],
             ingredientsDetail: [
-                { id: "chia", name: "2 ek Chia mag", isVilgainHero: true, link: "https://vilgain.hu/v/chia-seeds" },
-                { id: "kakao", name: "1 tk Kakaópor", isVilgainHero: true, link: "https://vilgain.hu/v/bio-kakao" }
+                { id: "tojas", name: "3 db Tojás", isVilgainHero: false },
+                { id: "bacon_szalonna", name: "4 szelet Bacon", isVilgainHero: false },
+                { id: "paradicsom", name: "1 db Paradicsom", isVilgainHero: false },
+                { id: "kigyouborka", name: "1/2 Kígyóuborka", isVilgainHero: false }
             ],
             steps: [
-                "Keverd el a chia magot és a kakaóport 1.5 dl tejben.",
-                "Hagyd állni a hűtőben legalább 15 percig."
+                "Süsd ropogósra a bacont egy serpenyőben.",
+                "Üsd rá a tojásokat és süsd kívánt állagúra. Tálald friss szeletelt zöldségekkel."
+            ]
+        },
+        {
+            title: "Krémes Paradicsomos Tonhalas Tészta",
+            desc: "Szupergyors mediterrán tészta konzerv tonhallal.",
+            requiredIngredients: ["szarazteszta", "tonhalkonzerv", "suritett_paradicsom", "fokhagymak"],
+            ingredientsDetail: [
+                { id: "szarazteszta", name: "200g Száraztészta", isVilgainHero: true, link: "https://vilgain.hu/v/protein-pasta" },
+                { id: "tonhalkonzerv", name: "1 doboz Tonhalkonzerv", isVilgainHero: true, link: "https://vilgain.hu/v/tonhal-konzerv" },
+                { id: "suritett_paradicsom", name: "150g Passata / Paradicsom", isVilgainHero: false },
+                { id: "fokhagymak", name: "1 gerezd Fokhagyma", isVilgainHero: false }
+            ],
+            steps: [
+                "Főzd ki a tésztát.",
+                "Pirítsd meg a fokhagymát, öntsd rá a paradicsomszószt és a tonhalat, majd rottyantsd össze és keverd a tésztához."
+            ]
+        },
+        {
+            title: "Zöldséges Csicseriborsó Ragutál",
+            desc: "Tápláló, rostban gazdag vegán ragu cukkínivel.",
+            requiredIngredients: ["csicseriborso", "cukkini", "suritett_paradicsom", "voroshagymak"],
+            ingredientsDetail: [
+                { id: "csicseriborso", name: "1 doboz Csicseriborsó", isVilgainHero: true, link: "https://vilgain.hu/v/csicseriborso" },
+                { id: "cukkini", name: "1 db Cukkini", isVilgainHero: false },
+                { id: "suritett_paradicsom", name: "200g Passata", isVilgainHero: false },
+                { id: "voroshagymak", name: "1 fej Vöröshagyma", isVilgainHero: false }
+            ],
+            steps: [
+                "Dinszteld meg a hagymát, add hozzá a kockázott cukkinit és a leöblített csicseriborsót.",
+                "Öntsd fel a paradicsomszósszal és fűszerezd bazsalikommal, tálald önmagában vagy rizzsel."
+            ]
+        },
+        {
+            title: "Tejfölös Sajtos Rakott Burgonya",
+            desc: "Kényeztető, sütőben sült klasszikus tepsis étel.",
+            requiredIngredients: ["burgonya", "tojas", "kolbasz", "tejfol", "trappista_sajt"],
+            ingredientsDetail: [
+                { id: "burgonya", name: "600g Burgonya", isVilgainHero: false },
+                { id: "tojas", name: "4 db Tojás", isVilgainHero: false },
+                { id: "kolbasz", name: "100g Kolbász", isVilgainHero: false },
+                { id: "tejfol", name: "250g Tejföl", isVilgainHero: false },
+                { id: "trappista_sajt", name: "100g Trappista sajt", isVilgainHero: false }
+            ],
+            steps: [
+                "Főzd meg héjában a krumplit és a tojásokat, majd karikázd fel őket.",
+                "Rétegezd egy tepsibe a krumplit, tojást, kolbászt és tejfölt. Tetejét szórd meg reszelt sajttal és süsd pirosra."
+            ]
+        },
+        {
+            title: "Spenótos Tojásos Tofu Stir-Fry",
+            desc: "Gyors, ázsiai hangulatú növényi fehérjetál.",
+            requiredIngredients: ["tofu", "spenot", "tojas", "fokhagymak"],
+            ingredientsDetail: [
+                { id: "tofu", name: "200g Tofu", isVilgainHero: false },
+                { id: "spenot", name: "150g Friss Spenót", isVilgainHero: false },
+                { id: "tojas", name: "2 db Tojás", isVilgainHero: false },
+                { id: "fokhagymak", name: "2 gerezd Fokhagyma", isVilgainHero: false }
+            ],
+            steps: [
+                "Morzsold össze vagy kockázd fel a tofut és pirítsd meg serpenyőben.",
+                "Dobj rá fokhagymát, spenótot, végül csurgasd rá a felvert tojásokat és süsd át."
+            ]
+        },
+        {
+            title: "Tejszínes Brokkolis Csirke",
+            desc: "Selymes, zöldséges csirkeragu egyetlen serpenyőben.",
+            requiredIngredients: ["csirkemell", "brokkoli", "fozotejszin", "trappista_sajt"],
+            ingredientsDetail: [
+                { id: "csirkemell", name: "300g Csirkemell", isVilgainHero: false },
+                { id: "brokkoli", name: "200g Brokkoli", isVilgainHero: false },
+                { id: "fozotejszin", name: "200ml Főzőtejszín", isVilgainHero: false },
+                { id: "trappista_sajt", name: "50g Reszelt sajt", isVilgainHero: false }
+            ],
+            steps: [
+                "Pirítsd meg a felkockázott csirkemellet.",
+                "Add hozzá a rózsáira szedett brokkolit, öntsd fel tejszínnel, rottyantsd össze míg megpuhul, végül keverd bele a reszelt sajtot."
+            ]
+        },
+        {
+            title: "Sajtos Sonkás Leveles Táska",
+            desc: "Ropogós sós vendégváró vagy gyors vacsora.",
+            requiredIngredients: ["leveles_teszta", "gepsonka", "trappista_sajt", "tojas"],
+            ingredientsDetail: [
+                { id: "leveles_teszta", name: "1 csomag Leveles tészta", isVilgainHero: false },
+                { id: "gepsonka", name: "100g Sonka", isVilgainHero: false },
+                { id: "trappista_sajt", name: "100g Reszelt sajt", isVilgainHero: false },
+                { id: "tojas", name: "1 db Tojás (kenéshez)", isVilgainHero: false }
+            ],
+            steps: [
+                "Vágd négyzetekre a leveles tésztát, töltsd meg sonkával és reszelt sajttal.",
+                "Hajtsd félbe, zárd le a széleit villa segítségével, kend meg tojással és süsd 200 fokon ropogósra."
+            ]
+        },
+        {
+            title: "Csokis Chia Puding",
+            desc: "Rostban dús, szupergyors hideg desszert.",
+            requiredIngredients: ["chia", "kakao", "novényi_tej"],
+            ingredientsDetail: [
+                { id: "chia", name: "2 ek Chia mag", isVilgainHero: true, link: "https://vilgain.hu/v/chia-seeds" },
+                { id: "kakao", name: "1 tk Kakaópor", isVilgainHero: true, link: "https://vilgain.hu/v/bio-kakao" },
+                { id: "novényi_tej", name: "150ml Növényi tej", isVilgainHero: false }
+            ],
+            steps: [
+                "Keverd el a chia magot és a kakaóport a növényi tejben.",
+                "Hagyd állni a hűtőben legalább 15 percig, amíg zselés állagúvá nem válik."
+            ]
+        },
+        {
+            title: "Frankfurti Virslileves",
+            desc: "Laktató, melengető leves kelkáposztával vagy savanyú káposztával.",
+            requiredIngredients: ["virsli", "savanyukaposzta", "burgonya", "tejfol", "voroshagymak"],
+            ingredientsDetail: [
+                { id: "virsli", name: "3 db Virsli", isVilgainHero: false },
+                { id: "savanyukaposzta", name: "200g Savanyú káposzta", isVilgainHero: false },
+                { id: "burgonya", name: "2 db Burgonya", isVilgainHero: false },
+                { id: "tejfol", name: "2 ek Tejföl", isVilgainHero: false },
+                { id: "voroshagymak", name: "1 fej Vöröshagyma", isVilgainHero: false }
+            ],
+            steps: [
+                "Dinszteld meg a hagymát, add hozzá a kockázott krumplit és a kimosott káposztát.",
+                "Öntsd fel vízzel, fűszerezd köménnyel és fokhagymával, főzd puhára, végül add hozzá a felkarikázott virslit és tegyél bele tejfölt."
+            ]
+        },
+        {
+            title: "Gyors Kuszkusz Tál Tonhallal és Kukoricával",
+            desc: "10 perces tápláló ebéd, főzés nélkül.",
+            requiredIngredients: ["kuszkusz", "tonhalkonzerv", "csemegekukorica", "kigyouborka"],
+            ingredientsDetail: [
+                { id: "kuszkusz", name: "80g Kuszkusz", isVilgainHero: true, link: "https://vilgain.hu/v/bio-kuszkusz" },
+                { id: "tonhalkonzerv", name: "1 doboz Tonhalkonzerv", isVilgainHero: true, link: "https://vilgain.hu/v/tonhal-konzerv" },
+                { id: "csemegekukorica", name: "3 ek Csemegekukorica", isVilgainHero: false },
+                { id: "kigyouborka", name: "1/3 Kígyóuborka", isVilgainHero: false }
+            ],
+            steps: [
+                "Öntsd le a kuszkuszt kétszeres mennyiségű forró sós vízzel, fedd le 5 percre.",
+                "Villával lazítsd fel, keverd hozzá a tonhalat, kukoricát és a kockázott uborkát."
+            ]
+        },
+        {
+            title: "Mézes-Mustáros Sült Lazacfilé",
+            desc: "Prémium halétel percek alatt.",
+            requiredIngredients: ["lazacfile", "sargarepa", "rizs"],
+            ingredientsDetail: [
+                { id: "lazacfile", name: "200g Lazacfilé", isVilgainHero: true, link: "https://vilgain.hu/v/lazac-file" },
+                { id: "sargarepa", name: "2 db Sárgarépa", isVilgainHero: false },
+                { id: "rizs", name: "100g Basmati Rizs", isVilgainHero: true, link: "https://vilgain.hu/v/basmati-rizs" }
+            ],
+            steps: [
+                "Főzd meg a rizst és párold meg a sárgarépa csíkokat.",
+                "A lazacfilét fűszerezd meg és serpenyőben oldalanként 3-4 perc alatt süsd készre."
             ]
         }
     ];
@@ -723,10 +1049,161 @@
        2. STATE MANAGEMENT
        ========================================== */
     let currentModule = "kamra";
-    let selectedPantryIngredients = ["zabpehely", "mogyorovaj"];
+    let selectedPantryIngredients = ["zabpehely", "mogyorovaj", "feherje"];
 
     /* ==========================================
-       3. CORE FUNCTIONS
+       3. HELPER FUNCTIONS
+       ========================================== */
+    function normalizeText(text) {
+        return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    /* ==========================================
+       4. AUTOCOMPLETE & PANTRY ENGINE
+       ========================================== */
+    function handlePantrySearch() {
+        const input = document.getElementById("pantry-search-input");
+        const dropdown = document.getElementById("pantry-autocomplete");
+        const query = normalizeText(input.value.trim());
+
+        if (query.length === 0) {
+            dropdown.classList.add("hidden");
+            dropdown.innerHTML = "";
+            return;
+        }
+
+        const matches = ALL_PANTRY_INGREDIENTS.filter(item => {
+            const isNotSelected = !selectedPantryIngredients.includes(item.id);
+            const matchesQuery = normalizeText(item.name).includes(query);
+            return isNotSelected && matchesQuery;
+        });
+
+        if (matches.length === 0) {
+            dropdown.classList.add("hidden");
+            dropdown.innerHTML = "";
+            return;
+        }
+
+        dropdown.innerHTML = matches.map(item => `
+            <div class="autocomplete-item" onclick="addPantryIngredient('${item.id}')">
+                ${item.name}
+            </div>
+        `).join('');
+
+        dropdown.classList.remove("hidden");
+    }
+
+    function addPantryIngredient(id) {
+        if (!selectedPantryIngredients.includes(id)) {
+            selectedPantryIngredients.push(id);
+        }
+        document.getElementById("pantry-search-input").value = "";
+        document.getElementById("pantry-autocomplete").classList.add("hidden");
+        
+        renderPantryTags();
+        renderPantryRecipes();
+    }
+
+    function removePantryIngredient(id) {
+        selectedPantryIngredients = selectedPantryIngredients.filter(item => item !== id);
+        renderPantryTags();
+        renderPantryRecipes();
+    }
+
+    function renderPantryTags() {
+        const container = document.getElementById("pantry-tags");
+        container.innerHTML = selectedPantryIngredients.map(id => {
+            const item = ALL_PANTRY_INGREDIENTS.find(ing => ing.id === id);
+            if (!item) return '';
+            return `
+                <div class="pantry-tag">
+                    <span>${item.name}</span>
+                    <div class="remove-btn" onclick="removePantryIngredient('${id}')">
+                        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderPantryRecipes() {
+        const container = document.getElementById("pantry-recipe-card");
+
+        if (selectedPantryIngredients.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                    Nincs kiválasztott alapanyag. Gépelj be elemeket a keresőbe!
+                </div>
+            `;
+            return;
+        }
+
+        // Matching Score kalkuláció és rendezés
+        const scoredRecipes = PANTRY_RECIPES.map(recipe => {
+            const matchCount = recipe.requiredIngredients.filter(ing => selectedPantryIngredients.includes(ing)).length;
+            return { ...recipe, matchCount };
+        }).filter(recipe => recipe.matchCount > 0);
+
+        // Rendezés: legtöbb egyezés elöl
+        scoredRecipes.sort((a, b) => b.matchCount - a.matchCount);
+
+        if (scoredRecipes.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
+                    Nincs találat a kiválasztott alapanyagokra. Válassz más elemeket!
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = scoredRecipes.map(recipe => {
+            let ingredientsHTML = recipe.ingredientsDetail.map(ing => {
+                const hasIt = selectedPantryIngredients.includes(ing.id);
+                return `
+                    <li class="ingredient-item">
+                        <span class="ingredient-name">
+                            <span class="status-dot ${hasIt ? 'has' : 'missing'}"></span>
+                            ${ing.name}
+                        </span>
+                        ${(!hasIt && ing.isVilgainHero) ? `
+                            <a href="${ing.link}?utm_source=daleday&utm_medium=pantry" target="_blank" rel="noopener" class="vilgain-nudge-btn">
+                                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                Hiányzik? Rendeld meg a Vilgain-től →
+                            </a>
+                        ` : (hasIt ? `<span style="color: var(--primary); font-size: 0.8rem; font-weight: 700;">Otthon van</span>` : `<span style="color: var(--text-muted); font-size: 0.8rem;">Hiányzik</span>`)}
+                    </li>
+                `;
+            }).join('');
+
+            let stepsHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
+
+            return `
+                <div class="recipe-card-item">
+                    <div class="recipe-title-group">
+                        <div class="recipe-name">${recipe.title}</div>
+                        <div class="recipe-desc">${recipe.desc}</div>
+                    </div>
+                    
+                    <ul class="ingredients-list">
+                        ${ingredientsHTML}
+                    </ul>
+
+                    <div class="steps-container">
+                        <div class="steps-title">
+                            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                            Elkészítés
+                        </div>
+                        <ol class="steps-ol">
+                            ${stepsHTML}
+                        </ol>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    /* ==========================================
+       5. CIKLUSSZINKRON ENGINE & SWITCH
        ========================================== */
     function switchModule(moduleName) {
         currentModule = moduleName;
@@ -745,7 +1222,6 @@
         }
     }
 
-    // Javított Ciklus Kalkulátor
     function calculateCycle() {
         const dateInput = document.getElementById("last-period-date").value;
         const cycleLength = parseInt(document.getElementById("cycle-length").value) || 28;
@@ -755,14 +1231,12 @@
         const lastPeriod = new Date(dateInput);
         const today = new Date();
         
-        // Időzóna korrekció éjfélre
         lastPeriod.setHours(0, 0, 0, 0);
         today.setHours(0, 0, 0, 0);
 
         const diffTime = today - lastPeriod;
         let currentDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-        // Érvényes tartomány ellenőrzése
         if (currentDay < 1) currentDay = 1;
         if (currentDay > cycleLength) {
             currentDay = ((currentDay - 1) % cycleLength) + 1;
@@ -770,13 +1244,11 @@
 
         document.getElementById("cycle-day-text").innerText = `${currentDay}.`;
 
-        // SVG progress korrekció
         const progressCircle = document.getElementById("cycle-progress");
         const maxStroke = 440;
         const offset = maxStroke - (currentDay / cycleLength) * maxStroke;
         progressCircle.style.strokeDashoffset = offset;
 
-        // Fázis meghatározása
         let phaseKey = "luteal";
         let phaseName = "Luteális fázis";
 
@@ -849,93 +1321,17 @@
         `;
     }
 
-    // Kamra Engine
-    function renderPantryTags() {
-        const container = document.getElementById("pantry-tags");
-        container.innerHTML = PANTRY_INGREDIENTS.map(ing => {
-            const isActive = selectedPantryIngredients.includes(ing.id);
-            return `
-                <div class="pantry-tag ${isActive ? 'active' : ''}" onclick="togglePantryTag('${ing.id}')">
-                    <svg viewBox="0 0 24 24"><path d="${isActive ? 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z' : 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'}"/></svg>
-                    ${ing.name}
-                </div>
-            `;
-        }).join('');
-    }
-
-    function togglePantryTag(id) {
-        if (selectedPantryIngredients.includes(id)) {
-            selectedPantryIngredients = selectedPantryIngredients.filter(item => item !== id);
-        } else {
-            selectedPantryIngredients.push(id);
-        }
-        renderPantryTags();
-        renderPantryRecipes();
-    }
-
-    function renderPantryRecipes() {
-        const container = document.getElementById("pantry-recipe-card");
-
-        const matchedRecipes = PANTRY_RECIPES.filter(recipe => {
-            return recipe.requiredIngredients.some(ing => selectedPantryIngredients.includes(ing));
-        });
-
-        if (matchedRecipes.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
-                    Nincs találat a kiválasztott alapanyagokra. Jelölj be több elemet!
-                </div>
-            `;
-            return;
-        }
-
-        const recipe = matchedRecipes[0];
-
-        let ingredientsHTML = recipe.ingredientsDetail.map(ing => {
-            const hasIt = selectedPantryIngredients.includes(ing.id);
-            return `
-                <li class="ingredient-item">
-                    <span class="ingredient-name">
-                        <span class="status-dot ${hasIt ? 'has' : 'missing'}"></span>
-                        ${ing.name}
-                    </span>
-                    ${(!hasIt && ing.isVilgainHero) ? `
-                        <a href="${ing.link}?utm_source=daleday&utm_medium=pantry" target="_blank" rel="noopener" class="vilgain-nudge-btn">
-                            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                            Hiányzik? Rendeld meg a Vilgain-től →
-                        </a>
-                    ` : (hasIt ? `<span style="color: var(--primary); font-size: 0.8rem; font-weight: 700;">Otthon van</span>` : `<span style="color: var(--text-muted); font-size: 0.8rem;">Hiányzik</span>`)}
-                </li>
-            `;
-        }).join('');
-
-        let stepsHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
-
-        container.innerHTML = `
-            <div class="recipe-title-group">
-                <div class="recipe-name">${recipe.title}</div>
-                <div class="recipe-desc">${recipe.desc}</div>
-            </div>
-            
-            <ul class="ingredients-list">
-                ${ingredientsHTML}
-            </ul>
-
-            <div class="steps-container">
-                <div class="steps-title">
-                    <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-                    Elkészítés
-                </div>
-                <ol class="steps-ol">
-                    ${stepsHTML}
-                </ol>
-            </div>
-        `;
-    }
-
     /* ==========================================
-       4. INITIALIZATION
+       6. INITIALIZATION & OUTSIDE CLICK CLOSE
        ========================================== */
+    document.addEventListener("click", function(event) {
+        const dropdown = document.getElementById("pantry-autocomplete");
+        const searchInput = document.getElementById("pantry-search-input");
+        if (!dropdown.contains(event.target) && event.target !== searchInput) {
+            dropdown.classList.add("hidden");
+        }
+    });
+
     window.addEventListener("DOMContentLoaded", () => {
         const today = new Date().toISOString().split('T')[0];
         document.getElementById("last-period-date").value = today;
