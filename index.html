@@ -201,9 +201,6 @@
             line-height: 1.2;
         }
 
-        /* ==========================================================================
-           5. INPUTS & VISUALIZERS
-           ========================================================================== */
         .form-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -332,9 +329,6 @@
             fill: currentColor;
         }
 
-        /* ==========================================================================
-           6. AUTOCOMPLETE & TAGS
-           ========================================================================== */
         .autocomplete-dropdown {
             position: absolute;
             top: 100%;
@@ -422,7 +416,7 @@
         }
 
         /* ==========================================================================
-           7. RECEPT KÁRTYA & DOBOZ DESIGN UPGRADE (.recipe-card-box)
+           5. RECEPT DOBOZ DESIGN & JELVÉNYEK (.recipe-card-box)
            ========================================================================== */
         .recipe-card-box {
             background: var(--bg-recipe-box);
@@ -444,7 +438,25 @@
         }
 
         .recipe-header-group {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
+        }
+
+        .recipe-badge-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .recipe-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--primary-light);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         .recipe-name {
@@ -646,7 +658,7 @@
     <!-- MODULVÁLASZTÓ SWITCH -->
     <div class="module-switch-container">
         <button class="tab-btn active" id="tab-kamra" onclick="switchModule('kamra')">
-            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
             Kamra - Mi van otthon?
         </button>
         <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
@@ -829,7 +841,6 @@
         { id: "etcsoki", name: "Étcsokoládé" }
     ];
 
-    /* 💡 Javítva: Az "avokado" felvétele a follicular tömbbe! */
     const PHASE_SUPERFOODS = {
         menstrual: ["cekla", "chia", "kakao", "spenot", "zabpehely"],
         follicular: ["quinoa", "spenot", "novényi_tej", "feherje", "gorog_joghurt", "avokado"],
@@ -843,9 +854,11 @@
                 id: "c_m1",
                 title: "Melegítő Fahéjas Kakaós Zabkása",
                 desc: "Könnyen emészthető, melegítő tál a vérzés első napjaira, amely pótolja a kiürült ásványi anyagokat.",
+                badges: ["Glükóz-Stabil", "Seed Cycling", "UPF-Mentes"],
                 time: "10 perc",
                 difficulty: "Könnyű",
                 servings: "1 adag",
+                plantScore: 4,
                 superfoods: ["chia", "kakao", "zabpehely"],
                 ingredients: [
                     { name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
@@ -859,6 +872,28 @@
                     "Hagyd állni 2 percig, majd melegen fogyaszd."
                 ],
                 booster: "A menstruáció alatt a vas- és C-vitamin pótláson van a hangsúly. Keverj a kásádba egy adag <a class='booster-link' href='https://vilgain.hu/v/greens-mix' target='_blank' rel='noopener'>Vilgain Greens Mix-et</a>!"
+            },
+            {
+                id: "c_m2",
+                title: "Céklás Meggyes Vas-Booster Smoothie",
+                desc: "Gyulladáscsökkentő és vérképzést támogató turmix, ami feltölt energiával.",
+                badges: ["Bélflóra-Támogató", "Vas-Booster", "UPF-Mentes"],
+                time: "5 perc",
+                difficulty: "Könnyű",
+                servings: "1 adag",
+                plantScore: 3,
+                superfoods: ["cekla", "spenot"],
+                ingredients: [
+                    { name: "1/2 kis nyers Cékla (reszelve)", isVilgain: false, tag: "Otthoni alapanyag" },
+                    { name: "1 marék friss Spenót", isVilgain: false, tag: "Otthoni alapanyag" },
+                    { name: "1 adag Tejsavófehérje", isVilgain: true, link: "https://vilgain.hu/v/grass-fed-whey", tag: "Vilgain Whey →" },
+                    { name: "200ml Kókuszvíz vagy Víz", isVilgain: false, tag: "Otthoni alapanyag" }
+                ],
+                steps: [
+                    "Helyezd a turmixgépbe a reszelt céklát és a megmosott spenótot.",
+                    "Add hozzá a fehérjeport és a folyadékot, majd turmixold magas fokozaton selymesre."
+                ],
+                booster: "A céklában lévő természetes vas C-vitamin jelenlétében szívódik fel a legjobban a szervezetben."
             }
         ],
         follicular: [
@@ -866,10 +901,13 @@
                 id: "c_f1",
                 title: "Proteines Energiatál Matcha-val",
                 desc: "Frissítő, emelkedő ösztrogénszinthez igazított reggeli az új ciklus dinamikus kezdetére.",
+                badges: ["Glükóz-Stabil", "Ösztrogén-Támogató", "UPF-Mentes"],
                 time: "8 perc",
                 difficulty: "Könnyű",
                 servings: "1 adag",
-                superfoods: ["feherje", "gorog_joghurt"],
+                plantScore: 3,
+                /* 💡 Javítva: novényi_tej hozzáadva, így nem tűnik el a szűrésnél! */
+                superfoods: ["feherje", "gorog_joghurt", "novényi_tej"],
                 ingredients: [
                     { name: "40g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
                     { name: "1 adag Organic Matcha por", isVilgain: true, link: "https://vilgain.hu/v/organic-matcha", tag: "Vilgain Matcha →" },
@@ -882,14 +920,15 @@
                 ],
                 booster: "Támogasd a bőröd ragyogását <a class='booster-link' href='https://vilgain.hu/v/collagen' target='_blank' rel='noopener'>Vilgain Kollagénnel</a>!"
             },
-            /* 💡 Javított Quinoa Saláta Recept avokádóval és Olívaolajjal! */
             {
                 id: "c_f2",
                 title: "Frissítő Spenótos Quinoa Saláta Avokádóval",
                 desc: "Könnyű, ösztrogénszintet támogató ebéd magas rosttartalommal és egészséges zsírokkal.",
+                badges: ["Ösztrogén-Metabolizmus", "Bélflóra-Támogató", "UPF-Mentes"],
                 time: "15 perc",
                 difficulty: "Könnyű",
                 servings: "2 adag",
+                plantScore: 4,
                 superfoods: ["quinoa", "spenot", "avokado"],
                 ingredients: [
                     { name: "100g Bio Quinoa", isVilgain: true, link: "https://vilgain.hu/v/quinoa", tag: "Vilgain Quinoa →" },
@@ -910,9 +949,11 @@
                 id: "c_o1",
                 title: "Ragyogás Magvas Zab-Bowl",
                 desc: "Rostban és antioxidánsokban gazdag tál a csúcsenergiájú ovulációs napokra.",
+                badges: ["Cink-Booster", "Seed Cycling", "UPF-Mentes"],
                 time: "10 perc",
                 difficulty: "Könnyű",
                 servings: "1 adag",
+                plantScore: 4,
                 superfoods: ["tokmag", "avokado"],
                 ingredients: [
                     { name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
@@ -923,7 +964,7 @@
                     "Öntsd le a zabot forró vízzel, hagyd állni 3 percig.",
                     "Tálald szeletelt avokádóval és pirított tökmaggal."
                 ],
-                booster: "Az ovuláció idején a cink és az omega-3 zsírsavak a legfontosabbak."
+                booster: "Az ovuláció idején a cink és az omega-3 zsírsavak a legfontosabbak a peteérés támogatására."
             }
         ],
         luteal: [
@@ -931,9 +972,11 @@
                 id: "c_l1",
                 title: "Krémes Mogyoróvajas Zabkása",
                 desc: "Segít leküzdeni az édességvágyat és feltölti a magnéziumraktáraidat a vérzés előtt.",
+                badges: ["Glükóz-Stabil", "Magnézium-Booster", "UPF-Mentes"],
                 time: "12 perc",
                 difficulty: "Könnyű",
                 servings: "1 adag",
+                plantScore: 3,
                 superfoods: ["mogyorovaj", "zabpehely", "feherje"],
                 ingredients: [
                     { name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
@@ -945,6 +988,27 @@
                     "Keverd hozzá a fehérjeport és a mogyoróvajat."
                 ],
                 booster: "Próbáld ki a <a class='booster-link' href='https://vilgain.hu/v/magnesium-chelate' target='_blank' rel='noopener'>Vilgain Magnesium Chelate-et</a> a görcsök megelőzésére!"
+            },
+            {
+                id: "c_l2",
+                title: "Sült Édesburgonya Étcsoki Krémmel",
+                desc: "Lassan felszívódó szénhidrátok a premenstruációs napok hormonális egyensúlyáért.",
+                badges: ["PMS-Nyugtató", "B6-Vitamin", "UPF-Mentes"],
+                time: "25 perc",
+                difficulty: "Közepes",
+                servings: "2 adag",
+                plantScore: 3,
+                superfoods: ["edesburgonya", "etcsoki"],
+                ingredients: [
+                    { name: "1 közepes Édesburgonya", isVilgain: false, tag: "Otthoni alapanyag" },
+                    { name: "30g Étcsokoládé (min. 75%)", isVilgain: true, link: "https://vilgain.hu/v/etcsoki", tag: "Vilgain Étcsoki →" },
+                    { name: "1 ek Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" }
+                ],
+                steps: [
+                    "Süsd meg az édesburgonyát sütőben 200 fokon kb. 20 perc alatt, míg teljesen megpuhul.",
+                    "Vágd félbe, és csurgasd rá az olvasztott étcsokoládét és a mogyoróvajat."
+                ],
+                booster: "Az édesburgonya gazdag B6-vitaminban, ami csökkenti a PMS tüneteket."
             }
         ]
     };
@@ -953,14 +1017,17 @@
         {
             title: "Pirított Csirkemell Párolt Rizzsel",
             desc: "Klasszikus, letisztult fehérjedús főétel zöldségekkel és tiszta basmati rizzsel.",
+            badges: ["Glükóz-Stabil", "Magas Fehérje"],
             time: "25 perc",
             difficulty: "Könnyű",
             servings: "2 adag",
+            plantScore: 3,
             requiredIngredients: ["csirkemell", "rizs", "sargarepa", "fokhagymak"],
             ingredientsDetail: [
                 { id: "csirkemell", name: "200g Csirkemell filé", isVilgainHero: false },
                 { id: "rizs", name: "100g Basmati Rizs", isVilgainHero: true, link: "https://vilgain.hu/v/basmati-rizs" },
                 { id: "sargarepa", name: "1 db Sárgarépa", isVilgainHero: false },
+                /* 💡 Javítva: id pótolva! */
                 { id: "fokhagymak", name: "1 gerezd Fokhagyma", isVilgainHero: false }
             ],
             steps: [
@@ -972,9 +1039,11 @@
         {
             title: "Magyaros Paprikás Krumpli",
             desc: "Laktató, hagyományos egytálétel füstölt kolbásszal.",
+            badges: ["Hagyományos", "Laktató"],
             time: "35 perc",
             difficulty: "Könnyű",
             servings: "3 adag",
+            plantScore: 2,
             requiredIngredients: ["burgonya", "voroshagymak", "kolbasz", "bacon_szalonna"],
             ingredientsDetail: [
                 { id: "burgonya", name: "500g Burgonya", isVilgainHero: false },
@@ -991,9 +1060,11 @@
         {
             title: "Tejszínes Gombás Protein Tészta",
             desc: "Selymes, gyors olaszos tésztaétel friss csiperkével.",
+            badges: ["Olasz-Style", "UPF-Mentes"],
             time: "15 perc",
             difficulty: "Könnyű",
             servings: "2 adag",
+            plantScore: 2,
             requiredIngredients: ["szarazteszta", "csiperkegomba", "fozotejszin", "fokhagymak"],
             ingredientsDetail: [
                 { id: "szarazteszta", name: "200g Száraztészta", isVilgainHero: true, link: "https://vilgain.hu/v/protein-pasta" },
@@ -1010,9 +1081,11 @@
         {
             title: "Krémes Mogyoróvajas Zabkása",
             desc: "Proteindús meleg reggeli az energikus kezdéshez.",
+            badges: ["Glükóz-Stabil", "UPF-Mentes"],
             time: "10 perc",
             difficulty: "Könnyű",
             servings: "1 adag",
+            plantScore: 2,
             requiredIngredients: ["zabpehely", "mogyorovaj", "feherje", "tej"],
             ingredientsDetail: [
                 { id: "zabpehely", name: "50g Zabpehely", isVilgainHero: true, link: "https://vilgain.hu/v/minute-oats" },
@@ -1271,9 +1344,12 @@
 
         let stepsHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
 
+        let badgesHTML = (recipe.badges || []).map(b => `<span class="recipe-badge">${b}</span>`).join('');
+
         return `
             <div class="recipe-card-box">
                 <div class="recipe-header-group">
+                    ${badgesHTML ? `<div class="recipe-badge-bar">${badgesHTML}</div>` : ''}
                     <div class="recipe-name">${recipe.title}</div>
                     <div class="recipe-desc">${recipe.desc}</div>
                 </div>
@@ -1291,6 +1367,13 @@
                         <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                         ${recipe.servings || '1 adag'}
                     </div>
+                    ${recipe.plantScore ? `
+                        <div class="meta-item" style="color: var(--primary);">
+                            <!-- 💡 Javítva: 🌱 emoji törölve, tiszta SVG ikon maradt! -->
+                            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7z"/></svg>
+                            ${recipe.plantScore} Növényi Pont
+                        </div>
+                    ` : ''}
                 </div>
 
                 <div class="recipe-section">
