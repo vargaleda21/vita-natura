@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DaleDay – Ciklusszinkron & Kamra</title>
-    <!-- Google Fonts Tipográfia -->
+    <title>DaleDay - Ciklusszinkron & Kamra</title>
+    <!-- Google Fonts Tipografia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & DYNAMIC THEMING (CSS Variables)
+           ========================================================================== */
         :root {
             --transition-speed: 0.35s;
             --font-heading: 'Cormorant Garamond', Georgia, serif;
@@ -60,6 +63,9 @@
             --border-strong: #DAA8A8;
         }
 
+        /* ==========================================================================
+           2. BASE RESETS & LAYOUT
+           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -108,7 +114,9 @@
             font-weight: 500;
         }
 
-        /* Tab Switcher */
+        /* ==========================================================================
+           3. MODULE SWITCHER (Tab System)
+           ========================================================================== */
         .module-switch-container {
             background: var(--bg-card-alt);
             padding: 6px;
@@ -148,6 +156,9 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
+        /* ==========================================================================
+           4. CARDS & UI COMPONENTS
+           ========================================================================== */
         .card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
@@ -404,6 +415,17 @@
             fill: currentColor;
         }
 
+        .pantry-tag.inactive .toggle-btn svg {
+            fill: var(--text-muted);
+        }
+
+        .pantry-tag.active .toggle-btn svg {
+            fill: #FFFFFF;
+        }
+
+        /* ==========================================================================
+           5. RECEPT DOBOZ DESIGN & JELVÉNYEK (.recipe-card-box)
+           ========================================================================== */
         .recipe-card-box {
             background: var(--bg-recipe-box);
             border: 1px solid var(--border-strong);
@@ -647,10 +669,11 @@
         <p class="brand-subtitle">Tudatos táplálkozás a ciklusod és a kamrád ritmusában.</p>
     </header>
 
+    <!-- MODULVÁLASZTÓ SWITCH -->
     <div class="module-switch-container">
         <button class="tab-btn active" id="tab-kamra" onclick="switchModule('kamra')">
             <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
-            Kamra – Mi van otthon?
+            Kamra - Mi van otthon?
         </button>
         <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
             <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 4a8 8 0 0 0 0 16 8 8 0 0 0 0-16z" opacity="0.3"/></svg>
@@ -658,6 +681,7 @@
         </button>
     </div>
 
+    <!-- CIKLUSSZINKRON MODUL -->
     <div id="module-cycle" class="hidden">
         <div class="card">
             <div class="card-header">
@@ -700,6 +724,7 @@
                 </div>
             </div>
 
+            <!-- FÁZIS-ALAPÚ ALAPANYAG-AJÁNLÓ KÁRTYA -->
             <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
                 <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">
                     Tápanyagdús alapanyag-ötletek a fázisodhoz:
@@ -718,6 +743,7 @@
         <div class="card" id="cycle-recipe-card"></div>
     </div>
 
+    <!-- KAMRA MODUL -->
     <div id="module-kamra">
         <div class="card">
             <div class="card-header">
@@ -730,20 +756,24 @@
                 </div>
             </div>
 
+            <!-- Autocomplete Field -->
             <div class="input-wrapper">
                 <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
                 <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
             </div>
 
+            <!-- Kijelölt Tagek -->
             <div class="pantry-tags-container" id="pantry-tags"></div>
         </div>
 
         <div class="card" id="pantry-recipe-card"></div>
     </div>
-
 </div>
 
 <script>
+    /* ==========================================
+       1. DATA STRUCTURES (60 Ingredients & Extended Recipes)
+       ========================================== */
     const ALL_PANTRY_INGREDIENTS = [
         // Zöldségek, gombák, fűszerek
         { id: "burgonya", name: "Burgonya" },
@@ -829,7 +859,7 @@
 
     const PHASE_SUPERFOODS = {
         menstrual: ["edesburgonya", "lencse", "cekla", "spenot", "zabpehely"],
-        follicular: ["quinoa", "csirkemell", "spenot", "novényi_tej", "gorog_joghurt"],
+        follicular: ["rizs", "csirkemell", "spenot", "novényi_tej", "gorog_joghurt", "avokado"],
         ovulatory: ["lazacfile", "rizs", "csicseriborso", "avokado", "tokmag"],
         luteal: ["edesburgonya", "rizs", "mogyorovaj", "zabpehely", "etcsoki"]
     };
@@ -957,14 +987,14 @@
         follicular: [
             {
                 id: "c_f1",
-                title: "Mogyorószószos Teriyaki Csirkemell Barna Rizzsel & Serpenyős Pirított Cukkínivel",
+                title: "Mogyorószószos Teriyaki Csirkemell Barna Rizzsel & Cukkínivel",
                 desc: "Pikáns, szaftos teriyaki csirkemell krémes mogyorószószban, párolt cukkínivel és sárgarépával.",
                 badges: ["Komplett Fehérje", "Ösztrogén-Támogató", "Szaftos Ázsiai"],
                 time: "20 perc",
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 4,
-                superfoods: ["quinoa", "csirkemell", "spenot"],
+                superfoods: ["rizs", "csirkemell", "spenot"],
                 ingredients: [
                     { id: "csirkemell", name: "150g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
                     { id: "rizs", name: "100g Basmati Rizs", isVilgain: true, link: "https://vilgain.hu/v/basmati-rizs", tag: "Vilgain Basmati →" },
@@ -975,7 +1005,7 @@
                 steps: [
                     "Főzd meg a basmati rizst sós vízben.",
                     "A csirkemellet és a cukkíni/sárgarépa karikákat hirtelen pirítsd meg serpenyőben.",
-                    "A mogyoróvaj porból kevés vízzel és szójaszósszal keverj selymes szósz, öntsd a húsra és tálald a rizzsel."
+                    "A mogyoróvaj porból kevés vízzel és szójaszósszal keverj selymes szószt, öntsd a húsra és tálald a rizzsel."
                 ],
                 booster: "A friss pirított zöldségek rostjai támogatják a felhalmozódó ösztrogén megfelelő ürülését."
             },
@@ -988,7 +1018,7 @@
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 4,
-                superfoods: ["quinoa", "spenot", "avokado"],
+                superfoods: ["spenot", "avokado"],
                 ingredients: [
                     { id: "gepsonka", name: "150g Omlós Pulykamell", isVilgain: false, tag: "Otthoni alapanyag" },
                     { id: "leveles_teszta", name: "1 db Vilgain BIO Tortilla", isVilgain: true, link: "https://vilgain.hu/v/tortilla", tag: "Vilgain Tortilla →" },
@@ -1010,7 +1040,7 @@
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 3,
-                superfoods: ["quinoa", "spenot"],
+                superfoods: ["rizs", "csirkemell"],
                 ingredients: [
                     { id: "csirkemell", name: "150g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
                     { id: "mozzarella", name: "50g Mozzarella sajt", isVilgain: false, tag: "Otthoni alapanyag" },
@@ -1054,7 +1084,7 @@
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 3,
-                superfoods: ["feherje", "spenot", "zabpehely"],
+                superfoods: ["feherje", "spenot", "novényi_tej"],
                 ingredients: [
                     { id: "zabpehely", name: "30g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
                     { id: "spenot", name: "1 marék Spenót", isVilgain: false, tag: "Otthoni alapanyag" },
@@ -1146,7 +1176,7 @@
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 3,
-                superfoods: ["avokado", "csicseriborso"],
+                superfoods: ["avokado", "csicseriborso", "lazacfile"],
                 ingredients: [
                     { id: "lazacfile", name: "150g Lazacfilé", isVilgain: true, link: "https://vilgain.hu/v/lazac-file", tag: "Vilgain Lazac →" },
                     { id: "quinoa", name: "80g Bio Quinoa", isVilgain: true, link: "https://vilgain.hu/v/quinoa", tag: "Vilgain Quinoa →" },
@@ -1167,7 +1197,7 @@
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 4,
-                superfoods: ["tokmag", "avokado", "zabpehely"],
+                superfoods: ["tokmag", "avokado", "rizs"],
                 ingredients: [
                     { id: "zabpehely", name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
                     { id: "tokmag", name: "1 ek Bio Tökmag", isVilgain: true, link: "https://vilgain.hu/v/tokmag", tag: "Vilgain Tökmag →" },
@@ -1237,7 +1267,7 @@
                 difficulty: "Közepes",
                 servings: "2 adag",
                 plantScore: 3,
-                superfoods: ["edesburgonya", "tonhalkonzerv", "rizs"],
+                superfoods: ["edesburgonya", "rizs"],
                 ingredients: [
                     { id: "edesburgonya", name: "1 nagy Édesburgonya", isVilgain: false, tag: "Otthoni alapanyag" },
                     { id: "tonhalkonzerv", name: "1 doboz Vilgain Tonhal", isVilgain: true, link: "https://vilgain.hu/v/tonhal-konzerv", tag: "Vilgain Tonhal →" },
@@ -1259,7 +1289,7 @@
                 difficulty: "Könnyű",
                 servings: "1 adag",
                 plantScore: 3,
-                superfoods: ["mogyorovaj", "zabpehely", "feherje"],
+                superfoods: ["mogyorovaj", "zabpehely", "etcsoki"],
                 ingredients: [
                     { id: "zabpehely", name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
                     { id: "mogyorovaj", name: "1 ek 100% Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" },
@@ -1402,15 +1432,26 @@
         }
     ];
 
+    /* ==========================================
+       2. STATE MANAGEMENT
+       ========================================== */
     let currentModule = "kamra";
     let selectedPantryIngredients = [];
     let currentPhaseKey = "luteal";
+    
+    // Ciklus fázis alapanyag csempéi kezdetben üresek
     let selectedCycleSuperfoods = [];
 
+    /* ==========================================
+       3. HELPER FUNCTIONS
+       ========================================== */
     function normalizeText(text) {
         return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
+    /* ==========================================
+       4. AUTOCOMPLETE & PANTRY ENGINE
+       ========================================== */
     function handlePantrySearch() {
         const input = document.getElementById("pantry-search-input");
         const dropdown = document.getElementById("pantry-autocomplete");
@@ -1507,6 +1548,9 @@
         container.innerHTML = scoredRecipes.map(recipe => renderRecipeBoxHTML(recipe, false)).join('');
     }
 
+    /* ==========================================
+       5. CIKLUSSZINKRON ENGINE & SUPERFOOD SYSTEM
+       ========================================== */
     function toggleCycleSuperfood(id) {
         if (selectedCycleSuperfoods.includes(id)) {
             selectedCycleSuperfoods = selectedCycleSuperfoods.filter(item => item !== id);
@@ -1612,9 +1656,12 @@
         container.innerHTML = filtered.map(recipe => renderRecipeBoxHTML(recipe, true)).join('');
     }
 
+    /* ==========================================
+       6. RECEPT BOX RENDERING ENGINE
+       ========================================== */
     function renderRecipeBoxHTML(recipe, isCycleModule) {
         let ingredientsHTML = (recipe.ingredientsDetail || recipe.ingredients).map(ing => {
-            const hasIt = isCycleModule ? true : selectedPantryIngredients.includes(ing.id);
+            const hasIt = isCycleModule ? true : (ing.id ? selectedPantryIngredients.includes(ing.id) : false);
             const isVilgain = ing.isVilgainHero || ing.isVilgain;
             
             return `
@@ -1703,6 +1750,9 @@
         `;
     }
 
+    /* ==========================================
+       7. SWITCH & INITIALIZATION
+       ========================================== */
     function switchModule(moduleName) {
         currentModule = moduleName;
         document.documentElement.setAttribute("data-theme", moduleName);
