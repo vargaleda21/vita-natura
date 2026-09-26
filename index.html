@@ -22,7 +22,6 @@
             --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
         }
 
-        /* 1. CLEAN SWAP THEME */
         [data-theme="cleanswap"], body[data-theme="cleanswap"] {
             --bg-main: #F9F6F0;
             --bg-card: #FFFFFF;
@@ -30,16 +29,15 @@
             --bg-recipe-box: #F5EFE6;
             --primary: #4D0E15;
             --primary-light: #F2E3E5;
-            --accent-vilgain: #E07A5F;
-            --accent-vilgain-bg: #FDF0ED;
-            --accent-vilgain-border: #F7D1C8;
+            --accent-vilgain: #4D0E15;
+            --accent-vilgain-bg: #F9EBEA;
+            --accent-vilgain-border: #DBC4AC;
             --text-main: #2C2828;
             --text-muted: #6B6263;
             --text-heading: #4D0E15;
             --border-color: #DBC4AC;
         }
 
-        /* 2. KAMRA THEME */
         [data-theme="kamra"], body[data-theme="kamra"] {
             --bg-main: #FCF8F5;
             --bg-card: #FFFFFF;
@@ -47,16 +45,15 @@
             --bg-recipe-box: #FAF6F0;
             --primary: #556B2F;
             --primary-light: #EBF0EA;
-            --accent-vilgain: #E07A5F;
-            --accent-vilgain-bg: #FDF0ED;
-            --accent-vilgain-border: #F7D1C8;
+            --accent-vilgain: #4D0E15;
+            --accent-vilgain-bg: #F9EBEA;
+            --accent-vilgain-border: #E5DEC9;
             --text-main: #333333;
             --text-muted: #6B7280;
             --text-heading: #3E4F22;
             --border-color: #E5DEC9;
         }
 
-        /* 3. CIKLUSSZINKRON THEME */
         [data-theme="cycle"], body[data-theme="cycle"] {
             --bg-main: #FAF4F4;
             --bg-card: #FFFFFF;
@@ -64,9 +61,9 @@
             --bg-recipe-box: #F5E8E8;
             --primary: #9E2A2B;
             --primary-light: #F4E3E3;
-            --accent-vilgain: #E07A5F;
-            --accent-vilgain-bg: #FDF0ED;
-            --accent-vilgain-border: #F7D1C8;
+            --accent-vilgain: #4D0E15;
+            --accent-vilgain-bg: #F9EBEA;
+            --accent-vilgain-border: #EAC8C8;
             --text-main: #2B1E1E;
             --text-muted: #7A6363;
             --text-heading: #541718;
@@ -77,7 +74,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
         body {
@@ -89,7 +85,6 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
         }
 
         .container {
@@ -166,9 +161,6 @@
         }
 
         .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             margin-bottom: 20px;
         }
 
@@ -266,6 +258,11 @@
             cursor: pointer;
         }
 
+        .demo-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
         #scanner-container {
             border-radius: var(--radius-md);
             overflow: hidden;
@@ -298,10 +295,9 @@
             flex-shrink: 0;
         }
 
-        /* Pontos színkódok */
-        .score-high { background: #2E7D32; } /* Zöld */
-        .score-mid { background: #E65100; }  /* Narancs */
-        .score-low { background: #B71C1C; }  /* Piros */
+        .score-high { background: #2E7D32; }
+        .score-mid { background: #E65100; }
+        .score-low { background: #B71C1C; }
 
         .analysis-section {
             background: var(--bg-main);
@@ -318,6 +314,7 @@
             font-size: 1rem;
         }
 
+        /* Bordó stílusú kiemelt doboz / buborék */
         .swap-box {
             background: var(--accent-vilgain-bg);
             border: 1px solid var(--accent-vilgain-border);
@@ -367,6 +364,11 @@
             cursor: pointer;
             font-size: 0.9rem;
             border-bottom: 1px solid var(--bg-card-alt);
+        }
+
+        .autocomplete-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
         }
 
         .pantry-tags-container {
@@ -451,24 +453,6 @@
             stroke-width: 12;
         }
 
-        .cycle-ring-progress {
-            fill: none;
-            stroke: var(--primary);
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
-            transition: stroke-dashoffset 0.8s ease;
-        }
-
-        .cycle-ring-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
         .day-counter {
             font-family: var(--font-heading);
             font-size: 2.2rem;
@@ -517,43 +501,41 @@
 <div class="container">
     <header>
         <div class="brand-title">daleday</div>
-        <div class="brand-subtitle">Tudatos taplalkozas es holisztikus eletmod asszisztens</div>
+        <div class="brand-subtitle">Tudatos táplálkozás és holisztikus életmód asszisztens</div>
     </header>
 
     <div class="module-switch-container">
-        <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">Clean Swap Detektor</button>
-        <button class="tab-btn" id="tab-kamra" onclick="switchModule('kamra')">Kamra Asszisztens</button>
-        <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">Ciklusszinkron</button>
+        <button class="tab-btn active" id="tab-cleanswap" data-module="cleanswap">Clean Swap Detektor</button>
+        <button class="tab-btn" id="tab-kamra" data-module="kamra">Kamra Asszisztens</button>
+        <button class="tab-btn" id="tab-cycle" data-module="cycle">Ciklusszinkron</button>
     </div>
 
     <!-- CLEAN SWAP MODUL -->
     <div id="module-cleanswap">
         <div class="card">
             <div class="card-header">
-                <div>
-                    <div class="card-title">Clean Swap Detektor</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Olvasd be vagy add meg a vonalkódot</div>
-                </div>
+                <div class="card-title">Clean Swap Detektor</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Olvasd be vagy add meg a vonalkódot</div>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Vonalkod (pl. 3017620422003)">
-                    <button onclick="scanManualBarcode()" class="btn-primary">Kereses</button>
+                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Vonalkód (pl. 3017620422003)">
+                    <button id="btn-manual-search" class="btn-primary">Keresés</button>
                 </div>
-                <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%;">Kamera Inditasa</button>
+                <button id="btn-start-camera" class="btn-secondary" style="width: 100%;">Kamera Indítása</button>
             </div>
 
             <div id="scanner-container" class="hidden">
                 <div id="reader" style="width: 100%;"></div>
-                <button onclick="stopCameraScanner()" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #B71C1C; color: #FFF; border: none;">Kamera Bezárása</button>
+                <button id="btn-stop-camera" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #B71C1C; color: #FFF; border: none;">Kamera Bezárása</button>
             </div>
 
             <div class="demo-buttons-bar">
                 <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Demó termékek:</span>
-                <button class="demo-btn" onclick="analyzeDemoProduct('granola')">Bolti Granola</button>
-                <button class="demo-btn" onclick="analyzeDemoProduct('bolognai')">Bolti Bolognai</button>
-                <button class="demo-btn" onclick="analyzeDemoProduct('vilgain')">Vilgain BIO Pesto</button>
+                <button class="demo-btn" data-demo="granola">Bolti Granola</button>
+                <button class="demo-btn" data-demo="bolognai">Bolti Bolognai</button>
+                <button class="demo-btn" data-demo="vilgain">Vilgain BIO Pesto</button>
             </div>
         </div>
 
@@ -564,10 +546,8 @@
     <div id="module-kamra" class="hidden">
         <div class="card">
             <div class="card-header">
-                <div>
-                    <div class="card-title">Mi van a kamradban?</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Válassz alapanyagokat a szűréshez</div>
-                </div>
+                <div class="card-title">Mi van a kamrádban?</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Válassz alapanyagokat a szűréshez</div>
             </div>
 
             <div class="input-wrapper">
@@ -585,20 +565,18 @@
     <div id="module-cycle" class="hidden">
         <div class="card">
             <div class="card-header">
-                <div>
-                    <div class="card-title">Ciklus-Kalkulator</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Hormonális fázisok szerinti tervező</div>
-                </div>
+                <div class="card-title">Ciklus-Kalkulátor</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Hormonális fázisok szerinti tervező</div>
             </div>
 
             <div class="form-group">
                 <div class="input-wrapper">
                     <label class="input-label">Utolsó menstruáció első napja</label>
-                    <input type="date" id="last-period-date" class="custom-input" onchange="updateCycleData()">
+                    <input type="date" id="last-period-date" class="custom-input">
                 </div>
                 <div class="input-wrapper">
                     <label class="input-label">Ciklushossz (nap)</label>
-                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" oninput="updateCycleData()">
+                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40">
                 </div>
             </div>
 
@@ -606,7 +584,6 @@
                 <div class="cycle-ring-container">
                     <svg class="cycle-ring-svg" viewBox="0 0 160 160">
                         <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
-                        <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
                     </svg>
                     <div class="cycle-ring-text">
                         <div class="day-counter" id="cycle-day-text">1.</div>
@@ -651,7 +628,6 @@
     function translateIngredientsToHungarian(rawText) {
         if (!rawText) return "Nincs elérhető összetevő lista.";
         let text = rawText.toLowerCase();
-        
         const dict = {
             'water': 'víz', 'sugar': 'cukor', 'cane sugar': 'nádcukor', 'salt': 'só',
             'palm oil': 'pálmaolaj', 'sunflower oil': 'napraforgóolaj', 'rapeseed oil': 'repceolaj',
@@ -662,7 +638,6 @@
             'emulsifier': 'emulgeálószer', 'lecithin': 'lecitin', 'flavouring': 'aroma',
             'modified starch': 'módosított keményítő', 'preservative': 'tartósítószer'
         };
-
         for (let key in dict) {
             text = text.replace(new RegExp(key, 'g'), dict[key]);
         }
@@ -697,17 +672,12 @@
         let scoreVal = 62;
         let scoreReason = "Átlagos termék. Tartalmaz hasznos összetevőket is, de a feldolgozottság miatt mértékkel fogyasztandó.";
         let problematicIngredients = [];
-        let cleanSwapProduct = 'Vilgain BIO Alternatíva (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Vilgain termék megtekintése</a>)';
-        let homeRecipe = {
-            ingredients: "Friss, feldolgozatlan alapanyagok",
-            steps: "Készítsd el otthon friss hozzávalókból adalékmentesen."
-        };
 
         if (ingredientsText.includes('cukor') || ingredientsText.includes('sugar') || ingredientsText.includes('szirup')) {
-            problematicIngredients.push("Hozzáadott cukor vagy glükózszirup: Gyors inzulintüskét és folyamatos éhségérzetet okoz.");
+            problematicIngredients.push("Hozzáadott cukor vagy glükózszirup: Gyors inzulintüskét okoz.");
         }
         if (ingredientsText.includes('pálma') || ingredientsText.includes('palm') || ingredientsText.includes('növényi zsír')) {
-            problematicIngredients.push("Finomított növényi olajok / Pálmaolaj: Kedvezőtlen zsírsav-összetételű, terheli a szervezetet.");
+            problematicIngredients.push("Finomított növényi olajok / Pálmaolaj: Kedvezőtlen zsírsav-összetételű.");
         }
         if (ingredientsText.includes('aroma') || ingredientsText.includes('emulgeálószer') || ingredientsText.includes('tartósító')) {
             problematicIngredients.push("Mesterséges adalékanyagok / Aromák: Ipari segédanyagok.");
@@ -716,31 +686,32 @@
         if (['a', 'b'].includes(nutriscore) && problematicIngredients.length === 0) {
             scoreClass = 'score-high';
             scoreVal = 92;
-            scoreReason = "A termék kiváló tápértékkel bír. Nem tartalmaz felesleges adalékokat vagy finomított cukrokat.";
+            scoreReason = "A termék kiváló tápértékkel bír. Nem tartalmaz felesleges adalékokat.";
         } else if (['d', 'e'].includes(nutriscore) || problematicIngredients.length >= 2) {
             scoreClass = 'score-low';
             scoreVal = 38;
-            scoreReason = "Ultra-feldolgozott élelmiszer (UPF). A pontszámot a magas cukor- és olcsó olajtartalom rontotta.";
+            scoreReason = "Ultra-feldolgozott élelmiszer (UPF). A pontszámot a magas cukor- és olajtartalom rontotta.";
         }
 
+        // Biztonságos HTML generálás DOM elemekkel a stringhiba elkerülése végett
+        let cleanSwapContainer = document.createElement('div');
+        cleanSwapContainer.innerHTML = 'Vilgain BIO Alternatíva (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Vilgain termék megtekintése</a>)';
+
+        let homeIngredientsText = "Friss, feldolgozatlan alapanyagok";
+        let homeStepsText = "Készítsd el otthon friss hozzávalókból adalékmentesen.";
+
         if (name.includes('granola') || name.includes('müzli') || name.includes('pehely') || ingredientsText.includes('zab')) {
-            cleanSwapProduct = 'Vilgain Granola (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Kattints ide a termékért</a>)';
-            homeRecipe = {
-                ingredients: "200g <a class=\"product-link\" href=\"https://vilgain.hu/vilgain-granola\" target="_blank">zabpehely</a>, 3 ek <a class=\"product-link\" href=\"https://vilgain.hu/vilgain-foeldimogyorovaj-por\" target="_blank">mogyoróvaj</a> vagy mandulavaj, 3 ek méz, 50g pekándió.",
-                steps: "1. Keverd össze a folyékony mogyoróvajat a mézzel.<br>2. Forgasd bele a zabpelyhet és az aprított diót.<br>3. Süsd 170 fokon 15 percig, amíg aranybarna nem lesz."
-            };
+            cleanSwapContainer.innerHTML = 'Vilgain Granola (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Kattints ide a termékért</a>)';
+            homeIngredientsText = '200g zabpehely, 3 ek mogyoróvaj, 3 ek méz.';
+            homeStepsText = '1. Keverd össze a mogyoróvajat a mézzel.<br>2. Forgasd bele a zabpelyhet.<br>3. Süsd 170 fokon 15 percig.';
         } else if (name.includes('bolognai') || name.includes('mártás') || ingredientsText.includes('paradicsom')) {
-            cleanSwapProduct = 'Vilgain BIO Pasta Sauce';
-            homeRecipe = {
-                ingredients: "400g passzírozott paradicsom, 1 ek olívaolaj, 2 gerezd fokhagyma, friss bazsalikom, tengeri só.",
-                steps: "1. Pirítsd meg a fokhagymát az olívaolajon.<br>2. Add hozzá a passzírozott paradicsomot és a fűszereket.<br>3. Főzd lassú tűzön 15 percig."
-            };
+            cleanSwapContainer.innerHTML = 'Vilgain BIO Pasta Sauce (<a class="product-link" href="https://vilgain.hu" target="_blank">Termék megtekintése</a>)';
+            homeIngredientsText = '400g passzírozott paradicsom, 1 ek olívaolaj, fokhagyma, bazsalikom.';
+            homeStepsText = '1. Pirítsd meg a fokhagymát olívaolajon.<br>2. Add hozzá a paradicsomot és fűszereket.<br>3. Főzd 15 percig.';
         } else if (name.includes('pesto')) {
-            cleanSwapProduct = 'Vilgain BIO Basil Pesto';
-            homeRecipe = {
-                ingredients: "2 marék friss bazsalikom, 50g kesudió, 40g parmezán, 1 dl olívaolaj, fokhagyma.",
-                steps: "1. Tedd az aprítógépbe a bazsalikomot, a magvakat, a sajtot és a fokhagymát.<br>2. Dolgozd simára az olívaolaj hozzáadásával."
-            };
+            cleanSwapContainer.innerHTML = 'Vilgain BIO Basil Pesto (<a class="product-link" href="https://vilgain.hu" target="_blank">Termék megtekintése</a>)';
+            homeIngredientsText = '2 marék bazsalikom, 50g kesudió, olívaolaj, parmezán.';
+            homeStepsText = '1. Aprítsd össze a hozzávalókat.<br>2. Keverd simára olívaolajjal.';
         }
 
         return {
@@ -748,9 +719,10 @@
             scoreVal,
             scoreReason,
             translatedIngredients: translateIngredientsToHungarian(rawIngredients),
-            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["Nincsenek kritikus mesterséges adalékanyagok a termékben."],
-            cleanSwapProduct,
-            homeRecipe
+            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["Nincsenek kritikus mesterséges adalékanyagok."],
+            cleanSwapHTML: cleanSwapContainer.innerHTML,
+            homeIngredients: homeIngredientsText,
+            homeSteps: homeStepsText
         };
     }
 
@@ -777,7 +749,7 @@
                 <div class="analysis-title">Miért kapta ezt a pontszámot?</div>
                 <div style="font-size: 0.88rem; margin-bottom: 14px;">${analysis.scoreReason}</div>
                 
-                <div class="analysis-title" style="color: #B71C1C;">Problémás összetevők és hatásuk:</div>
+                <div class="analysis-title" style="color: #B71C1C;">Problémás összetevők:</div>
                 <ul style="font-size: 0.85rem; padding-left: 18px;">
                     ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:6px;">${ing}</li>`).join('')}
                 </ul>
@@ -786,18 +758,18 @@
             <div class="swap-box">
                 <div class="swap-title">Ajánlott Clean Swap Alternatívák</div>
                 <div style="font-size: 0.88rem; margin-bottom: 12px;">
-                    <strong>Ajánlott termék:</strong> ${analysis.cleanSwapProduct}
+                    <strong>Ajánlott termék:</strong> ${analysis.cleanSwapHTML}
                 </div>
 
                 <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px;">
-                    Házi elkészítési opció (adalékmentes recept):
+                    Házi elkészítési opció:
                 </div>
                 <div class="home-recipe-card">
                     <div style="font-size: 0.85rem; margin-bottom: 6px;">
-                        <strong>Hozzávalók:</strong> ${analysis.homeRecipe.ingredients}
+                        <strong>Hozzávalók:</strong> ${analysis.homeIngredients}
                     </div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">
-                        <strong>Elkészítés:</strong><br>${analysis.homeRecipe.steps}
+                        <strong>Elkészítés:</strong><br>${analysis.homeSteps}
                     </div>
                 </div>
             </div>
@@ -813,32 +785,8 @@
                     <div style="font-size: 0.85rem; color: var(--text-muted);">Vonalkód: ${barcode}</div>
                 </div>
             </div>
-            <p style="font-size: 0.88rem; color: var(--text-muted);">Használd a fenti demó gombokat az elemzés teszteléséhez.</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Használd a demó gombokat az elemzés teszteléséhez.</p>
         `;
-    }
-
-    function scanManualBarcode() {
-        const barcode = document.getElementById('manual-barcode').value.trim();
-        if (barcode) fetchBarcodeData(barcode);
-    }
-
-    async function startCameraScanner() {
-        document.getElementById('scanner-container').classList.remove('hidden');
-        try {
-            if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
-            await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 150 } }, (text) => {
-                document.getElementById('manual-barcode').value = text;
-                stopCameraScanner();
-                fetchBarcodeData(text);
-            }, () => {});
-        } catch (err) {
-            alert("A kamera indítása sikertelen.");
-        }
-    }
-
-    async function stopCameraScanner() {
-        if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
-        document.getElementById('scanner-container').classList.add('hidden');
     }
 
     function analyzeDemoProduct(type) {
@@ -868,7 +816,25 @@
         }
     }
 
-    // KAMRA ÉS CIKLUS LOGIKA
+    async function startCameraScanner() {
+        document.getElementById('scanner-container').classList.remove('hidden');
+        try {
+            if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
+            await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 150 } }, (text) => {
+                document.getElementById('manual-barcode').value = text;
+                stopCameraScanner();
+                fetchBarcodeData(text);
+            }, () => {});
+        } catch (err) {
+            alert("A kamera indítása sikertelen.");
+        }
+    }
+
+    async function stopCameraScanner() {
+        if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
+        document.getElementById('scanner-container').classList.add('hidden');
+    }
+
     const availableIngredients = ["Zabpehely", "Mogyoróvaj", "Csirkemell", "Avokádó", "Tojás", "Édesburgonya", "Quinoa", "Lazac"];
     let selectedIngredients = ["Zabpehely", "Mogyoróvaj"];
 
@@ -916,7 +882,7 @@
         const container = document.getElementById('pantry-tags');
         if(container) {
             container.innerHTML = selectedIngredients.map(i => `
-                <div class="pantry-tag"><span>${i}</span><button onclick="removePantryTag('${i}')">&times;</button></div>
+                <div class="pantry-tag"><span>${i}</span><button onclick="window.removePantryTag('${i}')">&times;</button></div>
             `).join('');
         }
     }
@@ -971,18 +937,44 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchModule(btn.getAttribute('data-module'));
+            });
+        });
+
+        document.querySelectorAll('.demo-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                analyzeDemoProduct(btn.getAttribute('data-demo'));
+            });
+        });
+
+        const searchBtn = document.getElementById('btn-manual-search');
+        if(searchBtn) {
+            searchBtn.addEventListener('click', () => {
+                const barcode = document.getElementById('manual-barcode').value.trim();
+                if (barcode) fetchBarcodeData(barcode);
+            });
+        }
+
+        const startCamBtn = document.getElementById('btn-start-camera');
+        if(startCamBtn) startCamBtn.addEventListener('click', startCameraScanner);
+
+        const stopCamBtn = document.getElementById('btn-stop-camera');
+        if(stopCamBtn) stopCamBtn.addEventListener('click', stopCameraScanner);
+
         const dateEl = document.getElementById('last-period-date');
-        if(dateEl) dateEl.value = new Date().toISOString().split('T')[0];
+        if(dateEl) {
+            dateEl.value = new Date().toISOString().split('T')[0];
+            dateEl.addEventListener('change', updateCycleData);
+        }
+
+        const lenEl = document.getElementById('cycle-length');
+        if(lenEl) lenEl.addEventListener('input', updateCycleData);
+
         initPantry();
         updateCycleData();
     });
-
-    window.switchModule = switchModule;
-    window.scanManualBarcode = scanManualBarcode;
-    window.startCameraScanner = startCameraScanner;
-    window.stopCameraScanner = stopCameraScanner;
-    window.analyzeDemoProduct = analyzeDemoProduct;
-    window.updateCycleData = updateCycleData;
 </script>
 </body>
 </html>
