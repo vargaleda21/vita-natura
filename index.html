@@ -3,333 +3,912 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>daleday - Vita Natura & Életmód Asszisztens</title>
-    <!-- Külső könyvtárak -->
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <title>Vita Natura – daleday</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
     <style>
         :root {
-            --primary: #2d6a4f;
-            --primary-light: #52b788;
-            --accent: #d8f3dc;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-heading: #1b4332;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --border: #e2e8f0;
-            --warning: #d97706;
-            --danger: #e63946;
-            --success: #38b000;
+            --transition-speed: 0.35s;
+            --font-heading: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 8px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
         }
 
-        [data-theme="cycle"] {
-            --primary: #9b5de5;
-            --primary-light: #c77dff;
-            --accent: #f3c6ff;
-            --text-heading: #5a189a;
+        [data-theme="cleanswap"], body[data-theme="cleanswap"] {
+            --bg-main: #F9F6F0;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #EEE4DA;
+            --bg-recipe-box: #F5EFE6;
+            --primary: #4D0E15;
+            --primary-light: #F2E3E5;
+            --accent-vilgain: #4D0E15;
+            --accent-vilgain-bg: #F9EBEA;
+            --accent-vilgain-border: #DBC4AC;
+            --text-main: #2C2828;
+            --text-muted: #594E4F;
+            --text-heading: #4D0E15;
+            --border-color: #DBC4AC;
+        }
+
+        [data-theme="kamra"], body[data-theme="kamra"] {
+            --bg-main: #FCF8F5;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F7F3EE;
+            --bg-recipe-box: #FAF6F0;
+            --primary: #556B2F;
+            --primary-light: #EBF0EA;
+            --accent-vilgain: #4D0E15;
+            --accent-vilgain-bg: #F9EBEA;
+            --accent-vilgain-border: #E5DEC9;
+            --text-main: #333333;
+            --text-muted: #525B65;
+            --text-heading: #3E4F22;
+            --border-color: #E5DEC9;
+        }
+
+        [data-theme="cycle"], body[data-theme="cycle"] {
+            --bg-main: #FAF4F4;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F9EBEA;
+            --bg-recipe-box: #F5E8E8;
+            --primary: #9E2A2B;
+            --primary-light: #F4E3E3;
+            --accent-vilgain: #4D0E15;
+            --accent-vilgain-bg: #F9EBEA;
+            --accent-vilgain-border: #EAC8C8;
+            --text-main: #2B1E1E;
+            --text-muted: #5C4747;
+            --text-heading: #541718;
+            --border-color: #EAC8C8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg);
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
             color: var(--text-main);
-            padding-bottom: 50px;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .nav-tabs {
+            line-height: 1.6;
+            padding: 24px 16px;
             display: flex;
             justify-content: center;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 15px 10px;
-            text-align: center;
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-            background-color: var(--accent);
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 0 15px;
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand-title {
+            font-family: var(--font-heading);
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+            line-height: 1;
+            text-transform: lowercase;
+        }
+
+        .brand-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .module-switch-container {
+            background: var(--bg-card-alt);
+            padding: 6px;
+            border-radius: 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 520px) {
+            .module-switch-container {
+                grid-template-columns: 1fr;
+                border-radius: 20px;
+            }
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 100px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            font-weight: 700;
         }
 
         .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
             margin-bottom: 20px;
-            border: 1px solid var(--border);
         }
 
-        .hidden {
-            display: none !important;
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.2;
         }
 
-        /* CleanSwap elemek */
-        .btn {
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .form-group { grid-template-columns: 1fr; }
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .input-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            height: 46px;
+        }
+
+        .custom-input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
             background: var(--primary);
-            color: white;
+            color: #FFFFFF;
             border: none;
             padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
             cursor: pointer;
-            width: 100%;
-            text-align: center;
-            transition: opacity 0.2s;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
         }
 
         .btn-secondary {
-            background: #e2e8f0;
-            color: var(--text-main);
-            margin-top: 10px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
+            background: var(--bg-card-alt);
             color: var(--text-heading);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
+        .demo-buttons-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .demo-btn {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-heading);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .demo-btn:hover {
+            background: var(--primary-light);
+            color: var(--primary);
         }
 
         #scanner-container {
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 15px auto;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: #000;
+            margin-top: 16px;
+            padding: 10px;
         }
 
         .score-box {
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-recipe-box);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: var(--bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            gap: 16px;
         }
 
         .score-badge-circle {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: white;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #FFF;
             flex-shrink: 0;
         }
 
-        .score-good { background-color: var(--success); }
-        .score-mid { background-color: var(--warning); }
-        .score-bad { background-color: var(--danger); }
+        .score-high { background: #2E7D32; }
+        .score-mid { background: #E65100; }
+        .score-low { background: #B71C1C; }
+
+        .analysis-section {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-top: 16px;
+        }
+
+        .analysis-title {
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .swap-box {
+            background: var(--accent-vilgain-bg);
+            border: 1px solid var(--accent-vilgain-border);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-top: 16px;
+        }
+
+        .swap-title {
+            font-weight: 700;
+            color: var(--accent-vilgain);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .home-recipe-card {
+            background: #FFFFFF;
+            border: 1px solid var(--accent-vilgain-border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            margin-top: 8px;
+        }
+
+        .product-link {
+            color: var(--accent-vilgain);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-hover);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            margin-top: 4px;
+        }
+
+        .autocomplete-item {
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--bg-card-alt);
+        }
+
+        .autocomplete-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .pantry-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .pantry-tag {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pantry-tag button {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .recipe-card-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .recipe-meta-bar {
+            display: flex;
+            gap: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .recipe-title {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+        }
+
+        .vilgain-box {
+            background: var(--accent-vilgain-bg);
+            border: 1px solid var(--accent-vilgain-border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .cycle-visualizer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            background: var(--bg-card-alt);
+            border-radius: var(--radius-md);
+        }
+
+        .cycle-ring-container {
+            position: relative;
+            width: 170px;
+            height: 170px;
+        }
+
+        .cycle-ring-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .cycle-ring-bg {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 12;
+        }
+
+        .cycle-ring-progress {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 12;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s ease;
+        }
+
+        .cycle-ring-text {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day-counter {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .day-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .phase-badge-container {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 100px;
+        }
+
+        .superfood-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .superfood-chip {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .superfood-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .superfood-chip.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .disclaimer-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .hidden { display: none !important; }
     </style>
 </head>
-<body data-theme="default">
+<body data-theme="cleanswap">
 
+<div class="container">
     <header>
-        <h1>daleday</h1>
-        <p>Vita Natura & Életmód Asszisztens</p>
+        <div class="brand-title">daleday</div>
+        <div class="brand-subtitle">Ahol a tudatosság természetessé válik.</div>
     </header>
 
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('cleanSwap')">CleanSwap</button>
-        <button class="tab-btn" onclick="switchTab('pantry')">Kamra</button>
-        <button class="tab-btn" onclick="switchTab('cycle')">Ciklus</button>
+    <div class="module-switch-container">
+        <button class="tab-btn active" id="tab-cleanswap" data-module="cleanswap" onclick="switchModule('cleanswap')">Ételcsere-detektor</button>
+        <button class="tab-btn" id="tab-kamra" data-module="kamra" onclick="switchModule('kamra')">Kamra-asszisztens</button>
+        <button class="tab-btn" id="tab-cycle" data-module="cycle" onclick="switchModule('cycle')">Ciklusszinkron</button>
     </div>
 
-    <div class="container">
-        <!-- CleanSwap Modul -->
-        <div id="cleanSwap" class="tab-content">
-            <div class="card">
-                <h2>Ételcsere-detektor</h2>
-                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">Olvasd be egy termék vonalkódját, vagy írd be manuálisan az elemzéshez.</p>
-                
-                <div id="scanner-container" class="hidden">
-                    <div id="reader"></div>
-                    <button class="btn btn-secondary" onclick="stopCameraScanner()">Kamera bezárása</button>
-                </div>
+    <!-- ÉTELCSERE-DETEKTOR MODUL -->
+    <div id="module-cleanswap">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ételcsere-detektor</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Olvasd be vagy add meg a vonalkódot</div>
+            </div>
 
-                <button class="btn" onclick="startCameraScanner()" style="margin-bottom: 10px;">Kamerás vonalkód-olvasás</button>
-                
-                <div class="input-group">
-                    <label for="manualBarcode">Vagy írd be a vonalkódot:</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="manualBarcode" placeholder="pl. 5991234567890">
-                        <button class="btn" style="width: auto;" onclick="handleManualBarcode()">Keresés</button>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Vonalkód (pl. 3017620422003)">
+                    <button id="btn-manual-search" class="btn-primary" onclick="fetchBarcodeData(document.getElementById('manual-barcode').value.trim())">Keresés</button>
+                </div>
+                <button id="btn-start-camera" class="btn-secondary" style="width: 100%;">Kamera indítása</button>
+            </div>
+
+            <div id="scanner-container" class="hidden">
+                <div id="reader" style="width: 100%;"></div>
+                <button id="btn-stop-camera" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #B71C1C; color: #FFF; border: none;">Kamera bezárása</button>
+            </div>
+
+            <div class="demo-buttons-bar">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Demó termékek:</span>
+                <button class="demo-btn" onclick="fetchBarcodeData('5900512300211')">Hagyományos granola</button>
+                <button class="demo-btn" onclick="fetchBarcodeData('3017620422003')">Mogyorókrém</button>
+                <button class="demo-btn" onclick="fetchBarcodeData('8594073300123')">Vilgain BIO pesto</button>
+            </div>
+        </div>
+
+        <div id="cleanswap-result-card" class="card hidden"></div>
+    </div>
+
+    <!-- KAMRA MODUL -->
+    <div id="module-kamra" class="hidden">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Mi van a kamrádban?</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Válassz alapanyagokat a szűréshez</div>
+            </div>
+
+            <div class="input-wrapper">
+                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Alapanyag keresése..." autocomplete="off">
+                <div id="autocomplete-list" class="autocomplete-dropdown hidden"></div>
+            </div>
+
+            <div class="pantry-tags-container" id="pantry-tags"></div>
+        </div>
+
+        <div id="pantry-recipes-container"></div>
+    </div>
+
+    <!-- CIKLUSSZINKRON MODUL -->
+    <div id="module-cycle" class="hidden">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ciklus-Kalkulátor</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Hormonális fázisok szerinti tervező</div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label class="input-label">Utolsó menstruáció első napja</label>
+                    <input type="date" id="last-period-date" class="custom-input">
+                </div>
+                <div class="input-wrapper">
+                    <label class="input-label">Ciklushossz (nap)</label>
+                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40">
+                </div>
+            </div>
+
+            <div class="cycle-visualizer">
+                <div class="cycle-ring-container">
+                    <svg class="cycle-ring-svg" viewBox="0 0 160 160">
+                        <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
+                        <circle class="cycle-ring-progress" id="cycle-progress-ring" cx="80" cy="80" r="70" stroke-dasharray="439.8" stroke-dashoffset="30"></circle>
+                    </svg>
+                    <div class="cycle-ring-text">
+                        <div class="day-counter" id="cycle-day-text">1.</div>
+                        <div class="day-label">napja</div>
+                    </div>
+                </div>
+                <div class="phase-badge-container">
+                    <div class="phase-badge">
+                        <span id="phase-name-text">Menstruációs fázis</span>
                     </div>
                 </div>
             </div>
 
-            <div id="cleanswap-result-card" class="card hidden">
-                <!-- Dinamikus találat helye -->
+            <div class="disclaimer-text">
+                Tájékoztatás: A daleday életmód- és táplálkozási felület. Nem minősül orvosi diagnózisnak.
             </div>
         </div>
 
-        <!-- Kamra Modul -->
-        <div id="pantry" class="tab-content hidden">
-            <div class="card">
-                <h2>Kamra-asszisztens</h2>
-                <p style="color: var(--text-muted);">Válaszd ki az otthon lévő alapanyagaidat!</p>
-            </div>
-        </div>
-
-        <!-- Ciklus Modul -->
-        <div id="cycle" class="tab-content hidden">
-            <div class="card">
-                <h2>Ciklusszinkron Kalkulátor</h2>
-                <p style="color: var(--text-muted);">Hormonális fázisok szerinti étrend és életmód tervező.</p>
-            </div>
-        </div>
+        <div id="cycle-recipe-container"></div>
     </div>
+</div>
 
-    <script>
-        let html5QrCode = null;
+<script>
+    let html5QrCode = null;
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.remove('hidden');
-            event.currentTarget.classList.add('active');
-
-            const body = document.body;
-            if (tabId === 'cycle') {
-                body.setAttribute('data-theme', 'cycle');
-            } else {
-                body.setAttribute('data-theme', 'default');
-            }
-
-            if (tabId !== 'cleanSwap') {
-                stopCameraScanner();
-            }
+    const SCANNER_DATABASE = {
+        "3017620422003": {
+            product_name_hu: 'Mogyorókrém',
+            brands: 'Hagyományos bolti termék',
+            ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
+            nutriscore_grade: 'e'
+        },
+        "5900512300211": {
+            product_name_hu: 'Ropogós csokoládés granola',
+            brands: 'Kereskedelmi márkás termék',
+            ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
+            nutriscore_grade: 'd'
+        },
+        "8594073300123": {
+            product_name_hu: 'Vilgain BIO Basil Pesto',
+            brands: 'Vilgain',
+            ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
+            nutriscore_grade: 'a'
         }
+    };
 
-        function startCameraScanner() {
-            const container = document.getElementById('scanner-container');
-            container.classList.remove('hidden');
-            
-            if (!html5QrCode) {
-                html5QrCode = new Html5Qrcode("reader");
-            }
-
-            html5QrCode.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: 250 },
-                (decodedText, decodedResult) => {
-                    stopCameraScanner();
-                    document.getElementById('manualBarcode').value = decodedText;
-                    handleManualBarcode();
-                },
-                (errorMessage) => {
-                    // Olvasási hiba elnyelése szkennelés közben
-                }
-            ).catch(err => {
-                console.error("Nem sikerült elindítani a kamerát.", err);
-                alert("A kamera nem érhető el vagy letiltottad a hozzáférést.");
-            });
-        }
-
-        function stopCameraScanner() {
-            if (html5QrCode && html5QrCode.isScanning) {
-                html5QrCode.stop().then(() => {
-                    const container = document.getElementById('scanner-container');
-                    if (container) container.classList.add('hidden');
-                }).catch(err => console.error(err));
+    function switchModule(moduleName) {
+        document.body.setAttribute('data-theme', moduleName);
+        ['cleanswap', 'kamra', 'cycle'].forEach(m => {
+            const modElement = document.getElementById('module-' + m);
+            const tabBtn = document.getElementById('tab-' + m);
+            if (m === moduleName) {
+                if (modElement) modElement.classList.remove('hidden');
+                if (tabBtn) tabBtn.classList.add('active');
             } else {
+                if (modElement) modElement.classList.add('hidden');
+                if (tabBtn) tabBtn.classList.remove('active');
+            }
+        });
+        if (moduleName !== 'cleanswap') stopCameraScanner();
+    }
+
+    function stopCameraScanner() {
+        if (html5QrCode && html5QrCode.isScanning) {
+            html5QrCode.stop().then(() => {
                 const container = document.getElementById('scanner-container');
                 if (container) container.classList.add('hidden');
-            }
+            }).catch(err => console.error(err));
+        } else {
+            const container = document.getElementById('scanner-container');
+            if (container) container.classList.add('hidden');
+        }
+    }
+
+    function translateIngredientsToHungarian(rawText) {
+        if (!rawText) return "Nincs elérhető összetevő-lista.";
+        let text = rawText.toLowerCase();
+        const dict = {
+            'glucose syrup': 'glükózszirup',
+            'fructose syrup': 'fruktózszirup',
+            'invert sugar syrup': 'inverz cukorszirup',
+            'palm oil': 'pálmaolaj',
+            'sunflower oil': 'napraforgóolaj',
+            'rapeseed oil': 'repceolaj',
+            'olive oil': 'olívaolaj',
+            'wheat flour': 'búzaliszt',
+            'oat flakes': 'zabpehely',
+            'cocoa mass': 'kakaómassza',
+            'cocoa butter': 'kakaóvaj',
+            'cane sugar': 'nádcukor',
+            'water': 'víz',
+            'sugar': 'cukor',
+            'salt': 'só',
+            'honey': 'méz',
+            'peanuts': 'földimogyoró',
+            'almonds': 'mandula',
+            'hazelnuts': 'mogyoró',
+            'chocolate pieces': 'csokoládédarabok',
+            'chocolate': 'csokoládé',
+            'emulsifier': 'emulgeálószer',
+            'lecithin': 'lecitin',
+            'flavouring': 'aroma',
+            'modified starch': 'módosított keményítő',
+            'preservative': 'tartósítószer'
+        };
+        for (let key in dict) {
+            text = text.replace(new RegExp(key, 'g'), dict[key]);
+        }
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    async function fetchBarcodeData(barcode) {
+        const resultCard = document.getElementById('cleanswap-result-card');
+        resultCard.classList.remove('hidden');
+        resultCard.innerHTML = '<div style="padding:20px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
+
+        if (SCANNER_DATABASE[barcode]) {
+            renderProductResult(SCANNER_DATABASE[barcode]);
+            return;
         }
 
-        function handleManualBarcode() {
-            const code = document.getElementById('manualBarcode').value.trim();
-            if (!code) {
-                alert("Kérlek add meg a vonalkódot!");
-                return;
+        try {
+            const response = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
+            const data = await response.json();
+            if (data.status === 1 && data.product) {
+                renderProductResult(data.product);
+            } else {
+                renderNotFoundResult(barcode);
             }
-            // Demó logika nem található kezelésére
-            renderNotFoundResult(code);
+        } catch (error) {
+            renderNotFoundResult(barcode);
+        }
+    }
+
+    function generateSmartAnalysis(product) {
+        const rawIngredients = product.ingredients_text_hu || product.ingredients_text || '';
+        const ingredientsText = rawIngredients.toLowerCase();
+        const nutriscore = (product.nutriscore_grade || 'c').toLowerCase();
+        const name = (product.product_name_hu || product.product_name || '').toLowerCase();
+
+        let scoreClass = 'score-mid';
+        let scoreVal = 62;
+        let scoreReason = "Átlagos összetételű termék. Tartalmaz hasznos összetevőket is, de a feldolgozottság miatt mértékkel fogyasztandó.";
+        let problematicIngredients = [];
+
+        if (ingredientsText.includes('cukor') || ingredientsText.includes('sugar') || ingredientsText.includes('szirup')) {
+            problematicIngredients.push("Hozzáadott cukor vagy glükózszirup: Gyors vércukorszint-ingadozást okoz.");
+        }
+        if (ingredientsText.includes('pálma') || ingredientsText.includes('palm') || ingredientsText.includes('növényi zsír')) {
+            problematicIngredients.push("Finomított növényi olajok és pálmaolaj: Gyulladáskeltő hatású, kedvezőtlen zsírsav-profilú összetevők.");
+        }
+        if (ingredientsText.includes('aroma') || ingredientsText.includes('emulgeálószer') || ingredientsText.includes('tartósító')) {
+            problematicIngredients.push("Mesterséges adalékanyagok és aromák: Nehezíthetik az emésztést és terhelhetik a szervezetet.");
         }
 
-        function renderNotFoundResult(barcode) {
-            const container = document.getElementById('cleanswap-result-card');
-            if (!container) return;
-            
-            container.classList.remove('hidden');
-            container.innerHTML = `
-                <div class="score-box" style="border-left: 4px solid var(--primary);">
-                    <div class="score-badge-circle score-mid">?</div>
-                    <div>
-                        <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">A termék nem található</div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Vonalkód: ${barcode}</div>
+        if (['a', 'b'].includes(nutriscore) && problematicIngredients.length === 0) {
+            scoreClass = 'score-high';
+            scoreVal = 92;
+            scoreReason = "A termék kiváló tápértékkel bír. Nem tartalmaz felesleges adalékanyagokat.";
+        } else if (['d', 'e'].includes(nutriscore) || problematicIngredients.length >= 2) {
+            scoreClass = 'score-low';
+            scoreVal = 38;
+            scoreReason = "Ultra-feldolgozott élelmiszer. A pontszámot a magas cukor- és finomítottolaj-tartalom rontotta le.";
+        }
+
+        let cleanSwapHTML = 'Vilgain BIO alternatíva (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=cleanswap" target="_blank">Vilgain termék megtekintése</a>)';
+        let homeIngredientsText = "Friss, feldolgozatlan alapanyagok";
+        let homeStepsText = "Készítsd el otthon friss hozzávalókból, adalékmentesen.";
+
+        if (name.includes('granola') || name.includes('müzli') || name.includes('pehely') || ingredientsText.includes('zab')) {
+            cleanSwapHTML = 'Vilgain granola (<a class="product-link" href="https://vilgain.hu/vilgain-granola?utm_source=daleday&utm_medium=cleanswap" target="_blank">Kattints ide a termékért</a>)';
+            homeIngredientsText = '200g zabpehely, 3 ek mogyoróvaj, 3 ek méz.';
+            homeStepsText = '1. Keverd össze a mogyoróvajat a mézzel.<br>2. Forgasd bele a zabpelyhet.<br>3. Süsd 170 fokon 15 percig.';
+        } else if (name.includes('bolognai') || name.includes('mártás') || ingredientsText.includes('paradicsom')) {
+            cleanSwapHTML = 'Vilgain BIO paradicsomszósz (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=cleanswap" target="_blank">Termék megtekintése</a>)';
+            homeIngredientsText = '400g passzírozott paradicsom, 1 ek olívaolaj, fokhagyma, bazsalikom.';
+            homeStepsText = '1. Pirítsd meg a fokhagymát olívaolajon.<br>2. Add hozzá a paradicsomot és fűszereket.<br>3. Főzd 15 percig.';
+        } else if (name.includes('pesto')) {
+            cleanSwapHTML = 'Vilgain BIO bazsalikomos pesto (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=cleanswap" target="_blank">Termék megtekintése</a>)';
+            homeIngredientsText = '2 marék bazsalikom, 50g kesudió, olívaolaj, parmezán.';
+            homeStepsText = '1. Aprítsd össze a hozzávalókat.<br>2. Keverd simára olívaolajjal.';
+        }
+
+        return {
+            scoreClass,
+            scoreVal,
+            scoreReason,
+            translatedIngredients: translateIngredientsToHungarian(rawIngredients),
+            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["Nincsenek kritikus mesterséges adalékanyagok."],
+            cleanSwapHTML,
+            homeIngredients: homeIngredientsText,
+            homeSteps: homeStepsText
+        };
+    }
+
+    function renderProductResult(product) {
+        const name = product.product_name_hu || product.product_name || 'Ismeretlen termék';
+        const brands = product.brands || 'Kereskedelmi márkás termék';
+        const analysis = generateSmartAnalysis(product);
+
+        const resultCard = document.getElementById('cleanswap-result-card');
+        resultCard.innerHTML = `
+            <div class="score-box">
+                <div class="score-badge-circle ${analysis.scoreClass}">${analysis.scoreVal}</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">${name}</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">${brands}</div>
+                </div>
+            </div>
+
+            <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5; font-weight: 600;">
+                <strong>Összetevők:</strong> ${analysis.translatedIngredients}
+            </div>
+
+            <div class="analysis-section">
+                <div class="analysis-title">Miért kapta ezt a pontszámot?</div>
+                <div style="font-size: 0.88rem; margin-bottom: 14px; font-weight: 600;">${analysis.scoreReason}</div>
+                
+                <div class="analysis-title" style="color: #B71C1C;">Problémás összetevők:</div>
+                <ul style="font-size: 0.85rem; padding-left: 18px; font-weight: 600;">
+                    ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:6px;">${ing}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="swap-box">
+                <div class="swap-title">Ajánlott egészségesebb alternatívák</div>
+                <div style="font-size: 0.88rem; margin-bottom: 12px; font-weight: 600;">
+                    <strong>Ajánlott termék:</strong> ${analysis.cleanSwapHTML}
+                </div>
+
+                <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px;">
+                    Házi elkészítési opció:
+                </div>
+                <div class="home-recipe-card">
+                    <div style="font-size: 0.85rem; margin-bottom: 6px; font-weight: 600;">
+                        <strong>Hozzávalók:</strong> ${analysis.homeIngredients}
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
+                        <strong>Elkészítés:</strong><br>${analysis.homeSteps}
                     </div>
                 </div>
-                <div style="font-size: 0.88rem; font-weight: 600; text-align: center; padding: 10px; color: var(--text-muted);">
-                    A megadott vonalkód még nem szerepel a helyi adatbázisban vagy az Open Food Facts rendszerében. Próbáld ki a demó gombokat az elemzés teszteléséhez!
+            </div>
+        `;
+    }
+
+    function renderNotFoundResult(barcode) {
+        document.getElementById('cleanswap-result-card').innerHTML = `
+            <div class="score-box">
+                <div class="score-badge-circle score-mid">?</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">A termék nem található</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Vonalkód: ${barcode}</div>
                 </div>
-            `;
-        }
-    </script>
+            </div>
+            <div style="font-size: 0.88rem; font-weight: 600; text-align: center; padding: 10px; color: var(--text-muted);">
+                A megadott vonalkód még nem szerepel a helyi adatbázisban vagy az Open Food Facts rendszerében. Próbáld ki a demó gombokat az elemzés teszteléséhez!
+            </div>
+        `;
+    }
+</script>
 </body>
 </html>
