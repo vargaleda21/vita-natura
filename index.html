@@ -384,32 +384,41 @@
             background: var(--bg-main);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin-top: 14px;
+            padding: 18px;
+            margin-top: 16px;
         }
 
         .analysis-title {
             font-weight: 700;
             color: var(--text-heading);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-size: 1rem;
         }
 
         .swap-box {
             background: var(--accent-vilgain-bg);
             border: 1px solid var(--accent-vilgain-border);
             border-radius: var(--radius-md);
-            padding: 16px;
-            margin-top: 14px;
+            padding: 18px;
+            margin-top: 16px;
         }
 
         .swap-title {
             font-weight: 700;
             color: var(--accent-vilgain);
-            font-size: 0.95rem;
-            margin-bottom: 8px;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .home-recipe-card {
+            background: #FFFFFF;
+            border: 1px solid var(--accent-vilgain-border);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            margin-top: 8px;
         }
 
         /* ==========================================================================
@@ -788,8 +797,30 @@
     }
 
     // --------------------------------------------------------------------------
-    // 2. CLEAN SWAP LOGIKA, OPENFOODFACTS & RÉSZLETES RENDSZER-ELEMZÉS
+    // 2. CLEAN SWAP LOGIKA & FORDÍTÓ, INDOKLÓ, HÁZI RECEPT GENERÁLÓ MOTOR
     // --------------------------------------------------------------------------
+    
+    // Szótár az OpenFoodFacts angol összetevőinek fordítására
+    function translateIngredientsToHungarian(rawText) {
+        if (!rawText) return "Nincs elérhető összetevő lista.";
+        
+        let text = rawText.toLowerCase();
+        const dict = {
+            'water': 'víz', 'sugar': 'cukor', 'salt': 'só', 'palm oil': 'pálmaolaj',
+            'sunflower oil': 'napraforgóolaj', 'olive oil': 'olívaolaj', 'wheat flour': 'búzaliszt',
+            'modified starch': 'módosított keményítő', 'preservative': 'tartósítószer',
+            'flavor enhancer': 'ízfokozó', 'emulsifier': 'emulgeálószer', 'glucose syrup': 'glükózszirup',
+            'fructose syrup': 'fruktózszirup', 'oat flakes': 'zabpehely', 'peanuts': 'földimogyoró',
+            'cashew': 'kesudió', 'basil': 'bazsalikom', 'tomatoes': 'paradicsom', 'garlic': 'fokhagyma',
+            'milk': 'tej', 'cheese': 'sajt', 'soybean oil': 'szójaolaj', 'yeast extract': 'élesztőkivonat'
+        };
+
+        for (let key in dict) {
+            text = text.replace(new RegExp(key, 'g'), dict[key]);
+        }
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
     async function fetchBarcodeData(barcode) {
         const resultCard = document.getElementById('cleanswap-result-card');
         resultCard.classList.remove('hidden');
@@ -810,66 +841,94 @@
         }
     }
 
-    // Automatikus elemzés generáló függvény a tiszta összetevők és hibák feltárásához
+    // Részletes magyar elemzést és házireceptet előállító függvény
     function generateSmartAnalysis(product) {
-        const ingredientsText = (product.ingredients_text_hu || product.ingredients_text || '').toLowerCase();
+        const rawIngredients = product.ingredients_text_hu || product.ingredients_text || '';
+        const ingredientsText = rawIngredients.toLowerCase();
         const nutriscore = (product.nutriscore_grade || 'c').toLowerCase();
+        const name = (product.product_name_hu || product.product_name || '').toLowerCase();
 
         let scoreClass = 'score-mid';
-        let scoreVal = 65;
-        let scoreReason = 'A termék átlagos tápértékkel és összetétellel rendelkezik.';
+        let scoreVal = 60;
+        let scoreReason = '';
         let problematicIngredients = [];
-        let cleanSwapProduct = "Vilgain BIO / Tiszta alternatíva";
-        let homeAlternative = "Készítsd el otthon friss alapanyagokból adalékok nélkül!";
+        let cleanSwapProduct = "Vilgain BIO / Tiszta összetételű alternatíva";
+        
+        let homeRecipe = {
+            ingredients: "Friss, feldolgozatlan alapanyagok",
+            steps: "Készítsd el otthon friss hozzávalókból adalékmentesen!"
+        };
 
-        // Problémás összetevők detektálása
-        if (ingredientsText.includes('cukor') || ingredientsText.includes('glükóz') || ingredientsText.includes('fruktóz')) {
-            problematicIngredients.push("Hozzáadott cukor/szirup: Véreshurkaszerű vércukor-ingadozást és gyulladást okozhat.");
+        // Problémás összetevők kiszűrése és pontos egészségügyi hatása
+        if (ingredientsText.includes('cukor') || ingredientsText.includes('sugar') || ingredientsText.includes('glükóz') || ingredientsText.includes('fruktóz')) {
+            problematicIngredients.push("<strong>Hozzáadott cukor / Glükóz-fruktóz szirup:</strong> Gyors vércukor-ingadozást, inzulintüskét és folyamatos éhségérzetet okoz, emellett elősegíti a szervezetben a krónikus gyulladásos folyamatokat.");
         }
-        if (ingredientsText.includes('pálma') || ingredientsText.includes('módosított') || ingredientsText.includes('hidrogénezett')) {
-            problematicIngredients.push("Módosított/Feldolgozott zsírok: Károsíthatják a bélflórát és növelik a gyulladási faktorokat.");
+        if (ingredientsText.includes('pálma') || ingredientsText.includes('palm') || ingredientsText.includes('módosított') || ingredientsText.includes('hidrogénezett')) {
+            problematicIngredients.push("<strong>Pálmaolaj / Módosított zsírok:</strong> Telített zsírsavakban és feldolgozott transzzsírokban gazdag, ami károsíthatja a bélflórát és növeli a szív- és érrendszeri kockázatokat.");
         }
-        if (ingredientsText.includes('ízfokozó') || ingredientsText.includes('e621') || ingredientsText.includes('e202') || ingredientsText.includes('tartósító')) {
-            problematicIngredients.push("Mesterséges adalékok / Tartósítószerek: Megterhelhetik a méregtelenítő szerveket és az emésztőrendszert.");
+        if (ingredientsText.includes('ízfokozó') || ingredientsText.includes('e621') || ingredientsText.includes('glutamát') || ingredientsText.includes('e202') || ingredientsText.includes('tartósító')) {
+            problematicIngredients.push("<strong>Ízfokozók (pl. E621) / Tartósítószerek:</strong> Túlingerekhez vezethetnek az ízlelésben, megterhelhetik a bélrendszert és a méregtelenítő szerveket, valamint puffadást és emésztési panaszokat okozhatnak.");
+        }
+        if (ingredientsText.includes('aroma') || ingredientsText.includes('flavouring') || ingredientsText.includes('színezék')) {
+            problematicIngredients.push("<strong>Mesterséges aromák és színezékek:</strong> Szintetikus vegyületek, amelyek nem hordoznak tápértéket, de terhelik az emésztőrendszert és érzékenységet válthatnak ki.");
         }
 
-        // Pontszám és kategória finomhangolása
+        // Pontszám megállapítása és az okok szabatos indoklása
         if (['a', 'b'].includes(nutriscore) && problematicIngredients.length === 0) {
             scoreClass = 'score-high';
             scoreVal = 92;
-            scoreReason = "Kiváló, ultra-tiszta összetétel! Minimálisan feldolgozott, természetes alapanyagokból áll.";
-            cleanSwapProduct = "Remek választás! Hasonló tiszta alternatíva: Vilgain BIO termékcsalád.";
-            homeAlternative = "Nem szükséges cserélni, de friss zöldségekkel még tovább gazdagítható.";
+            scoreReason = "<strong>Miért kapott 92 pontot?</strong> Ez a termék a legmagasabb tápérték-kategóriába tartozik. Nem tartalmaz mesterséges tartósítószert, hozzáadott cukrot vagy ultra-feldolgozott növényi olajokat. Tiszta, természetes élelmiszer.";
+            cleanSwapProduct = "Ez a termék kiváló választás! Hasonló tiszta alternatíva: Vilgain BIO termékcsalád.";
         } else if (['d', 'e'].includes(nutriscore) || problematicIngredients.length >= 2) {
             scoreClass = 'score-low';
-            scoreVal = 38;
-            scoreReason = "Ultra-feldolgozott élelmiszer (UPF). A magas finomított szénhidrát-, adalék- vagy rossz minőségű zsírtartalom miatt nem ajánlott a napi fogyasztása.";
+            scoreVal = 35;
+            scoreReason = "<strong>Miért kapott 35 pontot?</strong> Ez egy ultra-feldolgozott élelmiszer (UPF). A pontszámot jelentősen csökkentette a hozzáadott cukor/szirup jelenléte, az olcsó töltőanyagok (módosított keményítő), valamint a mesterséges adalékanyagok és tartósítószerek magas aránya.";
+        } else {
+            scoreClass = 'score-mid';
+            scoreVal = 62;
+            scoreReason = "<strong>Miért kapott 62 pontot?</strong> Átlagos minőségű termék. Habár tartalmaz értékes alapanyagokat is, a feldolgozottsági szintje és a benne lévő aromák/zsírok miatt napi rendszerességű fogyasztásra kevésbé ajánlott.";
         }
 
-        // Kategória alapú okos csere-javaslatok
-        const name = (product.product_name_hu || product.product_name || '').toLowerCase();
-        if (name.includes('bolognai') || name.includes('szósz') || name.includes('pesto') || ingredientsText.includes('paradicsom')) {
-            cleanSwapProduct = "Vilgain BIO Basil Pesto / BIO Paradicsomszósz (100% tiszta olívaolajjal és olasz paradicsommal).";
-            homeAlternative = "Süss össze friss paradicsomot, fokhagymát és bazsalikomot extra szűz olívaolajon 10 perc alatt!";
+        // Konkrét Házi Recept Generálása a terméktípus alapján
+        if (name.includes('bolognai') || name.includes('mártás') || name.includes('paradicsom') || ingredientsText.includes('paradicsom')) {
+            cleanSwapProduct = "Vilgain BIO Bolognese Sauce / Vilgain BIO Basil Pesto";
+            homeRecipe = {
+                ingredients: "400g paszírozott BIO paradicsom, 2 gerezd fokhagyma, 1 ek extra szűz olívaolaj, friss bazsalikom, csipet tengeri só, olasz fűszerkeverék.",
+                steps: "1. Egy serpenyőben melegítsd fel az olívaolajat és pirítsd át a zúzott fokhagymát 1 percig.<br>2. Öntsd hozzá a paszírozott paradicsomot, sózd, fűszerezd.<br>3. Lassú tűzön rotyogtasd 10-15 percig, a végén keverd hozzá a friss bazsalikomot."
+            };
         } else if (name.includes('müzli') || name.includes('szelet') || name.includes('csoki') || ingredientsText.includes('zab')) {
-            cleanSwapProduct = "Vilgain Oat Bar / Flapjack (csak zabpehely, mogyoróvaj és kókuszszirup).";
-            homeAlternative = "Keverj össze zabpelyhet mogyoróvajjal, chia maggal és egy pici mézzel, majd hűtsd le formában!";
+            cleanSwapProduct = "Vilgain Oat Bar / Vilgain Nut & Fruit Bar";
+            homeRecipe = {
+                ingredients: "150g aprószemű zabpehely, 3 ek természetes mogyoróvaj, 2 ek méz vagy juharszirup, 2 ek chia mag, 1 marék aprított diák/aszalt gyümölcs.",
+                steps: "1. Egy tálban keverd össze a mogyoróvajat és a mézet, majd enyhén melegítsd össze.<br>2. Forgasd hozzá a zabpelyhet, chia magot és az aprított magvakat.<br>3. Nyomkodd egy sütőpapírral bélelt tepsibe, és tedd a hűtőbe 1 órára, mielőtt szeleteled."
+            };
+        } else if (name.includes('pesto')) {
+            cleanSwapProduct = "Vilgain BIO Basil Pesto (100% extra szűz olívaolajjal)";
+            homeRecipe = {
+                ingredients: "2 nagy marék friss bazsalikom, 50g kesudió vagy fenyőmag, 40g reszelt parmezán, 1 dl extra szűz olívaolaj, 1 gerezd fokhagyma, só.",
+                steps: "1. Tedd a bazsalikomot, a magvakat, a fokhagymát és a parmezánt egy aprítógépbe.<br>2. Turgalás közben lassan csorgasd hozzá az olívaolajat, amíg krémes textúrát nem kapsz."
+            };
+        } else {
+            homeRecipe = {
+                ingredients: "Alapvető, finomítatlan alapanyagok (zöldségek, minőségi hidegen sajtolt olajok, tiszta fűszerek).",
+                steps: "Kerüld a bolti készételeket! Válaszd a friss alapanyagokból való sütést/főzést hidegen sajtolt olívaolajjal vagy ghível."
+            };
         }
 
         return {
             scoreClass,
             scoreVal,
             scoreReason,
-            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["Nem találhatók kifejezetten kritikus mesterséges adalékok."],
+            translatedIngredients: translateIngredientsToHungarian(rawIngredients),
+            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["<strong>Minden rendben:</strong> Nem találhatók kifejezetten kritikus mesterséges adalékok vagy nem kívánatos összetevők."],
             cleanSwapProduct,
-            homeAlternative
+            homeRecipe
         };
     }
 
     function renderProductResult(product) {
         const name = product.product_name_hu || product.product_name || 'Ismeretlen termék';
         const brands = product.brands || 'Ismeretlen márka';
-        const ingredients = product.ingredients_text_hu || product.ingredients_text || 'Nincs részletes összetevő lista az adatbázisban.';
         const nutriscore = (product.nutriscore_grade || 'c').toUpperCase();
         const imageUrl = product.image_front_url || '';
 
@@ -888,28 +947,38 @@
             ${imageUrl ? `<div style="text-align:center; margin-bottom:16px;"><img src="${imageUrl}" style="max-height:130px; border-radius:8px;"></div>` : ''}
 
             <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5;">
-                <strong>Összetevők:</strong> ${ingredients}
+                <strong>Összetevők (Magyarul):</strong> ${analysis.translatedIngredients}
             </div>
 
             <!-- RÉSZLETES ELEMZÉS -->
             <div class="analysis-section">
                 <div class="analysis-title">📊 Miért kapta ezt a pontszámot?</div>
-                <div style="font-size: 0.88rem; margin-bottom: 10px;">${analysis.scoreReason}</div>
+                <div style="font-size: 0.88rem; margin-bottom: 14px; color: var(--text-main);">${analysis.scoreReason}</div>
                 
                 <div class="analysis-title" style="color: #C62828;">⚠️ Problémás összetevők és hatásuk:</div>
                 <ul style="font-size: 0.85rem; padding-left: 18px; color: var(--text-main);">
-                    ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:4px;">${ing}</li>`).join('')}
+                    ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:8px;">${ing}</li>`).join('')}
                 </ul>
             </div>
 
             <!-- CLEAN SWAP ALTERNATÍVÁK -->
             <div class="swap-box">
                 <div class="swap-title">✨ Ajánlott Clean Swap Alternatívák</div>
-                <div style="font-size: 0.88rem; margin-bottom: 8px;">
+                
+                <div style="font-size: 0.88rem; margin-bottom: 12px;">
                     <strong>🟢 Tiszta Bolti Ajánlás:</strong> ${analysis.cleanSwapProduct}
                 </div>
-                <div style="font-size: 0.88rem;">
-                    <strong>🏡 Házi Elkészítési Opció:</strong> ${analysis.homeAlternative}
+
+                <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px;">
+                    🏡 Házi Elkészítési Opció (Adalékmentes Recept):
+                </div>
+                <div class="home-recipe-card">
+                    <div style="font-size: 0.85rem; margin-bottom: 6px;">
+                        <strong>Hozzávalók:</strong> ${analysis.homeRecipe.ingredients}
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">
+                        <strong>Elkészítés:</strong><br>${analysis.homeRecipe.steps}
+                    </div>
                 </div>
             </div>
         `;
