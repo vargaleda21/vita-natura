@@ -683,149 +683,223 @@
     .hidden { display: none !important; }
 </style>
 
-
-<!-- MODULVÁLASZTÓ SWITCH (3 TAB) -->
-<div class="module-switch-container">
-    <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">
-        <svg viewBox="0 0 24 24"><path d="M2 6h2v12H2zm3 0h1v12H5zm2 0h3v12H7zm4 0h1v12h-1zm3 0h2v12h-2zm3 0h1v12h-1zm2 0h3v12h-3z"/></svg>
-        Clean Swap Detektor
-    </button>
-    <button class="tab-btn" id="tab-kamra" onclick="switchModule('kamra')">
-        <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
-        Kamra Asszisztens
-    </button>
-    <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
-        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
-        Ciklusszinkron
-    </button>
-</div>
-
-<!-- 1. MODUL: CLEAN SWAP VONALKÓD & LONGEVITY ELEMZŐ -->
-<div id="module-cleanswap">
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">
-                <svg viewBox="0 0 24 24"><path d="M3 5v4h2V7h2V5H3zm0 10h2v2h2v2H3v-4zm14 4h2v-2h2v4h-4v-2zm2-14h-2V5h-2V3h4v4zM7 9h10v6H7V9z"/></svg>
-            </div>
-            <div>
-                <div class="card-title">Clean Swap Detektor</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Scenneld be az ételt és derítsd ki a Longevity Pontszámát!</div>
-            </div>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; gap: 8px;">
-                <input type="text" id="manual-barcode" class="custom-input" placeholder="Írd be a vonalkódot (pl. 5900512300123)...">
-                <button onclick="scanManualBarcode()" class="btn-primary">Keresés</button>
-            </div>
-            <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm9-8h-3.17L16 5H8L6.17 7H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-9 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
-                Kamera Indítása
-            </button>
-        </div>
-
-        <div id="scanner-container" class="hidden">
-            <div id="reader" style="width: 100%;"></div>
-            <button onclick="stopCameraScanner()" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #C62828; color: #FFF; border: none;">Kamera Bezárása</button>
-        </div>
-
-        <!-- Demó gombok -->
-        <div class="demo-buttons-bar">
-            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Próbáld ki azonnal:</span>
-            <button class="demo-btn" onclick="analyzeDemoProduct('bolognai')">🔴 Bolti Bolognai Szósz</button>
-            <button class="demo-btn" onclick="analyzeDemoProduct('muzli')">🔴 Fitt Müzliszelet</button>
-            <button class="demo-btn" onclick="analyzeDemoProduct('vilgain')">🟢 Vilgain BIO Pesto</button>
-        </div>
+<div class="container">
+    <!-- MODULVÁLASZTÓ SWITCH (3 TAB) -->
+    <div class="module-switch-container">
+        <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">
+            <svg viewBox="0 0 24 24"><path d="M2 6h2v12H2zm3 0h1v12H5zm2 0h3v12H7zm4 0h1v12h-1zm3 0h2v12h-2zm3 0h1v12h-1zm2 0h3v12h-3z"/></svg>
+            Clean Swap Detektor
+        </button>
+        <button class="tab-btn" id="tab-kamra" onclick="switchModule('kamra')">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
+            Kamra Asszisztens
+        </button>
+        <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
+            Ciklusszinkron
+        </button>
     </div>
 
-    <!-- Eredmény Kártya -->
-    <div id="cleanswap-result-card" class="card hidden"></div>
-</div>
-
-<!-- 2. MODUL: KAMRA ASSZISZTENS -->
-<div id="module-kamra" class="hidden">
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">
-                <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5zm-12.12-20c-.28 0-.5.22-.5.5v17c0 .28.22.5.5.5h12.12c.28 0 .5-.22.5-.5v-17c0-.28-.22-.5-.5-.5h-12.12z"/><path d="M8 6h8v2h-8zm0 4h8v2h-8z"/></svg>
-            </div>
-            <div>
-                <div class="card-title">Mi van a kamrádban?</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Keress és válassz alapanyagokat a szűréshez</div>
-            </div>
-        </div>
-
-        <!-- Autocomplete Field -->
-        <div class="input-wrapper">
-            <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
-            <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
-        </div>
-
-        <!-- Kijelölt Tagek -->
-        <div class="pantry-tags-container" id="pantry-tags"></div>
-    </div>
-
-    <div id="pantry-recipe-card"></div>
-</div>
-
-<!-- 3. MODUL: CIKLUSSZINKRON -->
-<div id="module-cycle" class="hidden">
-    <div class="card">
-        <div class="card-header">
-            <div class="card-icon">
-                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
-            </div>
-            <div>
-                <div class="card-title">Ciklus-Kalkulátor</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Becsült táplálkozási fázisod kiszámítása</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-wrapper">
-                <label class="input-label">Utolsó menstruáció első napja</label>
-                <input type="date" id="last-period-date" class="custom-input" onchange="calculateCycle()">
-            </div>
-            <div class="input-wrapper">
-                <label class="input-label">Átlagos ciklushossz (nap)</label>
-                <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" onchange="calculateCycle()">
-            </div>
-        </div>
-
-        <div class="cycle-visualizer">
-            <div class="cycle-ring-container">
-                <svg class="cycle-ring-svg" viewBox="0 0 160 160">
-                    <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
-                    <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
-                </svg>
-                <div class="cycle-ring-text">
-                    <div class="day-counter" id="cycle-day-text">18.</div>
-                    <div class="day-label">napja</div>
+    <!-- 1. MODUL: CLEAN SWAP VONALKÓD & LONGEVITY ELEMZŐ -->
+    <div id="module-cleanswap">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 5v4h2V7h2V5H3zm0 10h2v2h2v2H3v-4zm14 4h2v-2h2v4h-4v-2zm2-14h-2V5h-2V3h4v4zM7 9h10v6H7V9z"/></svg>
+                </div>
+                <div>
+                    <div class="card-title">Clean Swap Detektor</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Scenneld be az ételt és derítsd ki a Longevity Pontszámát!</div>
                 </div>
             </div>
-            <div class="phase-badge-container">
-                <div class="phase-badge">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
-                    <span id="phase-name-text">Luteális fázis</span>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Írd be a vonalkódot (pl. 5900512300123)...">
+                    <button onclick="scanManualBarcode()" class="btn-primary">Keresés</button>
                 </div>
+                <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm9-8h-3.17L16 5H8L6.17 7H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-9 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+                    Kamera Indítása
+                </button>
+            </div>
+
+            <div id="scanner-container" class="hidden">
+                <div id="reader" style="width: 100%;"></div>
+                <button onclick="stopCameraScanner()" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #C62828; color: #FFF; border: none;">Kamera Bezárása</button>
+            </div>
+
+            <!-- Demó gombok -->
+            <div class="demo-buttons-bar">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Próbáld ki azonnal:</span>
+                <button class="demo-btn" onclick="analyzeDemoProduct('bolognai')">🔴 Bolti Bolognai Szósz</button>
+                <button class="demo-btn" onclick="analyzeDemoProduct('muzli')">🔴 Fitt Müzliszelet</button>
+                <button class="demo-btn" onclick="analyzeDemoProduct('vilgain')">🟢 Vilgain BIO Pesto</button>
             </div>
         </div>
 
-        <!-- FÁZIS-ALAPÚ ALAPANYAG-AJÁNLÓ KÁRTYA -->
-        <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">
-                Tápanyagdús alapanyag-ötletek a fázisodhoz:
-            </div>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-                Kattints rájuk, ha kifejezetten ezekre épülő receptet szeretnél a Kamrában:
-            </div>
-            <div class="pantry-tags-container" id="cycle-superfood-tags"></div>
-        </div>
-
-        <div class="disclaimer-text">
-            Tájékoztatás: A daleday egy életmód- és táplálkozási inspirációs felület. A megjelenített információk nem minősülnek orvosi diagnózisnak.
-        </div>
+        <!-- Eredmény Kártya -->
+        <div id="cleanswap-result-card" class="card hidden"></div>
     </div>
 
-    <div id="cycle-recipe-card"></div>
+    <!-- 2. MODUL: KAMRA ASSZISZTENS -->
+    <div id="module-kamra" class="hidden">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5zm-12.12-20c-.28 0-.5.22-.5.5v17c0 .28.22.5.5.5h12.12c.28 0 .5-.22.5-.5v-17c0-.28-.22-.5-.5-.5h-12.12z"/><path d="M8 6h8v2h-8zm0 4h8v2h-8z"/></svg>
+                </div>
+                <div>
+                    <div class="card-title">Mi van a kamrádban?</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Keress és válassz alapanyagokat a szűréshez</div>
+                </div>
+            </div>
+
+            <!-- Autocomplete Field -->
+            <div class="input-wrapper">
+                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
+                <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
+            </div>
+
+            <!-- Kijelölt Tagek -->
+            <div class="pantry-tags-container" id="pantry-tags"></div>
+        </div>
+
+        <div id="pantry-recipe-card"></div>
+    </div>
+
+    <!-- 3. MODUL: CIKLUSSZINKRON -->
+    <div id="module-cycle" class="hidden">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                </div>
+                <div>
+                    <div class="card-title">Ciklus-Kalkulátor</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Becsült táplálkozási fázisod kiszámítása</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label class="input-label">Utolsó menstruáció első napja</label>
+                    <input type="date" id="last-period-date" class="custom-input" onchange="calculateCycle()">
+                </div>
+                <div class="input-wrapper">
+                    <label class="input-label">Átlagos ciklushossz (nap)</label>
+                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" onchange="calculateCycle()">
+                </div>
+            </div>
+
+            <div class="cycle-visualizer">
+                <div class="cycle-ring-container">
+                    <svg class="cycle-ring-svg" viewBox="0 0 160 160">
+                        <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
+                        <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
+                    </svg>
+                    <div class="cycle-ring-text">
+                        <div class="day-counter" id="cycle-day-text">18.</div>
+                        <div class="day-label">napja</div>
+                    </div>
+                </div>
+                <div class="phase-badge-container">
+                    <div class="phase-badge">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                        <span id="phase-name-text">Luteális fázis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FÁZIS-ALAPÚ ALAPANYAG-AJÁNLÓ KÁRTYA -->
+            <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
+                <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">
+                    Tápanyagdús alapanyag-ötletek a fázisodhoz:
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+                    Kattints rájuk, ha kifejezetten ezekre épülő receptet szeretnél a Kamrában:
+                </div>
+                <div class="pantry-tags-container" id="cycle-superfood-tags"></div>
+            </div>
+
+            <div class="disclaimer-text">
+                Tájékoztatás: A daleday egy életmód- és táplálkozási inspirációs felület. A megjelenített információk nem minősülnek orvosi diagnózisnak.
+            </div>
+        </div>
+
+        <div id="cycle-recipe-card"></div>
+    </div>
 </div>
+
+<!-- ==========================================================================
+     JAVASCRIPT LOGIKA & GLOBÁLIS ELÉRÉSEK
+     ========================================================================== -->
+<script>
+    // 1. Modulváltó logika
+    function switchModule(moduleName) {
+        // Témabeállítás a body-n (ez cseréli a színeket a CSS-ben)
+        document.body.setAttribute('data-theme', moduleName);
+
+        // Modul panelek elrejtése / megjelenítése
+        const modules = ['cleanswap', 'kamra', 'cycle'];
+        modules.forEach(m => {
+            const modElement = document.getElementById('module-' + m);
+            const tabBtn = document.getElementById('tab-' + m);
+            
+            if (m === moduleName) {
+                if (modElement) modElement.classList.remove('hidden');
+                if (tabBtn) tabBtn.classList.add('active');
+            } else {
+                if (modElement) modElement.classList.add('hidden');
+                if (tabBtn) tabBtn.classList.remove('active');
+            }
+        });
+    }
+
+    // 2. Kamera és vonalkód kezelő függvények (alapváz)
+    function scanManualBarcode() {
+        const val = document.getElementById('manual-barcode').value;
+        if (!val) return alert('Kérlek írj be egy vonalkódot!');
+        alert('Keresés vonalkódra: ' + val);
+    }
+
+    function startCameraScanner() {
+        const container = document.getElementById('scanner-container');
+        if (container) container.classList.remove('hidden');
+    }
+
+    function stopCameraScanner() {
+        const container = document.getElementById('scanner-container');
+        if (container) container.classList.add('hidden');
+    }
+
+    function analyzeDemoProduct(type) {
+        const resultCard = document.getElementById('cleanswap-result-card');
+        if (resultCard) {
+            resultCard.classList.remove('hidden');
+            resultCard.innerHTML = `<h3>Elemzett termék: ${type}</h3><p>Sikeres elemzés!</p>`;
+        }
+    }
+
+    // 3. Kamra kereső függvények
+    function handlePantrySearch() {
+        const input = document.getElementById('pantry-search-input').value;
+        console.log('Kamra keresés:', input);
+    }
+
+    // 4. Ciklusszinkron számítás
+    function calculateCycle() {
+        console.log('Ciklus újraszámítása...');
+    }
+
+    // ==========================================================================
+    // BIZTOSÍTÁS: GLOBÁLISAN ELÉRHETŐVÉ TESSZÜK A FÜGGVÉNYEKET A HTML ONCLICK CÉLJÁRA
+    // ==========================================================================
+    window.switchModule = switchModule;
+    window.scanManualBarcode = scanManualBarcode;
+    window.startCameraScanner = startCameraScanner;
+    window.stopCameraScanner = stopCameraScanner;
+    window.analyzeDemoProduct = analyzeDemoProduct;
+    window.handlePantrySearch = handlePantrySearch;
+    window.calculateCycle = calculateCycle;
+</script>
