@@ -781,7 +781,6 @@
         }
     };
 
-    // TELJES KAMRA ADATBÁZIS
     const availableIngredients = [
         'zabpehely', 'mogyoróvaj', 'méz', 'tojás', 'banán', 'chia mag', 
         'mandulatej', 'avokádó', 'csirkemell', 'quinoa', 'spenót', 'fokhagyma', 'olívaolaj', 'paradicsom',
@@ -949,13 +948,13 @@
     }
 
     function generateSmartAnalysis(product) {
-        const name = product.product_name_hu.toLowerCase();
+        const name = (product.product_name_hu || product.product_name || '').toLowerCase();
         let score = 75;
         let analysisText = "A termék összetétele mérsékelten feldolgozott elemeket tartalmaz.";
         let diyTitle = "Házi készítési opció (Alternatíva)";
         let diyContent = "";
 
-        if (name.includes('mogyorókrém') || name.includes('krém')) {
+        if (name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('krém') || name.includes('nutella')) {
             score = 35;
             analysisText = "Gyulladáskeltő hatású: Magas finomított cukor- és pálmaolaj-tartalom jellemzi, amely kedvezőtlenül befolyásolja a bélflórát és a szervezet gyulladásos folyamatait.";
             diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
@@ -977,7 +976,7 @@
                     <li>Turmixold további 1-2 percig, amíg egyenletesen selyemfényű, homogén krémet nem kapsz. Töltsd tiszta üvegbe; hűtve 3 hétig eltartható.</li>
                 </ol>
             `;
-        } else if (name.includes('granola') || name.includes('müzli')) {
+        } else if (name.includes('granola') || name.includes('müzli') || name.includes('muzli')) {
             score = 42;
             analysisText = "Gyulladáskeltő hatású: Rejtett cukrokat és finomított növényi olajokat tartalmaz, amelyek hirtelen vércukorszint-ingadozást okozhatnak.";
             diyTitle = "Készítsd el otthon: Ropogós mézes-magos granola";
@@ -1099,7 +1098,7 @@
         return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    const searchInput = document.getElementById('pantry-search-input');
+    const pantryInput = document.getElementById('pantry-search-input');
     const autocompleteList = document.getElementById('autocomplete-list');
     const pantryTagsContainer = document.getElementById('pantry-tags');
     const pantryRecipesContainer = document.getElementById('pantry-recipes-container');
@@ -1136,13 +1135,11 @@
         if (!pantryRecipesContainer) return;
         pantryRecipesContainer.innerHTML = '';
 
-        // Súlyozott számítás (matchCount)
         const scoredRecipes = pantryRecipesData.map(recipe => {
             const matchCount = recipe.ingredients.filter(ing => selectedIngredients.includes(ing)).length;
             return { ...recipe, matchCount };
         });
 
-        // Csökkenő sorrendbe rendezés találatszám alapján
         scoredRecipes.sort((a, b) => b.matchCount - a.matchCount);
 
         let filtered = scoredRecipes;
@@ -1255,9 +1252,9 @@
 
         const circumference = 439.8;
         const progressOffset = circumference - (currentDay / cycleLen) * circumference;
-        document.getElementById('cycle-progress-ring').style.strokeDashoffset = progressOffset;
+        const ringEl = document.getElementById('cycle-progress-ring');
+        if (ringEl) ringEl.style.strokeDashoffset = progressOffset;
 
-        // SUPERFOOD CSEMPÉK RENDERELÉSE KATTINTHATÓSÁGGAL (JAVÍTVA)
         const chipsContainer = document.getElementById('superfood-chips-container');
         if (chipsContainer) {
             chipsContainer.innerHTML = '';
@@ -1277,7 +1274,6 @@
             });
         }
 
-        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL
         const recipeContainer = document.getElementById('cycle-recipe-container');
         if (recipeContainer) {
             recipeContainer.innerHTML = '';
@@ -1325,14 +1321,12 @@
 
     // DOM Betöltéskori inicializáció
     document.addEventListener('DOMContentLoaded', () => {
-        // Modulváltó tabok
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 switchModule(e.target.getAttribute('data-module'));
             });
         });
 
-        // Demó gombok bekötése
         document.querySelectorAll('.demo-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const code = e.target.getAttribute('data-demo');
@@ -1342,7 +1336,6 @@
             });
         });
 
-        // Kézi keresés gomb
         const searchBtn = document.getElementById('btn-manual-search');
         if (searchBtn) {
             searchBtn.addEventListener('click', () => {
@@ -1353,7 +1346,6 @@
             });
         }
 
-        // Kamera gombok
         const startCamBtn = document.getElementById('btn-start-camera');
         if (startCamBtn) {
             startCamBtn.addEventListener('click', () => {
@@ -1378,11 +1370,9 @@
         const stopCamBtn = document.getElementById('btn-stop-camera');
         if (stopCamBtn) stopCamBtn.addEventListener('click', stopCamera);
 
-        // Ciklus inputok eseménykezelői
         if (lastPeriodInput) lastPeriodInput.addEventListener('change', updateCycleCalculator);
         if (cycleLengthInput) cycleLengthInput.addEventListener('input', updateCycleCalculator);
 
-        // Kezdő inicializálások
         renderPantryTags();
         updateCycleCalculator();
     });
