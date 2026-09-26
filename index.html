@@ -33,7 +33,7 @@
             --accent-vilgain-bg: #F9EBEA;
             --accent-vilgain-border: #DBC4AC;
             --text-main: #2C2828;
-            --text-muted: #6B6263;
+            --text-muted: #594E4F;
             --text-heading: #4D0E15;
             --border-color: #DBC4AC;
         }
@@ -49,7 +49,7 @@
             --accent-vilgain-bg: #F9EBEA;
             --accent-vilgain-border: #E5DEC9;
             --text-main: #333333;
-            --text-muted: #6B7280;
+            --text-muted: #525B65;
             --text-heading: #3E4F22;
             --border-color: #E5DEC9;
         }
@@ -65,7 +65,7 @@
             --accent-vilgain-bg: #F9EBEA;
             --accent-vilgain-border: #EAC8C8;
             --text-main: #2B1E1E;
-            --text-muted: #7A6363;
+            --text-muted: #5C4747;
             --text-heading: #541718;
             --border-color: #EAC8C8;
         }
@@ -111,7 +111,7 @@
         .brand-subtitle {
             font-size: 0.95rem;
             color: var(--text-muted);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .module-switch-container {
@@ -149,6 +149,7 @@
             background: var(--bg-card);
             color: var(--primary);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            font-weight: 700;
         }
 
         .card {
@@ -192,7 +193,7 @@
 
         .input-label {
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
@@ -232,7 +233,7 @@
             border: 1px solid var(--border-color);
             padding: 10px 16px;
             border-radius: var(--radius-sm);
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
         }
@@ -254,7 +255,7 @@
             padding: 6px 12px;
             border-radius: 100px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
         }
 
@@ -339,7 +340,7 @@
 
         .product-link {
             color: var(--accent-vilgain);
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: underline;
         }
 
@@ -362,6 +363,7 @@
             padding: 10px 14px;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 600;
             border-bottom: 1px solid var(--bg-card-alt);
         }
 
@@ -384,7 +386,7 @@
             padding: 6px 14px;
             border-radius: 100px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -412,7 +414,7 @@
             display: flex;
             gap: 12px;
             font-size: 0.78rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-muted);
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -434,6 +436,7 @@
             padding: 12px;
             margin-top: 12px;
             font-size: 0.85rem;
+            font-weight: 600;
             color: var(--text-main);
         }
 
@@ -495,6 +498,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--text-muted);
+            font-weight: 700;
             margin-top: 2px;
         }
 
@@ -522,19 +526,35 @@
             margin-top: 12px;
         }
 
+        /* 1. Kérdésre: interaktív, gombként viselkedő csempék magas kontraszttal */
         .superfood-chip {
             background: var(--bg-card-alt);
             border: 1px solid var(--border-color);
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-main);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .superfood-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .superfood-chip.active {
+            background: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .disclaimer-text {
             font-size: 0.75rem;
             color: var(--text-muted);
+            font-weight: 600;
             text-align: center;
             margin-top: 16px;
         }
@@ -561,7 +581,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Clean Swap Detektor</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Olvasd be vagy add meg a vonalkódot</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Olvasd be vagy add meg a vonalkódot</div>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 12px;">
@@ -593,11 +613,11 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Mi van a kamrádban?</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Válassz alapanyagokat a szűréshez</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Válassz alapanyagokat a szűréshez</div>
             </div>
 
             <div class="input-wrapper">
-                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Alapanyag keresése (pl. Zabpehely, Mogyoróvaj, Csirkemell)..." autocomplete="off">
+                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Alapanyag keresése (pl. Csirkemell, Basmati Rizs, Marhahús)..." autocomplete="off">
                 <div id="autocomplete-list" class="autocomplete-dropdown hidden"></div>
             </div>
 
@@ -612,7 +632,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Ciklus-Kalkulátor</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Hormonális fázisok szerinti tervező</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Hormonális fázisok szerinti tervező</div>
             </div>
 
             <div class="form-group">
@@ -697,7 +717,6 @@
     function translateIngredientsToHungarian(rawText) {
         if (!rawText) return "Nincs elérhető összetevő lista.";
         let text = rawText.toLowerCase();
-        // Hosszabb kifejezések elöl a pontosabb cseréért
         const dict = {
             'glucose syrup': 'glükózszirup',
             'fructose syrup': 'fruktózszirup',
@@ -734,9 +753,8 @@
     async function fetchBarcodeData(barcode) {
         const resultCard = document.getElementById('cleanswap-result-card');
         resultCard.classList.remove('hidden');
-        resultCard.innerHTML = '<div style="padding:20px; text-align:center;">Adatok betöltése és elemzése...</div>';
+        resultCard.innerHTML = '<div style="padding:20px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
 
-        // Először a lokális magyar adatbázist nézzük meg
         if (SCANNER_DATABASE[barcode]) {
             renderProductResult(SCANNER_DATABASE[barcode]);
             return;
@@ -827,27 +845,27 @@
                 <div class="score-badge-circle ${analysis.scoreClass}">${analysis.scoreVal}</div>
                 <div>
                     <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">${name}</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">${brands}</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">${brands}</div>
                 </div>
             </div>
 
-            <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5;">
+            <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5; font-weight: 600;">
                 <strong>Összetevők magyarul:</strong> ${analysis.translatedIngredients}
             </div>
 
             <div class="analysis-section">
                 <div class="analysis-title">Miért kapta ezt a pontszámot?</div>
-                <div style="font-size: 0.88rem; margin-bottom: 14px;">${analysis.scoreReason}</div>
+                <div style="font-size: 0.88rem; margin-bottom: 14px; font-weight: 600;">${analysis.scoreReason}</div>
                 
                 <div class="analysis-title" style="color: #B71C1C;">Problémás összetevők:</div>
-                <ul style="font-size: 0.85rem; padding-left: 18px;">
+                <ul style="font-size: 0.85rem; padding-left: 18px; font-weight: 600;">
                     ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:6px;">${ing}</li>`).join('')}
                 </ul>
             </div>
 
             <div class="swap-box">
                 <div class="swap-title">Ajánlott Clean Swap Alternatívák</div>
-                <div style="font-size: 0.88rem; margin-bottom: 12px;">
+                <div style="font-size: 0.88rem; margin-bottom: 12px; font-weight: 600;">
                     <strong>Ajánlott termék:</strong> ${analysis.cleanSwapHTML}
                 </div>
 
@@ -855,10 +873,10 @@
                     Házi elkészítési opció:
                 </div>
                 <div class="home-recipe-card">
-                    <div style="font-size: 0.85rem; margin-bottom: 6px;">
+                    <div style="font-size: 0.85rem; margin-bottom: 6px; font-weight: 600;">
                         <strong>Hozzávalók:</strong> ${analysis.homeIngredients}
                     </div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
                         <strong>Elkészítés:</strong><br>${analysis.homeSteps}
                     </div>
                 </div>
@@ -872,10 +890,10 @@
                 <div class="score-badge-circle score-low">?</div>
                 <div>
                     <div style="font-weight: 700; font-size: 1.1rem;">A termék nem található</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Vonalkód: ${barcode}</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Vonalkód: ${barcode}</div>
                 </div>
             </div>
-            <p style="font-size: 0.88rem; color: var(--text-muted);">Használd a demó gombokat az elemzés teszteléséhez.</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">Használd a demó gombokat az elemzés teszteléséhez.</p>
         `;
     }
 
@@ -925,36 +943,113 @@
         document.getElementById('scanner-container').classList.add('hidden');
     }
 
-    // KAMRA MODUL - Teljes 60+ elemű adatbázis és receptek
+    // KAMRA MODUL - 60+ elemű alapanyag készlet
     const availableIngredients = [
-        "Zabpehely", "Mogyoróvaj", "Csirkemell", "Avokádó", "Tojás", "Édesburgonya", "Quinoa", "Lazac",
-        "Spenót", "Mandula", "Görög joghurt", "Chia mag", "Lenmag", "Barna rizs", "Csicseriborsó",
-        "Lencse", "Fekete bab", "Brokkoli", "Cukkini", "Paradicsom", "Uborka", "Fokhagyma", "Vöröshagyma",
-        "Olívaolaj", "Kókuszzolaj", "Méz", "Juhtúró", "Feta sajt", "Parmezán", "Diós", "Kesudió",
-        "Étcsokoládé", "Kakaópor", "Hajdina", "Kuszkusz", "Tortilla", "Teljes kiőrlésű kenyér",
-        "Tofu", "Tempeh", "Sárgarépa", "Cékla", "Petrezselyem", "Bazsalikom", "Oregánó", "Gyömbér",
-        "Citrom", "Lime", "Alma", "Banán", "Bogyós gyümölcsök", "Datolya", "Fahéj", "Só", "Bors"
+        "Csirkemell", "Marhahús", "Lazac", "Tojás", "Basmati Rizs", "Édesburgonya", "Quinoa", 
+        "Brokkoli", "Cukkini", "Olívaolaj", "Fokhagyma", "Vöröshagyma", "Fekete bab", "Csicseriborsó",
+        "Zabpehely", "Mogyoróvaj", "Banán", "Avokádó", "Spenót", "Mandula", "Görög joghurt", "Chia mag",
+        "Lenmag", "Barna rizs", "Lencse", "Paradicsom", "Uborka", "Kókuszzolaj", "Méz", "Juhtúró", 
+        "Feta sajt", "Parmezán", "Kesudió", "Étcsokoládé", "Kakaópor", "Hajdina", "Kuszkusz", "Tortilla", 
+        "Teljes kiőrlésű kenyér", "Tofu", "Tempeh", "Sárgarépa", "Cékla", "Petrezselyem", "Bazsalikom", 
+        "Oregánó", "Gyömbér", "Citrom", "Lime", "Alma", "Bogyós gyümölcsök", "Datolya", "Fahéj", "Só", "Bors"
     ];
-    let selectedIngredients = ["Zabpehely", "Mogyoróvaj", "Banán", "Chia mag"];
 
+    let selectedIngredients = ["Csirkemell", "Basmati Rizs", "Brokkoli", "Olívaolaj"];
+
+    // 2. Kérdésre: 6-8 szaftos főétel súlyozott illesztéshez (gasztronómiai elvek betartásával, nulla tofu/nyers zöldség)
     const pantryRecipes = [
         {
-            title: "Mogyoróvajas Zabkása Superfood Feltéttel",
-            time: "10 perc",
+            title: "Szaftos Csirkemell Basmati Rizsis Brokkolival",
+            time: "25 perc",
             difficulty: "Könnyű",
-            servings: "1 adag",
-            score: "94/100",
-            instructions: "Főzd meg a zabpelyhet növényi tejben vagy vízben. Keverj hozzá egy evőkanál mogyoróvajat, majd halmozz rá friss banánszeleteket és chia magot.",
-            vilgainSwap: 'Vilgain BIO Peanut Butter (<a class="product-link" href="https://vilgain.hu/vilgain-foeldimogyorovaj-por" target="_blank">Termék megtekintése</a>)'
+            servings: "2 adag",
+            score: "96/100",
+            requiredIngredients: ["Csirkemell", "Basmati Rizs", "Brokkoli", "Olívaolaj"],
+            ingredientsList: ["400g Csirkemell", "200g Basmati Rizs", "1 fej Brokkoli", "2 ek Olívaolaj", "Só, bors, fokhagyma"],
+            instructions: [
+                "Főzd meg a basmati rizst sós vízben.",
+                "Kockázd fel a csirkemelleket, fűszerezd sóval, borssal, és pirítsd meg olívaolajon.",
+                "A brokkolifecniket párold meg enyhén sós gőzben.",
+                "Tálald együtt a rizst, a szaftos csirkét és a brokkolit."
+            ],
+            vilgainSwap: 'Vilgain Extra Virgin Olive Oil (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=pantry" target="_blank">Termék megtekintése</a>)'
         },
         {
-            title: "Avokádós Tojásos Pirítós",
-            time: "8 perc",
+            title: "Fokhagymás Marhahúsragu Édesburgonyával",
+            time: "40 perc",
+            difficulty: "Közepes",
+            servings: "2 adag",
+            score: "94/100",
+            requiredIngredients: ["Marhahús", "Édesburgonya", "Vöröshagyma", "Fokhagyma", "Olívaolaj"],
+            ingredientsList: ["400g Marhahús", "2 db Édesburgonya", "1 db Vöröshagyma", "3 gerezd Fokhagyma", "2 ek Olívaolaj"],
+            instructions: [
+                "Pirítsd meg az aprított vöröshagymát és fokhagymát olívaolajon.",
+                "Add hozzá a felkockázott marhahúst, és pirítsd kifehéredésig.",
+                "Öntsd fel kevés vízzel, és párold fedő alatt puhára.",
+                "A meghámozott édesburgonyát süsd meg sütőben köretként."
+            ],
+            vilgainSwap: 'Vilgain Bio Fűszerkeverék (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=pantry" target="_blank">Termék megtekintése</a>)'
+        },
+        {
+            title: "Fűszeres Lazac Basmati Rizsis Spenóttal",
+            time: "20 perc",
+            difficulty: "Könnyű",
+            servings: "2 adag",
+            score: "98/100",
+            requiredIngredients: ["Lazac", "Basmati Rizs", "Spenót", "Citrom", "Olívaolaj"],
+            ingredientsList: ["2 szelet Lazac", "150g Basmati Rizs", "100g Spenót", "1 db Citrom", "1 ek Olívaolaj"],
+            instructions: [
+                "Főzd meg a basmati rizst.",
+                "A lazacfiléket csepegtesd meg citromlével, fűszerezd, majd olívaolajon süsd készre.",
+                "A spenótleveleket fokhagymás olívaolajon esszenstelenítsd/forgasd meg.",
+                "Tálald a rizst a lazaccal és a spenóttal."
+            ],
+            vilgainSwap: 'Vilgain Omega 3 Fish Oil (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=pantry" target="_blank">Termék megtekintése</a>)'
+        },
+        {
+            title: "Laktató Fekete Babos Marhaegytál",
+            time: "30 perc",
+            difficulty: "Közepes",
+            servings: "2 adag",
+            score: "92/100",
+            requiredIngredients: ["Marhahús", "Fekete bab", "Paradicsom", "Vöröshagyma", "Olívaolaj"],
+            ingredientsList: ["300g Marhahús", "1 doboz Fekete bab", "400g Paradicsom (passzírozott)", "1 db Vöröshagyma", "1 ek Olívaolaj"],
+            instructions: [
+                "A hagymát pirítsd meg olívaolajon, majd add hozzá a darált vagy aprított marhahúst.",
+                "Öntsd fel a passzírozott paradicsommal, add hozzá a leöblített fekete babot.",
+                "Főzd sűrű raguvá alacsony lángon 20 percig."
+            ],
+            vilgainSwap: 'Vilgain Bio Paradicsomszósz (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=pantry" target="_blank">Termék megtekintése</a>)'
+        },
+        {
+            title: "Tojásos Sült Rizs Brokkolival",
+            time: "15 perc",
             difficulty: "Könnyű",
             servings: "1 adag",
-            score: "90/100",
-            instructions: "Piríts meg egy szelet teljes kiőrlésű kenyeret. Villával nyomkodd szét az avokádót kevés sóval és citromlével, kend a kenyérre, majd tedd rá a lágyan főtt tojást.",
-            vilgainSwap: 'Vilgain Extra Virgin Olive Oil (<a class="product-link" href="https://vilgain.hu" target="_blank">Termék megtekintése</a>)'
+            score: "89/100",
+            requiredIngredients: ["Tojás", "Basmati Rizs", "Brokkoli", "Olívaolaj"],
+            ingredientsList: ["2 db Tojás", "150g Főtt Basmati Rizs", "100g Brokkoli", "1 ek Olívaolaj"],
+            instructions: [
+                "Forrósíts olajat egy serpenyőben, és add hozzá a főtt basmati rizst.",
+                "Üss rá két tojást, gyorsan keverve pirítsd össze.",
+                "Keverd hozzá a párolt brokkolirózsákat."
+            ],
+            vilgainSwap: 'Vilgain Pan (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=pantry" target="_blank">Termék megtekintése</a>)'
+        },
+        {
+            title: "Csicseriborsós Édesburgonya Krémleves",
+            time: "25 perc",
+            difficulty: "Könnyű",
+            servings: "2 adag",
+            score: "91/100",
+            requiredIngredients: ["Csicseriborsó", "Édesburgonya", "Vöröshagyma", "Fokhagyma", "Olívaolaj"],
+            ingredientsList: ["1 doboz Csicseriborsó", "2 db Édesburgonya", "1 db Vöröshagyma", "2 gerezd Fokhagyma", "1 ek Olívaolaj"],
+            instructions: [
+                "Pirítsd meg a hagymát és a fokhagymát olívaolajon.",
+                "Add hozzá a kockázott édesburgonyát és a csicseriborsót, majd engedd fel vízzel.",
+                "Főzd puhára, majd turmixold selymesre."
+            ],
+            vilgainSwap: 'Vilgain Fűszerkeverék (<a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=pantry" target="_blank">Termék megtekintése</a>)'
         }
     ];
 
@@ -1005,67 +1100,225 @@
         renderPantryRecipes();
     };
 
+    // 2. Kérdésre: Súlyozott illesztés, üres kamra és nincs találat kezelése
     function renderPantryRecipes() {
         const container = document.getElementById('pantry-recipes-container');
-        if(container) {
-            container.innerHTML = pantryRecipes.map(r => `
-                <div class="recipe-card-box">
-                    <div class="recipe-meta-bar">
-                        <span>🕒 ${r.time}</span> • <span>📊 ${r.difficulty}</span> • <span>👥 ${r.servings}</span> • <span style="color:var(--primary); font-weight:700;">Növényi Pont: ${r.score}</span>
-                    </div>
-                    <div class="recipe-title">${r.title}</div>
-                    <div style="font-size: 0.9rem; margin: 8px 0; color: var(--text-main);">${r.instructions}</div>
-                    <div class="vilgain-box">Ajánlott Vilgain termék: ${r.vilgainSwap}</div>
-                </div>
-            `).join('');
+        if(!container) return;
+
+        if (selectedIngredients.length === 0) {
+            container.innerHTML = `
+                <div class="card" style="text-align: center; padding: 30px;">
+                    <div style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-heading); margin-bottom: 8px;">Üres a kamrád!</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Válassz ki legalább egy alapanyagot fentebb, hogy személyre szabott recepteket mutassunk.</div>
+                </div>`;
+            return;
         }
+
+        // Súlyozott számítás (matchCount)
+        const scoredRecipes = pantryRecipes.map(r => {
+            const matchCount = r.requiredIngredients.filter(ing => selectedIngredients.includes(ing)).length;
+            return { ...r, matchCount };
+        }).filter(r => r.matchCount > 0);
+
+        // Csökkenő sorrendbe rendezés találatszám alapján
+        scoredRecipes.sort((a, b) => b.matchCount - a.matchCount);
+
+        if (scoredRecipes.length === 0) {
+            container.innerHTML = `
+                <div class="card" style="text-align: center; padding: 30px;">
+                    <div style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-heading); margin-bottom: 8px;">Nincs találat a megadott alapanyagokkal</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;">Próbálj meg más alapanyagokat is kijelölni (pl. Csirkemell, Basmati Rizs vagy Olívaolaj).</div>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = scoredRecipes.map(r => `
+            <div class="recipe-card-box">
+                <div class="recipe-meta-bar">
+                    <span>🕒 ${r.time}</span> • <span>📊 ${r.difficulty}</span> • <span>👥 ${r.servings}</span> • <span style="color:var(--primary); font-weight:700;">Növényi Pont: ${r.score}</span> (Egyezés: ${r.matchCount}/${r.requiredIngredients.length})
+                </div>
+                <div class="recipe-title">${r.title}</div>
+                
+                <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px; margin-bottom: 4px;">Hozzávalók:</div>
+                <ul style="font-size: 0.85rem; padding-left: 18px; margin-bottom: 12px; font-weight: 600;">
+                    ${r.ingredientsList.map(ing => `<li style="margin-bottom: 4px;">${ing}</li>`).join('')}
+                </ul>
+
+                <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px; margin-bottom: 4px;">Elkészítési útmutató:</div>
+                <ol style="font-size: 0.85rem; padding-left: 18px; color: var(--text-main); font-weight: 600;">
+                    ${r.instructions.map(step => `<li style="margin-bottom: 6px;">${step}</li>`).join('')}
+                </ol>
+
+                <div class="vilgain-box">Ajánlott Vilgain termék: ${r.vilgainSwap}</div>
+            </div>
+        `).join('');
     }
 
-    // CIKLUSSZINKRON MODUL - Részletes fázisok és superfood-szűrők
+    // CIKLUSSZINKRON MODUL - Részletes fázisok és interaktív superfood-szűrők
     const CYCLE_PHASES_DATA = {
         menstrual: {
             name: "Menstruációs fázis",
-            desc: "A progeszteron és az ösztrogén is a mélyponton van. Fókuszban a regeneráció, a vaspótlás, valamint a meleg, tápláló ételek.",
-            superfoods: ["Cékla", "Spenót", "Étcsokoládé", "Lencse", "Gyömbér"],
+            desc: "A progeszteron és az ösztrogén is a mélyponton van. Fókuszban a regeneráció, a vaspótlás, valamint a meleg, tápláló főételek.",
+            superfoods: ["Marhahús", "Cékla", "Spenót", "Étcsokoládé", "Gyömbér"],
             recipes: [
-                { title: "Vas- és Magnéziumdús Kakaós Zabkása", time: "10 perc", diff: "Könnyű", desc: "Zabpehely, növényi tej, nyers kakaópor, mogyoróvaj és aszalt szilva." },
-                { title: "Meleg Lencseleves Gyömbérrel", time: "25 perc", diff: "Közepes", desc: "Vöröslencse alapú fűszeres leves friss zöldségekkel." }
+                { 
+                    title: "Vaskoncentrátum Marharagu Basmati Rizzsel", 
+                    time: "35 perc", 
+                    diff: "Közepes", 
+                    servings: "2 adag",
+                    score: "95/100",
+                    superfoodTag: "Marhahús",
+                    ingredients: ["400g Marhahús", "150g Basmati Rizs", "1 db Cékla", "1 ek Olívaolaj", "Gyömbér, só, bors"],
+                    steps: [
+                        "Főzd meg a basmati rizst.",
+                        "A marhahúst kockázd fel, és olívaolajon pirítsd meg a reszelt gyömbérrel.",
+                        "Add hozzá a reszelt céklát, öntsd fel kevés vízzel, és főzd szaftosra.",
+                        "Tálald a fűszeres marharagut a basmati rizzsel."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Igyál naponta csalán- vagy cickafarkteát a méhnyálkahártya egészséges megújulásáért."
+                },
+                { 
+                    title: "Meleg Spenótos Csirke Szaftos Alapon", 
+                    time: "20 perc", 
+                    diff: "Könnyű", 
+                    servings: "2 adag",
+                    score: "92/100",
+                    superfoodTag: "Spenót",
+                    ingredients: ["350g Csirkemell", "150g Spenót", "2 gerezd Fokhagyma", "1 ek Olívaolaj"],
+                    steps: [
+                        "A csirkemellet csíkozd fel, és pirítsd meg olívaolajon.",
+                        "Add hozzá a fokhagymát és a friss spenótleveleket.",
+                        "Hagyd, hogy a spenót összeessen és szaftot képezzen."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Igyál naponta csalán- vagy cickafarkteát a méhnyálkahártya egészséges megújulásáért."
+                }
             ],
             booster: "Ciklus-Turbó Booster: Igyál naponta csalán- vagy cickafarkteát a méhnyálkahártya egészséges megújulásáért."
         },
         follicular: {
             name: "Folikuláris fázis",
-            desc: "Az ösztrogénszint emelkedni kezd, nő az energia és a kreativitás. Kiváló időszak a friss, ropogós ételekhez és az új szokások bevezetéséhez.",
-            superfoods: ["Chia mag", "Brokkoli", "Quinoa", "Citrusok", "Mandula"],
+            desc: "Az ösztrogénszint emelkedni kezd, nő az energia és a kreativitás. Kiváló időszak a friss, minőségi ételekhez.",
+            superfoods: ["Csirkemell", "Brokkoli", "Quinoa", "Citrusok", "Mandula"],
             recipes: [
-                { title: "Friss Quinoa Buddha Tál", time: "20 perc", diff: "Könnyű", desc: "Quinoa, avokádó, grillezett csirke vagy tofu, friss spenót és olívaolaj." },
-                { title: "Chia Puding Bogyós Gyümölccsel", time: "5 perc (+hűtés)", diff: "Könnyű", desc: "Chia mag mandulatejjel áztatva, málna öntettel." }
+                { 
+                    title: "Grillezett Csirkemell Quinoa Buddha Tállal", 
+                    time: "25 perc", 
+                    diff: "Könnyű", 
+                    servings: "2 adag",
+                    score: "94/100",
+                    superfoodTag: "Csirkemell",
+                    ingredients: ["300g Csirkemell", "150g Quinoa", "1 fej Brokkoli", "1 ek Olívaolaj"],
+                    steps: [
+                        "Főzd meg a quinoát sós vízben.",
+                        "A csirkemellet fűszerezd és grillserpenyőben süsd készre.",
+                        "A brokkolit párold meg, majd tálald a quinoával."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Fogyassz erjesztett ételeket a bélflóra ösztrogéntámogató működéséért."
+                },
+                { 
+                    title: "Brokkolis Quinoa Egytálétel", 
+                    time: "20 perc", 
+                    diff: "Könnyű", 
+                    servings: "2 adag",
+                    score: "91/100",
+                    superfoodTag: "Brokkoli",
+                    ingredients: ["150g Quinoa", "1 db Brokkoli", "Mandula", "Olívaolaj"],
+                    steps: [
+                        "Főzd meg a quinoát és a brokkolirózsákat.",
+                        "Keverd össze olívaolajjal és szórd meg mandulával."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Fogyassz erjesztett ételeket a bélflóra ösztrogéntámogató működéséért."
+                }
             ],
-            booster: "Ciklus-Turbó Booster: Fogyassz erjesztett ételeket (pl. kovászos uborka, kefir) a bélflóra ösztrogéntámogató működéséért."
+            booster: "Ciklus-Turbó Booster: Fogyassz erjesztett ételeket a bélflóra ösztrogéntámogató működéséért."
         },
         ovulatory: {
             name: "Ovulációs fázis",
-            desc: "Csúcson az ösztrogén és a tesztoszteron. Magas energiaszint, társaságkedvelés. Antioxidánsokban gazdag étrend javasolt.",
-            superfoods: ["Bogyós gyümölcsök", "Zöldfűszerek", "Tojás", "Édesburgonya", "Olívaolaj"],
+            desc: "Csúcson az ösztrogén és a tesztoszteron. Magas energiaszint, antioxidánsokban gazdag étrend javasolt.",
+            superfoods: ["Lazac", "Édesburgonya", "Tojás", "Olívaolaj", "Zöldfűszerek"],
             recipes: [
-                { title: "Antioxidánsban Gazdag Bogyós Smoothie Tál", time: "5 perc", diff: "Könnyű", desc: "Fagyasztott bogyós gyümölcsök, görög joghurt, mandula és lenmag." },
-                { title: "Sült Édesburgonya Tál Feta Sajttal", time: "30 perc", diff: "Közepes", desc: "Sütőben sült édesburgonya kockák, feta sajt, friss petrezselyem." }
+                { 
+                    title: "Sült Lazac Édesburgonya Pürével", 
+                    time: "30 perc", 
+                    diff: "Közepes", 
+                    servings: "2 adag",
+                    score: "97/100",
+                    superfoodTag: "Lazac",
+                    ingredients: ["2 szelet Lazac", "2 db Édesburgonya", "1 ek Olívaolaj", "Zöldfűszerek"],
+                    steps: [
+                        "Az édesburgonyát hámozd meg, főzd meg, majd törd pürévé olívaolajjal.",
+                        "A lazacot süsd meg sütőben zöldfűszerekkel."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Helyezd a hangsúlyt a májat támogató ételekre (citromos víz) a hormonok lebontásához."
+                },
+                { 
+                    title: "Édesburgonyás Tojásos Frittata", 
+                    time: "25 perc", 
+                    diff: "Könnyű", 
+                    servings: "2 adag",
+                    score: "90/100",
+                    superfoodTag: "Édesburgonya",
+                    ingredients: ["4 db Tojás", "1 db Édesburgonya", "Olívaolaj"],
+                    steps: [
+                        "Reszeld le az édesburgonyát, és pirítsd meg olívaolajon.",
+                        "Öntsd nyakon a felvert tojásokkal, és süsd szilárdra."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Helyezd a hangsúlyt a májat támogató ételekre (citromos víz) a hormonok lebontásához."
+                }
             ],
-            booster: "Ciklus-Turbó Booster: Helyezd a hangsúlyt a májat támogató ételekre (citromos víz, articsóka), hogy a hormonok lebomlása optimális legyen."
+            booster: "Ciklus-Turbó Booster: Helyezd a hangsúlyt a májat támogató ételekre (citromos víz) a hormonok lebontásához."
         },
         luteal: {
             name: "Luteális fázis",
-            desc: "A progeszteron átveszi az irányítást. Megemelkedhet az energiaszükséglet, fontos a stabil vércukorszint fenntartása komplex szénhidrátokkal.",
-            superfoods: ["Édesburgonya", "Tökmag", "Dió", "Tojás", "Quinoa"],
+            desc: "A progeszteron átveszi az irányítást. Fontos a stabil vércukorszint fenntartása komplex szénhidrátokkal és minőségi húsokkal.",
+            superfoods: ["Marhahús", "Édesburgonya", "Basmati Rizs", "Tojás", "Quinoa"],
             recipes: [
-                { title: "Komplex Sütőtökös vagy Édesburgonyás Egytál", time: "35 perc", diff: "Közepes", desc: "Sült édesburgonya, csicseriborsó, spenót és tahini öntet." },
-                { title: "Magas Magnéziumtartalmú Magos Keksz", time: "25 perc", diff: "Könnyű", desc: "Tökmag, lenmag, napraforgómag és zabpehely keveréke sütve." }
+                { 
+                    title: "Komplex Szaftos Marhahús Basmati Rizzsel", 
+                    time: "40 perc", 
+                    diff: "Közepes", 
+                    servings: "2 adag",
+                    score: "96/100",
+                    superfoodTag: "Marhahús",
+                    ingredients: ["400g Marhahús", "200g Basmati Rizs", "Hagyma, fokhagyma, olívaolaj"],
+                    steps: [
+                        "Készíts gazdag marhapörkölt jellegű szaftos húst kevés vízzel.",
+                        "Főzz hozzá illatos basmati rizst."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Fogyassz komplex szénhidrátokat este is a szerotoninszint stabilizálásához."
+                },
+                { 
+                    title: "Édesburgonyás Marhaegytál", 
+                    time: "35 perc", 
+                    diff: "Közepes", 
+                    servings: "2 adag",
+                    score: "93/100",
+                    superfoodTag: "Édesburgonya",
+                    ingredients: ["300g Marhahús", "2 db Édesburgonya", "Olívaolaj"],
+                    steps: [
+                        "A marhát és az édesburgonyát kockázd fel, süsd egy edényben puhára."
+                    ],
+                    booster: "Ciklus-Turbó Booster: Fogyassz komplex szénhidrátokat este is a szerotoninszint stabilizálásához."
+                }
             ],
-            booster: "Ciklus-Turbó Booster: Fogyassz komplex szénhidrátokat este is a szerotoninszint (jókedv) stabilizálása és a nyugodt alvás érdekében."
+            booster: "Ciklus-Turbó Booster: Fogyassz komplex szénhidrátokat este is a szerotoninszint stabilizálásához."
         }
     };
 
-    function updateCycleData() {
+    // Aktív szuperfood szűrő tárolása fázisonként
+    let activeCycleSuperfood = null;
+    let currentActivePhaseKey = 'menstrual';
+
+    window.toggleCycleSuperfood = function(superfoodName) {
+        if (activeCycleSuperfood === superfoodName) {
+            activeCycleSuperfood = null;
+        } else {
+            activeCycleSuperfood = superfoodName;
+        }
+        updateCycleData(false);
+    };
+
+    function updateCycleData(resetFilter = true) {
         const dateInput = document.getElementById('last-period-date').value;
         const cycleLength = parseInt(document.getElementById('cycle-length').value) || 28;
         let dayOfCycle = 1;
@@ -1075,31 +1328,43 @@
         }
         document.getElementById('cycle-day-text').innerText = dayOfCycle + '.';
         
-        // SVG körív animáció frissítése
         const ring = document.getElementById('cycle-progress-ring');
         if (ring) {
-            const circumference = 2 * Math.PI * 70; // ~439.8
+            const circumference = 2 * Math.PI * 70;
             const progress = dayOfCycle / cycleLength;
             const dashoffset = circumference * (1 - progress);
             ring.style.strokeDasharray = circumference;
             ring.style.strokeDashoffset = dashoffset;
         }
 
-        let phase = 'menstrual';
-        if (dayOfCycle >= 6 && dayOfCycle <= 13) phase = 'follicular';
-        else if (dayOfCycle >= 14 && dayOfCycle <= 17) phase = 'ovulatory';
-        else if (dayOfCycle >= 18) phase = 'luteal';
+        let phaseKey = 'menstrual';
+        if (dayOfCycle >= 6 && dayOfCycle <= 13) phaseKey = 'follicular';
+        else if (dayOfCycle >= 14 && dayOfCycle <= 17) phaseKey = 'ovulatory';
+        else if (dayOfCycle >= 18) phaseKey = 'luteal';
+
+        if (currentActivePhaseKey !== phaseKey) {
+            currentActivePhaseKey = phaseKey;
+            if (resetFilter) activeCycleSuperfood = null;
+        }
         
-        const data = CYCLE_PHASES_DATA[phase];
+        const data = CYCLE_PHASES_DATA[phaseKey];
         document.getElementById('phase-name-text').innerText = data.name;
         
+        // Szűrés a kiválasztott superfood alapján
+        let filteredRecipes = data.recipes;
+        if (activeCycleSuperfood) {
+            filteredRecipes = data.recipes.filter(r => r.superfoodTag === activeCycleSuperfood);
+        }
+
         document.getElementById('cycle-recipe-container').innerHTML = `
             <div class="card">
-                <div style="font-size: 0.95rem; margin-bottom: 12px; line-height: 1.5; color: var(--text-main);">${data.desc}</div>
+                <div style="font-size: 0.95rem; margin-bottom: 12px; line-height: 1.5; color: var(--text-main); font-weight: 600;">${data.desc}</div>
                 
-                <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 6px;">Ajánlott Szuperfoodok:</div>
+                <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 6px;">Kattintható Szuperfoodok:</div>
                 <div class="superfood-bar">
-                    ${data.superfoods.map(s => `<span class="superfood-chip">${s}</span>`).join('')}
+                    ${data.superfoods.map(s => `
+                        <button class="superfood-chip ${activeCycleSuperfood === s ? 'active' : ''}" onclick="window.toggleCycleSuperfood('${s}')">${s}</button>
+                    `).join('')}
                 </div>
 
                 <div class="vilgain-box" style="margin-top: 16px; margin-bottom: 20px;">
@@ -1107,15 +1372,28 @@
                 </div>
 
                 <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: var(--text-heading); margin-bottom: 12px;">Fázis-specifikus receptek</div>
-                ${data.recipes.map(r => `
+                ${filteredRecipes.length > 0 ? filteredRecipes.map(r => `
                     <div class="recipe-card-box">
                         <div class="recipe-meta-bar">
-                            <span>🕒 ${r.time}</span> • <span>📊 ${r.diff}</span>
+                            <span>🕒 ${r.time}</span> • <span>📊 ${r.diff}</span> • <span>👥 ${r.servings}</span> • <span style="color:var(--primary); font-weight:700;">Növényi Pont: ${r.score}</span>
                         </div>
                         <div class="recipe-title" style="font-size:1.15rem;">${r.title}</div>
-                        <div style="font-size:0.88rem; color:var(--text-muted);">${r.desc}</div>
+                        
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-heading); margin-top: 8px; margin-bottom: 4px;">Hozzávalók:</div>
+                        <ul style="font-size: 0.83rem; padding-left: 18px; margin-bottom: 10px; font-weight: 600;">
+                            ${r.ingredients.map(ing => `<li>${ing}</li>`).join('')}
+                        </ul>
+
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-heading); margin-top: 8px; margin-bottom: 4px;">Elkészítési útmutató:</div>
+                        <ol style="font-size: 0.83rem; padding-left: 18px; color: var(--text-main); font-weight: 600;">
+                            ${r.steps.map(step => `<li style="margin-bottom: 4px;">${step}</li>`).join('')}
+                        </ol>
+
+                        <div class="vilgain-box" style="margin-top: 10px;">
+                            Ajánlott Vilgain termék: <a class="product-link" href="https://vilgain.hu?utm_source=daleday&utm_medium=cycle" target="_blank">Vilgain termék megtekintése</a>
+                        </div>
                     </div>
-                `).join('')}
+                `).join('') : '<div style="font-size:0.88rem; color:var(--text-muted); font-weight:600; padding: 12px 0;">Nincs találat erre a szuperfoodra ebben a fázisban. Kattints újra a csempére a szűrő kikapcsolásához.</div>'}
             </div>`;
     }
 
@@ -1149,14 +1427,14 @@
         const dateEl = document.getElementById('last-period-date');
         if(dateEl) {
             dateEl.value = new Date().toISOString().split('T')[0];
-            dateEl.addEventListener('change', updateCycleData);
+            dateEl.addEventListener('change', () => updateCycleData(true));
         }
 
         const lenEl = document.getElementById('cycle-length');
-        if(lenEl) lenEl.addEventListener('input', updateCycleData);
+        if(lenEl) lenEl.addEventListener('input', () => updateCycleData(true));
 
         initPantry();
-        updateCycleData();
+        updateCycleData(true);
     });
 </script>
 </body>
