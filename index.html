@@ -1,689 +1,513 @@
-<!-- Google Fonts Tipografia -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>daleday</title>
 
-<!-- HTML5 QRCode Olvasó Könyvtár -->
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- Google Fonts Tipografia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-    /* ==========================================================================
-       1. DESIGN SYSTEM & DYNAMIC THEMING
-       ========================================================================== */
-    :root {
-        --transition-speed: 0.35s;
-        --font-heading: 'Cormorant Garamond', Georgia, serif;
-        --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        --radius-lg: 20px;
-        --radius-md: 14px;
-        --radius-sm: 8px;
-        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
-        --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
-        --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
-    }
+    <!-- HTML5 QRCode Olvasó Könyvtár -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-    /* 1. CLEAN SWAP THEME (Elegáns Bordó & Krém) */
-    [data-theme="cleanswap"], body[data-theme="cleanswap"] {
-        --bg-main: #F9F6F0;
-        --bg-card: #FFFFFF;
-        --bg-card-alt: #EEE4DA;
-        --bg-recipe-box: #F5EFE6;
-        --primary: #4D0E15;
-        --primary-hover: #38090E;
-        --primary-light: #F2E3E5;
-        --accent-vilgain: #E07A5F;
-        --accent-vilgain-bg: #FDF0ED;
-        --accent-vilgain-border: #F7D1C8;
-        --text-main: #2C2828;
-        --text-muted: #6B6263;
-        --text-heading: #4D0E15;
-        --border-color: #DBC4AC;
-        --border-strong: #C8A49F;
-    }
-
-    /* 2. KAMRA THEME (Földszínek & Természetes Zöld) */
-    [data-theme="kamra"], body[data-theme="kamra"] {
-        --bg-main: #FCF8F5;
-        --bg-card: #FFFFFF;
-        --bg-card-alt: #F7F3EE;
-        --bg-recipe-box: #FAF6F0;
-        --primary: #556B2F;
-        --primary-hover: #3E4F22;
-        --primary-light: #EBF0EA;
-        --accent-vilgain: #E07A5F;
-        --accent-vilgain-bg: #FDF0ED;
-        --accent-vilgain-border: #F7D1C8;
-        --text-main: #333333;
-        --text-muted: #6B7280;
-        --text-heading: #3E4F22;
-        --border-color: #E5DEC9;
-        --border-strong: #D6CCA8;
-    }
-
-    /* 3. CIKLUSSZINKRON THEME (Nőies & Mély Rózsaszín/Bordó) */
-    [data-theme="cycle"], body[data-theme="cycle"] {
-        --bg-main: #FAF4F4;
-        --bg-card: #FFFFFF;
-        --bg-card-alt: #F9EBEA;
-        --bg-recipe-box: #F5E8E8;
-        --primary: #9E2A2B;
-        --primary-hover: #7D2122;
-        --primary-light: #F4E3E3;
-        --accent-vilgain: #E07A5F;
-        --accent-vilgain-bg: #FDF0ED;
-        --accent-vilgain-border: #F7D1C8;
-        --text-main: #2B1E1E;
-        --text-muted: #7A6363;
-        --text-heading: #541718;
-        --border-color: #EAC8C8;
-        --border-strong: #DAA8A8;
-    }
-
-    /* ==========================================================================
-       2. BASE RESETS & LAYOUT
-       ========================================================================== */
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        transition: background-color var(--transition-speed) ease,
-                    border-color var(--transition-speed) ease,
-                    color var(--transition-speed) ease;
-    }
-
-    body {
-        font-family: var(--font-body);
-        background-color: var(--bg-main);
-        color: var(--text-main);
-        line-height: 1.6;
-        padding: 24px 16px;
-        display: flex;
-        justify-content: center;
-        min-height: 100vh;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    .container {
-        max-width: 680px;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    header {
-        text-align: center;
-        margin-bottom: 28px;
-    }
-
-    .brand-title {
-        font-family: var(--font-heading);
-        font-size: 3.2rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        color: var(--text-heading);
-        margin-bottom: 4px;
-        line-height: 1;
-        text-transform: lowercase;
-    }
-
-    .brand-subtitle {
-        font-size: 0.95rem;
-        color: var(--text-muted);
-        font-weight: 500;
-    }
-
-    /* ==========================================================================
-       3. MODULE SWITCHER (Tab System - 3 Tab)
-       ========================================================================== */
-    .module-switch-container {
-        background: var(--bg-card-alt);
-        padding: 6px;
-        border-radius: 100px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 6px;
-        margin-bottom: 28px;
-        border: 1px solid var(--border-color);
-    }
-
-    @media (max-width: 520px) {
-        .module-switch-container {
-            grid-template-columns: 1fr;
-            border-radius: 20px;
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & DYNAMIC THEMING
+           ========================================================================== */
+        :root {
+            --transition-speed: 0.35s;
+            --font-heading: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 8px;
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
+            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
         }
-    }
-
-    .tab-btn {
-        background: transparent;
-        border: none;
-        padding: 10px 12px;
-        border-radius: 100px;
-        font-family: var(--font-body);
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        text-align: center;
-    }
-
-    .tab-btn svg {
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
-        flex-shrink: 0;
-    }
-
-    .tab-btn.active {
-        background: var(--bg-card);
-        color: var(--primary);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    /* ==========================================================================
-       4. CARDS & UI COMPONENTS
-       ========================================================================== */
-    .card {
-        background: var(--bg-card);
-        border-radius: var(--radius-lg);
-        padding: 24px;
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-soft);
-        margin-bottom: 24px;
-    }
-
-    .card-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 20px;
-    }
-
-    .card-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: var(--primary-light);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        flex-shrink: 0;
-    }
-
-    .card-icon svg {
-        width: 22px;
-        height: 22px;
-        fill: currentColor;
-    }
-
-    .card-title {
-        font-family: var(--font-heading);
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: var(--text-heading);
-        line-height: 1.2;
-    }
-
-    .form-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 480px) {
-        .form-group { grid-template-columns: 1fr; }
-    }
-
-    .input-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        position: relative;
-    }
-
-    .input-label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--text-muted);
-    }
-
-    .custom-input {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border-color);
-        background: var(--bg-main);
-        color: var(--text-main);
-        font-family: var(--font-body);
-        font-size: 0.95rem;
-        outline: none;
-        height: 46px;
-    }
-
-    .custom-input:focus {
-        border-color: var(--primary);
-    }
-
-    .btn-primary {
-        background: var(--primary);
-        color: #FFFFFF;
-        border: none;
-        padding: 12px 20px;
-        border-radius: var(--radius-sm);
-        font-weight: 700;
-        font-size: 0.9rem;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: opacity 0.2s ease, transform 0.15s ease;
-    }
-
-    .btn-primary:hover {
-        opacity: 0.92;
-        transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-        background: var(--bg-card-alt);
-        color: var(--text-heading);
-        border: 1px solid var(--border-color);
-        padding: 10px 16px;
-        border-radius: var(--radius-sm);
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .btn-secondary:hover {
-        background: var(--primary-light);
-        color: var(--primary);
-    }
-
-    /* ==========================================================================
-       5. CLEAN SWAP SPECIFIC STYLES
-       ========================================================================== */
-    .demo-buttons-bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-        margin-top: 16px;
-        padding-top: 16px;
-        border-top: 1px dashed var(--border-color);
-    }
-
-    .demo-btn {
-        background: var(--bg-card-alt);
-        border: 1px solid var(--border-color);
-        color: var(--text-main);
-        padding: 6px 12px;
-        border-radius: 100px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .demo-btn:hover {
-        border-color: var(--primary);
-        color: var(--primary);
-    }
-
-    #scanner-container {
-        border-radius: var(--radius-md);
-        overflow: hidden;
-        background: #000;
-        margin-top: 16px;
-    }
-
-    .score-box {
-        padding: 20px;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border-color);
-        background: var(--bg-recipe-box);
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .score-badge-circle {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 1.4rem;
-        color: #FFF;
-        flex-shrink: 0;
-    }
-
-    .score-high { background: #2E7D32; }
-    .score-mid { background: #F57F17; }
-    .score-low { background: #C62828; }
-
-    .warning-list {
-        margin-top: 12px;
-        padding-left: 20px;
-        font-size: 0.88rem;
-        color: #C62828;
-    }
-
-    .warning-list li {
-        margin-bottom: 4px;
-    }
-
-    /* ==========================================================================
-       6. CYCLE VISUALIZER & TAGS
-       ========================================================================== */
-    .cycle-visualizer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 0;
-        margin-bottom: 20px;
-        background: var(--bg-card-alt);
-        border-radius: var(--radius-md);
-    }
-
-    .cycle-ring-container {
-        position: relative;
-        width: 170px;
-        height: 170px;
-    }
-
-    .cycle-ring-svg {
-        width: 100%;
-        height: 100%;
-        transform: rotate(-90deg);
-    }
-
-    .cycle-ring-bg {
-        fill: none;
-        stroke: var(--border-color);
-        stroke-width: 12;
-    }
-
-    .cycle-ring-progress {
-        fill: none;
-        stroke: var(--primary);
-        stroke-width: 12;
-        stroke-linecap: round;
-        stroke-dasharray: 440;
-        stroke-dashoffset: 440;
-        transition: stroke-dashoffset 0.8s ease;
-    }
-
-    .cycle-ring-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-    }
-
-    .day-counter {
-        font-family: var(--font-heading);
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: var(--primary);
-        line-height: 1;
-    }
-
-    .day-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--text-muted);
-        margin-top: 2px;
-    }
-
-    .phase-badge-container {
-        margin-top: 14px;
-        text-align: center;
-    }
-
-    .phase-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 16px;
-        background: var(--primary-light);
-        color: var(--primary);
-        font-size: 0.9rem;
-        font-weight: 700;
-        border-radius: 100px;
-    }
-
-    .phase-badge svg {
-        width: 12px;
-        height: 12px;
-        fill: currentColor;
-    }
-
-    .autocomplete-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-sm);
-        box-shadow: var(--shadow-hover);
-        max-height: 200px;
-        overflow-y: auto;
-        z-index: 100;
-        margin-top: 4px;
-    }
-
-    .autocomplete-item {
-        padding: 10px 14px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        color: var(--text-main);
-        border-bottom: 1px solid var(--bg-card-alt);
-    }
-
-    .autocomplete-item:last-child { border-bottom: none; }
-    .autocomplete-item:hover {
-        background: var(--primary-light);
-        color: var(--primary);
-    }
-
-    .pantry-tags-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 16px;
-    }
-
-    .pantry-tag {
-        background: var(--bg-card-alt);
-        color: var(--text-main);
-        border: 1px solid var(--border-color);
-        padding: 6px 14px;
-        border-radius: 100px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        user-select: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        transition: all 0.2s ease;
-        cursor: pointer;
-    }
-
-    .pantry-tag.active {
-        background: var(--primary);
-        color: #FFFFFF;
-        border-color: var(--primary);
-    }
-
-    .pantry-tag .remove-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.1);
-    }
-
-    .pantry-tag.active .remove-btn {
-        background: rgba(255, 255, 255, 0.25);
-    }
-
-    /* ==========================================================================
-       7. RECEPT DOBOZ DESIGN
-       ========================================================================== */
-    .recipe-card-box {
-        background: var(--bg-recipe-box);
-        border: 1px solid var(--border-strong);
-        border-radius: var(--radius-md);
-        padding: 22px;
-        margin-bottom: 20px;
-        box-shadow: var(--shadow-card);
-    }
-
-    .recipe-card-box:last-child { margin-bottom: 0; }
-
-    .recipe-badge-bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: 8px;
-    }
-
-    .recipe-badge {
-        font-size: 0.72rem;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 4px;
-        background: var(--primary-light);
-        color: var(--primary);
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-    }
-
-    .recipe-name {
-        font-family: var(--font-heading);
-        font-size: 1.7rem;
-        font-weight: 700;
-        color: var(--text-heading);
-        line-height: 1.2;
-        margin-bottom: 6px;
-    }
-
-    .recipe-desc {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        line-height: 1.5;
-        margin-bottom: 14px;
-    }
-
-    .recipe-meta-bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        padding: 10px 14px;
-        background: var(--bg-card);
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border-color);
-        margin-bottom: 16px;
-        font-size: 0.82rem;
-        font-weight: 600;
-    }
-
-    .recipe-section {
-        padding-top: 14px;
-        margin-top: 14px;
-        border-top: 1px solid var(--border-color);
-    }
-
-    .section-title {
-        font-size: 0.92rem;
-        font-weight: 700;
-        color: var(--text-heading);
-        margin-bottom: 10px;
-    }
-
-    .ingredients-list {
-        list-style: none;
-    }
-
-    .ingredient-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 6px 0;
-        border-bottom: 1px dashed var(--border-color);
-        font-size: 0.88rem;
-    }
-
-    .ingredient-item:last-child { border-bottom: none; }
-
-    .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        margin-right: 8px;
-        display: inline-block;
-    }
-
-    .status-dot.has { background: #2E7D32; }
-    .status-dot.missing { background: var(--accent-vilgain); }
-
-    .vilgain-nudge-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        background: var(--accent-vilgain-bg);
-        color: var(--accent-vilgain);
-        border: 1px solid var(--accent-vilgain-border);
-        padding: 3px 8px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-size: 0.78rem;
-        font-weight: 700;
-    }
-
-    .steps-ol {
-        padding-left: 18px;
-        font-size: 0.88rem;
-    }
-
-    .steps-ol li { margin-bottom: 6px; }
-
-    .booster-box {
-        background: var(--bg-card);
-        border-left: 4px solid var(--primary);
-        padding: 12px 14px;
-        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        margin-top: 14px;
-        font-size: 0.85rem;
-    }
-
-    .disclaimer-text {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        text-align: center;
-        margin-top: 16px;
-    }
-
-    .hidden { display: none !important; }
-</style>
+
+        /* 1. CLEAN SWAP THEME (Elegáns Bordó & Krém) */
+        [data-theme="cleanswap"], body[data-theme="cleanswap"] {
+            --bg-main: #F9F6F0;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #EEE4DA;
+            --bg-recipe-box: #F5EFE6;
+            --primary: #4D0E15;
+            --primary-hover: #38090E;
+            --primary-light: #F2E3E5;
+            --accent-vilgain: #E07A5F;
+            --accent-vilgain-bg: #FDF0ED;
+            --accent-vilgain-border: #F7D1C8;
+            --text-main: #2C2828;
+            --text-muted: #6B6263;
+            --text-heading: #4D0E15;
+            --border-color: #DBC4AC;
+            --border-strong: #C8A49F;
+        }
+
+        /* 2. KAMRA THEME (Földszínek & Természetes Zöld) */
+        [data-theme="kamra"], body[data-theme="kamra"] {
+            --bg-main: #FCF8F5;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F7F3EE;
+            --bg-recipe-box: #FAF6F0;
+            --primary: #556B2F;
+            --primary-hover: #3E4F22;
+            --primary-light: #EBF0EA;
+            --accent-vilgain: #E07A5F;
+            --accent-vilgain-bg: #FDF0ED;
+            --accent-vilgain-border: #F7D1C8;
+            --text-main: #333333;
+            --text-muted: #6B7280;
+            --text-heading: #3E4F22;
+            --border-color: #E5DEC9;
+            --border-strong: #D6CCA8;
+        }
+
+        /* 3. CIKLUSSZINKRON THEME (Nőies & Mély Rózsaszín/Bordó) */
+        [data-theme="cycle"], body[data-theme="cycle"] {
+            --bg-main: #FAF4F4;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F9EBEA;
+            --bg-recipe-box: #F5E8E8;
+            --primary: #9E2A2B;
+            --primary-hover: #7D2122;
+            --primary-light: #F4E3E3;
+            --accent-vilgain: #E07A5F;
+            --accent-vilgain-bg: #FDF0ED;
+            --accent-vilgain-border: #F7D1C8;
+            --text-main: #2B1E1E;
+            --text-muted: #7A6363;
+            --text-heading: #541718;
+            --border-color: #EAC8C8;
+            --border-strong: #DAA8A8;
+        }
+
+        /* ==========================================================================
+           2. BASE RESETS & LAYOUT
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color var(--transition-speed) ease,
+                        border-color var(--transition-speed) ease,
+                        color var(--transition-speed) ease;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 24px 16px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand-title {
+            font-family: var(--font-heading);
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+            line-height: 1;
+            text-transform: lowercase;
+        }
+
+        .brand-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           3. MODULE SWITCHER (Tab System - 3 Tab)
+           ========================================================================== */
+        .module-switch-container {
+            background: var(--bg-card-alt);
+            padding: 6px;
+            border-radius: 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 520px) {
+            .module-switch-container {
+                grid-template-columns: 1fr;
+                border-radius: 20px;
+            }
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 100px;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+        }
+
+        .tab-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ==========================================================================
+           4. CARDS & UI COMPONENTS
+           ========================================================================== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .card-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.2;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .form-group { grid-template-columns: 1fr; }
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .input-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            outline: none;
+            height: 46px;
+        }
+
+        .custom-input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card-alt);
+            color: var(--text-heading);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* ==========================================================================
+           5. CLEAN SWAP SPECIFIC STYLES
+           ========================================================================== */
+        .demo-buttons-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .demo-btn {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .demo-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        #scanner-container {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: #000;
+            margin-top: 16px;
+            padding: 10px;
+        }
+
+        .score-box {
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-recipe-box);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .score-badge-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #FFF;
+            flex-shrink: 0;
+        }
+
+        .score-high { background: #2E7D32; }
+        .score-mid { background: #F57F17; }
+        .score-low { background: #C62828; }
+
+        /* ==========================================================================
+           6. CYCLE VISUALIZER & TAGS
+           ========================================================================== */
+        .cycle-visualizer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            background: var(--bg-card-alt);
+            border-radius: var(--radius-md);
+        }
+
+        .cycle-ring-container {
+            position: relative;
+            width: 170px;
+            height: 170px;
+        }
+
+        .cycle-ring-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .cycle-ring-bg {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 12;
+        }
+
+        .cycle-ring-progress {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 0.8s ease;
+        }
+
+        .cycle-ring-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .day-counter {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .day-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .phase-badge-container {
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 100px;
+        }
+
+        .phase-badge svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-hover);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            margin-top: 4px;
+        }
+
+        .pantry-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .disclaimer-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body data-theme="cleanswap">
 
 <div class="container">
+    <header>
+        <div class="brand-title">daleday</div>
+        <div class="brand-subtitle">Tudatos táplálkozás & holisztikus életmód asszisztens</div>
+    </header>
+
     <!-- MODULVÁLASZTÓ SWITCH (3 TAB) -->
     <div class="module-switch-container">
         <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">
@@ -709,13 +533,13 @@
                 </div>
                 <div>
                     <div class="card-title">Clean Swap Detektor</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Scenneld be az ételt és derítsd ki a Longevity Pontszámát!</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Scenneld be az ételt vagy írd be a vonalkódot!</div>
                 </div>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Írd be a vonalkódot (pl. 5900512300123)...">
+                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Írd be a vonalkódot (pl. 3017620422003)...">
                     <button onclick="scanManualBarcode()" class="btn-primary">Keresés</button>
                 </div>
                 <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -755,13 +579,10 @@
                 </div>
             </div>
 
-            <!-- Autocomplete Field -->
             <div class="input-wrapper">
-                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
-                <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
+                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)...">
             </div>
 
-            <!-- Kijelölt Tagek -->
             <div class="pantry-tags-container" id="pantry-tags"></div>
         </div>
 
@@ -784,11 +605,11 @@
             <div class="form-group">
                 <div class="input-wrapper">
                     <label class="input-label">Utolsó menstruáció első napja</label>
-                    <input type="date" id="last-period-date" class="custom-input" onchange="calculateCycle()">
+                    <input type="date" id="last-period-date" class="custom-input">
                 </div>
                 <div class="input-wrapper">
                     <label class="input-label">Átlagos ciklushossz (nap)</label>
-                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" onchange="calculateCycle()">
+                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40">
                 </div>
             </div>
 
@@ -799,48 +620,35 @@
                         <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
                     </svg>
                     <div class="cycle-ring-text">
-                        <div class="day-counter" id="cycle-day-text">18.</div>
+                        <div class="day-counter" id="cycle-day-text">14.</div>
                         <div class="day-label">napja</div>
                     </div>
                 </div>
                 <div class="phase-badge-container">
                     <div class="phase-badge">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
-                        <span id="phase-name-text">Luteális fázis</span>
+                        <span id="phase-name-text">Ovulációs fázis</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- FÁZIS-ALAPÚ ALAPANYAG-AJÁNLÓ KÁRTYA -->
-            <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
-                <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">
-                    Tápanyagdús alapanyag-ötletek a fázisodhoz:
-                </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-                    Kattints rájuk, ha kifejezetten ezekre épülő receptet szeretnél a Kamrában:
-                </div>
-                <div class="pantry-tags-container" id="cycle-superfood-tags"></div>
             </div>
 
             <div class="disclaimer-text">
                 Tájékoztatás: A daleday egy életmód- és táplálkozási inspirációs felület. A megjelenített információk nem minősülnek orvosi diagnózisnak.
             </div>
         </div>
-
-        <div id="cycle-recipe-card"></div>
     </div>
 </div>
 
 <!-- ==========================================================================
-     JAVASCRIPT LOGIKA & GLOBÁLIS ELÉRÉSEK
+     JAVASCRIPT LOGIKA
      ========================================================================== -->
 <script>
+    let html5QrCode = null;
+
     // 1. Modulváltó logika
     function switchModule(moduleName) {
-        // Témabeállítás a body-n (ez cseréli a színeket a CSS-ben)
         document.body.setAttribute('data-theme', moduleName);
 
-        // Modul panelek elrejtése / megjelenítése
         const modules = ['cleanswap', 'kamra', 'cycle'];
         modules.forEach(m => {
             const modElement = document.getElementById('module-' + m);
@@ -854,52 +662,174 @@
                 if (tabBtn) tabBtn.classList.remove('active');
             }
         });
+
+        // Ha elváltunk a clean swap modulról, állítsuk le a kamerát
+        if (moduleName !== 'cleanswap') {
+            stopCameraScanner();
+        }
     }
 
-    // 2. Kamera és vonalkód kezelő függvények (alapváz)
+    // 2. OpenFoodFacts Vonalkód Lekérdezés
+    async function fetchBarcodeData(barcode) {
+        const resultCard = document.getElementById('cleanswap-result-card');
+        resultCard.classList.remove('hidden');
+        resultCard.innerHTML = '<div style="padding:20px; text-align:center;">🔍 Termék adatok lekérése az adatbázisból...</div>';
+
+        try {
+            const response = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
+            const data = await response.json();
+
+            if (data.status === 1 && data.product) {
+                renderProductResult(data.product);
+            } else {
+                renderNotFoundResult(barcode);
+            }
+        } catch (error) {
+            console.error("API hiba:", error);
+            renderNotFoundResult(barcode);
+        }
+    }
+
+    function renderProductResult(product) {
+        const name = product.product_name_hu || product.product_name || 'Ismeretlen termék';
+        const brands = product.brands || 'Ismeretlen márka';
+        const ingredients = product.ingredients_text_hu || product.ingredients_text || 'Nincs külön összetevő lista az adatbázisban.';
+        const nutriscore = (product.nutriscore_grade || 'c').toUpperCase();
+        const imageUrl = product.image_front_url || '';
+
+        let scoreClass = 'score-mid';
+        let scoreVal = 65;
+        let warningText = 'Mérsékelt összetevői minőség.';
+
+        if (['A', 'B'].includes(nutriscore)) {
+            scoreClass = 'score-high';
+            scoreVal = 88;
+            warningText = 'Tiszta összetevők, alacsony feldolgozottsági szint.';
+        } else if (['D', 'E'].includes(nutriscore)) {
+            scoreClass = 'score-low';
+            scoreVal = 35;
+            warningText = 'Magas feldolgozottság, hozzáadott adalékanyagok vagy cukor tartalom.';
+        }
+
+        const resultCard = document.getElementById('cleanswap-result-card');
+        resultCard.innerHTML = `
+            <div class="score-box">
+                <div class="score-badge-circle ${scoreClass}">${scoreVal}</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-heading);">${name}</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">${brands} | Nutri-Score: ${nutriscore}</div>
+                </div>
+            </div>
+            ${imageUrl ? `<div style="text-align:center; margin-bottom:15px;"><img src="${imageUrl}" style="max-height:140px; border-radius:8px;"></div>` : ''}
+            <div style="font-size: 0.88rem; margin-bottom: 12px;"><strong>Összetevők:</strong> ${ingredients}</div>
+            <div style="font-size: 0.88rem;"><strong>Elemzés:</strong> ${warningText}</div>
+        `;
+    }
+
+    function renderNotFoundResult(barcode) {
+        const resultCard = document.getElementById('cleanswap-result-card');
+        resultCard.innerHTML = `
+            <div class="score-box">
+                <div class="score-badge-circle score-low">?</div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-heading);">Termék nem található</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Vonalkód: ${barcode}</div>
+                </div>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Ez a vonalkód még nem szerepel az OpenFoodFacts adatbázisában. Próbáld ki a demó gombokat a felület teszteléséhez!</p>
+        `;
+    }
+
     function scanManualBarcode() {
-        const val = document.getElementById('manual-barcode').value;
-        if (!val) return alert('Kérlek írj be egy vonalkódot!');
-        alert('Keresés vonalkódra: ' + val);
+        const barcode = document.getElementById('manual-barcode').value.trim();
+        if (!barcode) {
+            alert('Kérlek írj be egy vonalkódot!');
+            return;
+        }
+        fetchBarcodeData(barcode);
     }
 
-    function startCameraScanner() {
+    // 3. Kamerás Beolvasás Kezelése (Html5Qrcode)
+    async function startCameraScanner() {
         const container = document.getElementById('scanner-container');
-        if (container) container.classList.remove('hidden');
+        container.classList.remove('hidden');
+
+        // HTTPS figyelmeztetés
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            alert('A kamera használatához biztonságos (HTTPS) kapcsolat szükséges. Ha helyi fájlként (file://) vagy sima HTTP-n nyitottad meg, a mobilböngésző letiltja a kamerát.');
+        }
+
+        try {
+            if (!html5QrCode) {
+                html5QrCode = new Html5Qrcode("reader");
+            }
+
+            const config = { fps: 10, qrbox: { width: 250, height: 150 } };
+
+            await html5QrCode.start(
+                { facingMode: "environment" }, // Hátsó kamera használata
+                config,
+                (decodedText) => {
+                    document.getElementById('manual-barcode').value = decodedText;
+                    stopCameraScanner();
+                    fetchBarcodeData(decodedText);
+                },
+                (errorMessage) => {
+                    // Beolvasási próbálkozások hibái (normális működés)
+                }
+            );
+        } catch (err) {
+            console.error("Kamera indítási hiba:", err);
+            alert("Nem sikerült elindítani a kamerát! Ellenőrizd, hogy megadtad-e a kamerahasználati engedélyt a böngészőben.");
+        }
     }
 
-    function stopCameraScanner() {
+    async function stopCameraScanner() {
+        if (html5QrCode && html5QrCode.isScanning) {
+            try {
+                await html5QrCode.stop();
+            } catch (err) {
+                console.error("Kamera leállítási hiba:", err);
+            }
+        }
         const container = document.getElementById('scanner-container');
         if (container) container.classList.add('hidden');
     }
 
+    // 4. Demó Termékek
     function analyzeDemoProduct(type) {
-        const resultCard = document.getElementById('cleanswap-result-card');
-        if (resultCard) {
-            resultCard.classList.remove('hidden');
-            resultCard.innerHTML = `<h3>Elemzett termék: ${type}</h3><p>Sikeres elemzés!</p>`;
+        const demoProducts = {
+            bolognai: {
+                product_name_hu: 'Bolti Bolognai Mártás',
+                brands: 'Készétel Márka',
+                ingredients_text_hu: 'Paradicsompüré (45%), cukor, módosított keményítő, pálmaolaj, tartósítószer (E202), ízfokozó (E621), só.',
+                nutriscore_grade: 'd'
+            },
+            muzli: {
+                product_name_hu: 'Fitt Gyümölcsös Müzliszelet',
+                brands: 'BioFit',
+                ingredients_text_hu: 'Zabpehely (30%), glükóz-fruktóz szirup, növényi zsír, aszalt gyümölcsök (8%), emulgeálószer (szójalecitin), aroma.',
+                nutriscore_grade: 'c'
+            },
+            vilgain: {
+                product_name_hu: 'Vilgain BIO Basil Pesto',
+                brands: 'Vilgain',
+                ingredients_text_hu: 'BIO bazsalikom (45%), BIO extra szűz olívaolaj, BIO kesudió, BIO Parmezán sajt, tengeri só.',
+                nutriscore_grade: 'a'
+            }
+        };
+
+        if (demoProducts[type]) {
+            renderProductResult(demoProducts[type]);
         }
     }
 
-    // 3. Kamra kereső függvények
-    function handlePantrySearch() {
-        const input = document.getElementById('pantry-search-input').value;
-        console.log('Kamra keresés:', input);
-    }
-
-    // 4. Ciklusszinkron számítás
-    function calculateCycle() {
-        console.log('Ciklus újraszámítása...');
-    }
-
-    // ==========================================================================
-    // BIZTOSÍTÁS: GLOBÁLISAN ELÉRHETŐVÉ TESSZÜK A FÜGGVÉNYEKET A HTML ONCLICK CÉLJÁRA
-    // ==========================================================================
+    // Globális elérések
     window.switchModule = switchModule;
     window.scanManualBarcode = scanManualBarcode;
     window.startCameraScanner = startCameraScanner;
     window.stopCameraScanner = stopCameraScanner;
     window.analyzeDemoProduct = analyzeDemoProduct;
-    window.handlePantrySearch = handlePantrySearch;
-    window.calculateCycle = calculateCycle;
 </script>
+</body>
+</html>
