@@ -19,7 +19,6 @@
             --radius-md: 14px;
             --radius-sm: 8px;
             --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
             --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
         }
 
@@ -30,7 +29,6 @@
             --bg-card-alt: #EEE4DA;
             --bg-recipe-box: #F5EFE6;
             --primary: #4D0E15;
-            --primary-hover: #38090E;
             --primary-light: #F2E3E5;
             --accent-vilgain: #E07A5F;
             --accent-vilgain-bg: #FDF0ED;
@@ -39,7 +37,6 @@
             --text-muted: #6B6263;
             --text-heading: #4D0E15;
             --border-color: #DBC4AC;
-            --border-strong: #C8A49F;
         }
 
         /* 2. KAMRA THEME */
@@ -49,7 +46,6 @@
             --bg-card-alt: #F7F3EE;
             --bg-recipe-box: #FAF6F0;
             --primary: #556B2F;
-            --primary-hover: #3E4F22;
             --primary-light: #EBF0EA;
             --accent-vilgain: #E07A5F;
             --accent-vilgain-bg: #FDF0ED;
@@ -58,7 +54,6 @@
             --text-muted: #6B7280;
             --text-heading: #3E4F22;
             --border-color: #E5DEC9;
-            --border-strong: #D6CCA8;
         }
 
         /* 3. CIKLUSSZINKRON THEME */
@@ -68,7 +63,6 @@
             --bg-card-alt: #F9EBEA;
             --bg-recipe-box: #F5E8E8;
             --primary: #9E2A2B;
-            --primary-hover: #7D2122;
             --primary-light: #F4E3E3;
             --accent-vilgain: #E07A5F;
             --accent-vilgain-bg: #FDF0ED;
@@ -77,16 +71,13 @@
             --text-muted: #7A6363;
             --text-heading: #541718;
             --border-color: #EAC8C8;
-            --border-strong: #DAA8A8;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color var(--transition-speed) ease,
-                        border-color var(--transition-speed) ease,
-                        color var(--transition-speed) ease;
+            transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
 
         body {
@@ -116,7 +107,6 @@
             font-family: var(--font-heading);
             font-size: 3.2rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
             color: var(--text-heading);
             margin-bottom: 4px;
             line-height: 1;
@@ -157,10 +147,6 @@
             font-weight: 600;
             color: var(--text-muted);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
             text-align: center;
         }
 
@@ -184,18 +170,6 @@
             align-items: center;
             gap: 12px;
             margin-bottom: 20px;
-        }
-
-        .card-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            flex-shrink: 0;
         }
 
         .card-title {
@@ -258,10 +232,6 @@
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .btn-secondary {
@@ -328,7 +298,7 @@
             flex-shrink: 0;
         }
 
-        /* Konkrét színkódok */
+        /* Pontos színkódok */
         .score-high { background: #2E7D32; } /* Zöld */
         .score-mid { background: #E65100; }  /* Narancs */
         .score-low { background: #B71C1C; }  /* Piros */
@@ -436,27 +406,11 @@
             margin-bottom: 16px;
         }
 
-        .recipe-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
         .recipe-title {
             font-family: var(--font-heading);
             font-size: 1.4rem;
             font-weight: 700;
             color: var(--text-heading);
-        }
-
-        .recipe-badge {
-            background: var(--bg-card-alt);
-            color: var(--text-muted);
-            padding: 4px 10px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 700;
         }
 
         .vilgain-box {
@@ -576,7 +530,6 @@
     <div id="module-cleanswap">
         <div class="card">
             <div class="card-header">
-                <div class="card-icon"></div>
                 <div>
                     <div class="card-title">Clean Swap Detektor</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">Olvasd be vagy add meg a vonalkódot</div>
@@ -611,7 +564,6 @@
     <div id="module-kamra" class="hidden">
         <div class="card">
             <div class="card-header">
-                <div class="card-icon"></div>
                 <div>
                     <div class="card-title">Mi van a kamradban?</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">Válassz alapanyagokat a szűréshez</div>
@@ -633,7 +585,6 @@
     <div id="module-cycle" class="hidden">
         <div class="card">
             <div class="card-header">
-                <div class="card-icon"></div>
                 <div>
                     <div class="card-title">Ciklus-Kalkulator</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">Hormonális fázisok szerinti tervező</div>
@@ -697,7 +648,6 @@
         if (moduleName !== 'cleanswap') stopCameraScanner();
     }
 
-    // Erősített fordítómotor a megbízható magyar összetevőlistáért
     function translateIngredientsToHungarian(rawText) {
         if (!rawText) return "Nincs elérhető összetevő lista.";
         let text = rawText.toLowerCase();
@@ -744,8 +694,8 @@
         const name = (product.product_name_hu || product.product_name || '').toLowerCase();
 
         let scoreClass = 'score-mid';
-        let scoreVal = 60;
-        let scoreReason = '';
+        let scoreVal = 62;
+        let scoreReason = "Átlagos termék. Tartalmaz hasznos összetevőket is, de a feldolgozottság miatt mértékkel fogyasztandó.";
         let problematicIngredients = [];
         let cleanSwapProduct = 'Vilgain BIO Alternatíva (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Vilgain termék megtekintése</a>)';
         let homeRecipe = {
@@ -760,7 +710,7 @@
             problematicIngredients.push("Finomított növényi olajok / Pálmaolaj: Kedvezőtlen zsírsav-összetételű, terheli a szervezetet.");
         }
         if (ingredientsText.includes('aroma') || ingredientsText.includes('emulgeálószer') || ingredientsText.includes('tartósító')) {
-            problematicIngredients.push("Mesterséges adalékanyagok / Aromák: Ipari segédanyagok, amelyek nem járulnak hozzá a tápértékhez.");
+            problematicIngredients.push("Mesterséges adalékanyagok / Aromák: Ipari segédanyagok.");
         }
 
         if (['a', 'b'].includes(nutriscore) && problematicIngredients.length === 0) {
@@ -771,13 +721,8 @@
             scoreClass = 'score-low';
             scoreVal = 38;
             scoreReason = "Ultra-feldolgozott élelmiszer (UPF). A pontszámot a magas cukor- és olcsó olajtartalom rontotta.";
-        } else {
-            scoreClass = 'score-mid';
-            scoreVal = 62;
-            scoreReason = "Átlagos termék. Tartalmaz hasznos összetevőket is, de a feldolgozottság miatt mértékkel fogyasztandó.";
         }
 
-        // Pontos receptek granolához, bolognaihoz, pestóhoz
         if (name.includes('granola') || name.includes('müzli') || name.includes('pehely') || ingredientsText.includes('zab')) {
             cleanSwapProduct = 'Vilgain Granola (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Kattints ide a termékért</a>)';
             homeRecipe = {
@@ -795,11 +740,6 @@
             homeRecipe = {
                 ingredients: "2 marék friss bazsalikom, 50g kesudió, 40g parmezán, 1 dl olívaolaj, fokhagyma.",
                 steps: "1. Tedd az aprítógépbe a bazsalikomot, a magvakat, a sajtot és a fokhagymát.<br>2. Dolgozd simára az olívaolaj hozzáadásával."
-            };
-        } else {
-            homeRecipe = {
-                ingredients: "Természetes, tiszta alapanyagok, finomított olajok és cukor nélkül.",
-                steps: "Készítsd el otthon friss zöldségekből és minőségi hidegen sajtolt olajokból."
             };
         }
 
@@ -922,7 +862,10 @@
                 nutriscore_grade: 'a'
             }
         };
-        if (demos[type]) renderProductResult(demos[type]);
+        if (demos[type]) {
+            document.getElementById('cleanswap-result-card').classList.remove('hidden');
+            renderProductResult(demos[type]);
+        }
     }
 
     // KAMRA ÉS CIKLUS LOGIKA
@@ -932,8 +875,6 @@
     const pantryRecipes = [
         {
             title: "Mogyoróvajas Zabkása",
-            time: "10 perc",
-            ingredients: ["Zabpehely", "Mogyoróvaj"],
             instructions: "Főzd meg a zabpelyhet, majd keverd hozzá a mogyoróvajat.",
             vilgainSwap: 'Vilgain BIO Peanut Butter (<a class="product-link" href="https://vilgain.hu/vilgain-foeldimogyorovaj-por" target="_blank">Termék megtekintése</a>)'
         }
@@ -945,38 +886,58 @@
         const input = document.getElementById('pantry-search-input');
         const dropdown = document.getElementById('autocomplete-list');
 
-        input.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
-            dropdown.innerHTML = '';
-            if (!query) { dropdown.classList.add('hidden'); return; }
-            const matches = availableIngredients.filter(i => i.toLowerCase().includes(query) && !selectedIngredients.includes(i));
-            if (matches.length > 0) {
-                matches.forEach(m => {
-                    const item = document.createElement('div');
-                    item.className = 'autocomplete-item';
-                    item.innerText = m;
-                    item.onclick = () => { selectedIngredients.push(m); renderPantryTags(); renderPantryRecipes(); input.value = ''; dropdown.classList.add('hidden'); };
-                    dropdown.appendChild(item);
-                });
-                dropdown.classList.remove('hidden');
-            } else { dropdown.classList.add('hidden'); }
-        });
+        if(input && dropdown) {
+            input.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                dropdown.innerHTML = '';
+                if (!query) { dropdown.classList.add('hidden'); return; }
+                const matches = availableIngredients.filter(i => i.toLowerCase().includes(query) && !selectedIngredients.includes(i));
+                if (matches.length > 0) {
+                    matches.forEach(m => {
+                        const item = document.createElement('div');
+                        item.className = 'autocomplete-item';
+                        item.innerText = m;
+                        item.onclick = () => { 
+                            selectedIngredients.push(m); 
+                            renderPantryTags(); 
+                            renderPantryRecipes(); 
+                            input.value = ''; 
+                            dropdown.classList.add('hidden'); 
+                        };
+                        dropdown.appendChild(item);
+                    });
+                    dropdown.classList.remove('hidden');
+                } else { dropdown.classList.add('hidden'); }
+            });
+        }
     }
 
     function renderPantryTags() {
-        document.getElementById('pantry-tags').innerHTML = selectedIngredients.map(i => `
-            <div class="pantry-tag"><span>${i}</span><button onclick="selectedIngredients = selectedIngredients.filter(x => x !== '${i}'); renderPantryTags(); renderPantryRecipes();">&times;</button></div>
-        `).join('');
+        const container = document.getElementById('pantry-tags');
+        if(container) {
+            container.innerHTML = selectedIngredients.map(i => `
+                <div class="pantry-tag"><span>${i}</span><button onclick="removePantryTag('${i}')">&times;</button></div>
+            `).join('');
+        }
     }
 
+    window.removePantryTag = function(item) {
+        selectedIngredients = selectedIngredients.filter(x => x !== item);
+        renderPantryTags();
+        renderPantryRecipes();
+    };
+
     function renderPantryRecipes() {
-        document.getElementById('pantry-recipes-container').innerHTML = pantryRecipes.map(r => `
-            <div class="recipe-card">
-                <div class="recipe-title">${r.title}</div>
-                <div style="font-size: 0.9rem; margin: 8px 0;">${r.instructions}</div>
-                <div class="vilgain-box">Ajánlott termék: ${r.vilgainSwap}</div>
-            </div>
-        `).join('');
+        const container = document.getElementById('pantry-recipes-container');
+        if(container) {
+            container.innerHTML = pantryRecipes.map(r => `
+                <div class="recipe-card">
+                    <div class="recipe-title">${r.title}</div>
+                    <div style="font-size: 0.9rem; margin: 8px 0;">${r.instructions}</div>
+                    <div class="vilgain-box">Ajánlott termék: ${r.vilgainSwap}</div>
+                </div>
+            `).join('');
+        }
     }
 
     const cyclePhasesData = {
@@ -1010,7 +971,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('last-period-date').value = new Date().toISOString().split('T')[0];
+        const dateEl = document.getElementById('last-period-date');
+        if(dateEl) dateEl.value = new Date().toISOString().split('T')[0];
         initPantry();
         updateCycleData();
     });
