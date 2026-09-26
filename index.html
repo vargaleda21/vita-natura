@@ -5,18 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>daleday</title>
 
-    <!-- Google Fonts Tipografia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- HTML5 QRCode Olvasó Könyvtár -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
     <style>
-        /* ==========================================================================
-           1. DESIGN SYSTEM & DYNAMIC THEMING
-           ========================================================================== */
         :root {
             --transition-speed: 0.35s;
             --font-heading: 'Cormorant Garamond', Georgia, serif;
@@ -29,7 +23,7 @@
             --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
         }
 
-        /* 1. CLEAN SWAP THEME (Elegáns Bordó & Krém) */
+        /* 1. CLEAN SWAP THEME */
         [data-theme="cleanswap"], body[data-theme="cleanswap"] {
             --bg-main: #F9F6F0;
             --bg-card: #FFFFFF;
@@ -48,7 +42,7 @@
             --border-strong: #C8A49F;
         }
 
-        /* 2. KAMRA THEME (Földszínek & Természetes Zöld) */
+        /* 2. KAMRA THEME */
         [data-theme="kamra"], body[data-theme="kamra"] {
             --bg-main: #FCF8F5;
             --bg-card: #FFFFFF;
@@ -67,7 +61,7 @@
             --border-strong: #D6CCA8;
         }
 
-        /* 3. CIKLUSSZINKRON THEME (Nőies & Mély Mályva/Rózsaszín) */
+        /* 3. CIKLUSSZINKRON THEME */
         [data-theme="cycle"], body[data-theme="cycle"] {
             --bg-main: #FAF4F4;
             --bg-card: #FFFFFF;
@@ -86,9 +80,6 @@
             --border-strong: #DAA8A8;
         }
 
-        /* ==========================================================================
-           2. BASE RESETS & LAYOUT
-           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -138,9 +129,6 @@
             font-weight: 500;
         }
 
-        /* ==========================================================================
-           3. MODULE SWITCHER (Tab System - 3 Tab)
-           ========================================================================== */
         .module-switch-container {
             background: var(--bg-card-alt);
             padding: 6px;
@@ -176,22 +164,12 @@
             text-align: center;
         }
 
-        .tab-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
-
         .tab-btn.active {
             background: var(--bg-card);
             color: var(--primary);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* ==========================================================================
-           4. CARDS & UI COMPONENTS
-           ========================================================================== */
         .card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
@@ -218,12 +196,6 @@
             justify-content: center;
             color: var(--primary);
             flex-shrink: 0;
-        }
-
-        .card-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
         }
 
         .card-title {
@@ -290,12 +262,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: opacity 0.2s ease, transform 0.15s ease;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.92;
-            transform: translateY(-1px);
         }
 
         .btn-secondary {
@@ -307,17 +273,8 @@
             font-weight: 600;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
-        .btn-secondary:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        /* ==========================================================================
-           5. CLEAN SWAP SPECIFIC STYLES
-           ========================================================================== */
         .demo-buttons-bar {
             display: flex;
             flex-wrap: wrap;
@@ -337,11 +294,6 @@
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-        }
-
-        .demo-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
         }
 
         #scanner-container {
@@ -376,9 +328,10 @@
             flex-shrink: 0;
         }
 
-        .score-high { background: #2E7D32; }
-        .score-mid { background: #F57F17; }
-        .score-low { background: #C62828; }
+        /* Konkrét színkódok */
+        .score-high { background: #2E7D32; } /* Zöld */
+        .score-mid { background: #E65100; }  /* Narancs */
+        .score-low { background: #B71C1C; }  /* Piros */
 
         .analysis-section {
             background: var(--bg-main);
@@ -392,9 +345,6 @@
             font-weight: 700;
             color: var(--text-heading);
             margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
             font-size: 1rem;
         }
 
@@ -421,9 +371,12 @@
             margin-top: 8px;
         }
 
-        /* ==========================================================================
-           6. KAMRA & AUTOCOMPLETE STYLES
-           ========================================================================== */
+        .product-link {
+            color: var(--accent-vilgain);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
         .autocomplete-dropdown {
             position: absolute;
             top: 100%;
@@ -444,11 +397,6 @@
             cursor: pointer;
             font-size: 0.9rem;
             border-bottom: 1px solid var(--bg-card-alt);
-        }
-
-        .autocomplete-item:hover {
-            background: var(--primary-light);
-            color: var(--primary);
         }
 
         .pantry-tags-container {
@@ -478,7 +426,6 @@
             font-weight: 800;
             cursor: pointer;
             font-size: 1rem;
-            line-height: 1;
         }
 
         .recipe-card {
@@ -522,13 +469,6 @@
             color: var(--text-main);
         }
 
-        .vilgain-box strong {
-            color: var(--accent-vilgain);
-        }
-
-        /* ==========================================================================
-           7. CYCLE VISUALIZER & STYLES
-           ========================================================================== */
         .cycle-visualizer {
             display: flex;
             flex-direction: column;
@@ -608,12 +548,6 @@
             border-radius: 100px;
         }
 
-        .phase-badge svg {
-            width: 12px;
-            height: 12px;
-            fill: currentColor;
-        }
-
         .disclaimer-text {
             font-size: 0.75rem;
             color: var(--text-muted);
@@ -629,81 +563,63 @@
 <div class="container">
     <header>
         <div class="brand-title">daleday</div>
-        <div class="brand-subtitle">Tudatos táplálkozás & holisztikus életmód asszisztens</div>
+        <div class="brand-subtitle">Tudatos taplalkozas es holisztikus eletmod asszisztens</div>
     </header>
 
-    <!-- MODULVÁLASZTÓ SWITCH (3 TAB) -->
     <div class="module-switch-container">
-        <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">
-            <svg viewBox="0 0 24 24"><path d="M2 6h2v12H2zm3 0h1v12H5zm2 0h3v12H7zm4 0h1v12h-1zm3 0h2v12h-2zm3 0h1v12h-1zm2 0h3v12h-3z"/></svg>
-            Clean Swap Detektor
-        </button>
-        <button class="tab-btn" id="tab-kamra" onclick="switchModule('kamra')">
-            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
-            Kamra Asszisztens
-        </button>
-        <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
-            Ciklusszinkron
-        </button>
+        <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">Clean Swap Detektor</button>
+        <button class="tab-btn" id="tab-kamra" onclick="switchModule('kamra')">Kamra Asszisztens</button>
+        <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">Ciklusszinkron</button>
     </div>
 
-    <!-- 1. MODUL: CLEAN SWAP VONALKÓD & LONGEVITY ELEMZŐ -->
+    <!-- CLEAN SWAP MODUL -->
     <div id="module-cleanswap">
         <div class="card">
             <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M3 5v4h2V7h2V5H3zm0 10h2v2h2v2H3v-4zm14 4h2v-2h2v4h-4v-2zm2-14h-2V5h-2V3h4v4zM7 9h10v6H7V9z"/></svg>
-                </div>
+                <div class="card-icon"></div>
                 <div>
                     <div class="card-title">Clean Swap Detektor</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Scenneld be az ételt vagy írd be a vonalkódot!</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Olvasd be vagy add meg a vonalkódot</div>
                 </div>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Írd be a vonalkódot (pl. 3017620422003)...">
-                    <button onclick="scanManualBarcode()" class="btn-primary">Keresés</button>
+                    <input type="text" id="manual-barcode" class="custom-input" placeholder="Vonalkod (pl. 3017620422003)">
+                    <button onclick="scanManualBarcode()" class="btn-primary">Kereses</button>
                 </div>
-                <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm9-8h-3.17L16 5H8L6.17 7H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-9 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
-                    Kamera Indítása
-                </button>
+                <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%;">Kamera Inditasa</button>
             </div>
 
             <div id="scanner-container" class="hidden">
                 <div id="reader" style="width: 100%;"></div>
-                <button onclick="stopCameraScanner()" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #C62828; color: #FFF; border: none;">Kamera Bezárása</button>
+                <button onclick="stopCameraScanner()" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #B71C1C; color: #FFF; border: none;">Kamera Bezárása</button>
             </div>
 
-            <!-- Demó gombok -->
             <div class="demo-buttons-bar">
-                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Próbáld ki azonnal:</span>
-                <button class="demo-btn" onclick="analyzeDemoProduct('bolognai')">🔴 Bolti Bolognai Szósz</button>
-                <button class="demo-btn" onclick="analyzeDemoProduct('muzli')">🔴 Fitt Müzliszelet</button>
-                <button class="demo-btn" onclick="analyzeDemoProduct('vilgain')">🟢 Vilgain BIO Pesto</button>
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Demó termékek:</span>
+                <button class="demo-btn" onclick="analyzeDemoProduct('granola')">Bolti Granola</button>
+                <button class="demo-btn" onclick="analyzeDemoProduct('bolognai')">Bolti Bolognai</button>
+                <button class="demo-btn" onclick="analyzeDemoProduct('vilgain')">Vilgain BIO Pesto</button>
             </div>
         </div>
 
         <div id="cleanswap-result-card" class="card hidden"></div>
     </div>
 
-    <!-- 2. MODUL: KAMRA ASSZISZTENS -->
+    <!-- KAMRA MODUL -->
     <div id="module-kamra" class="hidden">
         <div class="card">
             <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5zm-12.12-20c-.28 0-.5.22-.5.5v17c0 .28.22.5.5.5h12.12c.28 0 .5-.22.5-.5v-17c0-.28-.22-.5-.5-.5h-12.12z"/><path d="M8 6h8v2h-8zm0 4h8v2h-8z"/></svg>
-                </div>
+                <div class="card-icon"></div>
                 <div>
-                    <div class="card-title">Mi van a kamrádban?</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Keress és válassz alapanyagokat a szűréshez!</div>
+                    <div class="card-title">Mi van a kamradban?</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Válassz alapanyagokat a szűréshez</div>
                 </div>
             </div>
 
             <div class="input-wrapper">
-                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell, Avokádó)..." autocomplete="off">
+                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Alapanyag keresése (pl. Zabpehely, Mogyoróvaj)..." autocomplete="off">
                 <div id="autocomplete-list" class="autocomplete-dropdown hidden"></div>
             </div>
 
@@ -713,16 +629,14 @@
         <div id="pantry-recipes-container"></div>
     </div>
 
-    <!-- 3. MODUL: CIKLUSSZINKRON -->
+    <!-- CIKLUSSZINKRON MODUL -->
     <div id="module-cycle" class="hidden">
         <div class="card">
             <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
-                </div>
+                <div class="card-icon"></div>
                 <div>
-                    <div class="card-title">Ciklus-Kalkulátor</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Tervezd meg a táplálkozásodat a hormonális fázisaid alapján</div>
+                    <div class="card-title">Ciklus-Kalkulator</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">Hormonális fázisok szerinti tervező</div>
                 </div>
             </div>
 
@@ -732,7 +646,7 @@
                     <input type="date" id="last-period-date" class="custom-input" onchange="updateCycleData()">
                 </div>
                 <div class="input-wrapper">
-                    <label class="input-label">Átlagos ciklushossz (nap)</label>
+                    <label class="input-label">Ciklushossz (nap)</label>
                     <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" oninput="updateCycleData()">
                 </div>
             </div>
@@ -750,14 +664,13 @@
                 </div>
                 <div class="phase-badge-container">
                     <div class="phase-badge">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
                         <span id="phase-name-text">Menstruációs fázis</span>
                     </div>
                 </div>
             </div>
 
             <div class="disclaimer-text">
-                Tájékoztatás: A daleday egy életmód- és táplálkozási inspirációs felület. A megjelenített információk nem minősülnek orvosi diagnózisnak.
+                Tájékoztatás: A daleday életmód- és táplálkozási felület. Nem minősül orvosi diagnózisnak.
             </div>
         </div>
 
@@ -765,23 +678,14 @@
     </div>
 </div>
 
-<!-- ==========================================================================
-     JAVASCRIPT LOGIKA
-     ========================================================================== -->
 <script>
     let html5QrCode = null;
 
-    // --------------------------------------------------------------------------
-    // 1. MODULVÁLTÓ LOGIKA
-    // --------------------------------------------------------------------------
     function switchModule(moduleName) {
         document.body.setAttribute('data-theme', moduleName);
-
-        const modules = ['cleanswap', 'kamra', 'cycle'];
-        modules.forEach(m => {
+        ['cleanswap', 'kamra', 'cycle'].forEach(m => {
             const modElement = document.getElementById('module-' + m);
             const tabBtn = document.getElementById('tab-' + m);
-            
             if (m === moduleName) {
                 if (modElement) modElement.classList.remove('hidden');
                 if (tabBtn) tabBtn.classList.add('active');
@@ -790,29 +694,23 @@
                 if (tabBtn) tabBtn.classList.remove('active');
             }
         });
-
-        if (moduleName !== 'cleanswap') {
-            stopCameraScanner();
-        }
+        if (moduleName !== 'cleanswap') stopCameraScanner();
     }
 
-    // --------------------------------------------------------------------------
-    // 2. CLEAN SWAP LOGIKA & FORDÍTÓ, INDOKLÓ, HÁZI RECEPT GENERÁLÓ MOTOR
-    // --------------------------------------------------------------------------
-    
-    // Szótár az OpenFoodFacts angol összetevőinek fordítására
+    // Erősített fordítómotor a megbízható magyar összetevőlistáért
     function translateIngredientsToHungarian(rawText) {
         if (!rawText) return "Nincs elérhető összetevő lista.";
-        
         let text = rawText.toLowerCase();
+        
         const dict = {
-            'water': 'víz', 'sugar': 'cukor', 'salt': 'só', 'palm oil': 'pálmaolaj',
-            'sunflower oil': 'napraforgóolaj', 'olive oil': 'olívaolaj', 'wheat flour': 'búzaliszt',
-            'modified starch': 'módosított keményítő', 'preservative': 'tartósítószer',
-            'flavor enhancer': 'ízfokozó', 'emulsifier': 'emulgeálószer', 'glucose syrup': 'glükózszirup',
-            'fructose syrup': 'fruktózszirup', 'oat flakes': 'zabpehely', 'peanuts': 'földimogyoró',
-            'cashew': 'kesudió', 'basil': 'bazsalikom', 'tomatoes': 'paradicsom', 'garlic': 'fokhagyma',
-            'milk': 'tej', 'cheese': 'sajt', 'soybean oil': 'szójaolaj', 'yeast extract': 'élesztőkivonat'
+            'water': 'víz', 'sugar': 'cukor', 'cane sugar': 'nádcukor', 'salt': 'só',
+            'palm oil': 'pálmaolaj', 'sunflower oil': 'napraforgóolaj', 'rapeseed oil': 'repceolaj',
+            'olive oil': 'olívaolaj', 'wheat flour': 'búzaliszt', 'oat flakes': 'zabpehely',
+            'glucose syrup': 'glükózszirup', 'fructose syrup': 'fruktózszirup', 'invert sugar syrup': 'inverz cukorszirup',
+            'honey': 'méz', 'peanuts': 'földimogyoró', 'almonds': 'mandula', 'hazelnuts': 'mogyoró',
+            'chocolate': 'csokoládé', 'cocoa mass': 'kakaómassza', 'cocoa butter': 'kakaóvaj',
+            'emulsifier': 'emulgeálószer', 'lecithin': 'lecitin', 'flavouring': 'aroma',
+            'modified starch': 'módosított keményítő', 'preservative': 'tartósítószer'
         };
 
         for (let key in dict) {
@@ -824,24 +722,21 @@
     async function fetchBarcodeData(barcode) {
         const resultCard = document.getElementById('cleanswap-result-card');
         resultCard.classList.remove('hidden');
-        resultCard.innerHTML = '<div style="padding:20px; text-align:center;">🔍 Termék adatok és összetevők elemzése...</div>';
+        resultCard.innerHTML = '<div style="padding:20px; text-align:center;">Adatok betöltése és elemzése...</div>';
 
         try {
             const response = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
             const data = await response.json();
-
             if (data.status === 1 && data.product) {
                 renderProductResult(data.product);
             } else {
                 renderNotFoundResult(barcode);
             }
         } catch (error) {
-            console.error("API hiba:", error);
             renderNotFoundResult(barcode);
         }
     }
 
-    // Részletes magyar elemzést és házireceptet előállító függvény
     function generateSmartAnalysis(product) {
         const rawIngredients = product.ingredients_text_hu || product.ingredients_text || '';
         const ingredientsText = rawIngredients.toLowerCase();
@@ -852,66 +747,59 @@
         let scoreVal = 60;
         let scoreReason = '';
         let problematicIngredients = [];
-        let cleanSwapProduct = "Vilgain BIO / Tiszta összetételű alternatíva";
-        
+        let cleanSwapProduct = 'Vilgain BIO Alternatíva (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Vilgain termék megtekintése</a>)';
         let homeRecipe = {
             ingredients: "Friss, feldolgozatlan alapanyagok",
-            steps: "Készítsd el otthon friss hozzávalókból adalékmentesen!"
+            steps: "Készítsd el otthon friss hozzávalókból adalékmentesen."
         };
 
-        // Problémás összetevők kiszűrése és pontos egészségügyi hatása
-        if (ingredientsText.includes('cukor') || ingredientsText.includes('sugar') || ingredientsText.includes('glükóz') || ingredientsText.includes('fruktóz')) {
-            problematicIngredients.push("<strong>Hozzáadott cukor / Glükóz-fruktóz szirup:</strong> Gyors vércukor-ingadozást, inzulintüskét és folyamatos éhségérzetet okoz, emellett elősegíti a szervezetben a krónikus gyulladásos folyamatokat.");
+        if (ingredientsText.includes('cukor') || ingredientsText.includes('sugar') || ingredientsText.includes('szirup')) {
+            problematicIngredients.push("Hozzáadott cukor vagy glükózszirup: Gyors inzulintüskét és folyamatos éhségérzetet okoz.");
         }
-        if (ingredientsText.includes('pálma') || ingredientsText.includes('palm') || ingredientsText.includes('módosított') || ingredientsText.includes('hidrogénezett')) {
-            problematicIngredients.push("<strong>Pálmaolaj / Módosított zsírok:</strong> Telített zsírsavakban és feldolgozott transzzsírokban gazdag, ami károsíthatja a bélflórát és növeli a szív- és érrendszeri kockázatokat.");
+        if (ingredientsText.includes('pálma') || ingredientsText.includes('palm') || ingredientsText.includes('növényi zsír')) {
+            problematicIngredients.push("Finomított növényi olajok / Pálmaolaj: Kedvezőtlen zsírsav-összetételű, terheli a szervezetet.");
         }
-        if (ingredientsText.includes('ízfokozó') || ingredientsText.includes('e621') || ingredientsText.includes('glutamát') || ingredientsText.includes('e202') || ingredientsText.includes('tartósító')) {
-            problematicIngredients.push("<strong>Ízfokozók (pl. E621) / Tartósítószerek:</strong> Túlingerekhez vezethetnek az ízlelésben, megterhelhetik a bélrendszert és a méregtelenítő szerveket, valamint puffadást és emésztési panaszokat okozhatnak.");
-        }
-        if (ingredientsText.includes('aroma') || ingredientsText.includes('flavouring') || ingredientsText.includes('színezék')) {
-            problematicIngredients.push("<strong>Mesterséges aromák és színezékek:</strong> Szintetikus vegyületek, amelyek nem hordoznak tápértéket, de terhelik az emésztőrendszert és érzékenységet válthatnak ki.");
+        if (ingredientsText.includes('aroma') || ingredientsText.includes('emulgeálószer') || ingredientsText.includes('tartósító')) {
+            problematicIngredients.push("Mesterséges adalékanyagok / Aromák: Ipari segédanyagok, amelyek nem járulnak hozzá a tápértékhez.");
         }
 
-        // Pontszám megállapítása és az okok szabatos indoklása
         if (['a', 'b'].includes(nutriscore) && problematicIngredients.length === 0) {
             scoreClass = 'score-high';
             scoreVal = 92;
-            scoreReason = "<strong>Miért kapott 92 pontot?</strong> Ez a termék a legmagasabb tápérték-kategóriába tartozik. Nem tartalmaz mesterséges tartósítószert, hozzáadott cukrot vagy ultra-feldolgozott növényi olajokat. Tiszta, természetes élelmiszer.";
-            cleanSwapProduct = "Ez a termék kiváló választás! Hasonló tiszta alternatíva: Vilgain BIO termékcsalád.";
+            scoreReason = "A termék kiváló tápértékkel bír. Nem tartalmaz felesleges adalékokat vagy finomított cukrokat.";
         } else if (['d', 'e'].includes(nutriscore) || problematicIngredients.length >= 2) {
             scoreClass = 'score-low';
-            scoreVal = 35;
-            scoreReason = "<strong>Miért kapott 35 pontot?</strong> Ez egy ultra-feldolgozott élelmiszer (UPF). A pontszámot jelentősen csökkentette a hozzáadott cukor/szirup jelenléte, az olcsó töltőanyagok (módosított keményítő), valamint a mesterséges adalékanyagok és tartósítószerek magas aránya.";
+            scoreVal = 38;
+            scoreReason = "Ultra-feldolgozott élelmiszer (UPF). A pontszámot a magas cukor- és olcsó olajtartalom rontotta.";
         } else {
             scoreClass = 'score-mid';
             scoreVal = 62;
-            scoreReason = "<strong>Miért kapott 62 pontot?</strong> Átlagos minőségű termék. Habár tartalmaz értékes alapanyagokat is, a feldolgozottsági szintje és a benne lévő aromák/zsírok miatt napi rendszerességű fogyasztásra kevésbé ajánlott.";
+            scoreReason = "Átlagos termék. Tartalmaz hasznos összetevőket is, de a feldolgozottság miatt mértékkel fogyasztandó.";
         }
 
-        // Konkrét Házi Recept Generálása a terméktípus alapján
-        if (name.includes('bolognai') || name.includes('mártás') || name.includes('paradicsom') || ingredientsText.includes('paradicsom')) {
-            cleanSwapProduct = "Vilgain BIO Bolognese Sauce / Vilgain BIO Basil Pesto";
+        // Pontos receptek granolához, bolognaihoz, pestóhoz
+        if (name.includes('granola') || name.includes('müzli') || name.includes('pehely') || ingredientsText.includes('zab')) {
+            cleanSwapProduct = 'Vilgain Granola (<a class="product-link" href="https://vilgain.hu/vilgain-granola" target="_blank">Kattints ide a termékért</a>)';
             homeRecipe = {
-                ingredients: "400g paszírozott BIO paradicsom, 2 gerezd fokhagyma, 1 ek extra szűz olívaolaj, friss bazsalikom, csipet tengeri só, olasz fűszerkeverék.",
-                steps: "1. Egy serpenyőben melegítsd fel az olívaolajat és pirítsd át a zúzott fokhagymát 1 percig.<br>2. Öntsd hozzá a paszírozott paradicsomot, sózd, fűszerezd.<br>3. Lassú tűzön rotyogtasd 10-15 percig, a végén keverd hozzá a friss bazsalikomot."
+                ingredients: "200g <a class=\"product-link\" href=\"https://vilgain.hu/vilgain-granola\" target="_blank">zabpehely</a>, 3 ek <a class=\"product-link\" href=\"https://vilgain.hu/vilgain-foeldimogyorovaj-por\" target="_blank">mogyoróvaj</a> vagy mandulavaj, 3 ek méz, 50g pekándió.",
+                steps: "1. Keverd össze a folyékony mogyoróvajat a mézzel.<br>2. Forgasd bele a zabpelyhet és az aprított diót.<br>3. Süsd 170 fokon 15 percig, amíg aranybarna nem lesz."
             };
-        } else if (name.includes('müzli') || name.includes('szelet') || name.includes('csoki') || ingredientsText.includes('zab')) {
-            cleanSwapProduct = "Vilgain Oat Bar / Vilgain Nut & Fruit Bar";
+        } else if (name.includes('bolognai') || name.includes('mártás') || ingredientsText.includes('paradicsom')) {
+            cleanSwapProduct = 'Vilgain BIO Pasta Sauce';
             homeRecipe = {
-                ingredients: "150g aprószemű zabpehely, 3 ek természetes mogyoróvaj, 2 ek méz vagy juharszirup, 2 ek chia mag, 1 marék aprított diák/aszalt gyümölcs.",
-                steps: "1. Egy tálban keverd össze a mogyoróvajat és a mézet, majd enyhén melegítsd össze.<br>2. Forgasd hozzá a zabpelyhet, chia magot és az aprított magvakat.<br>3. Nyomkodd egy sütőpapírral bélelt tepsibe, és tedd a hűtőbe 1 órára, mielőtt szeleteled."
+                ingredients: "400g passzírozott paradicsom, 1 ek olívaolaj, 2 gerezd fokhagyma, friss bazsalikom, tengeri só.",
+                steps: "1. Pirítsd meg a fokhagymát az olívaolajon.<br>2. Add hozzá a passzírozott paradicsomot és a fűszereket.<br>3. Főzd lassú tűzön 15 percig."
             };
         } else if (name.includes('pesto')) {
-            cleanSwapProduct = "Vilgain BIO Basil Pesto (100% extra szűz olívaolajjal)";
+            cleanSwapProduct = 'Vilgain BIO Basil Pesto';
             homeRecipe = {
-                ingredients: "2 nagy marék friss bazsalikom, 50g kesudió vagy fenyőmag, 40g reszelt parmezán, 1 dl extra szűz olívaolaj, 1 gerezd fokhagyma, só.",
-                steps: "1. Tedd a bazsalikomot, a magvakat, a fokhagymát és a parmezánt egy aprítógépbe.<br>2. Turgalás közben lassan csorgasd hozzá az olívaolajat, amíg krémes textúrát nem kapsz."
+                ingredients: "2 marék friss bazsalikom, 50g kesudió, 40g parmezán, 1 dl olívaolaj, fokhagyma.",
+                steps: "1. Tedd az aprítógépbe a bazsalikomot, a magvakat, a sajtot és a fokhagymát.<br>2. Dolgozd simára az olívaolaj hozzáadásával."
             };
         } else {
             homeRecipe = {
-                ingredients: "Alapvető, finomítatlan alapanyagok (zöldségek, minőségi hidegen sajtolt olajok, tiszta fűszerek).",
-                steps: "Kerüld a bolti készételeket! Válaszd a friss alapanyagokból való sütést/főzést hidegen sajtolt olívaolajjal vagy ghível."
+                ingredients: "Természetes, tiszta alapanyagok, finomított olajok és cukor nélkül.",
+                steps: "Készítsd el otthon friss zöldségekből és minőségi hidegen sajtolt olajokból."
             };
         }
 
@@ -920,7 +808,7 @@
             scoreVal,
             scoreReason,
             translatedIngredients: translateIngredientsToHungarian(rawIngredients),
-            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["<strong>Minden rendben:</strong> Nem találhatók kifejezetten kritikus mesterséges adalékok vagy nem kívánatos összetevők."],
+            problematicIngredients: problematicIngredients.length > 0 ? problematicIngredients : ["Nincsenek kritikus mesterséges adalékanyagok a termékben."],
             cleanSwapProduct,
             homeRecipe
         };
@@ -929,9 +817,6 @@
     function renderProductResult(product) {
         const name = product.product_name_hu || product.product_name || 'Ismeretlen termék';
         const brands = product.brands || 'Ismeretlen márka';
-        const nutriscore = (product.nutriscore_grade || 'c').toUpperCase();
-        const imageUrl = product.image_front_url || '';
-
         const analysis = generateSmartAnalysis(product);
 
         const resultCard = document.getElementById('cleanswap-result-card');
@@ -940,37 +825,32 @@
                 <div class="score-badge-circle ${analysis.scoreClass}">${analysis.scoreVal}</div>
                 <div>
                     <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">${name}</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">${brands} | Nutri-Score: ${nutriscore}</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">${brands}</div>
                 </div>
             </div>
 
-            ${imageUrl ? `<div style="text-align:center; margin-bottom:16px;"><img src="${imageUrl}" style="max-height:130px; border-radius:8px;"></div>` : ''}
-
             <div style="font-size: 0.88rem; margin-bottom: 12px; line-height: 1.5;">
-                <strong>Összetevők (Magyarul):</strong> ${analysis.translatedIngredients}
+                <strong>Összetevők magyarul:</strong> ${analysis.translatedIngredients}
             </div>
 
-            <!-- RÉSZLETES ELEMZÉS -->
             <div class="analysis-section">
-                <div class="analysis-title">📊 Miért kapta ezt a pontszámot?</div>
-                <div style="font-size: 0.88rem; margin-bottom: 14px; color: var(--text-main);">${analysis.scoreReason}</div>
+                <div class="analysis-title">Miért kapta ezt a pontszámot?</div>
+                <div style="font-size: 0.88rem; margin-bottom: 14px;">${analysis.scoreReason}</div>
                 
-                <div class="analysis-title" style="color: #C62828;">⚠️ Problémás összetevők és hatásuk:</div>
-                <ul style="font-size: 0.85rem; padding-left: 18px; color: var(--text-main);">
-                    ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:8px;">${ing}</li>`).join('')}
+                <div class="analysis-title" style="color: #B71C1C;">Problémás összetevők és hatásuk:</div>
+                <ul style="font-size: 0.85rem; padding-left: 18px;">
+                    ${analysis.problematicIngredients.map(ing => `<li style="margin-bottom:6px;">${ing}</li>`).join('')}
                 </ul>
             </div>
 
-            <!-- CLEAN SWAP ALTERNATÍVÁK -->
             <div class="swap-box">
-                <div class="swap-title">✨ Ajánlott Clean Swap Alternatívák</div>
-                
+                <div class="swap-title">Ajánlott Clean Swap Alternatívák</div>
                 <div style="font-size: 0.88rem; margin-bottom: 12px;">
-                    <strong>🟢 Tiszta Bolti Ajánlás:</strong> ${analysis.cleanSwapProduct}
+                    <strong>Ajánlott termék:</strong> ${analysis.cleanSwapProduct}
                 </div>
 
                 <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px;">
-                    🏡 Házi Elkészítési Opció (Adalékmentes Recept):
+                    Házi elkészítési opció (adalékmentes recept):
                 </div>
                 <div class="home-recipe-card">
                     <div style="font-size: 0.85rem; margin-bottom: 6px;">
@@ -985,342 +865,152 @@
     }
 
     function renderNotFoundResult(barcode) {
-        const resultCard = document.getElementById('cleanswap-result-card');
-        resultCard.innerHTML = `
+        document.getElementById('cleanswap-result-card').innerHTML = `
             <div class="score-box">
                 <div class="score-badge-circle score-low">?</div>
                 <div>
-                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-heading);">Termék nem található</div>
+                    <div style="font-weight: 700; font-size: 1.1rem;">A termék nem található</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted);">Vonalkód: ${barcode}</div>
                 </div>
             </div>
-            <p style="font-size: 0.88rem; color: var(--text-muted);">Ez a vonalkód még nem szerepel az adatbázisban. Próbáld ki a lenti demó gombokat az elemző funkció teszteléséhez!</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Használd a fenti demó gombokat az elemzés teszteléséhez.</p>
         `;
     }
 
     function scanManualBarcode() {
         const barcode = document.getElementById('manual-barcode').value.trim();
-        if (!barcode) {
-            alert('Kérlek írj be egy vonalkódot!');
-            return;
-        }
-        fetchBarcodeData(barcode);
+        if (barcode) fetchBarcodeData(barcode);
     }
 
     async function startCameraScanner() {
-        const container = document.getElementById('scanner-container');
-        container.classList.remove('hidden');
-
-        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-            alert('A kamera használatához biztonságos (HTTPS) kapcsolat szükséges!');
-        }
-
+        document.getElementById('scanner-container').classList.remove('hidden');
         try {
-            if (!html5QrCode) {
-                html5QrCode = new Html5Qrcode("reader");
-            }
-
-            const config = { fps: 10, qrbox: { width: 250, height: 150 } };
-
-            await html5QrCode.start(
-                { facingMode: "environment" },
-                config,
-                (decodedText) => {
-                    document.getElementById('manual-barcode').value = decodedText;
-                    stopCameraScanner();
-                    fetchBarcodeData(decodedText);
-                },
-                (errorMessage) => {}
-            );
+            if (!html5QrCode) html5QrCode = new Html5Qrcode("reader");
+            await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 150 } }, (text) => {
+                document.getElementById('manual-barcode').value = text;
+                stopCameraScanner();
+                fetchBarcodeData(text);
+            }, () => {});
         } catch (err) {
-            console.error("Kamera hiba:", err);
-            alert("Nem sikerült elindítani a kamerát. Ellenőrizd a böngésző engedélyeit!");
+            alert("A kamera indítása sikertelen.");
         }
     }
 
     async function stopCameraScanner() {
-        if (html5QrCode && html5QrCode.isScanning) {
-            try {
-                await html5QrCode.stop();
-            } catch (err) {
-                console.error("Kamera leállítási hiba:", err);
-            }
-        }
-        const container = document.getElementById('scanner-container');
-        if (container) container.classList.add('hidden');
+        if (html5QrCode && html5QrCode.isScanning) await html5QrCode.stop();
+        document.getElementById('scanner-container').classList.add('hidden');
     }
 
     function analyzeDemoProduct(type) {
-        const demoProducts = {
+        const demos = {
+            granola: {
+                product_name_hu: 'Ropogós Csokoládés Granola',
+                brands: 'Bolti Márka',
+                ingredients_text_hu: 'Oat flakes, sugar, palm oil, glucose syrup, chocolate pieces, emulsifier.',
+                nutriscore_grade: 'd'
+            },
             bolognai: {
                 product_name_hu: 'Bolti Bolognai Mártás',
                 brands: 'Készétel Márka',
-                ingredients_text_hu: 'Paradicsompüré (45%), cukor, módosított keményítő, pálmaolaj, tartósítószer (E202), ízfokozó (E621), só.',
+                ingredients_text_hu: 'Tomatoes, sugar, modified starch, palm oil, preservative.',
                 nutriscore_grade: 'd'
-            },
-            muzli: {
-                product_name_hu: 'Fitt Gyümölcsös Müzliszelet',
-                brands: 'BioFit',
-                ingredients_text_hu: 'Zabpehely (30%), glükóz-fruktóz szirup, növényi zsír, aszalt gyümölcsök (8%), emulgeálószer, aroma.',
-                nutriscore_grade: 'c'
             },
             vilgain: {
                 product_name_hu: 'Vilgain BIO Basil Pesto',
                 brands: 'Vilgain',
-                ingredients_text_hu: 'BIO bazsalikom (45%), BIO extra szűz olívaolaj, BIO kesudió, BIO Parmezán sajt, tengeri só.',
+                ingredients_text_hu: 'Basil, extra virgin olive oil, cashew nuts, parmesan cheese, salt.',
                 nutriscore_grade: 'a'
             }
         };
-
-        if (demoProducts[type]) {
-            renderProductResult(demoProducts[type]);
-        }
+        if (demos[type]) renderProductResult(demos[type]);
     }
 
-    // --------------------------------------------------------------------------
-    // 3. KAMRA ASSZISZTENS LOGIKA & RECEPTKERESŐ
-    // --------------------------------------------------------------------------
-    const availableIngredients = [
-        "Zabpehely", "Mogyoróvaj", "Csirkemell", "Avokádó", "Tojás", 
-        "Édesburgonya", "Quinoa", "Lazac", "Gomba", "Spenót", "Tofu", 
-        "Görög joghurt", "Chia mag", "Alma", "Brokkoli", "Mandulatej"
-    ];
-
+    // KAMRA ÉS CIKLUS LOGIKA
+    const availableIngredients = ["Zabpehely", "Mogyoróvaj", "Csirkemell", "Avokádó", "Tojás", "Édesburgonya", "Quinoa", "Lazac"];
     let selectedIngredients = ["Zabpehely", "Mogyoróvaj"];
 
     const pantryRecipes = [
         {
-            title: "Mogyoróvajas Fehérjés Zabkása",
+            title: "Mogyoróvajas Zabkása",
             time: "10 perc",
-            ingredients: ["Zabpehely", "Mogyoróvaj", "Mandulatej", "Chia mag"],
-            instructions: "Forrald fel a mandulatejet a zabpehellyel és chia maggal, majd keverd hozzá a mogyoróvajat és díszítsd gyümölccsel.",
-            vilgainSwap: "Vilgain BIO Peanut Butter & Vilgain Minute Oats"
-        },
-        {
-            title: "Avokádós Tojáskrém Édesburgonya Pirítóson",
-            time: "15 perc",
-            ingredients: ["Avokádó", "Tojás", "Édesburgonya"],
-            instructions: "Süsd meg az édesburgonya szeleteket kenyér helyett, majd halmozd rá az összetört avokádót és a lágy tojást.",
-            vilgainSwap: "Vilgain Ghee & Extra Szűz Olívaolaj"
-        },
-        {
-            title: "Spenótos Quinoa Tál Lazaccal",
-            time: "20 perc",
-            ingredients: ["Lazac", "Quinoa", "Spenót", "Brokkoli"],
-            instructions: "Párold meg a quinoát és a zöldségeket, serpenyőben süsd ropogósra a lazacot, majd tálald egy tálban.",
-            vilgainSwap: "Vilgain BIO Quinoa & Vilgain Premium Salmon"
-        },
-        {
-            title: "Gombás Tofu Serpenyős Egytálétel",
-            time: "15 perc",
-            ingredients: ["Tofu", "Gomba", "Spenót"],
-            instructions: "Kockázd fel a tofut és a gombát, pirítsd át olívaolajon, végül forgasd hozzá a friss spenótot.",
-            vilgainSwap: "Vilgain Coconut Oil / Extra Virgin Olive Oil"
+            ingredients: ["Zabpehely", "Mogyoróvaj"],
+            instructions: "Főzd meg a zabpelyhet, majd keverd hozzá a mogyoróvajat.",
+            vilgainSwap: 'Vilgain BIO Peanut Butter (<a class="product-link" href="https://vilgain.hu/vilgain-foeldimogyorovaj-por" target="_blank">Termék megtekintése</a>)'
         }
     ];
 
     function initPantry() {
         renderPantryTags();
         renderPantryRecipes();
-
         const input = document.getElementById('pantry-search-input');
         const dropdown = document.getElementById('autocomplete-list');
 
         input.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
             dropdown.innerHTML = '';
-
-            if (!query) {
-                dropdown.classList.add('hidden');
-                return;
-            }
-
-            const matches = availableIngredients.filter(ing => 
-                ing.toLowerCase().includes(query) && !selectedIngredients.includes(ing)
-            );
-
+            if (!query) { dropdown.classList.add('hidden'); return; }
+            const matches = availableIngredients.filter(i => i.toLowerCase().includes(query) && !selectedIngredients.includes(i));
             if (matches.length > 0) {
-                matches.forEach(match => {
+                matches.forEach(m => {
                     const item = document.createElement('div');
                     item.className = 'autocomplete-item';
-                    item.innerText = match;
-                    item.onclick = function() {
-                        addIngredient(match);
-                        input.value = '';
-                        dropdown.classList.add('hidden');
-                    };
+                    item.innerText = m;
+                    item.onclick = () => { selectedIngredients.push(m); renderPantryTags(); renderPantryRecipes(); input.value = ''; dropdown.classList.add('hidden'); };
                     dropdown.appendChild(item);
                 });
                 dropdown.classList.remove('hidden');
-            } else {
-                dropdown.classList.add('hidden');
-            }
+            } else { dropdown.classList.add('hidden'); }
         });
-
-        document.addEventListener('click', function(e) {
-            if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
-            }
-        });
-    }
-
-    function addIngredient(ing) {
-        if (!selectedIngredients.includes(ing)) {
-            selectedIngredients.push(ing);
-            renderPantryTags();
-            renderPantryRecipes();
-        }
-    }
-
-    function removeIngredient(ing) {
-        selectedIngredients = selectedIngredients.filter(i => i !== ing);
-        renderPantryTags();
-        renderPantryRecipes();
     }
 
     function renderPantryTags() {
-        const container = document.getElementById('pantry-tags');
-        container.innerHTML = selectedIngredients.map(ing => `
-            <div class="pantry-tag">
-                <span>${ing}</span>
-                <button onclick="removeIngredient('${ing}')">&times;</button>
-            </div>
+        document.getElementById('pantry-tags').innerHTML = selectedIngredients.map(i => `
+            <div class="pantry-tag"><span>${i}</span><button onclick="selectedIngredients = selectedIngredients.filter(x => x !== '${i}'); renderPantryTags(); renderPantryRecipes();">&times;</button></div>
         `).join('');
     }
 
     function renderPantryRecipes() {
-        const container = document.getElementById('pantry-recipes-container');
-
-        if (selectedIngredients.length === 0) {
-            container.innerHTML = `
-                <div class="card" style="text-align:center; color: var(--text-muted);">
-                    Kérlek válassz ki legalább egy alapanyagot a receptek megjelenítéséhez!
-                </div>`;
-            return;
-        }
-
-        const matched = pantryRecipes.map(recipe => {
-            const matchCount = recipe.ingredients.filter(i => selectedIngredients.includes(i)).length;
-            return { ...recipe, matchCount };
-        }).filter(r => r.matchCount > 0).sort((a, b) => b.matchCount - a.matchCount);
-
-        if (matched.length === 0) {
-            container.innerHTML = `
-                <div class="card" style="text-align:center; color: var(--text-muted);">
-                    Sajnos a kiválasztott alapanyagokhoz nem találtunk közvetlen receptet. Próbálj meg többet kijelölni!
-                </div>`;
-            return;
-        }
-
-        container.innerHTML = matched.map(recipe => `
+        document.getElementById('pantry-recipes-container').innerHTML = pantryRecipes.map(r => `
             <div class="recipe-card">
-                <div class="recipe-header">
-                    <div class="recipe-title">${recipe.title}</div>
-                    <div class="recipe-badge">⏱️ ${recipe.time}</div>
-                </div>
-                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">
-                    <strong>Szükséges alapanyagok:</strong> ${recipe.ingredients.join(', ')}
-                </div>
-                <div style="font-size: 0.9rem; margin-bottom: 10px;">
-                    ${recipe.instructions}
-                </div>
-                <div class="vilgain-box">
-                    💡 <strong>Clean Swap ajánlás:</strong> A legjobb tápanyagértékhez használd a következőt: <em>${recipe.vilgainSwap}</em>
-                </div>
+                <div class="recipe-title">${r.title}</div>
+                <div style="font-size: 0.9rem; margin: 8px 0;">${r.instructions}</div>
+                <div class="vilgain-box">Ajánlott termék: ${r.vilgainSwap}</div>
             </div>
         `).join('');
     }
 
-    // --------------------------------------------------------------------------
-    // 4. CIKLUSSZINKRON LOGIKA & TÁPLÁLKOZÁSI AJÁNLÓ
-    // --------------------------------------------------------------------------
     const cyclePhasesData = {
-        menstrual: {
-            name: "Menstruációs fázis (1-5. nap)",
-            desc: "A szervezet energiája alacsonyabb, vas- és magnéziumpótlásra van szükség.",
-            recipes: [
-                { title: "Meleg Vasbomba Tál", desc: "Spenótos, lencsés egytálétel párolt zöldségekkel és marhahússal vagy tofuval." },
-                { title: "Kakaós Magnézium Turmix", desc: "Kukoricamentes zabtej, nyers kakaópor, mogyoróvaj és banán." }
-            ]
-        },
-        follicular: {
-            name: "Folikuláris fázis (6-13. nap)",
-            desc: "Emelkedő ösztrogénszint, megnövekedett energia. Friss, könnyed, erjesztett ételek javasoltak.",
-            recipes: [
-                { title: "Friss Tavaszi Lazacsáta", desc: "Rukkola, csírák, fermentált zöldségek, avokádó és grillezett lazac." },
-                { title: "Kimchi & Quinoa Tál", desc: "Probiotikumban gazdag kimchi quinoával és pirított tofuval." }
-            ]
-        },
-        ovulatory: {
-            name: "Ovulációs fázis (14-17. nap)",
-            desc: "Az energiáid a csúcson vannak. Antioxidánsokban és rostokban gazdag ételek támogatják a májat.",
-            recipes: [
-                { title: "Erdei Gyümölcsös Antioxidáns Smoothie Tál", desc: "Málna, áfonya, chia mag, kókuszpehely és kollagén fehérje." },
-                { title: "Ropogós Zöldséges Csirkesaláta", desc: "Brokkoli, kaliforniai paprika, tökmag és citromos olívaolaj öntet." }
-            ]
-        },
-        luteal: {
-            name: "Luteális fázis (18-28. nap)",
-            desc: "A progeszteron dominál. Komplex szénhidrátok és gyökérzöldségek segítenek elkerülni a pms-t és a vércukor-ingadozást.",
-            recipes: [
-                { title: "Sült Édesburgonya & Csicseriborsó Tál", desc: "Fűszeres sült édesburgonya, csicseriborsó, tahini öntettel." },
-                { title: "Fahéjas Zabkása Aszalt Szilvával", desc: "Lassan felszívódó szénhidrátok a stabil vércukorszintért." }
-            ]
-        }
+        menstrual: { name: "Menstruációs fázis", desc: "Vas- és magnéziumpótlás javasolt.", recipes: [{ title: "Magnézium Turmix", desc: "Zabtej, kakaó, mogyoróvaj." }] },
+        follicular: { name: "Folikuláris fázis", desc: "Könnyed, friss ételek.", recipes: [{ title: "Friss Saláta", desc: "Zöldségek, olívaolaj." }] },
+        ovulatory: { name: "Ovulációs fázis", desc: "Antioxidánsok bevitele.", recipes: [{ title: "Gyümölcsös Tál", desc: "Bogyós gyümölcsök, magvak." }] },
+        luteal: { name: "Luteális fázis", desc: "Komplex szénhidrátok.", recipes: [{ title: "Sült Zöldségek", desc: "Édesburgonya, olívaolaj." }] }
     };
 
     function updateCycleData() {
         const dateInput = document.getElementById('last-period-date').value;
         const cycleLength = parseInt(document.getElementById('cycle-length').value) || 28;
-
         let dayOfCycle = 1;
-
         if (dateInput) {
-            const lastPeriod = new Date(dateInput);
-            const today = new Date();
-            const diffTime = Math.abs(today - lastPeriod);
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            dayOfCycle = (diffDays % cycleLength) + 1;
+            const diff = Math.abs(new Date() - new Date(dateInput));
+            dayOfCycle = (Math.floor(diff / (1000 * 60 * 60 * 24)) % cycleLength) + 1;
         }
-
-        const progressCircle = document.getElementById('cycle-progress');
-        const circumference = 2 * Math.PI * 70;
-        const progressOffset = circumference - (dayOfCycle / cycleLength) * circumference;
-        progressCircle.style.strokeDashoffset = progressOffset;
-
         document.getElementById('cycle-day-text').innerText = dayOfCycle + '.';
-
-        let currentPhase = 'menstrual';
-        if (dayOfCycle >= 6 && dayOfCycle <= 13) currentPhase = 'follicular';
-        else if (dayOfCycle >= 14 && dayOfCycle <= 17) currentPhase = 'ovulatory';
-        else if (dayOfCycle >= 18) currentPhase = 'luteal';
-
-        const phaseData = cyclePhasesData[currentPhase];
-        document.getElementById('phase-name-text').innerText = phaseData.name;
-
-        const container = document.getElementById('cycle-recipe-container');
-        container.innerHTML = `
+        let phase = 'menstrual';
+        if (dayOfCycle >= 6 && dayOfCycle <= 13) phase = 'follicular';
+        else if (dayOfCycle >= 14 && dayOfCycle <= 17) phase = 'ovulatory';
+        else if (dayOfCycle >= 18) phase = 'luteal';
+        
+        const data = cyclePhasesData[phase];
+        document.getElementById('phase-name-text').innerText = data.name;
+        document.getElementById('cycle-recipe-container').innerHTML = `
             <div class="card">
-                <div style="font-size: 0.95rem; margin-bottom: 16px; color: var(--text-main);">
-                    <strong>A jelenlegi fázisod jellemzői:</strong> ${phaseData.desc}
-                </div>
-                <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--text-heading); margin-bottom: 12px;">
-                    Ajánlott ételek a fázisodhoz
-                </div>
-                ${phaseData.recipes.map(r => `
-                    <div class="recipe-card" style="margin-bottom:12px;">
-                        <div class="recipe-title" style="font-size:1.2rem;">${r.title}</div>
-                        <div style="font-size:0.88rem; color:var(--text-muted); margin-top:4px;">${r.desc}</div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
+                <div style="font-size: 0.95rem; margin-bottom: 12px;">${data.desc}</div>
+                ${data.recipes.map(r => `<div class="recipe-card"><div class="recipe-title" style="font-size:1.1rem;">${r.title}</div><div style="font-size:0.85rem; color:var(--text-muted);">${r.desc}</div></div>`).join('')}
+            </div>`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        const todayStr = new Date().toISOString().split('T')[0];
-        document.getElementById('last-period-date').value = todayStr;
-        
+        document.getElementById('last-period-date').value = new Date().toISOString().split('T')[0];
         initPantry();
         updateCycleData();
     });
@@ -1330,8 +1020,6 @@
     window.startCameraScanner = startCameraScanner;
     window.stopCameraScanner = stopCameraScanner;
     window.analyzeDemoProduct = analyzeDemoProduct;
-    window.addIngredient = addIngredient;
-    window.removeIngredient = removeIngredient;
     window.updateCycleData = updateCycleData;
 </script>
 </body>
