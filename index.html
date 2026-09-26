@@ -672,9 +672,9 @@
 
             <div class="demo-buttons-bar">
                 <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-heading);">Demó termékek:</span>
-                <button class="demo-btn" data-demo="5900512300211">Hagyományos granola</button>
-                <button class="demo-btn" data-demo="3017620422003">Mogyorókrém</button>
-                <button class="demo-btn" data-demo="8594073300123">Vilgain BIO pesto</button>
+                <button class="demo-btn" data-demo="granola">Hagyományos granola</button>
+                <button class="demo-btn" data-demo="mogyorokrem">Mogyorókrém</button>
+                <button class="demo-btn" data-demo="pesto">Vilgain BIO pesto</button>
             </div>
         </div>
 
@@ -772,6 +772,24 @@
     let html5QrCode = null;
 
     const SCANNER_DATABASE = {
+        "mogyorokrem": {
+            product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
+            brands: 'Kereskedelmi márka',
+            ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
+            nutriscore_grade: 'e'
+        },
+        "granola": {
+            product_name_hu: 'Ropogós csokoládés granola',
+            brands: 'Ipari müzli termék',
+            ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
+            nutriscore_grade: 'd'
+        },
+        "pesto": {
+            product_name_hu: 'Vilgain BIO Basil Pesto',
+            brands: 'Vilgain',
+            ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
+            nutriscore_grade: 'a'
+        },
         "3017620422003": {
             product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
             brands: 'Kereskedelmi márka',
@@ -851,7 +869,6 @@
         }
     ];
 
-    // CIKLUS RECEPT- ÉS FÁZIS-ADATBÁZIS
     const cyclePhasesInfo = {
         menstrual: {
             name: "Menstruációs fázis",
@@ -982,7 +999,7 @@
         let diyTitle = "Házi készítési opció (Alternatíva)";
         let diyContent = "";
 
-        if (name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('krém') || name.includes('nutella')) {
+        if (name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('krém') || name.includes('nutella') || name.includes('3017620422003')) {
             score = 35;
             analysisText = "Gyulladáskeltő hatású: Magas finomított cukor- és pálmaolaj-tartalom jellemzi, amely kedvezőtlenül befolyásolja a bélflórát és a szervezet gyulladásos folyamatait.";
             diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
@@ -1004,7 +1021,7 @@
                     <li>Turmixold további 1-2 percig, amíg egyenletesen selyemfényű, homogén krémet nem kapsz. Töltsd tiszta üvegbe; hűtve 3 hétig eltartható.</li>
                 </ol>
             `;
-        } else if (name.includes('granola') || name.includes('müzli') || name.includes('muzli')) {
+        } else if (name.includes('granola') || name.includes('müzli') || name.includes('muzli') || name.includes('5900512300211')) {
             score = 42;
             analysisText = "Gyulladáskeltő hatású: Rejtett cukrokat és finomított növényi olajokat tartalmaz, amelyek hirtelen vércukorszint-ingadozást okozhatnak.";
             diyTitle = "Készítsd el otthon: Ropogós mézes-magos granola";
