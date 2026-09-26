@@ -8,7 +8,7 @@
 
 <style>
     /* ==========================================================================
-       1. DESIGN SYSTEM & DYNAMIC THEMING (CSS Variables)
+       1. DESIGN SYSTEM & DYNAMIC THEMING
        ========================================================================== */
     :root {
         --transition-speed: 0.35s;
@@ -23,7 +23,7 @@
     }
 
     /* 1. CLEAN SWAP THEME (Elegáns Bordó & Krém) */
-    [data-theme="cleanswap"] {
+    [data-theme="cleanswap"], body[data-theme="cleanswap"] {
         --bg-main: #F9F6F0;
         --bg-card: #FFFFFF;
         --bg-card-alt: #EEE4DA;
@@ -42,26 +42,26 @@
     }
 
     /* 2. KAMRA THEME (Földszínek & Természetes Zöld) */
-    [data-theme="kamra"] {
+    [data-theme="kamra"], body[data-theme="kamra"] {
         --bg-main: #FCF8F5;
         --bg-card: #FFFFFF;
         --bg-card-alt: #F7F3EE;
         --bg-recipe-box: #FAF6F0;
-        --primary: #8A9A86;
-        --primary-hover: #73836F;
+        --primary: #556B2F;
+        --primary-hover: #3E4F22;
         --primary-light: #EBF0EA;
         --accent-vilgain: #E07A5F;
         --accent-vilgain-bg: #FDF0ED;
         --accent-vilgain-border: #F7D1C8;
         --text-main: #333333;
         --text-muted: #6B7280;
-        --text-heading: #4A5746;
+        --text-heading: #3E4F22;
         --border-color: #E5DEC9;
         --border-strong: #D6CCA8;
     }
 
     /* 3. CIKLUSSZINKRON THEME (Nőies & Mély Rózsaszín/Bordó) */
-    [data-theme="cycle"] {
+    [data-theme="cycle"], body[data-theme="cycle"] {
         --bg-main: #FAF4F4;
         --bg-card: #FFFFFF;
         --bg-card-alt: #F9EBEA;
@@ -350,11 +350,14 @@
         border: 1px solid var(--border-color);
         background: var(--bg-recipe-box);
         margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 
     .score-badge-circle {
-        width: 56px;
-        height: 56px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -362,11 +365,23 @@
         font-weight: 800;
         font-size: 1.4rem;
         color: #FFF;
+        flex-shrink: 0;
     }
 
     .score-high { background: #2E7D32; }
     .score-mid { background: #F57F17; }
     .score-low { background: #C62828; }
+
+    .warning-list {
+        margin-top: 12px;
+        padding-left: 20px;
+        font-size: 0.88rem;
+        color: #C62828;
+    }
+
+    .warning-list li {
+        margin-bottom: 4px;
+    }
 
     /* ==========================================================================
        6. CYCLE VISUALIZER & TAGS
@@ -375,7 +390,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 16px 0;
+        padding: 20px 0;
         margin-bottom: 20px;
         background: var(--bg-card-alt);
         border-radius: var(--radius-md);
@@ -434,7 +449,7 @@
     }
 
     .phase-badge-container {
-        margin-top: 12px;
+        margin-top: 14px;
         text-align: center;
     }
 
@@ -442,17 +457,17 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 6px 14px;
+        padding: 6px 16px;
         background: var(--primary-light);
         color: var(--primary);
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         font-weight: 700;
         border-radius: 100px;
     }
 
     .phase-badge svg {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         fill: currentColor;
     }
 
@@ -494,14 +509,14 @@
 
     .pantry-tag {
         background: var(--bg-card-alt);
-        color: var(--text-muted);
+        color: var(--text-main);
         border: 1px solid var(--border-color);
-        padding: 6px 12px;
+        padding: 6px 14px;
         border-radius: 100px;
         font-size: 0.85rem;
         font-weight: 600;
         user-select: none;
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 6px;
         transition: all 0.2s ease;
@@ -521,32 +536,26 @@
         width: 16px;
         height: 16px;
         border-radius: 50%;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .pantry-tag.active .remove-btn {
         background: rgba(255, 255, 255, 0.25);
     }
 
-    .pantry-tag .remove-btn:hover { background: rgba(255, 255, 255, 0.4); }
-    .pantry-tag .remove-btn svg { width: 10px; height: 10px; fill: currentColor; }
-
     /* ==========================================================================
-       7. RECEPT DOBOZ DESIGN & JELVÉNYEK (.recipe-card-box)
+       7. RECEPT DOBOZ DESIGN
        ========================================================================== */
     .recipe-card-box {
         background: var(--bg-recipe-box);
         border: 1px solid var(--border-strong);
         border-radius: var(--radius-md);
-        padding: 24px;
-        margin-bottom: 24px;
+        padding: 22px;
+        margin-bottom: 20px;
         box-shadow: var(--shadow-card);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .recipe-card-box:last-child { margin-bottom: 0; }
-    .recipe-card-box:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-hover);
-    }
-
-    .recipe-header-group { margin-bottom: 12px; }
 
     .recipe-badge-bar {
         display: flex;
@@ -568,7 +577,7 @@
 
     .recipe-name {
         font-family: var(--font-heading);
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         font-weight: 700;
         color: var(--text-heading);
         line-height: 1.2;
@@ -579,6 +588,7 @@
         font-size: 0.9rem;
         color: var(--text-muted);
         line-height: 1.5;
+        margin-bottom: 14px;
     }
 
     .recipe-meta-bar {
@@ -589,138 +599,78 @@
         background: var(--bg-card);
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-color);
-        margin-bottom: 18px;
+        margin-bottom: 16px;
         font-size: 0.82rem;
         font-weight: 600;
-        color: var(--text-main);
-    }
-
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .meta-item svg {
-        width: 14px;
-        height: 14px;
-        fill: var(--primary);
     }
 
     .recipe-section {
-        padding-top: 16px;
-        margin-top: 16px;
+        padding-top: 14px;
+        margin-top: 14px;
         border-top: 1px solid var(--border-color);
     }
 
     .section-title {
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         font-weight: 700;
         color: var(--text-heading);
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .section-title svg {
-        width: 16px;
-        height: 16px;
-        fill: var(--primary);
+        margin-bottom: 10px;
     }
 
     .ingredients-list {
         list-style: none;
-        margin: 0;
-        padding: 0;
     }
 
     .ingredient-item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 8px 0;
+        padding: 6px 0;
         border-bottom: 1px dashed var(--border-color);
         font-size: 0.88rem;
     }
 
     .ingredient-item:last-child { border-bottom: none; }
 
-    .ingredient-name {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
     .status-dot {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--border-color);
-        flex-shrink: 0;
+        margin-right: 8px;
+        display: inline-block;
     }
 
-    .status-dot.has { background: var(--primary); }
+    .status-dot.has { background: #2E7D32; }
     .status-dot.missing { background: var(--accent-vilgain); }
 
     .vilgain-nudge-btn {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         background: var(--accent-vilgain-bg);
         color: var(--accent-vilgain);
         border: 1px solid var(--accent-vilgain-border);
-        padding: 4px 10px;
+        padding: 3px 8px;
         border-radius: 6px;
         text-decoration: none;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 700;
-        transition: transform 0.15s ease;
     }
-
-    .vilgain-nudge-btn:hover { transform: translateY(-1px); }
 
     .steps-ol {
-        padding-left: 20px;
+        padding-left: 18px;
         font-size: 0.88rem;
-        color: var(--text-main);
-        line-height: 1.6;
     }
 
-    .steps-ol li {
-        margin-bottom: 8px;
-        padding-left: 4px;
-    }
+    .steps-ol li { margin-bottom: 6px; }
 
     .booster-box {
         background: var(--bg-card);
-        border: 1px solid var(--border-color);
         border-left: 4px solid var(--primary);
-        padding: 14px 16px;
+        padding: 12px 14px;
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        margin-top: 16px;
-    }
-
-    .booster-header {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 700;
-        font-size: 0.88rem;
-        color: var(--primary);
-        margin-bottom: 4px;
-    }
-
-    .booster-header svg {
-        width: 16px;
-        height: 16px;
-        fill: currentColor;
-    }
-
-    .booster-text {
+        margin-top: 14px;
         font-size: 0.85rem;
-        color: var(--text-main);
-        line-height: 1.5;
     }
 
     .disclaimer-text {
@@ -728,7 +678,6 @@
         color: var(--text-muted);
         text-align: center;
         margin-top: 16px;
-        line-height: 1.4;
     }
 
     .hidden { display: none !important; }
@@ -816,7 +765,7 @@
         <div class="pantry-tags-container" id="pantry-tags"></div>
     </div>
 
-    <div class="card" id="pantry-recipe-card"></div>
+    <div id="pantry-recipe-card"></div>
 </div>
 
 <!-- 3. MODUL: CIKLUSSZINKRON -->
@@ -878,5 +827,5 @@
         </div>
     </div>
 
-    <div class="card" id="cycle-recipe-card"></div>
+    <div id="cycle-recipe-card"></div>
 </div>
