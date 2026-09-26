@@ -1,1791 +1,882 @@
-<!DOCTYPE html>
-<html lang="hu" data-theme="kamra">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DaleDay - Ciklusszinkron & Kamra</title>
-    <!-- Google Fonts Tipografia -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Google Fonts Tipografia -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        /* ==========================================================================
-           1. DESIGN SYSTEM & DYNAMIC THEMING (CSS Variables)
-           ========================================================================== */
-        :root {
-            --transition-speed: 0.35s;
-            --font-heading: 'Cormorant Garamond', Georgia, serif;
-            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            --radius-lg: 20px;
-            --radius-md: 14px;
-            --radius-sm: 8px;
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
-            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
-        }
+<!-- HTML5 QRCode Olvasó Könyvtár -->
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-        /* KAMRA THEME (Earth Tone & Natural) */
-        [data-theme="kamra"] {
-            --bg-main: #FCF8F5;
-            --bg-card: #FFFFFF;
-            --bg-card-alt: #F7F3EE;
-            --bg-recipe-box: #FAF6F0;
-            --primary: #8A9A86;
-            --primary-hover: #73836F;
-            --primary-light: #EBF0EA;
-            --accent-vilgain: #E07A5F;
-            --accent-vilgain-bg: #FDF0ED;
-            --accent-vilgain-border: #F7D1C8;
-            --text-main: #333333;
-            --text-muted: #6B7280;
-            --text-heading: #4A5746;
-            --border-color: #E5DEC9;
-            --border-strong: #D6CCA8;
-        }
+<style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM & DYNAMIC THEMING (CSS Variables)
+       ========================================================================== */
+    :root {
+        --transition-speed: 0.35s;
+        --font-heading: 'Cormorant Garamond', Georgia, serif;
+        --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        --radius-lg: 20px;
+        --radius-md: 14px;
+        --radius-sm: 8px;
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
+        --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+        --shadow-hover: 0 14px 32px rgba(0, 0, 0, 0.09);
+    }
 
-        /* CIKLUSSZINKRON THEME (Feminine & Deep Tones) */
-        [data-theme="cycle"] {
-            --bg-main: #FAF4F4;
-            --bg-card: #FFFFFF;
-            --bg-card-alt: #F9EBEA;
-            --bg-recipe-box: #F5E8E8;
-            --primary: #9E2A2B;
-            --primary-hover: #7D2122;
-            --primary-light: #F4E3E3;
-            --accent-vilgain: #E07A5F;
-            --accent-vilgain-bg: #FDF0ED;
-            --accent-vilgain-border: #F7D1C8;
-            --text-main: #2B1E1E;
-            --text-muted: #7A6363;
-            --text-heading: #541718;
-            --border-color: #EAC8C8;
-            --border-strong: #DAA8A8;
-        }
+    /* 1. CLEAN SWAP THEME (Elegáns Bordó & Krém) */
+    [data-theme="cleanswap"] {
+        --bg-main: #F9F6F0;
+        --bg-card: #FFFFFF;
+        --bg-card-alt: #EEE4DA;
+        --bg-recipe-box: #F5EFE6;
+        --primary: #4D0E15;
+        --primary-hover: #38090E;
+        --primary-light: #F2E3E5;
+        --accent-vilgain: #E07A5F;
+        --accent-vilgain-bg: #FDF0ED;
+        --accent-vilgain-border: #F7D1C8;
+        --text-main: #2C2828;
+        --text-muted: #6B6263;
+        --text-heading: #4D0E15;
+        --border-color: #DBC4AC;
+        --border-strong: #C8A49F;
+    }
 
-        /* ==========================================================================
-           2. BASE RESETS & LAYOUT
-           ========================================================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            transition: background-color var(--transition-speed) ease,
-                        border-color var(--transition-speed) ease,
-                        color var(--transition-speed) ease;
-        }
+    /* 2. KAMRA THEME (Földszínek & Természetes Zöld) */
+    [data-theme="kamra"] {
+        --bg-main: #FCF8F5;
+        --bg-card: #FFFFFF;
+        --bg-card-alt: #F7F3EE;
+        --bg-recipe-box: #FAF6F0;
+        --primary: #8A9A86;
+        --primary-hover: #73836F;
+        --primary-light: #EBF0EA;
+        --accent-vilgain: #E07A5F;
+        --accent-vilgain-bg: #FDF0ED;
+        --accent-vilgain-border: #F7D1C8;
+        --text-main: #333333;
+        --text-muted: #6B7280;
+        --text-heading: #4A5746;
+        --border-color: #E5DEC9;
+        --border-strong: #D6CCA8;
+    }
 
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 24px 16px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-        }
+    /* 3. CIKLUSSZINKRON THEME (Nőies & Mély Rózsaszín/Bordó) */
+    [data-theme="cycle"] {
+        --bg-main: #FAF4F4;
+        --bg-card: #FFFFFF;
+        --bg-card-alt: #F9EBEA;
+        --bg-recipe-box: #F5E8E8;
+        --primary: #9E2A2B;
+        --primary-hover: #7D2122;
+        --primary-light: #F4E3E3;
+        --accent-vilgain: #E07A5F;
+        --accent-vilgain-bg: #FDF0ED;
+        --accent-vilgain-border: #F7D1C8;
+        --text-main: #2B1E1E;
+        --text-muted: #7A6363;
+        --text-heading: #541718;
+        --border-color: #EAC8C8;
+        --border-strong: #DAA8A8;
+    }
 
-        .container {
-            max-width: 660px;
-            width: 100%;
-            margin: 0 auto;
-        }
+    /* ==========================================================================
+       2. BASE RESETS & LAYOUT
+       ========================================================================== */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        transition: background-color var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease,
+                    color var(--transition-speed) ease;
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
+    body {
+        font-family: var(--font-body);
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 24px 16px;
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+    }
 
-        .brand-title {
-            font-family: var(--font-heading);
-            font-size: 3.2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text-heading);
-            margin-bottom: 4px;
-            line-height: 1;
-        }
+    .container {
+        max-width: 680px;
+        width: 100%;
+        margin: 0 auto;
+    }
 
-        .brand-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+    header {
+        text-align: center;
+        margin-bottom: 28px;
+    }
 
-        /* ==========================================================================
-           3. MODULE SWITCHER (Tab System)
-           ========================================================================== */
+    .brand-title {
+        font-family: var(--font-heading);
+        font-size: 3.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text-heading);
+        margin-bottom: 4px;
+        line-height: 1;
+        text-transform: lowercase;
+    }
+
+    .brand-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    /* ==========================================================================
+       3. MODULE SWITCHER (Tab System - 3 Tab)
+       ========================================================================== */
+    .module-switch-container {
+        background: var(--bg-card-alt);
+        padding: 6px;
+        border-radius: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+        margin-bottom: 28px;
+        border: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 520px) {
         .module-switch-container {
-            background: var(--bg-card-alt);
-            padding: 6px;
-            border-radius: 100px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-            margin-bottom: 28px;
-            border: 1px solid var(--border-color);
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 100px;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .tab-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-
-        .tab-btn.active {
-            background: var(--bg-card);
-            color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        /* ==========================================================================
-           4. CARDS & UI COMPONENTS
-           ========================================================================== */
-        .card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-soft);
-            margin-bottom: 24px;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            flex-shrink: 0;
-        }
-
-        .card-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .card-title {
-            font-family: var(--font-heading);
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            line-height: 1.2;
-        }
-
-        .form-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 480px) {
-            .form-group { grid-template-columns: 1fr; }
-        }
-
-        .input-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            position: relative;
-        }
-
-        .input-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        .custom-input {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            background: var(--bg-main);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            outline: none;
-            height: 46px;
-        }
-
-        .custom-input:focus {
-            border-color: var(--primary);
-        }
-
-        .cycle-visualizer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 16px 0;
-            margin-bottom: 20px;
-            background: var(--bg-card-alt);
-            border-radius: var(--radius-md);
-        }
-
-        .cycle-ring-container {
-            position: relative;
-            width: 180px;
-            height: 180px;
-        }
-
-        .cycle-ring-svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .cycle-ring-bg {
-            fill: none;
-            stroke: var(--border-color);
-            stroke-width: 12;
-        }
-
-        .cycle-ring-progress {
-            fill: none;
-            stroke: var(--primary);
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
-            transition: stroke-dashoffset 0.8s ease;
-        }
-
-        .cycle-ring-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .day-counter {
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1;
-        }
-
-        .day-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .phase-badge-container {
-            margin-top: 12px;
-            text-align: center;
-        }
-
-        .phase-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            background: var(--primary-light);
-            color: var(--primary);
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 100px;
-        }
-
-        .phase-badge svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
-        }
-
-        .autocomplete-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-hover);
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 100;
-            margin-top: 4px;
-        }
-
-        .autocomplete-item {
-            padding: 10px 14px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--bg-card-alt);
-        }
-
-        .autocomplete-item:last-child {
-            border-bottom: none;
-        }
-
-        .autocomplete-item:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .pantry-tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .pantry-tag {
-            background: var(--bg-card-alt);
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .pantry-tag.active {
-            background: var(--primary);
-            color: #FFFFFF;
-            border-color: var(--primary);
-        }
-
-        .pantry-tag .remove-btn, .pantry-tag .toggle-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.08);
-            transition: background 0.2s ease;
-        }
-
-        .pantry-tag.active .toggle-btn, .pantry-tag .remove-btn {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .pantry-tag:hover .toggle-btn, .pantry-tag .remove-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .pantry-tag .remove-btn svg, .pantry-tag .toggle-btn svg {
-            width: 10px;
-            height: 10px;
-            fill: currentColor;
-        }
-
-        .pantry-tag.inactive .toggle-btn svg {
-            fill: var(--text-muted);
-        }
-
-        .pantry-tag.active .toggle-btn svg {
-            fill: #FFFFFF;
-        }
-
-        /* ==========================================================================
-           5. RECEPT DOBOZ DESIGN & JELVÉNYEK (.recipe-card-box)
-           ========================================================================== */
-        .recipe-card-box {
-            background: var(--bg-recipe-box);
-            border: 1px solid var(--border-strong);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-card);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .recipe-card-box:last-child {
-            margin-bottom: 0;
-        }
-
-        .recipe-card-box:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .recipe-header-group {
-            margin-bottom: 12px;
-        }
-
-        .recipe-badge-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .recipe-badge {
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: var(--primary-light);
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .recipe-name {
-            font-family: var(--font-heading);
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            line-height: 1.2;
-            margin-bottom: 6px;
-        }
-
-        .recipe-desc {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .recipe-meta-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            padding: 10px 14px;
-            background: var(--bg-card);
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            margin-bottom: 18px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .meta-item svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--primary);
-        }
-
-        .recipe-section {
-            padding-top: 16px;
-            margin-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .section-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-title svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--primary);
-        }
-
-        .ingredients-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .ingredient-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--border-color);
-            font-size: 0.88rem;
-        }
-
-        .ingredient-item:last-child {
-            border-bottom: none;
-        }
-
-        .ingredient-name {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--border-color);
-            flex-shrink: 0;
-        }
-
-        .status-dot.has {
-            background: var(--primary);
-        }
-
-        .status-dot.missing {
-            background: var(--accent-vilgain);
-        }
-
-        .vilgain-nudge-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--accent-vilgain-bg);
-            color: var(--accent-vilgain);
-            border: 1px solid var(--accent-vilgain-border);
-            padding: 4px 10px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 700;
-            transition: transform 0.15s ease;
-        }
-
-        .vilgain-nudge-btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .vilgain-nudge-btn svg {
-            width: 12px;
-            height: 12px;
-            fill: currentColor;
-        }
-
-        .steps-ol {
-            padding-left: 20px;
-            font-size: 0.88rem;
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        .steps-ol li {
-            margin-bottom: 8px;
-            padding-left: 4px;
-        }
-
-        .booster-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--primary);
-            padding: 14px 16px;
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-            margin-top: 16px;
-        }
-
-        .booster-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            font-size: 0.88rem;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-
-        .booster-header svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        .booster-text {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            line-height: 1.5;
-        }
-
-        .booster-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            color: var(--primary);
-            font-weight: 700;
-            text-decoration: underline;
-        }
-
-        .disclaimer-text {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 16px;
-            line-height: 1.4;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <header>
-        <h1 class="brand-title">daleday</h1>
-        <p class="brand-subtitle">Tudatos táplálkozás a ciklusod és a kamrád ritmusában.</p>
-    </header>
-
-    <!-- MODULVÁLASZTÓ SWITCH -->
-    <div class="module-switch-container">
-        <button class="tab-btn active" id="tab-kamra" onclick="switchModule('kamra')">
-            <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
-            Kamra - Mi van otthon?
-        </button>
-        <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 4a8 8 0 0 0 0 16 8 8 0 0 0 0-16z" opacity="0.3"/></svg>
-            Ciklusszinkron
-        </button>
-    </div>
-
-    <!-- CIKLUSSZINKRON MODUL -->
-    <div id="module-cycle" class="hidden">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
-                </div>
-                <div>
-                    <div class="card-title">Ciklus-Kalkulátor</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Becsült táplálkozási fázisod kiszámítása</div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <label class="input-label">Utolsó menstruáció első napja</label>
-                    <input type="date" id="last-period-date" class="custom-input" onchange="calculateCycle()">
-                </div>
-                <div class="input-wrapper">
-                    <label class="input-label">Átlagos ciklushossz (nap)</label>
-                    <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" onchange="calculateCycle()">
-                </div>
-            </div>
-
-            <div class="cycle-visualizer">
-                <div class="cycle-ring-container">
-                    <svg class="cycle-ring-svg" viewBox="0 0 160 160">
-                        <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
-                        <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
-                    </svg>
-                    <div class="cycle-ring-text">
-                        <div class="day-counter" id="cycle-day-text">18.</div>
-                        <div class="day-label">napja</div>
-                    </div>
-                </div>
-                <div class="phase-badge-container">
-                    <div class="phase-badge">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
-                        <span id="phase-name-text">Luteális fázis</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FÁZIS-ALAPÚ ALAPANYAG-AJÁNLÓ KÁRTYA -->
-            <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
-                <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">
-                    Tápanyagdús alapanyag-ötletek a fázisodhoz:
-                </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
-                    Kattints rájuk, ha kifejezetten ezekre épülő receptet szeretnél:
-                </div>
-                <div class="pantry-tags-container" id="cycle-superfood-tags"></div>
-            </div>
-
-            <div class="disclaimer-text">
-                Tájékoztatás: A daleday egy életmód- és táplálkozási inspirációs felület. A megjelenített információk nem minősülnek orvosi diagnózisnak.
-            </div>
-        </div>
-
-        <div class="card" id="cycle-recipe-card"></div>
-    </div>
-
-    <!-- KAMRA MODUL -->
-    <div id="module-kamra">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5zm-12.12-20c-.28 0-.5.22-.5.5v17c0 .28.22.5.5.5h12.12c.28 0 .5-.22.5-.5v-17c0-.28-.22-.5-.5-.5h-12.12z"/><path d="M8 6h8v2h-8zm0 4h8v2h-8z"/></svg>
-                </div>
-                <div>
-                    <div class="card-title">Mi van a kamrádban?</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);">Keress és válassz alapanyagokat a szűréshez</div>
-                </div>
-            </div>
-
-            <!-- Autocomplete Field -->
-            <div class="input-wrapper">
-                <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
-                <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
-            </div>
-
-            <!-- Kijelölt Tagek -->
-            <div class="pantry-tags-container" id="pantry-tags"></div>
-        </div>
-
-        <div class="card" id="pantry-recipe-card"></div>
-    </div>
+            grid-template-columns: 1fr;
+            border-radius: 20px;
+        }
+    }
+
+    .tab-btn {
+        background: transparent;
+        border: none;
+        padding: 10px 12px;
+        border-radius: 100px;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        text-align: center;
+    }
+
+    .tab-btn svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+        flex-shrink: 0;
+    }
+
+    .tab-btn.active {
+        background: var(--bg-card);
+        color: var(--primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* ==========================================================================
+       4. CARDS & UI COMPONENTS
+       ========================================================================== */
+    .card {
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-soft);
+        margin-bottom: 24px;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .card-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--primary-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        flex-shrink: 0;
+    }
+
+    .card-icon svg {
+        width: 22px;
+        height: 22px;
+        fill: currentColor;
+    }
+
+    .card-title {
+        font-family: var(--font-heading);
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        line-height: 1.2;
+    }
+
+    .form-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 480px) {
+        .form-group { grid-template-columns: 1fr; }
+    }
+
+    .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        position: relative;
+    }
+
+    .input-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        background: var(--bg-main);
+        color: var(--text-main);
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        outline: none;
+        height: 46px;
+    }
+
+    .custom-input:focus {
+        border-color: var(--primary);
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        color: #FFFFFF;
+        border: none;
+        padding: 12px 20px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-primary:hover {
+        opacity: 0.92;
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        background: var(--bg-card-alt);
+        color: var(--text-heading);
+        border: 1px solid var(--border-color);
+        padding: 10px 16px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+
+    /* ==========================================================================
+       5. CLEAN SWAP SPECIFIC STYLES
+       ========================================================================== */
+    .demo-buttons-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px dashed var(--border-color);
+    }
+
+    .demo-btn {
+        background: var(--bg-card-alt);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        padding: 6px 12px;
+        border-radius: 100px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .demo-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    #scanner-container {
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: #000;
+        margin-top: 16px;
+    }
+
+    .score-box {
+        padding: 20px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        background: var(--bg-recipe-box);
+        margin-bottom: 20px;
+    }
+
+    .score-badge-circle {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.4rem;
+        color: #FFF;
+    }
+
+    .score-high { background: #2E7D32; }
+    .score-mid { background: #F57F17; }
+    .score-low { background: #C62828; }
+
+    /* ==========================================================================
+       6. CYCLE VISUALIZER & TAGS
+       ========================================================================== */
+    .cycle-visualizer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 0;
+        margin-bottom: 20px;
+        background: var(--bg-card-alt);
+        border-radius: var(--radius-md);
+    }
+
+    .cycle-ring-container {
+        position: relative;
+        width: 170px;
+        height: 170px;
+    }
+
+    .cycle-ring-svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    .cycle-ring-bg {
+        fill: none;
+        stroke: var(--border-color);
+        stroke-width: 12;
+    }
+
+    .cycle-ring-progress {
+        fill: none;
+        stroke: var(--primary);
+        stroke-width: 12;
+        stroke-linecap: round;
+        stroke-dasharray: 440;
+        stroke-dashoffset: 440;
+        transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .cycle-ring-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .day-counter {
+        font-family: var(--font-heading);
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+    }
+
+    .day-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .phase-badge-container {
+        margin-top: 12px;
+        text-align: center;
+    }
+
+    .phase-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        background: var(--primary-light);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 700;
+        border-radius: 100px;
+    }
+
+    .phase-badge svg {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+    }
+
+    .autocomplete-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-hover);
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+        margin-top: 4px;
+    }
+
+    .autocomplete-item {
+        padding: 10px 14px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        border-bottom: 1px solid var(--bg-card-alt);
+    }
+
+    .autocomplete-item:last-child { border-bottom: none; }
+    .autocomplete-item:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+
+    .pantry-tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .pantry-tag {
+        background: var(--bg-card-alt);
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+        padding: 6px 12px;
+        border-radius: 100px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .pantry-tag.active {
+        background: var(--primary);
+        color: #FFFFFF;
+        border-color: var(--primary);
+    }
+
+    .pantry-tag .remove-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    .pantry-tag .remove-btn:hover { background: rgba(255, 255, 255, 0.4); }
+    .pantry-tag .remove-btn svg { width: 10px; height: 10px; fill: currentColor; }
+
+    /* ==========================================================================
+       7. RECEPT DOBOZ DESIGN & JELVÉNYEK (.recipe-card-box)
+       ========================================================================== */
+    .recipe-card-box {
+        background: var(--bg-recipe-box);
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: var(--shadow-card);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .recipe-card-box:last-child { margin-bottom: 0; }
+    .recipe-card-box:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .recipe-header-group { margin-bottom: 12px; }
+
+    .recipe-badge-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    .recipe-badge {
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        background: var(--primary-light);
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .recipe-name {
+        font-family: var(--font-heading);
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+
+    .recipe-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+    .recipe-meta-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        padding: 10px 14px;
+        background: var(--bg-card);
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+        margin-bottom: 18px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .meta-item svg {
+        width: 14px;
+        height: 14px;
+        fill: var(--primary);
+    }
+
+    .recipe-section {
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .section-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .section-title svg {
+        width: 16px;
+        height: 16px;
+        fill: var(--primary);
+    }
+
+    .ingredients-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .ingredient-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px dashed var(--border-color);
+        font-size: 0.88rem;
+    }
+
+    .ingredient-item:last-child { border-bottom: none; }
+
+    .ingredient-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--border-color);
+        flex-shrink: 0;
+    }
+
+    .status-dot.has { background: var(--primary); }
+    .status-dot.missing { background: var(--accent-vilgain); }
+
+    .vilgain-nudge-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--accent-vilgain-bg);
+        color: var(--accent-vilgain);
+        border: 1px solid var(--accent-vilgain-border);
+        padding: 4px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+        transition: transform 0.15s ease;
+    }
+
+    .vilgain-nudge-btn:hover { transform: translateY(-1px); }
+
+    .steps-ol {
+        padding-left: 20px;
+        font-size: 0.88rem;
+        color: var(--text-main);
+        line-height: 1.6;
+    }
+
+    .steps-ol li {
+        margin-bottom: 8px;
+        padding-left: 4px;
+    }
+
+    .booster-box {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary);
+        padding: 14px 16px;
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        margin-top: 16px;
+    }
+
+    .booster-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        color: var(--primary);
+        margin-bottom: 4px;
+    }
+
+    .booster-header svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+    }
+
+    .booster-text {
+        font-size: 0.85rem;
+        color: var(--text-main);
+        line-height: 1.5;
+    }
+
+    .disclaimer-text {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-align: center;
+        margin-top: 16px;
+        line-height: 1.4;
+    }
+
+    .hidden { display: none !important; }
+</style>
+
+
+<!-- MODULVÁLASZTÓ SWITCH (3 TAB) -->
+<div class="module-switch-container">
+    <button class="tab-btn active" id="tab-cleanswap" onclick="switchModule('cleanswap')">
+        <svg viewBox="0 0 24 24"><path d="M2 6h2v12H2zm3 0h1v12H5zm2 0h3v12H7zm4 0h1v12h-1zm3 0h2v12h-2zm3 0h1v12h-1zm2 0h3v12h-3z"/></svg>
+        Clean Swap Detektor
+    </button>
+    <button class="tab-btn" id="tab-kamra" onclick="switchModule('kamra')">
+        <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7zm-4 5c-1.5 2-3 3-3 5.5 0 1.9 1.1 3.5 2.5 3.5 1.5 0 2.5-1.6 2.5-3.5 0-2.5-1-3.5-2-5.5zm8 0c-1 2-2 3-2 5.5 0 1.9 1.1 3.5 2.5 3.5 1.4 0 2.5-1.6 2.5-3.5 0-2.5-1.5-3.5-3-5.5zM12 14v7"/></svg>
+        Kamra Asszisztens
+    </button>
+    <button class="tab-btn" id="tab-cycle" onclick="switchModule('cycle')">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/></svg>
+        Ciklusszinkron
+    </button>
 </div>
 
-<script>
-    /* ==========================================
-       1. DATA STRUCTURES (60 Ingredients & Extended Recipes)
-       ========================================== */
-    const ALL_PANTRY_INGREDIENTS = [
-        // Zöldségek, gombák, fűszerek
-        { id: "burgonya", name: "Burgonya" },
-        { id: "voroshagymak", name: "Vöröshagyma" },
-        { id: "lilahagyma", name: "Lilahagyma" },
-        { id: "fokhagymak", name: "Fokhagyma" },
-        { id: "sargarepa", name: "Sárgarépa" },
-        { id: "petrezselyemgyoker", name: "Petrezselyemgyökér" },
-        { id: "porehagyma", name: "Póréhagyma" },
-        { id: "ujhagyma", name: "Újhagyma" },
-        { id: "paradicsom", name: "Paradicsom" },
-        { id: "tv_paprika", name: "Tölteni való paprika (TV)" },
-        { id: "kigyouborka", name: "Kígyóuborka" },
-        { id: "cukkini", name: "Cukkini" },
-        { id: "brokkoli", name: "Brokkoli" },
-        { id: "csiperkegomba", name: "Csiperkegomba" },
-        { id: "spenot", name: "Spenót" },
-        { id: "edesburgonya", name: "Édesburgonya" },
-        { id: "avokado", name: "Avokádó" },
-        { id: "cekla", name: "Cékla" },
-        
-        // Gabonafélék, szárazáruk
-        { id: "buzaliszt", name: "Búzaliszt" },
-        { id: "zabpehely", name: "Zabpehely" },
-        { id: "rizs", name: "Rizs" },
-        { id: "szarazteszta", name: "Száraztészta" },
-        { id: "kenyér", name: "Kenyér" },
-        { id: "zsemle_kifli", name: "Zsemle / Kifli" },
-        { id: "zsemlemorzsak", name: "Zsemlemorzsa" },
-        { id: "buzadara", name: "Búzadara" },
-        { id: "kukoricadara", name: "Kukoricadara" },
-        { id: "kukoricakemenyito", name: "Kukoricakeményítő" },
-        { id: "zabpehelyliszt", name: "Zabpehelyliszt" },
-        { id: "kuszkusz", name: "Kuszkusz" },
-        { id: "quinoa", name: "Quinoa" },
-        
-        // Tejtermékek, tojás
-        { id: "tojas", name: "Tojás" },
-        { id: "tej", name: "Tej" },
-        { id: "tejfol", name: "Tejföl" },
-        { id: "trappista_sajt", name: "Trappista sajt" },
-        { id: "turo", name: "Túró" },
-        { id: "vaj", name: "Vaj" },
-        { id: "gorog_joghurt", name: "Görög joghurt" },
-        { id: "kefir", name: "Kefir" },
-        { id: "habtejszin", name: "Habtejszín" },
-        { id: "fozotejszin", name: "Főzőtejszín" },
-        { id: "mozzarella", name: "Mozzarella" },
-        { id: "novényi_tej", name: "Növényi tej" },
-        { id: "mascarpone", name: "Mascarpone" },
-        
-        // Húsok, halak
-        { id: "csirkemell", name: "Csirkemell" },
-        { id: "csirkecomb", name: "Csirkecomb" },
-        { id: "daralt_serteshus", name: "Darált sertéshús" },
-        { id: "sertestarja", name: "Sertéstarja / Sertéskaraj" },
-        { id: "bacon_szalonna", name: "Bacon / Szalonna" },
-        { id: "gepsonka", name: "Gépsonka / Pulykamellsonka" },
-        { id: "kolbasz", name: "Kolbász" },
-        { id: "virsli", name: "Virsli" },
-        { id: "tonhalkonzerv", name: "Tonhalkonzerv" },
-        { id: "lazacfile", name: "Lazacfilé" },
-
-        // Hűtött, konzervek, hüvelyesek
-        { id: "leveles_teszta", name: "Leveles tészta" },
-        { id: "csemegekukorica", name: "Csemegekukorica (konzerv)" },
-        { id: "suritett_paradicsom", name: "Sűrített paradicsom / Passata" },
-        { id: "csemegeuborka", name: "Csemegeuborka" },
-        { id: "szarazbab", name: "Szárazbab / Fehérbab (konzerv)" },
-        { id: "vorosbab", name: "Vörösbab (konzerv)" },
-        { id: "lencse", name: "Lencse" },
-        { id: "csicseriborso", name: "Csicseriborsó (konzerv)" },
-        { id: "savanyukaposzta", name: "Savanyú káposzta" },
-
-        // Vilgain speciálisok & Superfoodok
-        { id: "mogyorovaj", name: "Mogyoróvaj" },
-        { id: "feherje", name: "Fehérjepor" },
-        { id: "chia", name: "Chia mag" },
-        { id: "kakao", name: "Kakaópor" },
-        { id: "tokmag", name: "Tökmag" },
-        { id: "etcsoki", name: "Étcsokoládé" }
-    ];
-
-    const PHASE_SUPERFOODS = {
-        menstrual: ["edesburgonya", "lencse", "cekla", "spenot", "zabpehely"],
-        follicular: ["rizs", "csirkemell", "spenot", "novényi_tej", "gorog_joghurt", "avokado"],
-        ovulatory: ["lazacfile", "rizs", "csicseriborso", "avokado", "tokmag"],
-        luteal: ["edesburgonya", "rizs", "mogyorovaj", "zabpehely", "etcsoki"]
-    };
-
-    const CYCLE_RECIPES = {
-        menstrual: [
-            {
-                id: "c_m1",
-                title: "Szaftos Olasz Cannellini Babos Marharagu Rizzsel",
-                desc: "Melegítő, lassan felszívódó szénhidrátokban, vasban és rostokban dús tartalmas egytálétel spenóttal.",
-                badges: ["Magas Vas", "Komplex Szénhidrát", "Melegítő Étel"],
-                time: "25 perc",
-                difficulty: "Könnyű",
-                servings: "2 adag",
-                plantScore: 4,
-                superfoods: ["edesburgonya", "lencse", "spenot"],
-                ingredients: [
-                    { id: "daralt_serteshus", name: "200g Darált Marha/Sertéshús", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "szarazbab", name: "150g Vilgain BIO Cannellini Bab", isVilgain: true, link: "https://vilgain.hu/v/cannellini-bab", tag: "Vilgain Cannellini →" },
-                    { id: "rizs", name: "100g Basmati Rizs", isVilgain: true, link: "https://vilgain.hu/v/basmati-rizs", tag: "Vilgain Basmati →" },
-                    { id: "spenot", name: "2 marék friss Spenót", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "suritett_paradicsom", name: "150g Passata", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "A rizst kétszeres sós vízben párold puhára kb. 12 perc alatt.",
-                    "Serpenyőben pirítsd fehéredésig a darált húst, öntsd rá a passatát és fűszerezd fokhagymával, sóval, borssal.",
-                    "Főzd 10 percig, majd keverd bele a leöblített krémes fehér babot és a spenótot.",
-                    "Tálald a meleg basmati rizzsel."
-                ],
-                booster: "A fehér bab és a spenót növényi vasa segít pótolni a vérzés során elveszített ásványi anyagokat."
-            },
-            {
-                id: "c_m2",
-                title: "Krémes Tejszínes-Gombás Csirkeragu Tésztával & Brokkolival",
-                desc: "Szaftos, könnyen emészthető omlós csirkemell csíkok tejszínes gombamártásban, párolt brokkolival.",
-                badges: ["Fehérjedús", "Rostos", "UPF-Mentes"],
-                time: "20 perc",
-                difficulty: "Könnyű",
-                servings: "2 adag",
-                plantScore: 3,
-                superfoods: ["spenot", "lencse"],
-                ingredients: [
-                    { id: "csirkemell", name: "200g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "csiperkegomba", name: "150g Csiperkegomba", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "brokkoli", name: "150g Párolt Brokkoli", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "szarazteszta", name: "150g Vilgain Protein Tészta", isVilgain: true, link: "https://vilgain.hu/v/protein-pasta", tag: "Vilgain Tészta →" },
-                    { id: "fozotejszin", name: "100ml Főzőtejszín", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Főzd kifolyt tésztát al dente állagúra.",
-                    "A csíkozott csirkemellet és gombát pirítsd meg serpenyőben, fűszerezd, majd öntsd fel a főzőtejszínnel.",
-                    "Keverd hozzá a párolt brokkolirózsákat és forgasd össze a meleg tésztával."
-                ],
-                booster: "A brokkoli C-vitaminja és folsava támogatja a sejtek regenerálódását."
-            },
-            {
-                id: "c_m3",
-                title: "Vörösbabos Chili Con Carne Sült Édesburgonyával",
-                desc: "Fűszeres, sűrű paradicsomos darált hús vörösbabbal és kápia paprikával, sült édesburgonyával.",
-                badges: ["Hém-Vas Forrás", "Lassan Felszívódó", "Comfort Étel"],
-                time: "30 perc",
-                difficulty: "Közepes",
-                servings: "2 adag",
-                plantScore: 4,
-                superfoods: ["edesburgonya", "cekla"],
-                ingredients: [
-                    { id: "edesburgonya", name: "1 db Édesburgonya (hasábok)", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "daralt_serteshus", name: "200g Darált marha/sertés", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "vorosbab", name: "1/2 konzerv Vörösbab", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "tv_paprika", name: "1 db Paprika", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Az édesburgonyahasábokat süsd meg sütőben 200 fokon 20 perc alatt.",
-                    "Pirítsd meg a darált húst a kockázott paprikával, add hozzá a vörösbabot és a paradicsomszószt, majd főzd sűrűre.",
-                    "Tálald a meleg sült édesburgonyával."
-                ],
-                booster: "Az édesburgonya B6-vitaminja csökkenti a menstruáció környéki hangulatváltozásokat."
-            },
-            {
-                id: "c_m4",
-                title: "Fahéjas-Kakaós Krémes Zabkása Étcsokival",
-                desc: "Könnyen emészthető, melegítő tál a vérzés első napjaira, amely megnyugtatja a hasat.",
-                badges: ["Glükóz-Stabil", "Komfort Reggeli", "UPF-Mentes"],
-                time: "10 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["chia", "kakao", "zabpehely"],
-                ingredients: [
-                    { id: "zabpehely", name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
-                    { id: "kakao", name: "1 tk Bio Kakaópor", isVilgain: true, link: "https://vilgain.hu/v/bio-kakao", tag: "Vilgain Kakaó →" },
-                    { id: "chia", name: "1 ek Chia mag", isVilgain: true, link: "https://vilgain.hu/v/chia-seeds", tag: "Vilgain Chia →" },
-                    { id: "etcsoki", name: "15g Vilgain Étcsokoládé", isVilgain: true, link: "https://vilgain.hu/v/etcsoki", tag: "Vilgain Étcsoki →" }
-                ],
-                steps: [
-                    "Egy kis lábasban keverd össze a zabpelyhet, a chia magot és a bio kakaóport.",
-                    "Öntsd fel meleg növényi tejjel, majd alacsony lángon főzd 3-4 percig krémességig.",
-                    "Díszítsd a tetejét a ráolvadó étcsokival és fogyaszd melegen."
-                ],
-                booster: "A tiszta kakaó és étcsoki természetes magnéziumtartalma segít az izomgörcsök feloldásában."
-            },
-            {
-                id: "c_m5",
-                title: "Meleg Kakaós-Mogyoróvajas Chia Puding",
-                desc: "Szobahőmérsékletű, görcsoldó hatású krémes desszert Omega-3 zsírsavakkal.",
-                badges: ["Omega-3 Dús", "Görcsoldó", "Vegán"],
-                time: "10 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["chia", "kakao"],
-                ingredients: [
-                    { id: "chia", name: "2 ek Chia mag", isVilgain: true, link: "https://vilgain.hu/v/chia-seeds", tag: "Vilgain Chia →" },
-                    { id: "kakao", name: "1 tk Bio Kakaópor", isVilgain: true, link: "https://vilgain.hu/v/bio-kakao", tag: "Vilgain Kakaó →" },
-                    { id: "mogyorovaj", name: "1 ek 100% Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" }
-                ],
-                steps: [
-                    "Keverd el a chia magot a kakaóporral és mogyoróvajjal.",
-                    "Öntsd rá a meleg növényi tejet, keverd el, majd hagyd állni 15 percig sűrűsödésig."
-                ],
-                booster: "A chia mag gyulladáscsökkentő zsírsavai enyhítik a méhösszehúzódásokat."
-            }
-        ],
-
-        follicular: [
-            {
-                id: "c_f1",
-                title: "Mogyorószószos Teriyaki Csirkemell Barna Rizzsel & Cukkínivel",
-                desc: "Pikáns, szaftos teriyaki csirkemell krémes mogyorószószban, párolt cukkínivel és sárgarépával.",
-                badges: ["Komplett Fehérje", "Ösztrogén-Támogató", "Szaftos Ázsiai"],
-                time: "20 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 4,
-                superfoods: ["rizs", "csirkemell", "spenot"],
-                ingredients: [
-                    { id: "csirkemell", name: "150g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "rizs", name: "100g Basmati Rizs", isVilgain: true, link: "https://vilgain.hu/v/basmati-rizs", tag: "Vilgain Basmati →" },
-                    { id: "cukkini", name: "1/2 Cukkini (szeletelve)", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "sargarepa", name: "1 db Sárgarépa", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "mogyorovaj", name: "1 ek Vilgain Mogyoróvaj Por", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-por", tag: "Vilgain Magvaj Por →" }
-                ],
-                steps: [
-                    "Főzd meg a basmati rizst sós vízben.",
-                    "A csirkemellet és a cukkíni/sárgarépa karikákat hirtelen pirítsd meg serpenyőben.",
-                    "A mogyoróvaj porból kevés vízzel és szójaszósszal keverj selymes szószt, öntsd a húsra és tálald a rizzsel."
-                ],
-                booster: "A friss pirított zöldségek rostjai támogatják a felhalmozódó ösztrogén megfelelő ürülését."
-            },
-            {
-                id: "c_f2",
-                title: "Szaftos Pulykamell Tortilla Wrap Avokádóval & Friss Zöldségekkel",
-                desc: "Laktató és szaftos meleg tortilla tekercs omlós pulykamellel, krémes avokádóval és ropogós salátával.",
-                badges: ["Ösztrogén-Metabolizmus", "Egészséges Zsírok", "Szaftos Wrap"],
-                time: "12 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 4,
-                superfoods: ["spenot", "avokado"],
-                ingredients: [
-                    { id: "gepsonka", name: "150g Omlós Pulykamell", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "leveles_teszta", name: "1 db Vilgain BIO Tortilla", isVilgain: true, link: "https://vilgain.hu/v/tortilla", tag: "Vilgain Tortilla →" },
-                    { id: "avokado", name: "1/2 Avokádó", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "paradicsom", name: "1 db Paradicsom", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "A pulykamell csíkokat melegítsd át a serpenyőben.",
-                    "Pirítsd meg a tortilla lapot, kend meg áttört avokádóval, halmozd rá a pulykát, paradicsomot és tekerd fel."
-                ],
-                booster: "Az avokádó monotelítetlen zsírsavai támogatják a kiegyensúlyozott tüszőérést."
-            },
-            {
-                id: "c_f3",
-                title: "Olasz Pestós Csirke Mozzarellával, Rizzsel & Sült Paradicsommal",
-                desc: "Serpenyőben sült csirkemell friss zöld pestóval, ráolvasztott mozzarellával és meleg basmati rizzsel.",
-                badges: ["Gourmet", "Magas Fehérje", "Mediterrán"],
-                time: "18 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["rizs", "csirkemell"],
-                ingredients: [
-                    { id: "csirkemell", name: "150g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "mozzarella", name: "50g Mozzarella sajt", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "rizs", name: "80g Basmati Rizs", isVilgain: true, link: "https://vilgain.hu/v/basmati-rizs", tag: "Vilgain Basmati →" },
-                    { id: "paradicsom", name: "1 db Paradicsom", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Süsd meg a csirkemellet és a paradicsomkarikákat a serpenyőben.",
-                    "A hús tetejét kend meg zöld pestóval, tedd rá a mozzarellát, fedd le 2 percre míg ráolvad.",
-                    "Tálald a párolt basmati rizzsel."
-                ],
-                booster: "A paradicsom likopinja védelmezi a petefészkek sejtjeit az oxidatív stressztől."
-            },
-            {
-                id: "c_f4",
-                title: "Proteines Energiatál Matcha-val",
-                desc: "Frissítő, matcha teás görög joghurt zabpehellyel és ropogós magvakkal.",
-                badges: ["Glükóz-Stabil", "Antioxidáns", "UPF-Mentes"],
-                time: "8 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["feherje", "gorog_joghurt", "novényi_tej"],
-                ingredients: [
-                    { id: "zabpehely", name: "40g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
-                    { id: "feherje", name: "1 adag Tejsavófehérje", isVilgain: true, link: "https://vilgain.hu/v/grass-fed-whey", tag: "Vilgain Whey →" },
-                    { id: "gorog_joghurt", name: "150g Görög joghurt", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Keverd el a görög joghurtot a fehérjeporral és matcha teával.",
-                    "Szórd rá a zabpelyhet a stabil vércukorszintért."
-                ],
-                booster: "Támogasd a bőröd ragyogását <a class='booster-link' href='https://vilgain.hu/v/collagen' target='_blank' rel='noopener'>Vilgain Kollagénnel</a>!"
-            },
-            {
-                id: "c_f5",
-                title: "Zöld Fehérje Smoothie Bowl Zabbal",
-                desc: "Sűrű, kanalas smoothie tápanyagdús zöldségekkel és finomszemű zabbal.",
-                badges: ["Gyors Reggeli", "Rostbomba", "Kanalas Bowl"],
-                time: "6 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["feherje", "spenot", "novényi_tej"],
-                ingredients: [
-                    { id: "zabpehely", name: "30g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
-                    { id: "spenot", name: "1 marék Spenót", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "feherje", name: "1 adag Fehérjepor", isVilgain: true, link: "https://vilgain.hu/v/grass-fed-whey", tag: "Vilgain Whey →" }
-                ],
-                steps: [
-                    "Turmixold össze a spenótot, a fehérjeport és kevés növényi tejet.",
-                    "Öntsd tálba és keverd bele a zabpelyhet."
-                ],
-                booster: "A zöld leveles zöldségek klorofillja támogatja a sejtek megújulását."
-            }
-        ],
-
-        ovulatory: [
-            {
-                id: "c_o1",
-                title: "Sült Lazacfilé Citromos Rizzsel & Serpenyős Pirított Cukkínivel",
-                desc: "Komplett, prémium minőségű főétel magas Omega-3 tartalommal és lassan felszívódó szénhidrátokkal az ovulációs hormoncsúcsra.",
-                badges: ["Omega-3 Dús", "Tüszőrepedés-Támogató", "Szuper-Protein"],
-                time: "20 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["lazacfile", "rizs", "cukkini"],
-                ingredients: [
-                    { id: "lazacfile", name: "150g Lazacfilé", isVilgain: true, link: "https://vilgain.hu/v/lazac-file", tag: "Vilgain Lazac →" },
-                    { id: "rizs", name: "100g Basmati Rizs", isVilgain: true, link: "https://vilgain.hu/v/basmati-rizs", tag: "Vilgain Basmati →" },
-                    { id: "cukkini", name: "1/2 Cukkini", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Főzd meg a basmati rizst kétszeres sós vízben.",
-                    "A lazacfilét sózd, borsozd, majd a cukkíni szeletekkel együtt süsd serpenyőben oldalanként 3-4 percig puhára.",
-                    "Tálald a meleg rizzsel és citromkarikával."
-                ],
-                booster: "A lazac gyulladáscsökkentő zsírsavai támogatják az egészséges peteérést."
-            },
-            {
-                id: "c_o2",
-                title: "Spanyol Tonhalas-Cannellini Bab Saláta Lilahagymával & Rizzsel",
-                desc: "Lédús tonhaldarabok krémes fehér babbal, lila hagymával és meleg basmati rizzsel összeforgatva.",
-                badges: ["Cink-Booster", "Szaftos Saláta", "Rost & Fehérje"],
-                time: "12 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 4,
-                superfoods: ["csicseriborso", "tokmag", "rizs"],
-                ingredients: [
-                    { id: "tonhalkonzerv", name: "1 doboz Vilgain Tonhal", isVilgain: true, link: "https://vilgain.hu/v/tonhal-konzerv", tag: "Vilgain Tonhal →" },
-                    { id: "szarazbab", name: "1/2 doboz Cannellini Bab", isVilgain: true, link: "https://vilgain.hu/v/cannellini-bab", tag: "Vilgain Cannellini →" },
-                    { id: "rizs", name: "80g Basmati Rizs", isVilgain: true, link: "https://vilgain.hu/v/basmati-rizs", tag: "Vilgain Basmati →" },
-                    { id: "lilahagyma", name: "1/2 Lilahagyma", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "A rizst főzd meg sós vízben.",
-                    "Forgasd össze a leszűrt tonhalat, a krémes fehér babot és a finomra vágott lilahagymát a meleg rizzsel.",
-                    "Locsold meg extra szűz olívaolajjal és citromlével."
-                ],
-                booster: "A fehér bab és a tonhal kombinációja természetes cinkforrás."
-            },
-            {
-                id: "c_o3",
-                title: "Serpenyős Fűszeres Pulykacsíkok Tökmagos Kuszkusszal & Brokkolival",
-                desc: "Szaftos pulykamell csíkok párolt brokkolival és pirított tökmaggal szórt gőzölgő kuszkusz ágyon.",
-                badges: ["Cink-Dús", "Szaftos Ebéd", "Seed Cycling"],
-                time: "15 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["cukkini", "csicseriborso", "tokmag"],
-                ingredients: [
-                    { id: "gepsonka", name: "150g Pulykamell csíkok", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "kuszkusz", name: "80g Vilgain BIO Kuszkusz", isVilgain: true, link: "https://vilgain.hu/v/kuszkusz", tag: "Vilgain Kuszkusz →" },
-                    { id: "tokmag", name: "1 ek Bio Tökmag", isVilgain: true, link: "https://vilgain.hu/v/tokmag", tag: "Vilgain Tökmag →" },
-                    { id: "brokkoli", name: "150g Brokkoli", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Öntsd le a kuszkuszt kétszeres forró sós vízzel, fedd le 5 percre.",
-                    "A pulykacsíkokat és a brokkolirózsákat pirítsd meg serpenyőben.",
-                    "Keverd hozzá a kuszkuszhoz a pirított tökmaggal együtt."
-                ],
-                booster: "A tökmag magas cinktartalma elengedhetetlen a megfelelő peteéréshez."
-            },
-            {
-                id: "c_o4",
-                title: "Mézes-Mustáros Lazac Quinoa Ágyon & Bébispenóttal",
-                desc: "Omlós mézes-mustáros pácolt lazac puha quinoával és zsenge bébispenóttal.",
-                badges: ["Omega-3", "Gourmet", "Glükóz-Stabil"],
-                time: "18 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["avokado", "csicseriborso", "lazacfile"],
-                ingredients: [
-                    { id: "lazacfile", name: "150g Lazacfilé", isVilgain: true, link: "https://vilgain.hu/v/lazac-file", tag: "Vilgain Lazac →" },
-                    { id: "quinoa", name: "80g Bio Quinoa", isVilgain: true, link: "https://vilgain.hu/v/quinoa", tag: "Vilgain Quinoa →" },
-                    { id: "spenot", name: "1 marék Bébispenót", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "A quinoát főzd meg sós vízben 12 perc alatt.",
-                    "A lazacfilét kend meg mézes mustárral, süsd meg serpenyőben, és tálald a spenótos quinoával."
-                ],
-                booster: "Az Omega-3 zsírsavak támogatják az érett tüsző egészséges megrepedését."
-            },
-            {
-                id: "c_o5",
-                title: "Avokádós Zab-Bowl Tökmaggal & Sárgarépa Hasábokkal",
-                desc: "Rostban és telítetlen zsírsavakban gazdag tápláló sós-édes reggeli bowl.",
-                badges: ["Cink-Forrás", "Tápanyagdús", "UPF-Mentes"],
-                time: "10 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 4,
-                superfoods: ["tokmag", "avokado", "rizs"],
-                ingredients: [
-                    { id: "zabpehely", name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
-                    { id: "tokmag", name: "1 ek Bio Tökmag", isVilgain: true, link: "https://vilgain.hu/v/tokmag", tag: "Vilgain Tökmag →" },
-                    { id: "avokado", name: "1/2 Avokádó (szeletelve)", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Öntsd le a zabot forró vízzel, hagyd állni 3 percig.",
-                    "Tálald szeletelt avokádóval és pirított tökmaggal."
-                ],
-                booster: "A tökmag cinktartalma támogatja az elhúzódó energiaszintet."
-            }
-        ],
-
-        luteal: [
-            {
-                id: "c_l1",
-                title: "Mogyorószószos Sült Édesburgonyás Csirke Brokkolival",
-                desc: "Sütőben sült fűszeres édesburgonya cikkek pörkölt csirkemellel és bőséges krémes sós mogyorószásszal.",
-                badges: ["PMS-Nyugtató", "Lassan Felszívódó", "B6-Vitamin"],
-                time: "25 perc",
-                difficulty: "Közepes",
-                servings: "2 adag",
-                plantScore: 3,
-                superfoods: ["edesburgonya", "mogyorovaj"],
-                ingredients: [
-                    { id: "edesburgonya", name: "1 nagy Édesburgonya", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "csirkemell", name: "200g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "brokkoli", name: "150g Párolt Brokkoli", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "mogyorovaj", name: "2 ek Vilgain Mogyoróvaj Por", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-por", tag: "Vilgain Magvaj Por →" }
-                ],
-                steps: [
-                    "Az édesburgonyát kockázd fel és süsd meg sütőben 200 fokon 20 perc alatt.",
-                    "A csirkemellet pirítsd meg serpenyőben.",
-                    "A mogyoróvaj porból kevés vízzel és sóval keverj krémes szószt, öntsd a meleg édesburgonyára, brokkolira és csirkére."
-                ],
-                booster: "Az édesburgonya B6-vitaminja hozzájárul a szerotonin képződéséhez, ami csökkenti a PMS alatti szorongást."
-            },
-            {
-                id: "c_l2",
-                title: "Baconbe Tekert Csirkemell Édesburgonyapürével & Párolt Sárgarépával",
-                desc: "Ropogós és szaftos szárnyas krémes, édeskés burgonyapürével a premenstruációs napok komfortjáért.",
-                badges: ["Komfort Ebéd", "Magas Fehérje", "B6-Vitamin"],
-                time: "25 perc",
-                difficulty: "Könnyű",
-                servings: "2 adag",
-                plantScore: 3,
-                superfoods: ["edesburgonya", "mogyorovaj", "rizs"],
-                ingredients: [
-                    { id: "csirkemell", name: "200g Csirkemell filé", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "bacon_szalonna", name: "4 szelet Bacon", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "edesburgonya", name: "1 db Édesburgonya", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "sargarepa", name: "1 db Sárgarépa", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "A csirkemellet tekerd baconbe és süsd meg serpenyőben pirosra.",
-                    "Főzd meg az édesburgonyát és a sárgarépát, majd törd össze krémes pürévé vajjal és sóval.",
-                    "Tálald a szaftos csirkével."
-                ],
-                booster: "A komplex szénhidrátok kiegyensúlyozzák a luteális fázis magasabb kalóriaigényét."
-            },
-            {
-                id: "c_l3",
-                title: "Tonhallal, Kukoricával és Sajttal Töltött Sült Édesburgonya",
-                desc: "Laktató, sós-édes tepsis vacsora magas nátrium- és B-vitamin tartalommal.",
-                badges: ["Tepsis Vacsora", "B-Vitamin", "Magas Fehérje"],
-                time: "30 perc",
-                difficulty: "Közepes",
-                servings: "2 adag",
-                plantScore: 3,
-                superfoods: ["edesburgonya", "rizs"],
-                ingredients: [
-                    { id: "edesburgonya", name: "1 nagy Édesburgonya", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "tonhalkonzerv", name: "1 doboz Vilgain Tonhal", isVilgain: true, link: "https://vilgain.hu/v/tonhal-konzerv", tag: "Vilgain Tonhal →" },
-                    { id: "csemegekukorica", name: "3 ek Csemegekukorica", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "trappista_sajt", name: "50g Reszelt Sajt", isVilgain: false, tag: "Otthoni alapanyag" }
-                ],
-                steps: [
-                    "Süsd meg az édesburgonyát egészben 200 fokon puhára.",
-                    "Vágd félbe, kikapart belsejét keverd össze a tonhallal és kukoricával, majd kanalazd vissza, szórd meg sajttal és süsd még 5 percig."
-                ],
-                booster: "A B-vitaminok és a B6-vitamin együttesen támogatják a nyugodt alvást."
-            },
-            {
-                id: "c_l4",
-                title: "Krémes Mogyoróvajas Zabkása Étcsokival",
-                desc: "Tápláló meleg reggeli lassan felszívódó szénhidrátokkal a luteális fázisra.",
-                badges: ["Glükóz-Stabil", "Magnézium-Forrás", "UPF-Mentes"],
-                time: "12 perc",
-                difficulty: "Könnyű",
-                servings: "1 adag",
-                plantScore: 3,
-                superfoods: ["mogyorovaj", "zabpehely", "etcsoki"],
-                ingredients: [
-                    { id: "zabpehely", name: "50g Finomszemű Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
-                    { id: "mogyorovaj", name: "1 ek 100% Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" },
-                    { id: "feherje", name: "1 adag Tejsavófehérje", isVilgain: true, link: "https://vilgain.hu/v/grass-fed-whey", tag: "Vilgain Whey →" }
-                ],
-                steps: [
-                    "A zabpelyhet forrázd le 1.5 dl meleg vízzel vagy tejjel, és hagyd állni 3 percig.",
-                    "Keverd hozzá a fehérjeport és a mogyoróvajat."
-                ],
-                booster: "Próbáld ki a <a class='booster-link' href='https://vilgain.hu/v/magnesium-chelate' target='_blank' rel='noopener'>Vilgain Magnesium Chelate-et</a> az izomgörcsök megelőzésére!"
-            },
-            {
-                id: "c_l5",
-                title: "Sült Édesburgonya Étcsoki Krémmel",
-                desc: "Lassan felszívódó szénhidrátok és értékes B6-vitamin az esti édességvágy kiváltására.",
-                badges: ["Lassan Felszívódó", "B6-Vitamin", "UPF-Mentes"],
-                time: "25 perc",
-                difficulty: "Közepes",
-                servings: "2 adag",
-                plantScore: 3,
-                superfoods: ["edesburgonya", "etcsoki", "mogyorovaj"],
-                ingredients: [
-                    { id: "edesburgonya", name: "1 közepes Édesburgonya", isVilgain: false, tag: "Otthoni alapanyag" },
-                    { id: "etcsoki", name: "30g Étcsokoládé (min. 75%)", isVilgain: true, link: "https://vilgain.hu/v/etcsoki", tag: "Vilgain Étcsoki →" },
-                    { id: "mogyorovaj", name: "1 ek Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" }
-                ],
-                steps: [
-                    "Süsd meg az édesburgonyát sütőben 200 fokon kb. 20 perc alatt.",
-                    "Vágd félbe, és csurgasd rá az olvasztott étcsokoládét és a mogyoróvajat."
-                ],
-                booster: "Az édesburgonya B6-vitaminja hozzájárul az idegrendszer normál működéséhez."
-            },
-            {
-                id: "c_l6",
-                title: "Mogyoróvajas Étcsokis Zabgolyók",
-                desc: "Sütés nélküli, előre elkészíthető snack az esti nassolások kiváltására.",
-                badges: ["Sütés-Mentes", "Snack-Prep", "Magnézium-Dús"],
-                time: "10 perc",
-                difficulty: "Könnyű",
-                servings: "2 adag",
-                plantScore: 3,
-                superfoods: ["zabpehely", "mogyorovaj", "etcsoki"],
-                ingredients: [
-                    { id: "zabpehely", name: "60g Zabpehely", isVilgain: true, link: "https://vilgain.hu/v/minute-oats", tag: "Vilgain Zab →" },
-                    { id: "mogyorovaj", name: "2 ek Mogyoróvaj", isVilgain: true, link: "https://vilgain.hu/v/mogyorovaj-100", tag: "Vilgain Magvaj →" },
-                    { id: "etcsoki", name: "20g Étcsokoládé", isVilgain: true, link: "https://vilgain.hu/v/etcsoki", tag: "Vilgain Étcsoki →" }
-                ],
-                steps: [
-                    "Dolgozd össze a zabpelyhet, a mogyoróvajat és az aprított étcsokit egy tálban.",
-                    "Formázz belőle kis golyókat és pihentesd hűtőben 10 percig."
-                ],
-                booster: "Kiváló hordozható nassolnivaló, ami stabilan tartja a vércukorszintet."
-            }
-        ]
-    };
-
-    const PANTRY_RECIPES = [
-        {
-            title: "Szaftos Pirított Csirkemell Basmati Rizzsel & Sárgarépával",
-            desc: "Klasszikus, letisztult fehérjedús főétel zöldségekkel és tiszta basmati rizzsel.",
-            badges: ["Glükóz-Stabil", "Magas Fehérje"],
-            time: "25 perc",
-            difficulty: "Könnyű",
-            servings: "2 adag",
-            plantScore: 3,
-            requiredIngredients: ["csirkemell", "rizs", "sargarepa", "fokhagymak"],
-            ingredientsDetail: [
-                { id: "csirkemell", name: "200g Csirkemell filé", isVilgainHero: false },
-                { id: "rizs", name: "100g Basmati Rizs", isVilgainHero: true, link: "https://vilgain.hu/v/basmati-rizs" },
-                { id: "sargarepa", name: "1 db Sárgarépa", isVilgainHero: false },
-                { id: "fokhagymak", name: "1 gerezd Fokhagyma", isVilgainHero: false }
-            ],
-            steps: [
-                "A rizst kétszeres sós vízben párold puhára kb. 12-15 perc alatt.",
-                "A csirkemellet kockázd fel, fűszerezd, majd pirítsd meg serpenyőben.",
-                "Add hozzá a reszelt sárgarépát és a fokhagymát, majd süsd még 3-4 percig."
-            ]
-        },
-        {
-            title: "Magyaros Paprikás Krumpli Kolbásszal, Szalonnával & Csemegeuborkával",
-            desc: "Laktató, hagyományos egytálétel füstölt kolbásszal és savanyúsággal.",
-            badges: ["Hagyományos", "Laktató"],
-            time: "35 perc",
-            difficulty: "Könnyű",
-            servings: "3 adag",
-            plantScore: 2,
-            requiredIngredients: ["burgonya", "voroshagymak", "kolbasz", "bacon_szalonna"],
-            ingredientsDetail: [
-                { id: "burgonya", name: "500g Burgonya", isVilgainHero: false },
-                { id: "voroshagymak", name: "1 fej Vöröshagyma", isVilgainHero: false },
-                { id: "kolbasz", name: "100g Kolbász", isVilgainHero: false },
-                { id: "bacon_szalonna", name: "50g Szalonna", isVilgainHero: false }
-            ],
-            steps: [
-                "Pirítsd ki a szalonnát és a hagymát, szórj rá fűszerpaprikát.",
-                "Keverd hozzá a felkockázott burgonyát és karikázott kolbászt.",
-                "Öntsd fel annyi vízzel ami ellepi, és főzd puhára 20 perc alatt."
-            ]
-        },
-        {
-            title: "Tejszínes-Gombás Tészta Csirkével & Brokkolival",
-            desc: "Selymes, gyors olaszos tésztaétel friss csiperkével és párolt brokkolival.",
-            badges: ["Olasz-Style", "UPF-Mentes"],
-            time: "15 perc",
-            difficulty: "Könnyű",
-            servings: "2 adag",
-            plantScore: 2,
-            requiredIngredients: ["szarazteszta", "csiperkegomba", "fozotejszin", "fokhagymak"],
-            ingredientsDetail: [
-                { id: "szarazteszta", name: "200g Száraztészta", isVilgainHero: true, link: "https://vilgain.hu/v/protein-pasta" },
-                { id: "csiperkegomba", name: "150g Csiperkegomba", isVilgainHero: false },
-                { id: "fozotejszin", name: "150ml Főzőtejszín", isVilgainHero: false },
-                { id: "fokhagymak", name: "2 gerezd Fokhagyma", isVilgainHero: false }
-            ],
-            steps: [
-                "Főzd kifolyt tésztát sós vízben al dente állagúra.",
-                "Pirítsd meg a gombát és fokhagymát kevés zsiradékon.",
-                "Öntsd fel a főzőtejszínnel, majd forgasd bele a leszűrt tésztát."
-            ]
-        },
-        {
-            title: "Krémes Mogyoróvajas Zabkása",
-            desc: "Proteindús meleg reggeli az energikus kezdéshez.",
-            badges: ["Glükóz-Stabil", "UPF-Mentes"],
-            time: "10 perc",
-            difficulty: "Könnyű",
-            servings: "1 adag",
-            plantScore: 2,
-            requiredIngredients: ["zabpehely", "mogyorovaj", "feherje", "tej"],
-            ingredientsDetail: [
-                { id: "zabpehely", name: "50g Zabpehely", isVilgainHero: true, link: "https://vilgain.hu/v/minute-oats" },
-                { id: "mogyorovaj", name: "1 ek Mogyoróvaj", isVilgainHero: true, link: "https://vilgain.hu/v/mogyorovaj-100" },
-                { id: "feherje", name: "1 adag Fehérjepor", isVilgainHero: true, link: "https://vilgain.hu/v/grass-fed-whey" },
-                { id: "tej", name: "150ml Tej", isVilgainHero: false }
-            ],
-            steps: [
-                "Forrázd le a zabot meleg tejjel.",
-                "Keverd bele a mogyoróvajat és a fehérjeport selymesre."
-            ]
-        }
-    ];
-
-    /* ==========================================
-       2. STATE MANAGEMENT
-       ========================================== */
-    let currentModule = "kamra";
-    let selectedPantryIngredients = [];
-    let currentPhaseKey = "luteal";
-    
-    // Ciklus fázis alapanyag csempéi kezdetben üresek
-    let selectedCycleSuperfoods = [];
-
-    /* ==========================================
-       3. HELPER FUNCTIONS
-       ========================================== */
-    function normalizeText(text) {
-        return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    }
-
-    /* ==========================================
-       4. AUTOCOMPLETE & PANTRY ENGINE
-       ========================================== */
-    function handlePantrySearch() {
-        const input = document.getElementById("pantry-search-input");
-        const dropdown = document.getElementById("pantry-autocomplete");
-        const query = normalizeText(input.value.trim());
-
-        if (query.length === 0) {
-            dropdown.classList.add("hidden");
-            dropdown.innerHTML = "";
-            return;
-        }
-
-        const matches = ALL_PANTRY_INGREDIENTS.filter(item => {
-            const isNotSelected = !selectedPantryIngredients.includes(item.id);
-            const matchesQuery = normalizeText(item.name).includes(query);
-            return isNotSelected && matchesQuery;
-        });
-
-        if (matches.length === 0) {
-            dropdown.classList.add("hidden");
-            dropdown.innerHTML = "";
-            return;
-        }
-
-        dropdown.innerHTML = matches.map(item => `
-            <div class="autocomplete-item" onclick="addPantryIngredient('${item.id}')">
-                ${item.name}
+<!-- 1. MODUL: CLEAN SWAP VONALKÓD & LONGEVITY ELEMZŐ -->
+<div id="module-cleanswap">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 5v4h2V7h2V5H3zm0 10h2v2h2v2H3v-4zm14 4h2v-2h2v4h-4v-2zm2-14h-2V5h-2V3h4v4zM7 9h10v6H7V9z"/></svg>
             </div>
-        `).join('');
-
-        dropdown.classList.remove("hidden");
-    }
-
-    function addPantryIngredient(id) {
-        if (!selectedPantryIngredients.includes(id)) {
-            selectedPantryIngredients.push(id);
-        }
-        document.getElementById("pantry-search-input").value = "";
-        document.getElementById("pantry-autocomplete").classList.add("hidden");
-        
-        renderPantryTags();
-        renderPantryRecipes();
-    }
-
-    function removePantryIngredient(id) {
-        selectedPantryIngredients = selectedPantryIngredients.filter(item => item !== id);
-        renderPantryTags();
-        renderPantryRecipes();
-    }
-
-    function renderPantryTags() {
-        const container = document.getElementById("pantry-tags");
-        container.innerHTML = selectedPantryIngredients.map(id => {
-            const item = ALL_PANTRY_INGREDIENTS.find(ing => ing.id === id);
-            if (!item) return '';
-            return `
-                <div class="pantry-tag active">
-                    <span>${item.name}</span>
-                    <div class="remove-btn" onclick="removePantryIngredient('${id}')">
-                        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function renderPantryRecipes() {
-        const container = document.getElementById("pantry-recipe-card");
-
-        if (selectedPantryIngredients.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
-                    Nincs kiválasztott alapanyag. Gépelj be elemeket a keresőbe a receptek megjelenítéséhez!
-                </div>
-            `;
-            return;
-        }
-
-        const scoredRecipes = PANTRY_RECIPES.map(recipe => {
-            const matchCount = recipe.requiredIngredients.filter(ing => selectedPantryIngredients.includes(ing)).length;
-            return { ...recipe, matchCount };
-        }).filter(recipe => recipe.matchCount > 0);
-
-        scoredRecipes.sort((a, b) => b.matchCount - a.matchCount);
-
-        if (scoredRecipes.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
-                    Nincs találat a kiválasztott alapanyagokra. Válassz más elemeket!
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = scoredRecipes.map(recipe => renderRecipeBoxHTML(recipe, false)).join('');
-    }
-
-    /* ==========================================
-       5. CIKLUSSZINKRON ENGINE & SUPERFOOD SYSTEM
-       ========================================== */
-    function toggleCycleSuperfood(id) {
-        if (selectedCycleSuperfoods.includes(id)) {
-            selectedCycleSuperfoods = selectedCycleSuperfoods.filter(item => item !== id);
-        } else {
-            selectedCycleSuperfoods.push(id);
-        }
-        renderCycleSuperfoodTags();
-        renderFilteredCycleRecipes();
-    }
-
-    function renderCycleSuperfoodTags() {
-        const container = document.getElementById("cycle-superfood-tags");
-        const availableSuperfoodIds = PHASE_SUPERFOODS[currentPhaseKey] || [];
-
-        container.innerHTML = availableSuperfoodIds.map(id => {
-            const item = ALL_PANTRY_INGREDIENTS.find(ing => ing.id === id);
-            if (!item) return '';
-            const isActive = selectedCycleSuperfoods.includes(id);
-            return `
-                <div class="pantry-tag ${isActive ? 'active' : 'inactive'}" onclick="toggleCycleSuperfood('${id}')">
-                    <span>${item.name}</span>
-                    <div class="toggle-btn">
-                        <svg viewBox="0 0 24 24"><path d="${isActive ? 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z' : 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'}"/></svg>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function calculateCycle() {
-        const dateInput = document.getElementById("last-period-date").value;
-        const cycleLength = parseInt(document.getElementById("cycle-length").value) || 28;
-
-        if (!dateInput) return;
-
-        const lastPeriod = new Date(dateInput);
-        const today = new Date();
-        
-        lastPeriod.setHours(0, 0, 0, 0);
-        today.setHours(0, 0, 0, 0);
-
-        const diffTime = today - lastPeriod;
-        let currentDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-        if (currentDay < 1) currentDay = 1;
-        if (currentDay > cycleLength) {
-            currentDay = ((currentDay - 1) % cycleLength) + 1;
-        }
-
-        document.getElementById("cycle-day-text").innerText = `${currentDay}.`;
-
-        const progressCircle = document.getElementById("cycle-progress");
-        const maxStroke = 440;
-        const offset = maxStroke - (currentDay / cycleLength) * maxStroke;
-        progressCircle.style.strokeDashoffset = offset;
-
-        let phaseName = "Luteális fázis";
-
-        if (currentDay >= 1 && currentDay <= 5) {
-            currentPhaseKey = "menstrual";
-            phaseName = "Menstruációs fázis";
-        } else if (currentDay >= 6 && currentDay <= 11) {
-            currentPhaseKey = "follicular";
-            phaseName = "Follikuláris fázis";
-        } else if (currentDay >= 12 && currentDay <= 16) {
-            currentPhaseKey = "ovulatory";
-            phaseName = "Ovulációs fázis";
-        } else {
-            currentPhaseKey = "luteal";
-            phaseName = "Luteális fázis";
-        }
-
-        document.getElementById("phase-name-text").innerText = phaseName;
-        
-        selectedCycleSuperfoods = [];
-        
-        renderCycleSuperfoodTags();
-        renderFilteredCycleRecipes();
-    }
-
-    function renderFilteredCycleRecipes() {
-        const container = document.getElementById("cycle-recipe-card");
-        const baseRecipes = CYCLE_RECIPES[currentPhaseKey] || [];
-
-        let filtered = baseRecipes;
-
-        if (selectedCycleSuperfoods.length > 0) {
-            filtered = baseRecipes.filter(recipe => {
-                if (!recipe.superfoods || recipe.superfoods.length === 0) return false;
-                return recipe.superfoods.some(sf => selectedCycleSuperfoods.includes(sf));
-            });
-        }
-
-        if (filtered.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: var(--text-muted);">
-                    Nincs találat a kiválasztott alapanyagra. Próbálj ki más csempét fentről!
-                </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = filtered.map(recipe => renderRecipeBoxHTML(recipe, true)).join('');
-    }
-
-    /* ==========================================
-       6. RECEPT BOX RENDERING ENGINE
-       ========================================== */
-    function renderRecipeBoxHTML(recipe, isCycleModule) {
-        let ingredientsHTML = (recipe.ingredientsDetail || recipe.ingredients).map(ing => {
-            const hasIt = isCycleModule ? true : (ing.id ? selectedPantryIngredients.includes(ing.id) : false);
-            const isVilgain = ing.isVilgainHero || ing.isVilgain;
-            
-            return `
-                <li class="ingredient-item">
-                    <span class="ingredient-name">
-                        <span class="status-dot ${hasIt ? 'has' : 'missing'}"></span>
-                        ${ing.name}
-                    </span>
-                    ${(!hasIt || isCycleModule) && isVilgain ? `
-                        <a href="${ing.link}?utm_source=daleday&utm_medium=${isCycleModule ? 'cycle' : 'pantry'}" target="_blank" rel="noopener" class="vilgain-nudge-btn">
-                            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                            ${ing.tag || 'Vilgain opció →'}
-                        </a>
-                    ` : (hasIt ? `<span style="color: var(--primary); font-size: 0.8rem; font-weight: 700;">Otthon van</span>` : `<span style="color: var(--text-muted); font-size: 0.8rem;">Hiányzik</span>`)}
-                </li>
-            `;
-        }).join('');
-
-        let stepsHTML = recipe.steps.map(step => `<li>${step}</li>`).join('');
-
-        let badgesHTML = (recipe.badges && recipe.badges.length > 0) 
-            ? `<div class="recipe-badge-bar">${recipe.badges.map(b => `<span class="recipe-badge">${b}</span>`).join('')}</div>` 
-            : '';
-
-        let plantScoreHTML = recipe.plantScore ? `
-            <div class="meta-item" style="color: var(--primary);">
-                <svg viewBox="0 0 24 24"><path d="M12 3c-1.5 2.5-3 4-3 7 0 2.2 1.3 4 3 4s3-1.8 3-4c0-3-1.5-4.5-3-7z"/></svg>
-                ${recipe.plantScore} Növényi Pont
+            <div>
+                <div class="card-title">Clean Swap Detektor</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Scenneld be az ételt és derítsd ki a Longevity Pontszámát!</div>
             </div>
-        ` : '';
+        </div>
 
-        return `
-            <div class="recipe-card-box">
-                <div class="recipe-header-group">
-                    ${badgesHTML}
-                    <div class="recipe-name">${recipe.title}</div>
-                    <div class="recipe-desc">${recipe.desc}</div>
-                </div>
-
-                <div class="recipe-meta-bar">
-                    <div class="meta-item">
-                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        ${recipe.time || '15 perc'}
-                    </div>
-                    <div class="meta-item">
-                        <svg viewBox="0 0 24 24"><path d="M12 3L1 21h22L12 2zm0 3.5L19 19H5l7-12.5z"/></svg>
-                        ${recipe.difficulty || 'Könnyű'}
-                    </div>
-                    <div class="meta-item">
-                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                        ${recipe.servings || '1 adag'}
-                    </div>
-                    ${plantScoreHTML}
-                </div>
-
-                <div class="recipe-section">
-                    <div class="section-title">
-                        <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5z"/></svg>
-                        Hozzávalók
-                    </div>
-                    <ul class="ingredients-list">
-                        ${ingredientsHTML}
-                    </ul>
-                </div>
-
-                <div class="recipe-section">
-                    <div class="section-title">
-                        <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-                        Elkészítés
-                    </div>
-                    <ol class="steps-ol">
-                        ${stepsHTML}
-                    </ol>
-                </div>
-
-                ${recipe.booster ? `
-                    <div class="booster-box">
-                        <div class="booster-header">
-                            <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z"/></svg>
-                            Ciklus-Turbó Booster
-                        </div>
-                        <div class="booster-text">${recipe.booster}</div>
-                    </div>
-                ` : ''}
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="manual-barcode" class="custom-input" placeholder="Írd be a vonalkódot (pl. 5900512300123)...">
+                <button onclick="scanManualBarcode()" class="btn-primary">Keresés</button>
             </div>
-        `;
-    }
+            <button onclick="startCameraScanner()" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm9-8h-3.17L16 5H8L6.17 7H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zm-9 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+                Kamera Indítása
+            </button>
+        </div>
 
-    /* ==========================================
-       7. SWITCH & INITIALIZATION
-       ========================================== */
-    function switchModule(moduleName) {
-        currentModule = moduleName;
-        document.documentElement.setAttribute("data-theme", moduleName);
+        <div id="scanner-container" class="hidden">
+            <div id="reader" style="width: 100%;"></div>
+            <button onclick="stopCameraScanner()" class="btn-secondary" style="width: 100%; margin-top: 8px; background: #C62828; color: #FFF; border: none;">Kamera Bezárása</button>
+        </div>
 
-        document.getElementById("tab-kamra").classList.toggle("active", moduleName === "kamra");
-        document.getElementById("tab-cycle").classList.toggle("active", moduleName === "cycle");
+        <!-- Demó gombok -->
+        <div class="demo-buttons-bar">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading);">Próbáld ki azonnal:</span>
+            <button class="demo-btn" onclick="analyzeDemoProduct('bolognai')">🔴 Bolti Bolognai Szósz</button>
+            <button class="demo-btn" onclick="analyzeDemoProduct('muzli')">🔴 Fitt Müzliszelet</button>
+            <button class="demo-btn" onclick="analyzeDemoProduct('vilgain')">🟢 Vilgain BIO Pesto</button>
+        </div>
+    </div>
 
-        document.getElementById("module-kamra").classList.toggle("hidden", moduleName !== "kamra");
-        document.getElementById("module-cycle").classList.toggle("hidden", moduleName !== "cycle");
+    <!-- Eredmény Kártya -->
+    <div id="cleanswap-result-card" class="card hidden"></div>
+</div>
 
-        if (moduleName === "cycle") {
-            calculateCycle();
-        } else {
-            renderPantryRecipes();
-        }
-    }
+<!-- 2. MODUL: KAMRA ASSZISZTENS -->
+<div id="module-kamra" class="hidden">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M18.06 23h-12.12c-1.38 0-2.5-1.12-2.5-2.5v-17c0-1.38 1.12-2.5 2.5-2.5h12.12c1.38 0 2.5 1.12 2.5 2.5v17c0 1.38-1.12 2.5-2.5 2.5zm-12.12-20c-.28 0-.5.22-.5.5v17c0 .28.22.5.5.5h12.12c.28 0 .5-.22.5-.5v-17c0-.28-.22-.5-.5-.5h-12.12z"/><path d="M8 6h8v2h-8zm0 4h8v2h-8z"/></svg>
+            </div>
+            <div>
+                <div class="card-title">Mi van a kamrádban?</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Keress és válassz alapanyagokat a szűréshez</div>
+            </div>
+        </div>
 
-    document.addEventListener("click", function(event) {
-        const dropdown = document.getElementById("pantry-autocomplete");
-        const searchInput = document.getElementById("pantry-search-input");
-        if (dropdown && searchInput && !dropdown.contains(event.target) && event.target !== searchInput) {
-            dropdown.classList.add("hidden");
-        }
-    });
+        <!-- Autocomplete Field -->
+        <div class="input-wrapper">
+            <input type="text" id="pantry-search-input" class="custom-input" placeholder="Gépelj be egy alapanyagot (pl. Zabpehely, Csirkemell)..." oninput="handlePantrySearch()" autocomplete="off">
+            <div id="pantry-autocomplete" class="autocomplete-dropdown hidden"></div>
+        </div>
 
-    window.addEventListener("DOMContentLoaded", () => {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById("last-period-date").value = today;
+        <!-- Kijelölt Tagek -->
+        <div class="pantry-tags-container" id="pantry-tags"></div>
+    </div>
 
-        renderPantryTags();
-        switchModule("kamra");
-    });
-</script>
+    <div class="card" id="pantry-recipe-card"></div>
+</div>
 
-</body>
-</html>
+<!-- 3. MODUL: CIKLUSSZINKRON -->
+<div id="module-cycle" class="hidden">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+            </div>
+            <div>
+                <div class="card-title">Ciklus-Kalkulátor</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">Becsült táplálkozási fázisod kiszámítása</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-wrapper">
+                <label class="input-label">Utolsó menstruáció első napja</label>
+                <input type="date" id="last-period-date" class="custom-input" onchange="calculateCycle()">
+            </div>
+            <div class="input-wrapper">
+                <label class="input-label">Átlagos ciklushossz (nap)</label>
+                <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40" onchange="calculateCycle()">
+            </div>
+        </div>
+
+        <div class="cycle-visualizer">
+            <div class="cycle-ring-container">
+                <svg class="cycle-ring-svg" viewBox="0 0 160 160">
+                    <circle class="cycle-ring-bg" cx="80" cy="80" r="70"></circle>
+                    <circle class="cycle-ring-progress" id="cycle-progress" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="cycle-ring-text">
+                    <div class="day-counter" id="cycle-day-text">18.</div>
+                    <div class="day-label">napja</div>
+                </div>
+            </div>
+            <div class="phase-badge-container">
+                <div class="phase-badge">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                    <span id="phase-name-text">Luteális fázis</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FÁZIS-ALAPÚ ALAPANYAG-AJÁNLÓ KÁRTYA -->
+        <div style="margin-top: 20px; border-top: 1px dashed var(--border-color); padding-top: 16px;">
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">
+                Tápanyagdús alapanyag-ötletek a fázisodhoz:
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+                Kattints rájuk, ha kifejezetten ezekre épülő receptet szeretnél a Kamrában:
+            </div>
+            <div class="pantry-tags-container" id="cycle-superfood-tags"></div>
+        </div>
+
+        <div class="disclaimer-text">
+            Tájékoztatás: A daleday egy életmód- és táplálkozási inspirációs felület. A megjelenített információk nem minősülnek orvosi diagnózisnak.
+        </div>
+    </div>
+
+    <div class="card" id="cycle-recipe-card"></div>
+</div>
