@@ -1102,6 +1102,7 @@
 
     function fetchBarcodeData(barcode) {
         const resultCard = document.getElementById('ellenor-result-card');
+        if (!resultCard) return;
         resultCard.classList.remove('hidden');
         resultCard.innerHTML = '<div style="padding:16px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
 
@@ -1129,12 +1130,15 @@
     function stopCamera() {
         if (html5QrCode) {
             html5QrCode.stop().then(() => {
-                document.getElementById('scanner-container').classList.add('hidden');
+                const el = document.getElementById('scanner-container');
+                if (el) el.classList.add('hidden');
             }).catch(err => {
-                document.getElementById('scanner-container').classList.add('hidden');
+                const el = document.getElementById('scanner-container');
+                if (el) el.classList.add('hidden');
             });
         } else {
-            document.getElementById('scanner-container').classList.add('hidden');
+            const el = document.getElementById('scanner-container');
+            if (el) el.classList.add('hidden');
         }
     }
 
@@ -1143,12 +1147,8 @@
         return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    const searchInput = document.getElementById('pantry-search-input');
-    const autocompleteList = document.getElementById('autocomplete-list');
-    const pantryTagsContainer = document.getElementById('pantry-tags');
-    const pantryRecipesContainer = document.getElementById('pantry-recipes-container');
-
     function renderPantryTags() {
+        const pantryTagsContainer = document.getElementById('pantry-tags');
         if (!pantryTagsContainer) return;
         pantryTagsContainer.innerHTML = '';
         if (selectedIngredients.length === 0) {
@@ -1177,6 +1177,7 @@
     }
 
     function renderPantryRecipes() {
+        const pantryRecipesContainer = document.getElementById('pantry-recipes-container');
         if (!pantryRecipesContainer) return;
         pantryRecipesContainer.innerHTML = '';
 
@@ -1220,52 +1221,12 @@
         });
     }
 
-    if (pantryInput) {
-        pantryInput.addEventListener('input', (e) => {
-            const val = normalizeStr(e.target.value.trim());
-            autocompleteList.innerHTML = '';
-            if (!val) {
-                autocompleteList.classList.add('hidden');
-                return;
-            }
-            const matches = availableIngredients.filter(i => normalizeStr(i).includes(val) && !selectedIngredients.includes(i));
-            if (matches.length === 0) {
-                autocompleteList.classList.add('hidden');
-                return;
-            }
-            matches.forEach(m => {
-                const item = document.createElement('div');
-                item.className = 'autocomplete-item';
-                item.textContent = m;
-                item.addEventListener('click', () => {
-                    selectedIngredients.push(m);
-                    pantryInput.value = '';
-                    autocompleteList.classList.add('hidden');
-                    renderPantryTags();
-                });
-                autocompleteList.appendChild(item);
-            });
-            autocompleteList.classList.remove('hidden');
-        });
-    }
-
-    document.addEventListener('click', (e) => {
-        if (pantryInput && autocompleteList && !pantryInput.contains(e.target) && !autocompleteList.contains(e.target)) {
-            autocompleteList.classList.add('hidden');
-        }
-    });
-
     // CIKLUS LOGIKA
-    const lastPeriodInput = document.getElementById('last-period-date');
-    const cycleLengthInput = document.getElementById('cycle-length');
-
-    if (lastPeriodInput && !lastPeriodInput.value) {
-        const todayStr = new Date().toISOString().split('T')[0];
-        lastPeriodInput.value = todayStr;
-    }
-
     function updateCycleCalculator() {
+        const lastPeriodInput = document.getElementById('last-period-date');
+        const cycleLengthInput = document.getElementById('cycle-length');
         if (!lastPeriodInput || !cycleLengthInput) return;
+
         const dateVal = new Date(lastPeriodInput.value);
         const cycleLen = parseInt(cycleLengthInput.value) || 28;
         const now = new Date();
@@ -1276,7 +1237,8 @@
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) % cycleLen;
         const currentDay = diffDays === 0 ? cycleLen : diffDays;
 
-        document.getElementById('cycle-day-text').textContent = currentDay + '.';
+        const dayEl = document.getElementById('cycle-day-text');
+        if (dayEl) dayEl.textContent = currentDay + '.';
 
         let phaseKey = 'menstrual';
         let phaseData = cyclePhasesInfo.menstrual;
@@ -1292,8 +1254,11 @@
             phaseData = cyclePhasesInfo.luteal;
         }
 
-        document.getElementById('phase-name-text').textContent = phaseData.name;
-        document.getElementById('phase-description-text').textContent = phaseData.description;
+        const phaseNameEl = document.getElementById('phase-name-text');
+        if (phaseNameEl) phaseNameEl.textContent = phaseData.name;
+
+        const phaseDescEl = document.getElementById('phase-description-text');
+        if (phaseDescEl) phaseDescEl.textContent = phaseData.description;
 
         const circumference = 439.8;
         const progressOffset = circumference - (currentDay / cycleLen) * circumference;
@@ -1320,7 +1285,7 @@
             });
         }
 
-        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL & ELKÜLÖNÍTETT TEÁKKAL
+        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL
         const recipeContainer = document.getElementById('cycle-recipe-container');
         if (recipeContainer) {
             recipeContainer.innerHTML = '';
@@ -1370,12 +1335,14 @@
 
     // DOM Betöltéskori inicializáció
     document.addEventListener('DOMContentLoaded', () => {
+        // Modulváltó tabok
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 switchModule(e.target.getAttribute('data-module'));
             });
         });
 
+        // Demó gombok golyóálló bekötése
         document.querySelectorAll('.demo-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const code = e.target.getAttribute('data-demo');
@@ -1385,6 +1352,7 @@
             });
         });
 
+        // Kézi keresés gomb
         const searchBtn = document.getElementById('btn-manual-search');
         if (searchBtn) {
             searchBtn.addEventListener('click', () => {
@@ -1395,6 +1363,7 @@
             });
         }
 
+        // Kamera gombok
         const startCamBtn = document.getElementById('btn-start-camera');
         if (startCamBtn) {
             startCamBtn.addEventListener('click', () => {
@@ -1419,9 +1388,56 @@
         const stopCamBtn = document.getElementById('btn-stop-camera');
         if (stopCamBtn) stopCamBtn.addEventListener('click', stopCamera);
 
-        if (lastPeriodInput) lastPeriodInput.addEventListener('change', updateCycleCalculator);
-        if (cycleLengthInput) cycleLengthInput.addEventListener('input', updateCycleCalculator);
+        // Kamra autocomplete bekötése
+        const pantryInputEl = document.getElementById('pantry-search-input');
+        const autocompleteListEl = document.getElementById('autocomplete-list');
+        if (pantryInputEl) {
+            pantryInputEl.addEventListener('input', (e) => {
+                const val = normalizeStr(e.target.value.trim());
+                if (!autocompleteListEl) return;
+                autocompleteListEl.innerHTML = '';
+                if (!val) {
+                    autocompleteListEl.classList.add('hidden');
+                    return;
+                }
+                const matches = availableIngredients.filter(i => normalizeStr(i).includes(val) && !selectedIngredients.includes(i));
+                if (matches.length === 0) {
+                    autocompleteListEl.classList.add('hidden');
+                    return;
+                }
+                matches.forEach(m => {
+                    const item = document.createElement('div');
+                    item.className = 'autocomplete-item';
+                    item.textContent = m;
+                    item.addEventListener('click', () => {
+                        selectedIngredients.push(m);
+                        pantryInputEl.value = '';
+                        autocompleteListEl.classList.add('hidden');
+                        renderPantryTags();
+                    });
+                    autocompleteListEl.appendChild(item);
+                });
+                autocompleteListEl.classList.remove('hidden');
+            });
+        }
 
+        document.addEventListener('click', (e) => {
+            if (pantryInputEl && autocompleteListEl && !pantryInputEl.contains(e.target) && !autocompleteListEl.contains(e.target)) {
+                autocompleteListEl.classList.add('hidden');
+            }
+        });
+
+        // Ciklus inputok eseménykezelői
+        const lastPeriodInputEl = document.getElementById('last-period-date');
+        const cycleLengthInputEl = document.getElementById('cycle-length');
+        if (lastPeriodInputEl) {
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (!lastPeriodInputEl.value) lastPeriodInputEl.value = todayStr;
+            lastPeriodInputEl.addEventListener('change', updateCycleCalculator);
+        }
+        if (cycleLengthInputEl) cycleLengthInputEl.addEventListener('input', updateCycleCalculator);
+
+        // Kezdő nézetek inicializálása
         renderPantryTags();
         updateCycleCalculator();
     });
