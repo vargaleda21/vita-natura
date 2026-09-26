@@ -284,16 +284,26 @@
         }
 
         .score-badge-circle {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #FFF;
             flex-shrink: 0;
+            line-height: 1.1;
+        }
+
+        .score-badge-sub {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.9;
         }
 
         .score-high { background: #2E7D32; }
@@ -313,6 +323,31 @@
             color: var(--text-heading);
             margin-bottom: 8px;
             font-size: 1rem;
+        }
+
+        .methodology-box {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 0.82rem;
+        }
+
+        .methodology-title {
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .methodology-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
         .swap-box {
@@ -519,6 +554,23 @@
             border-radius: 100px;
         }
 
+        .phase-description-box {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 12px;
+            padding: 0 10px;
+        }
+
+        .booster-box {
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-top: 20px;
+        }
+
         .superfood-bar {
             display: flex;
             flex-wrap: wrap;
@@ -602,6 +654,20 @@
                 <button class="demo-btn" onclick="fetchBarcodeData('3017620422003')">Mogyorókrém</button>
                 <button class="demo-btn" onclick="fetchBarcodeData('8594073300123')">Vilgain BIO pesto</button>
             </div>
+
+            <!-- Metodológiai tájékoztató doboz -->
+            <div class="methodology-box">
+                <div class="methodology-title">Pontozási metodológia és kategóriák</div>
+                <div class="methodology-item">
+                    <span>🟢</span> <strong>80–100 pont (Kiváló / Tiszta):</strong> Tápanyagdús, minimálisan feldolgozott vagy organikus alapanyagok, felesleges adalékok és hozzáadott cukor nélkül.
+                </div>
+                <div class="methodology-item">
+                    <span>🟡</span> <strong>50–79 pont (Átlagos / Mértékkel):</strong> Enyhén feldolgozott termék, amely tartalmazhat finomított összetevőket, de mérsékelt mennyiségben fogyasztható.
+                </div>
+                <div class="methodology-item">
+                    <span>🔴</span> <strong>0–49 pont (Ultra-feldolgozott / Kerülendő):</strong> Magas hozzáadott cukor-, finomított olaj- (pálmaolaj) vagy mesterséges adalékanyag-tartalmú élelmiszer.
+                </div>
+            </div>
         </div>
 
         <div id="cleanswap-result-card" class="card hidden"></div>
@@ -661,6 +727,15 @@
                         <span id="phase-name-text">Menstruációs fázis</span>
                     </div>
                 </div>
+                <div class="phase-description-box" id="phase-description-text">
+                    A fázis leírása betöltés alatt...
+                </div>
+            </div>
+
+            <div class="booster-box">
+                <div style="font-weight: 700; color: var(--text-heading); font-size: 0.95rem; margin-bottom: 6px;">Ciklus-Turbó Booster Alapanyagok</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Kattints a szuperfood csempékre a receptek szűréséhez:</div>
+                <div class="superfood-bar" id="superfood-chips-container"></div>
             </div>
 
             <div class="disclaimer-text">
@@ -696,6 +771,138 @@
         }
     };
 
+    // KAMRA ADATOK ÉS ÁLLAPOT
+    const availableIngredients = [
+        'zabpehely', 'mogyoróvaj', 'méz', 'tojás', 'banán', 'chia mag', 
+        'mandulatej', 'avokádó', 'csirkemell', 'quinoa', 'spenót', 'fokhagyma', 'olívaolaj', 'paradicsom'
+    ];
+    let selectedIngredients = [];
+
+    const pantryRecipesData = [
+        {
+            title: 'Házi ropogós granola tál',
+            time: '15 perc',
+            difficulty: 'Könnyű',
+            ingredients: ['zabpehely', 'mogyoróvaj', 'méz', 'banán'],
+            description: 'Keverd össze a zabpelyhet a mogyoróvajjal és a mézzel, pirítsd serpenyőben aranybarnára, majd tálald friss banánkarikákkal.',
+            vilgain: 'Ajánlott Vilgain elem: Vilgain Organikus Mogyoróvaj és Tiszta Zabpehely.'
+        },
+        {
+            title: 'Avokádós spenótos quinoasaláta',
+            time: '20 perc',
+            difficulty: 'Közepes',
+            ingredients: ['quinoa', 'avokádó', 'spenót', 'olívaolaj', 'fokhagyma', 'paradicsom'],
+            description: 'Főzd meg a quinoát, majd keverd össze a friss spenóttal, kockázott avokádóval, paradicsommal és fokhagymás olívaolaj öntettel.',
+            vilgain: 'Ajánlott Vilgain elem: Vilgain Extra Szűz Olívaolaj és BIO Quinoa.'
+        },
+        {
+            title: 'Chia magos banánpuding mandulatejjel',
+            time: '10 perc + hűtés',
+            difficulty: 'Könnyű',
+            ingredients: ['chia mag', 'mandulatej', 'banán', 'méz'],
+            description: 'Keverd össze a chia magot a mandulatejjel és egy kevés mézzel, hagyd állni hűtőben, majd díszítsd szeletelt banánnal.',
+            vilgain: 'Ajánlott Vilgain elem: Vilgain BIO Chia Mag.'
+        },
+        {
+            title: 'Fokhagymás csirkemell friss spenóttal',
+            time: '25 perc',
+            difficulty: 'Közepes',
+            ingredients: ['csirkemell', 'fokhagyma', 'olívaolaj', 'spenót', 'paradicsom'],
+            description: 'Pirítsd meg a fokhagymás olívaolajon a csirkemell kockákat, add hozzá a paradicsomot és a spenótot, majd párold készre.',
+            vilgain: 'Ajánlott Vilgain elem: Vilgain Himalája Só és Fűszerkeverékek.'
+        }
+    ];
+
+    // CIKLUS ADATOK ÉS FÁZISOK
+    const cyclePhasesInfo = {
+        menstrual: {
+            name: "Menstruációs fázis",
+            description: "Alacsony energiaszint, regenerálódás. Fókuszban a melegítő, vasdús ételek és a mély pihenés.",
+            superfoods: ["cékla", "csicseriborsó", "spenót", "gyömbér", "étcsokoládé"],
+            recipes: [
+                {
+                    title: "Melegítő cékla-krémleves gyömbérrel",
+                    time: "30 perc",
+                    ingredients: ["cékla", "gyömbér", "olívaolaj"],
+                    description: "Süsd meg a céklát, majd turmixold össze zöldségalaplével és friss reszelt gyömbérrel.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain Organikus Fűszerek."
+                },
+                {
+                    title: "Vasdús spenótos-csicseriborsós ragu",
+                    time: "20 perc",
+                    ingredients: ["spenót", "csicseriborsó", "fokhagyma"],
+                    description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot és párold össze.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain BIO Hüvelyesek."
+                }
+            ]
+        },
+        follicular: {
+            name: "Follikuláris fázis",
+            description: "Növekvő energia és kreativitás. Ideálisak a friss, ropogós, könnyed és élénk ételek.",
+            superfoods: ["zabpehely", "chia mag", "bogyós gyümölcsök", "mandula", "citrom"],
+            recipes: [
+                {
+                    title: "Frissítő bogyós gyümölcsös zabkása",
+                    time: "10 perc",
+                    ingredients: ["zabpehely", "mandulatej", "chia mag"],
+                    description: "Főzd meg a zabpelyhet mandulatejjel, majd szórd meg chia maggal és friss gyümölccsel.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain Finomított Cukormentes Proteinek."
+                },
+                {
+                    title: "Zöld smoothie mandulatejjel és chiamaggal",
+                    time: "5 perc",
+                    ingredients: ["spenót", "mandulatej", "chia mag", "banán"],
+                    description: "Turmixold simára a hozzávalókat egy adag friss zöldséggel és maggal a hosszan tartó energiáért.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain BIO Chia Mag."
+                }
+            ]
+        },
+        ovulatory: {
+            name: "Ovulációs fázis",
+            description: "Csúcsteljesítmény és társasági energia. Könnyű, magas antioxidáns-tartalmú saláták.",
+            superfoods: ["avokádó", "paradicsom", "quinoa", "olívaolaj", "bazsalikom"],
+            recipes: [
+                {
+                    title: "Nyári quinoa saláta friss bazsalikommal",
+                    time: "15 perc",
+                    ingredients: ["quinoa", "paradicsom", "avokádó", "olívaolaj"],
+                    description: "Keverd össze a főtt quinoát az aprított paradicsommal, avokádóval és olívaolajos bazsalikomos öntettel.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain Extra Szűz Olívaolaj."
+                },
+                {
+                    title: "Avokádós-paradicsomos friss pirítós",
+                    time: "10 perc",
+                    ingredients: ["avokádó", "paradicsom", "fokhagyma"],
+                    description: "Kend meg a teljes kiőrlésű kenyeret fokhagymás avokádókrémmel, pakold meg lédús paradicsommal.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain Fűszerkeverékek."
+                }
+            ]
+        },
+        luteal: {
+            name: "Luteális fázis",
+            description: "Lassuló tempó, progeszteron-támogatás. Stabil vércukorszintet biztosító komplex fogások.",
+            superfoods: ["édesburgonya", "tök", "mogyoróvaj", "fahéj", "tojás"],
+            recipes: [
+                {
+                    title: "Fahéjas sütőtökös zabkása mogyoróvajjal",
+                    time: "15 perc",
+                    ingredients: ["zabpehely", "mogyoróvaj", "fahéj"],
+                    description: "Keverj a meleg zabkásához sült sütőtök pürét, fahéjat és egy kanál mogyoróvajat a hormonális egyensúlyért.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain 100% Mogyoróvaj."
+                },
+                {
+                    title: "Fűszeres édesburgonya omlett",
+                    time: "20 perc",
+                    ingredients: ["tojás", "spenót", "olívaolaj"],
+                    description: "Süss házi omlettet friss spenóttal és párolt édesburgonya kockákkal.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain Omega-3 Olaj."
+                }
+            ]
+        }
+    };
+
+    let activeCycleSuperfoodFilter = null;
+
     function switchModule(moduleName) {
         document.body.setAttribute('data-theme', moduleName);
         ['cleanswap', 'kamra', 'cycle'].forEach(m => {
@@ -710,6 +917,8 @@
             }
         });
         if (moduleName !== 'cleanswap') stopCameraScanner();
+        if (moduleName === 'kamra') renderPantryRecipes();
+        if (moduleName === 'cycle') initCycleModule();
     }
 
     function stopCameraScanner() {
@@ -853,7 +1062,10 @@
         const resultCard = document.getElementById('cleanswap-result-card');
         resultCard.innerHTML = `
             <div class="score-box">
-                <div class="score-badge-circle ${analysis.scoreClass}">${analysis.scoreVal}</div>
+                <div class="score-badge-circle ${analysis.scoreClass}">
+                    <span>${analysis.scoreVal}</span>
+                    <span class="score-badge-sub">/ 100 pt</span>
+                </div>
                 <div>
                     <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">${name}</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">${brands}</div>
@@ -881,7 +1093,7 @@
                 </div>
 
                 <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-heading); margin-top: 10px;">
-                    Házi elkészítési opció:
+                    Házi készítési opció:
                 </div>
                 <div class="home-recipe-card">
                     <div style="font-size: 0.85rem; margin-bottom: 6px; font-weight: 600;">
@@ -898,7 +1110,10 @@
     function renderNotFoundResult(barcode) {
         document.getElementById('cleanswap-result-card').innerHTML = `
             <div class="score-box">
-                <div class="score-badge-circle score-mid">?</div>
+                <div class="score-badge-circle score-mid">
+                    <span>?</span>
+                    <span class="score-badge-sub">/ 100 pt</span>
+                </div>
                 <div>
                     <div style="font-weight: 700; font-size: 1.15rem; color: var(--text-heading);">A termék nem található</div>
                     <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Vonalkód: ${barcode}</div>
@@ -909,6 +1124,252 @@
             </div>
         `;
     }
+
+    // KAMRA LOGIKA ÉS AUTOCOMPLETE
+    function normalizeStr(str) {
+        return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    const searchInput = document.getElementById('pantry-search-input');
+    const autocompleteList = document.getElementById('autocomplete-list');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const query = normalizeStr(this.value.trim());
+            autocompleteList.innerHTML = '';
+            if (!query) {
+                autocompleteList.classList.add('hidden');
+                return;
+            }
+
+            const filtered = availableIngredients.filter(item => 
+                normalizeStr(item).includes(query) && !selectedIngredients.includes(item)
+            );
+
+            if (filtered.length > 0) {
+                autocompleteList.classList.remove('hidden');
+                filtered.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.textContent = item;
+                    div.onclick = function() {
+                        addPantryIngredient(item);
+                        searchInput.value = '';
+                        autocompleteList.classList.add('hidden');
+                    };
+                    autocompleteList.appendChild(div);
+                });
+            } else {
+                autocompleteList.classList.add('hidden');
+            }
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        if (searchInput && autocompleteList && !searchInput.contains(e.target) && !autocompleteList.contains(e.target)) {
+            autocompleteList.classList.add('hidden');
+        }
+    });
+
+    function addPantryIngredient(item) {
+        if (!selectedIngredients.includes(item)) {
+            selectedIngredients.push(item);
+            renderPantryTags();
+            renderPantryRecipes();
+        }
+    }
+
+    function removePantryIngredient(item) {
+        selectedIngredients = selectedIngredients.filter(i => i !== item);
+        renderPantryTags();
+        renderPantryRecipes();
+    }
+
+    function renderPantryTags() {
+        const container = document.getElementById('pantry-tags');
+        if (!container) return;
+        container.innerHTML = '';
+        if (selectedIngredients.length === 0) {
+            container.innerHTML = '<span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;">Még nincs kiválasztott alapanyag. Kezd el beírni fent!</span>';
+            return;
+        }
+        selectedIngredients.forEach(item => {
+            const tag = document.createElement('div');
+            tag.className = 'pantry-tag';
+            tag.innerHTML = `${item} <button onclick="removePantryIngredient('${item}')">&times;</button>`;
+            container.appendChild(tag);
+        });
+    }
+
+    function renderPantryRecipes() {
+        const container = document.getElementById('pantry-recipes-container');
+        if (!container) return;
+
+        // Számoljuk ki a találati egyezéseket (matchCount)
+        const scoredRecipes = pantryRecipesData.map(recipe => {
+            const matchCount = recipe.ingredients.filter(ing => selectedIngredients.includes(ing)).length;
+            return { ...recipe, matchCount };
+        });
+
+        // Rendezés találati szám szerint csökkenő sorrendben
+        scoredRecipes.sort((a, b) => b.matchCount - a.matchCount);
+
+        container.innerHTML = `
+            <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--text-heading); margin-bottom: 14px;">
+                Elérhető receptek a kamrád alapján (${selectedIngredients.length} kiválasztott elem)
+            </div>
+        `;
+
+        scoredRecipes.forEach(recipe => {
+            const hasAll = recipe.matchCount === recipe.ingredients.length;
+            container.innerHTML += `
+                <div class="recipe-card-box">
+                    <div class="recipe-meta-bar">
+                        <span>⏱️ ${recipe.time}</span>
+                        <span>📊 ${recipe.difficulty}</span>
+                        <span style="color: ${recipe.matchCount > 0 ? 'var(--primary)' : 'var(--text-muted)'};">
+                            Találat: ${recipe.matchCount} / ${recipe.ingredients.length} alapanyag ${hasAll ? '✨ (Teljes egyezés!)' : ''}
+                        </span>
+                    </div>
+                    <div class="recipe-title">${recipe.title}</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 600;">
+                        ${recipe.description}
+                    </div>
+                    <div style="font-size: 0.82rem; font-weight: 700; margin-bottom: 6px;">
+                        Szükséges hozzávalók: ${recipe.ingredients.join(', ')}
+                    </div>
+                    <div class="vilgain-box">
+                        🛒 ${recipe.vilgain}
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // CIKLUSSZINKRON MODUL LOGIKA
+    function initCycleModule() {
+        const dateInput = document.getElementById('last-period-date');
+        const lengthInput = document.getElementById('cycle-length');
+
+        if (dateInput && !dateInput.value) {
+            const today = new Date();
+            today.setDate(today.getDate() - 5);
+            dateInput.value = today.toISOString().split('T')[0];
+        }
+
+        if (dateInput) dateInput.oninput = updateCycleCalculation;
+        if (lengthInput) lengthInput.oninput = updateCycleCalculation;
+
+        updateCycleCalculation();
+    }
+
+    function updateCycleCalculation() {
+        const dateInputVal = document.getElementById('last-period-date').value;
+        const cycleLength = parseInt(document.getElementById('cycle-length').value) || 28;
+
+        if (!dateInputVal) return;
+
+        const startDate = new Date(dateInputVal);
+        const today = new Date();
+        const diffTime = today - startDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+        let currentDay = ((diffDays - 1) % cycleLength) + 1;
+        if (currentDay < 1) currentDay = 1;
+
+        // Fázis meghatározása ciklushossz arányában
+        let phaseKey = 'menstrual';
+        if (currentDay >= 1 && currentDay <= 5) {
+            phaseKey = 'menstrual';
+        } else if (currentDay > 5 && currentDay <= Math.floor(cycleLength * 0.45)) {
+            phaseKey = 'follicular';
+        } else if (currentDay > Math.floor(cycleLength * 0.45) && currentDay <= Math.floor(cycleLength * 0.55)) {
+            phaseKey = 'ovulatory';
+        } else {
+            phaseKey = 'luteal';
+        }
+
+        // UI frissítés
+        document.getElementById('cycle-day-text').textContent = currentDay + '.';
+        
+        const phaseData = cyclePhasesInfo[phaseKey];
+        document.getElementById('phase-name-text').textContent = phaseData.name;
+        document.getElementById('phase-description-text').textContent = phaseData.description;
+
+        // SVG ív frissítés
+        const circumference = 439.8;
+        const progressOffset = circumference - (currentDay / cycleLength) * circumference;
+        const ringProgress = document.getElementById('cycle-progress-ring');
+        if (ringProgress) ringProgress.style.strokeDashoffset = progressOffset;
+
+        // Superfood chipek renderelése
+        const chipsContainer = document.getElementById('superfood-chips-container');
+        if (chipsContainer) {
+            chipsContainer.innerHTML = '';
+            phaseData.superfoods.forEach(sf => {
+                const chip = document.createElement('div');
+                chip.className = `superfood-chip ${activeCycleSuperfoodFilter === sf ? 'active' : ''}`;
+                chip.textContent = sf;
+                chip.onclick = function() {
+                    if (activeCycleSuperfoodFilter === sf) {
+                        activeCycleSuperfoodFilter = null;
+                    } else {
+                        activeCycleSuperfoodFilter = sf;
+                    }
+                    updateCycleCalculation();
+                };
+                chipsContainer.appendChild(chip);
+            });
+        }
+
+        renderCycleRecipes(phaseData, activeCycleSuperfoodFilter);
+    }
+
+    function renderCycleRecipes(phaseData, filter) {
+        const container = document.getElementById('cycle-recipe-container');
+        if (!container) return;
+
+        let recipes = phaseData.recipes;
+        if (filter) {
+            recipes = recipes.filter(r => r.ingredients.includes(filter));
+        }
+
+        container.innerHTML = `
+            <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--text-heading); margin-bottom: 14px;">
+                ${phaseData.name} receptek ${filter ? `(szűrve: "${filter}")` : ''}
+            </div>
+        `;
+
+        if (recipes.length === 0) {
+            container.innerHTML += `<div class="card" style="text-align:center; font-weight:600; color:var(--text-muted);">Nincs találat a(z) "${filter}" szuperfood szűrőre ebben a fázisban.</div>`;
+            return;
+        }
+
+        recipes.forEach(recipe => {
+            container.innerHTML += `
+                <div class="recipe-card-box">
+                    <div class="recipe-meta-bar">
+                        <span>⏱️ ${recipe.time}</span>
+                        <span>🌿 Hormonális fázis recept</span>
+                    </div>
+                    <div class="recipe-title">${recipe.title}</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 600;">
+                        ${recipe.description}
+                    </div>
+                    <div style="font-size: 0.82rem; font-weight: 700; margin-bottom: 6px;">
+                        Fő összetevők: ${recipe.ingredients.join(', ')}
+                    </div>
+                    <div class="vilgain-box">
+                        🛒 ${recipe.vilgain}
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // Alapértelmezett inicializálás betöltéskor
+    renderPantryTags();
+    renderPantryRecipes();
 </script>
 </body>
 </html>
