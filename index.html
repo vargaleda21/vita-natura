@@ -475,6 +475,17 @@
             margin-bottom: 10px;
         }
 
+        .supplement-box {
+            background: rgba(128, 0, 32, 0.06);
+            border: 1px dashed var(--primary);
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
         .vilgain-box {
             background: var(--accent-vilgain-bg);
             border: 1px solid var(--accent-vilgain-border);
@@ -840,88 +851,105 @@
         }
     ];
 
+    // CIKLUS RECEPT- ÉS FÁZIS-ADATBÁZIS
     const cyclePhasesInfo = {
         menstrual: {
             name: "Menstruációs fázis",
             description: "Alacsony energiaszint, regenerálódás. Fókuszban a melegítő, vasdús ételek és a mély pihenés.",
-            superfoods: ["cékla", "csicseriborsó", "spenót", "gyömbér", "étcsokoládé", "Csalántea", "Magnézium-kelát", "Omega-3"],
+            superfoods: ["cékla", "csicseriborsó", "spenót", "gyömbér", "étcsokoládé"],
             recipes: [
                 {
-                    title: "Melegítő cékla-krémleves gyömbérrel",
+                    title: "Melegítő cékla-krémleves gyömbérrel és pirított tökmaggal",
                     time: "30 perc",
-                    ingredients: ["cékla", "gyömbér", "olívaolaj", "Magnézium-kelát"],
-                    description: "Süsd meg a céklát, majd turmixold össze zöldségalaplével és friss reszelt gyömbérrel.",
-                    justification: "A cékla magas vastartalma pótolja a menstruáció alatt elvesztett ásványi anyagokat.",
+                    ingredients: ["cékla", "gyömbér", "olívaolaj"],
+                    description: "Süsd meg a céklát, majd turmixold össze zöldségalaplével és friss reszelt gyömbérrel. Tálald tökmaggal.",
+                    justification: "A cékla magas vastartalma és a gyömbér gyulladáscsökkentő hatása kíméletesen támogatja a vérképzést és csillapítja a görcsöket.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea (vérképzésért) + Magnézium-kelát (izomgörcsök ellen).",
                     vilgain: "Ajánlott Vilgain elem: Vilgain Organikus Fűszerek."
                 },
                 {
-                    title: "Vasdús spenótos-csicseriborsós ragu",
+                    title: "Vasdús krémes spenótos csicseriborsó-ragu tahinivel és citromlével",
                     time: "20 perc",
-                    ingredients: ["spenót", "csicseriborsó", "fokhagyma", "Csalántea"],
-                    description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot és párold össze.",
-                    justification: "A marhahúsban lévő szerves vas és a spenót folsavtartalma hatékonyan támogatja a szervezet vérképzését a menstruáció napjaiban.",
-                    vilgain: "Ajánlott Vilgain elem: Vilgain BIO Hüvelyesek."
+                    ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
+                    description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
+                    justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel a szervezetben.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
                 }
             ]
         },
         follicular: {
             name: "Follikuláris fázis",
             description: "Növekvő energia és kreativitás. Ideálisak a friss, ropogós, könnyed és élénk ételek.",
-            superfoods: ["zabpehely", "chia mag", "bogyós gyümölcsök", "mandula", "citrom", "Cickafarktea", "C-vitamin", "Zöld tea"],
+            superfoods: ["zabpehely", "chia mag", "bogyós gyümölcsök", "mandula", "citrom"],
             recipes: [
                 {
-                    title: "Frissítő bogyós gyümölcsös zabkása",
+                    title: "Frissítő bogyós gyümölcsös zabkása chia maggal és mandulával",
                     time: "10 perc",
-                    ingredients: ["zabpehely", "mandulatej", "chia mag", "C-vitamin"],
-                    description: "Főzd meg a zabpelyhet mandulatejjel, majd szórd meg chia maggal és friss gyümölccsel.",
-                    justification: "A komplex szénhidrátok és az antioxidánsok stabil energiát biztosítanak az emelkedő ösztrogénszint mellé.",
+                    ingredients: ["zabpehely", "mandulatej", "chia mag", "bogyós gyümölcsök", "mandula", "citrom"],
+                    description: "Főzd meg a zabpelyhet mandulatejjel, majd szórd meg chia maggal, mandulával és friss bogyós gyümölcsökkel.",
+                    justification: "A zabpehely összetett szénhidrátjai és a bogyós gyümölcsök antioxidánsai stabil energiát nyújtanak az emelkedő ösztrogénszint fázisában.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Cickafarktea + C-vitamin kompex.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain Finomított Cukormentes Proteinek."
                 },
                 {
-                    title: "Zöld smoothie mandulatejjel és chiamaggal",
+                    title: "Zöld smoothie mandulatejjel, spenóttal és chia maggal",
                     time: "5 perc",
-                    ingredients: ["spenót", "mandulatej", "chia mag", "banán", "Cickafarktea"],
-                    description: "Turmixold simára a hozzávalókat egy adag friss zöldséggel és maggal a hosszan tartó energiáért.",
-                    justification: "A friss zöldségek és magvak vitaminjai támogatják a megújulási folyamatokat és a hormonális egyensúlyt.",
+                    ingredients: ["spenót", "mandulatej", "chia mag", "banán", "citrom"],
+                    description: "Turmixold simára a hozzávalókat a friss spenóttal és citromlével a hosszan tartó energiáért.",
+                    justification: "A friss zöldségek folsavtartalma és a chia mag fitoösztrogénjei finoman támogatják a tüszőérést.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Zöld tea + B-vitamin komplex.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain BIO Chia Mag."
                 }
             ]
         },
         ovulatory: {
             name: "Ovulációs fázis",
-            description: "Csúcsteljesítmény és társasági energia. Könnyű, magas antioxidáns-tartalmú saláták.",
-            superfoods: ["avokádó", "paradicsom", "quinoa", "olívaolaj", "bazsalikom", "Kamillatea", "Cink", "Kollagén"],
+            description: "Csúcsteljesítmény és társasági energia. Könnyű, magas antioxidáns-tartalmú saláták és egészséges zsírok.",
+            superfoods: ["avokádó", "paradicsom", "quinoa", "olívaolaj", "bazsalikom"],
             recipes: [
                 {
-                    title: "Nyári quinoa saláta friss bazsalikommal",
+                    title: "Nyári quinoa saláta avokádóval, lédús paradicsommal és bazsalikommal",
                     time: "15 perc",
-                    ingredients: ["quinoa", "paradicsom", "avokádó", "olívaolaj", "Cink"],
+                    ingredients: ["quinoa", "paradicsom", "avokádó", "olívaolaj", "bazsalikom"],
                     description: "Keverd össze a főtt quinoát az aprított paradicsommal, avokádóval és olívaolajos bazsalikomos öntettel.",
-                    justification: "Az avokádó egészséges zsírsavai támogatják a peteérést és a hormonok optimális szintézisét.",
+                    justification: "Az avokádó és az olívaolaj egészséges zsírsavai elengedhetetlenek a tüszőrepedéshez és a hormonok szintéziséhez.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Kamillatea + Cink & Kollagén.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain Extra Szűz Olívaolaj."
                 },
                 {
-                    title: "Avokádós-paradicsomos friss pirítós",
+                    title: "Avokádós-paradicsomos friss kence teljes kiőrlésű pirítóson",
                     time: "10 perc",
-                    ingredients: ["avokádó", "paradicsom", "fokhagyma", "Kamillatea"],
-                    description: "Kend meg a teljes kiőrlésű kenyeret fokhagymás avokádókrémmel, pakold meg lédús paradicsommal.",
-                    justification: "A friss zöldségek és növényi olajok megkötik a szabadgyököket ebben az aktív fázisban.",
-                    vilgain: "Ajánlott Vilgain elem: Vilgain Fűszerkeverékek."
+                    ingredients: ["avokádó", "paradicsom", "fokhagyma", "olívaolaj", "bazsalikom"],
+                    description: "Kend meg a pirítóst fokhagymás avokádókrémmel, és pakold meg lédús paradicsomszeletekkel.",
+                    justification: "A paradicsom likopintartalma megköti a szabadgyököket ebben a magas energiaszintű fázisban.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Zöld tea + Cink.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain BIO Quinoa és Fűszerek."
                 }
             ]
         },
         luteal: {
             name: "Luteális fázis",
-            description: "Lassuló tempó, fókuszban a stabil vércukorszint és a hangulat támogatása.",
-            superfoods: ["édesburgonya", "diófélék", "tojás", "fahéj", "étcsokoládé", "Borsmentatea", "Magnézium", "B6-vitamin"],
+            description: "Lassuló tempó, progeszteron-támogatás. Stabil vércukorszintet biztosító komplex fogások.",
+            superfoods: ["édesburgonya", "diófélék", "tojás", "fahéj", "étcsokoládé"],
             recipes: [
                 {
-                    title: "Sütőtökös vagy édesburgonyás melengető tál",
+                    title: "Fahéjas sütőtökös édesburgonya-tál pirított diófélékkel",
                     time: "30 perc",
-                    ingredients: ["édesburgonya", "diófélék", "fahéj", "Magnézium"],
-                    description: "Süsd meg az édesburgonyát fahéjjal, majd tálald ropogós diófélékkel.",
-                    justification: "A komplex szénhidrátok kiegyensúlyozzák a vércukorszintet, csökkentve a ciklus végi sóvárgást.",
+                    ingredients: ["édesburgonya", "diófélék", "fahéj", "étcsokoládé"],
+                    description: "Süsd meg az édesburgonyát fahéjjal, majd tálald ropogós diófélékkel és csipet étcsokoládéval.",
+                    justification: "Az édesburgonya lassan felszívódó szénhidrátjai és a fahéj vércukor-stabilizáló hatása csökkentik a PMS alatti sóvárgást.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Borsmentatea + Magnézium-kelát & B6-vitamin.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain Diófélék és Magvak."
+                },
+                {
+                    title: "Fűszeres édesburgonyás tojásomlett friss spenóttal",
+                    time: "20 perc",
+                    ingredients: ["tojás", "édesburgonya", "spenót", "olívaolaj"],
+                    description: "Süss krémes omlettet a pirított édesburgonya kockákkal és friss spenóttal.",
+                    justification: "A tojás minőségi fehérjéje és B6-vitaminja közvetlenül támogatja a progeszteron termelődését.",
+                    supplement: "🍵 Ajánlott tea & kiegészítő: Barátcserje kivonat + B6-vitamin.",
+                    vilgain: "Ajánlott Vilgain elem: Vilgain Omega-3 Olaj."
                 }
             ]
         }
@@ -1098,7 +1126,7 @@
         return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    const pantryInput = document.getElementById('pantry-search-input');
+    const searchInput = document.getElementById('pantry-search-input');
     const autocompleteList = document.getElementById('autocomplete-list');
     const pantryTagsContainer = document.getElementById('pantry-tags');
     const pantryRecipesContainer = document.getElementById('pantry-recipes-container');
@@ -1255,6 +1283,7 @@
         const ringEl = document.getElementById('cycle-progress-ring');
         if (ringEl) ringEl.style.strokeDashoffset = progressOffset;
 
+        // SUPERFOOD CSEMPÉK RENDERELÉSE
         const chipsContainer = document.getElementById('superfood-chips-container');
         if (chipsContainer) {
             chipsContainer.innerHTML = '';
@@ -1274,6 +1303,7 @@
             });
         }
 
+        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL & ELKÜLÖNÍTETT TEÁKKAL
         const recipeContainer = document.getElementById('cycle-recipe-container');
         if (recipeContainer) {
             recipeContainer.innerHTML = '';
@@ -1282,7 +1312,8 @@
             if (activeCycleSuperfoodFilter) {
                 recipesToRender = recipesToRender.filter(rec => 
                     rec.ingredients.map(i => i.toLowerCase()).includes(activeCycleSuperfoodFilter.toLowerCase()) || 
-                    rec.title.toLowerCase().includes(activeCycleSuperfoodFilter.toLowerCase())
+                    rec.title.toLowerCase().includes(activeCycleSuperfoodFilter.toLowerCase()) ||
+                    (rec.supplement && rec.supplement.toLowerCase().includes(activeCycleSuperfoodFilter.toLowerCase()))
                 );
             }
 
@@ -1307,6 +1338,7 @@
                         </div>
                         <div class="recipe-title">${rec.title}</div>
                         <div class="educational-justification">💡 ${rec.justification}</div>
+                        ${rec.supplement ? `<div class="supplement-box">${rec.supplement}</div>` : ''}
                         <div style="font-size: 0.85rem; color: var(--text-main); font-weight: 600; margin-bottom: 8px;">${rec.description}</div>
                         <div style="font-size: 0.78rem; font-weight: 700; margin-bottom: 6px;">
                             Fő összetevők: ${rec.ingredients.join(', ')}
