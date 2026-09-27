@@ -819,7 +819,7 @@ title: "Vasdús krémes spenótos csicseriborsó-ragu tahinivel és citromlével
 time: "20 perc",
 ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
 description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
-justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel a szervezetben.",
+justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik felszívódik.",
 supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
 vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
 }
@@ -983,8 +983,8 @@ text = text.replace(/\s+/g, ' ').replace(/,\s*,/g, ',').trim();
 return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-// REKURZÍV ADAT-KINYERÉS AZ OPEN FOOD FACTS MINTÁKBÓL
-function extractIngredients(product) {
+// SZIGORÍTOTT KINYERÉS: KISZŰRI A VONALKÓD-SZÁMOKAT ÉS A ROSSZ MEZŐKET
+function extractIngredients(product, barcode) {
 let raw = product.ingredients_text_hu || product.ingredients_text || product.ingredients_text_en || '';
 if (!raw && product.ingredients && Array.isArray(product.ingredients) && product.ingredients.length > 0) {
 raw = product.ingredients.map(i => i.text || i.id || '').filter(Boolean).join(', ');
@@ -992,19 +992,24 @@ raw = product.ingredients.map(i => i.text || i.id || '').filter(Boolean).join(',
 if (!raw && product.ingredients_tags && Array.isArray(product.ingredients_tags) && product.ingredients_tags.length > 0) {
 raw = product.ingredients_tags.map(t => t.replace(/^[a-z]{2}:/, '').replace(/-/g, ' ')).join(', ');
 }
+
+let clean = raw.trim();
+if (barcode && clean === barcode.trim()) return '';
+if (/^\d+$/.test(clean.replace(/\s+/g, ''))) return '';
+
 return raw;
 }
 
-function generateSmartAnalysis(product) {
+function generateSmartAnalysis(product, barcode) {
 const name = (product.product_name_hu || product.product_name || '').toLowerCase();
-const rawIngredients = extractIngredients(product);
+const rawIngredients = extractIngredients(product, barcode);
 const ingText = rawIngredients.toLowerCase().trim();
 
-// TÉNYLEGESEN HIÁNYZÓ ÖSSZETEVŐK KEZELÉSE – NUTRI-SCORE ÉS NOVA FALLBACK
-if (!ingText || ingText.length < 3) {
-let fallbackScore = 65;
+// HIÁNYZÓ VAGY ÉRVÉNYTELEN ÖSSZETEVŐK KEZELÉSE – TÁPÉRTIK FALLBACK
+if (!ingText || ingText.length < 5) {
+let fallbackScore = 75;
 let badgeClass = "score-mid";
-let text = "Ehhez a termékhez a nyílt adatbázisban a részletes összetevőlista nem áll rendelkezésre.";
+let text = "Ehhez a termékhez a nyílt adatbázisban a részletes összetevőlista még nem áll rendelkezésre.";
 
 if (product.nutriscore_grade) {
 const ns = String(product.nutriscore_grade).toLowerCase();
@@ -1018,7 +1023,7 @@ return {
 score: "N/A",
 badgeClass: "score-mid",
 isUnknown: true,
-analysisText: "Ehhez a termékhez a nyilvános adatbázisban még nem töltötték fel az összetevők listáját.",
+analysisText: "Sajnos ehhez a termékhez a nyilvános adatbázisban még nem érhető el az összetevők teljes listája.",
 problematicIngredients: [],
 diyTitle: "💡 Így ellenőrizheted a boltban:",
 diyContent: "<div style='font-size: 0.82rem;'>Forgasd meg a dobozt a kezedben! Ha nem látsz benne hozzáadott cukrot, pálmaolajat vagy mesterséges E-számokat, a termék nyugodtan fogyasztható.</div>",
@@ -1135,12 +1140,12 @@ vilgainRecommend
 };
 }
 
-function renderProductResult(product) {
+function renderProductResult(product, barcode) {
 const resultCard = document.getElementById('ellenor-result-card');
-const analysis = generateSmartAnalysis(product);
+const analysis = generateSmartAnalysis(product, barcode);
 
 const imageUrl = product.image_url || product.image_front_url || product.image_small_url || FALLBACK_IMAGE_URL;
-const rawIngredients = extractIngredients(product);
+const rawIngredients = extractIngredients(product, barcode);
 const translatedIngredients = translateIngredientsToHungarian(rawIngredients);
 
 let warningHTML = "";
@@ -1197,7 +1202,7 @@ resultCard.classList.remove('hidden');
 resultCard.innerHTML = '<div style="padding:16px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
 
 if (SCANNER_DATABASE[barcode]) {
-renderProductResult(SCANNER_DATABASE[barcode]);
+renderProductResult(SCANNER_DATABASE[barcode], barcode);
 return;
 }
 
@@ -1219,7 +1224,7 @@ nutriscore_grade: prod.nutriscore_grade || null,
 nova_group: prod.nova_group || null,
 image_url: prod.image_url || prod.image_front_url || prod.image_small_url || null
 };
-renderProductResult(formattedProduct);
+renderProductResult(formattedProduct, barcode);
 } else {
 renderNotFoundUI(barcode);
 }
