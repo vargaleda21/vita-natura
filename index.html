@@ -157,6 +157,30 @@ font-weight: 700;
 color: #FFFCEA !important;
 background: #3D3332 !important;
 }
+.sub-switch-container {
+display: flex;
+gap: 8px;
+margin-bottom: 16px;
+background: rgba(0,0,0,0.08);
+padding: 4px;
+border-radius: var(--radius-sm);
+}
+.sub-tab-btn {
+flex: 1;
+padding: 8px;
+border: none;
+background: transparent;
+color: var(--text-muted);
+font-weight: 700;
+font-size: 0.8rem;
+border-radius: 6px;
+cursor: pointer;
+text-align: center;
+}
+.sub-tab-btn.active {
+background: var(--primary);
+color: #FFFFFF;
+}
 .card {
 background: var(--bg-card);
 border-radius: var(--radius-lg);
@@ -647,6 +671,14 @@ text-align: center;
 margin: 14px 0;
 border: 1px solid #D3B5B3;
 }
+.raw-info-card {
+background: rgba(255,255,255,0.9);
+border: 1px solid var(--border-color);
+border-radius: var(--radius-md);
+padding: 16px;
+margin-top: 12px;
+color: #1B2C36;
+}
 .disclaimer-text {
 font-size: 0.7rem;
 color: var(--text-muted);
@@ -672,9 +704,15 @@ margin-top: 14px;
 <button class="tab-btn" id="tab-cycle" data-module="cycle">Ciklusszinkron</button>
 </div>
 <div id="module-ellenor">
+<div class="sub-switch-container">
+<button class="sub-tab-btn active" id="sub-tab-barcode">📷 Csomagolt termék (Vonalkód)</button>
+<button class="sub-tab-btn" id="sub-tab-raw">🌿 Nyers alapanyag & Szuperfoodok</button>
+</div>
+
+<div id="section-barcode-scanner">
 <div class="card">
 <div class="card-header">
-<div class="card-title">Alapanyag-ellenőr</div>
+<div class="card-title">Csomagolt Termék Ellenőr</div>
 <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Olvasd be vagy add meg a vonalkódot</div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -696,6 +734,22 @@ margin-top: 14px;
 </div>
 </div>
 <div id="ellenor-result-card" class="card hidden"></div>
+</div>
+
+<div id="section-raw-database" class="hidden">
+<div class="card">
+<div class="card-header">
+<div class="card-title">Nyers Alapanyag Tudástár</div>
+<div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Ismerd meg a természetes alapanyagok élettani hatásait!</div>
+</div>
+<div class="input-wrapper">
+<input type="text" id="raw-search-input" class="custom-input" placeholder="Keress alapanyagot (pl. Sárgarépa, Cékla, Chia mag...)" autocomplete="off">
+<div id="raw-autocomplete-list" class="autocomplete-dropdown hidden"></div>
+</div>
+</div>
+<div id="raw-info-result-container"></div>
+</div>
+
 <div class="methodology-box-flexible">
 <div class="methodology-title">Pontozási metodológia és kategóriák</div>
 <div class="methodology-item">
@@ -1006,6 +1060,39 @@ let html5QrCode = null;
 let activeCycleSuperfoodFilter = null;
 const FALLBACK_IMAGE_URL = 'assets/images/fallback-food.jpg';
 
+const RAW_INGREDIENTS_DATABASE = {
+"sargarepa": { name: "Sárgarépa (BIO)", benefit: "Magas béta-karotin tartalmának köszönhetően támogatja a bőr és a szem egészségét, valamint sejtvédő hatású.", tip: "Zsírok jelenlétében (pl. olívaolaj) szívódik fel a legjobban az A-vitamin!", vilgain: "Vilgain Extra Szűz BIO Olívaolaj" },
+"cekla": { name: "Cékla", benefit: "Kiváló vasforrás és természetes nitráttartalma javítja a vérkeringést és az állóképességet.", tip: "C-vitaminnal fogyasztva (pl. citromlé) a vasfelszívódás többszörösére nő!", vilgain: "Vilgain Organikus Fűszerkeverék" },
+"spenot": { name: "Spenót", benefit: "Gazdag folsavban, magnéziumban és növényi vasban, támogatja a sejtek regenerációját.", tip: "Enyhén párolva csökken az oxaláttartalma, így jobb a tápanyag-hasznosulás.", vilgain: "Vilgain BIO Csicseriborsó" },
+"edesburgonya": { name: "Édesburgonya", benefit: "Lassan felszívódó, összetett szénhidrát, amely stabilan tartja a vércukorszintet.", tip: "A héjával együtt sütve extra diétás rostot biztosít az emésztésnek.", vilgain: "Vilgain Ghee Tisztított Vaj" },
+"brokkoli": { name: "Brokkoli", benefit: "Szulforafánban gazdag keresztesvirágú zöldség, amely támogatja a máj méregtelenítési folyamatait.", tip: "A roppanósra párolt brokkoliban több aktív enzim marad meg.", vilgain: "Vilgain Extra Szűz Olívaolaj" },
+"fokhagyma": { name: "Fokhagyma", benefit: "Természetes allicin-tartalma révén erős antibakteriális és immunerősítő hatású.", tip: "Zúzás után hagyd állni 5-10 percet a serpenyőbe dobás előtt az allicin aktiválásához!", vilgain: "Vilgain BIO Fűszerek" },
+"cukkini": { name: "Cukkini", benefit: "Könnyen emészthető, alacsony kalóriatartalmú zöldség magas kálium- és víztartalommal.", tip: "Héjastól fogyasztva védi az emésztőrendszer nyálkahártyáját.", vilgain: "Vilgain Szezámmag" },
+"avokado": { name: "Avokádó", benefit: "Szívbarát monotelítetlen zsírsavakban és káliumban gazdag szuperfood.", tip: "Segíti a zsírban oldódó vitaminok (A, D, E, K) felszívódását a salátákból.", vilgain: "Vilgain BIO Quinoa" },
+"paradicsom": { name: "Paradicsom", benefit: "Lykopin-tartalma erős antioxidáns, amely védi a sejteket az oxidatív stressztől.", tip: "Hőkezelve (pl. süve vagy szószban) a lykopin sokkal hatékonyabban szívódik fel!", vilgain: "Vilgain BIO Paradicsomszósz" },
+"voroshagyma": { name: "Vöröshagyma", benefit: "Kvercetinben dús, amely gyulladáscsökkentő és immunerősítő hatással bír.", tip: "Lassan dinsztelve természetes édeskés ízt ad a fogásoknak cukor hozzáadása nélkül.", vilgain: "Vilgain BIO Kókuszolaj" },
+"banan": { name: "Banán", benefit: "Kiváló gyors és tiszta energiaforrás káliummal és B6-vitaminnal.", tip: "A kissé zöldebb banán több rezisztens keményítőt tartalmaz, ami táplálja a bélflórát.", vilgain: "Vilgain Organikus Mogyoróvaj" },
+"bogyos gyumolcsok": { name: "Bogyós gyümölcsök (Áfonya / Málna)", benefit: "A legmagasabb antioxidáns-tartalmú gyümölcsök alacsony cukortartalommal.", tip: "Zabkásába keverve stabilizálják a reggeli vércukorszintet.", vilgain: "Vilgain Tiszta Zabpehely" },
+"citrom": { name: "Citrom", benefit: "Magas C-vitamin tartalmú, serkenti az emésztőenzimek termelődését.", tip: "Reggel langyos vízzel fogyasztva beindítja az emésztőrendszert.", vilgain: "Vilgain Chia Mag" },
+"alma": { name: "Alma", benefit: "Pektin rosttartalma segíti a bélflóra egyensúlyát és tisztítja az emésztőrendszert.", tip: "Mindig héjával együtt fogyaszd a maximális rostbevitelért!", vilgain: "Vilgain Fahéj" },
+"granatalma": { name: "Gránátalma", benefit: "Polifenolokban rendkívül gazdag gyümölcs, amely támogatja az érrendszert.", tip: "Magvai friss roppanósságot adnak a sós salátáknak is.", vilgain: "Vilgain Kesudió" },
+"narancs": { name: "Narancs", benefit: "C-vitamin és bioflavonoid forrás az immunrendszer és a kollagéntermelés támogatásához.", tip: "Friss gyümölcsként fogyasztva a rostjai csökkentik a cukorfelszívódás ütemét.", vilgain: "Vilgain Diófélék" },
+"chia mag": { name: "Chia mag", benefit: "Növényi Omega-3 zsírsavakban és vízoldékony rostokban gazdag szuperfood.", tip: "Folyadékba áztatva gélképző rostjai kímélik a gyomrot és laktatnak.", vilgain: "Vilgain BIO Chia Mag" },
+"lenmag": { name: "Lenmag", benefit: "Lignánokban és rostokban gazdag, támogatja a hormonális egyensúlyt.", tip: "Frissen őrölve vagy mozsárban törve tudja a szervezet feldolgozni a belsejét!", vilgain: "Vilgain Szezámmag & Lenmag" },
+"mandula": { name: "Mandula", benefit: "Magas E-vitamin és magnézium tartalmú csonthéjas a szív és idegrendszer védelméért.", tip: "Egy marék mandula délután stabilizálja az energiaszintet.", vilgain: "Vilgain Mandulavaj" },
+"kesudio": { name: "Kesudió", benefit: "Cinkben és rézben dús mag, amely hozzájárul a haj és a bőr egészségéhez.", tip: "Beáztatva és turmixolva selymes, vegán krémek alapja.", vilgain: "Vilgain Kesudió" },
+"torokmogyoro": { name: "Törökmogyoró", benefit: "Egészséges zsírok és B-vitaminok forrása az agyműködés serkentésére.", tip: "Pörkölve intenzívebb az íze, tiszta kakaóval mennyei párosítás.", vilgain: "Vilgain 100% Törökmogyoróvaj" },
+"tokmag": { name: "Tökmag", benefit: "Rendkívül magas cink- és magnéziumtartalma miatt védi az immunrendszert.", tip: "Pirítsd át száraz serpenyőben pár perc alatt a ropogós élményért!", vilgain: "Vilgain BIO Tökmagolaj" },
+"szezammag": { name: "Szezámmag", benefit: "A legmagasabb növényi kalciumforrások egyike, jó hatással van a csontokra.", tip: "Tahini (szezámpaszta) formájában krémes szószok fő eleme.", vilgain: "Vilgain BIO Tahini" },
+"gyomber": { name: "Gyömbér", benefit: "Erőteljes gyulladáscsökkentő és emésztésjavító fűszer, csökkenti a puffadást.", tip: "Reszelve teába vagy meleg ragukba téve átmelegíti a szervezetet.", vilgain: "Vilgain BIO Fűszerek" },
+"fahej": { name: "Fahéj", benefit: "Biológiailag bizonyítottan növeli az inzulinérzékenységet és szabályozza a vércukrot.", tip: "Ceylon fahéjat válassz a tisztább és kíméletesebb összetételért!", vilgain: "Vilgain Organikus Ceylon Fahéj" },
+"kakaopor": { name: "Kakaópor (Étcsoki)", benefit: "Flavonoidokban gazdag hangulatjavító és érmentő szuperfood.", tip: "Cukormentes, legalább 70%-os kakaótartalmú változatot válassz!", vilgain: "Vilgain BIO Kakaópor" },
+"olivaolaj": { name: "Extra szűz olívaolaj", benefit: "Hidegen sajtolt monotelítetlen zsírsavak és E-vitamin forrása.", tip: "Ne hevítésre, hanem tálaláskor a kész ételre csepegtetve használd!", vilgain: "Vilgain Extra Szűz BIO Olívaolaj" },
+"kurkuma": { name: "Kurkuma", benefit: "Kurkumin tartalma miatt az egyik legerősebb természetes gyulladáscsökkentő.", tip: "Fekete borssal és egészséges zsírokkal együtt fogyasztva 2000%-kal jobb a felszívódása!", vilgain: "Vilgain BIO Kurkuma" },
+"kakukkfu": { name: "Kakukkfű", benefit: "Illóolajai (timol) fertőtlenítik a légutakat és támogatják az emésztést.", tip: "Sültekhez és májas ételekhez az egyik legfinomabb friss fűszer.", vilgain: "Vilgain BIO Fűszerkeverék" },
+"zoldtea": { name: "Zöld tea", benefit: "EGCG katekin antioxidánsa serkenti az anyagcserét és a sejtek védelmét.", tip: "80 fokos, nem forró vízzel forrázd a hatóanyagok védelméért!", vilgain: "Vilgain Organikus Teák" }
+};
+
 const SCANNER_DATABASE = {
 "mogyorokrem": {
 product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
@@ -1094,10 +1181,11 @@ nutriscore_grade: 'a'
 };
 
 const availableIngredients = [
-'zabpehely', 'mogyoróvaj', 'méz', 'tojás', 'banán', 'chia mag', 
-'mandulatej', 'avokádó', 'csirkemell', 'quinoa', 'spenót', 'fokhagyma', 'olívaolaj', 'paradicsom',
-'marhahús', 'lazac', 'basmati rizs', 'édesburgonya', 'brokkoli', 'cukkini', 'fekete bab', 'csicseriborsó',
-'lencse', 'vöröshagyma', 'citrom', 'mandula', 'kesudió', 'étcsokoládé', 'kakaópor', 'fahéj', 'gyömbér'
+'sárgarépa', 'cékla', 'spenót', 'édesburgonya', 'brokkoli', 'fokhagyma', 'cukkini', 'avokádó', 'paradicsom', 'vöröshagyma',
+'banán', 'bogyós gyümölcsök', 'citrom', 'alma', 'gránátalma', 'narancs',
+'chia mag', 'lenmag', 'mandula', 'kesudió', 'törökmogyoró', 'tökmag', 'szezámmag',
+'gyömbér', 'fahéj', 'kakaópor', 'olívaolaj', 'kurkuma', 'kakukkfű', 'zöld tea',
+'zabpehely', 'mogyoróvaj', 'méz', 'tojás', 'mandulatej', 'csirkemell', 'quinoa', 'marhahús', 'lazac', 'basmati rizs', 'fekete bab', 'csicseriborsó'
 ];
 let selectedIngredients = [];
 
@@ -1156,7 +1244,7 @@ const cyclePhasesInfo = {
 menstrual: {
 name: "Menstruációs fázis",
 description: "Alacsony energiaszint, regenerálódás. Fókuszban a melegítő, vasdús ételek és a mély pihenés.",
-superfoods: ["cékla", "csicseriborsó", "spenót", "gyömbér", "étcsokoládé"],
+superfoods: ["cékla", "csicseriborsó", "spenót", "gyömbér", "kakaópor"],
 recipes: [
 {
 title: "Melegítő cékla-krémleves gyömbérrel és pirított tökmaggal",
@@ -1231,13 +1319,13 @@ vilgain: "Ajánlott Vilgain elem: Vilgain BIO Quinoa és Fűszerek."
 luteal: {
 name: "Luteális fázis",
 description: "Lassuló tempó, progeszteron-támogatás. Stabil vércukorszintet biztosító komplex fogások.",
-superfoods: ["édesburgonya", "diófélék", "tojás", "fahéj", "étcsokoládé"],
+superfoods: ["édesburgonya", "diófélék", "tojás", "fahéj", "kakaópor"],
 recipes: [
 {
 title: "Fahéjas sütőtökös édesburgonya-tál pirított diófélékkel",
 time: "30 perc",
-ingredients: ["édesburgonya", "diófélék", "fahéj", "étcsokoládé"],
-description: "Süsd meg az édesburgonyát fahéjjal, majd tálald ropogós diófélékkel és csipet étcsokoládéval.",
+ingredients: ["édesburgonya", "diófélék", "fahéj", "kakaópor"],
+description: "Süsd meg az édesburgonyát fahéjjal, majd tálald ropogós diófélékkel és csipet kakaóporral.",
 justification: "Az édesburgonya lassan felszívódó szénhidrátjai és a fahéj vércukor-stabilizáló hatása csökkentik a PMS alatti sóvárgást.",
 supplement: "🍵 Ajánlott tea & kiegészítő: Borsmentatea + Magnézium-kelát & B6-vitamin.",
 vilgain: "Ajánlott Vilgain elem: Vilgain Diófélék és Magvak."
@@ -1273,6 +1361,59 @@ if (moduleName === 'kamra') renderPantryRecipes();
 if (moduleName === 'cycle') updateCycleCalculator();
 }
 
+function switchSubSection(type) {
+const barcodeSec = document.getElementById('section-barcode-scanner');
+const rawSec = document.getElementById('section-raw-database');
+const btnBarcode = document.getElementById('sub-tab-barcode');
+const btnRaw = document.getElementById('sub-tab-raw');
+
+if (type === 'barcode') {
+if (barcodeSec) barcodeSec.classList.remove('hidden');
+if (rawSec) rawSec.classList.add('hidden');
+if (btnBarcode) btnBarcode.classList.add('active');
+if (btnRaw) btnRaw.classList.remove('active');
+} else {
+if (barcodeSec) barcodeSec.classList.add('hidden');
+if (rawSec) rawSec.classList.remove('hidden');
+if (btnBarcode) btnBarcode.classList.remove('active');
+if (btnRaw) btnRaw.classList.add('active');
+stopCamera();
+}
+}
+
+function renderRawIngredientInfo(key) {
+const container = document.getElementById('raw-info-result-container');
+if (!container) return;
+const item = RAW_INGREDIENTS_DATABASE[key];
+if (!item) return;
+
+const cleanIngredientName = item.name.replace(/\s*\([^)]*\)/g, '').toLowerCase().trim();
+
+container.innerHTML = `
+<div class="raw-info-card">
+<div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 4px;">${item.name}</div>
+<div style="font-size: 0.88rem; font-weight: 600; color: var(--text-main); margin-bottom: 10px;">✨ <strong>Élettani hatás:</strong> ${item.benefit}</div>
+<div style="background: var(--bg-card-alt); padding: 10px; border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; margin-bottom: 10px;">
+💡 <strong>Szakértői tipp:</strong> ${item.tip}
+</div>
+<div class="vilgain-box" style="margin-bottom: 12px;">
+🛒 <strong>Ajánlott tiszta kiegészítő:</strong> ${item.vilgain}
+</div>
+<button onclick="jumpToRecipesWithIngredient('${cleanIngredientName}')" class="btn-primary" style="width: 100%; text-align: center;">
+🍳 Recept megtekintése ezzel az alapanyaggal ➔
+</button>
+</div>
+`;
+}
+
+window.jumpToRecipesWithIngredient = function(ingredientName) {
+if (!selectedIngredients.includes(ingredientName)) {
+selectedIngredients.push(ingredientName);
+}
+switchModule('kamra');
+renderPantryTags();
+};
+
 function translateIngredientsToHungarian(rawText) {
 if (!rawText || rawText.trim() === '') return "A hozzávalók nem érhetők el az adatbázisban.";
 let text = rawText;
@@ -1282,55 +1423,21 @@ text = text.replace(/minimalni\s+trvanlivost\s+do\s+[a-z]*/gi, '');
 text = text.replace(/najlepiej\s+spożyć\s+do/gi, '');
 text = text.replace(/ital\s+maarzellert/gi, '');
 text = text.toLowerCase();
-const typoDict = {
-'büzát': 'búzát',
-'büzalizst': 'búzaliszt',
-'chiese': 'cheese',
-'toporban': ''
-};
-for (let typo in typoDict) {
-text = text.replace(new RegExp(typo, 'g'), typoDict[typo]);
-}
+const typoDict = { 'büzát': 'búzát', 'büzalizst': 'búzaliszt', 'chiese': 'cheese', 'toporban': '' };
+for (let typo in typoDict) { text = text.replace(new RegExp(typo, 'g'), typoDict[typo]); }
 const dict = {
-'glucose syrup': 'glükózszirup',
-'fructose syrup': 'fruktózszirup',
-'invert sugar syrup': 'inverz cukorszirup',
-'palm oil': 'pálmaolaj',
-'sunflower oil': 'napraforgóolaj',
-'rapeseed oil': 'repceolaj',
-'olive oil': 'olívaolaj',
-'wheat flour': 'búzaliszt',
-'oat flakes': 'zabpehely',
-'cocoa mass': 'kakaómassza',
-'cocoa butter': 'kakaóvaj',
-'cane sugar': 'nádcukor',
-'water': 'víz',
-'sugar': 'cukor',
-'salt': 'só',
-'honey': 'méz',
-'peanuts': 'földimogyoró',
-'almonds': 'mandula',
-'hazelnuts': 'mogyoró',
-'chocolate pieces': 'csokoládédarabok',
-'chocolate': 'csokoládé',
-'emulsifier': 'emulgeálószer',
-'lecithin': 'lecitin',
-'flavouring': 'aroma',
-'flavor enhancer': 'ízfokozó',
-'preservative': 'tartósítószer',
-'acidifier': 'savanyúságot szabályozó anyag',
-'thickener': 'sűrítőanyag',
-'modified starch': 'módosított keményítő',
-'milk': 'tej',
-'skimmed milk powder': 'sovány tejpor',
-'fat reduced cocoa powder': 'zsírszegény kakaópor',
-'monosodium glutamate': 'nátrium-glutamát (E621)',
-'citric acid': 'citromsav (E330)',
-'xanthan gum': 'xantángumi (E415)'
+'glucose syrup': 'glükózszirup', 'fructose syrup': 'fruktózszirup', 'invert sugar syrup': 'inverz cukorszirup',
+'palm oil': 'pálmaolaj', 'sunflower oil': 'napraforgóolaj', 'rapeseed oil': 'repceolaj', 'olive oil': 'olívaolaj',
+'wheat flour': 'búzaliszt', 'oat flakes': 'zabpehely', 'cocoa mass': 'kakaómassza', 'cocoa butter': 'kakaóvaj',
+'cane sugar': 'nádcukor', 'water': 'víz', 'sugar': 'cukor', 'salt': 'só', 'honey': 'méz', 'peanuts': 'földimogyoró',
+'almonds': 'mandula', 'hazelnuts': 'mogyoró', 'chocolate pieces': 'csokoládédarabok', 'chocolate': 'csokoládé',
+'emulsifier': 'emulgeálószer', 'lecithin': 'lecitin', 'flavouring': 'aroma', 'flavor enhancer': 'ízfokozó',
+'preservative': 'tartósítószer', 'acidifier': 'savanyúságot szabályozó anyag', 'thickener': 'sűrítőanyag',
+'modified starch': 'módosított keményítő', 'milk': 'tej', 'skimmed milk powder': 'sovány tejpor',
+'fat reduced cocoa powder': 'zsírszegény kakaópor', 'monosodium glutamate': 'nátrium-glutamát (E621)',
+'citric acid': 'citromsav (E330)', 'xanthan gum': 'xantángumi (E415)'
 };
-for (let key in dict) {
-text = text.replace(new RegExp(key, 'g'), dict[key]);
-}
+for (let key in dict) { text = text.replace(new RegExp(key, 'g'), dict[key]); }
 text = text.replace(/\s+/g, ' ').replace(/,\s*,/g, ',').trim();
 return text.charAt(0).toUpperCase() + text.slice(1);
 }
@@ -1343,11 +1450,9 @@ raw = product.ingredients.map(i => i.text || i.id || '').filter(Boolean).join(',
 if (!raw && product.ingredients_tags && Array.isArray(product.ingredients_tags) && product.ingredients_tags.length > 0) {
 raw = product.ingredients_tags.map(t => t.replace(/^[a-z]{2}:/, '').replace(/-/g, ' ')).join(', ');
 }
-
 let clean = raw.trim();
 if (barcode && clean === barcode.trim()) return '';
 if (/^\d+$/.test(clean.replace(/\s+/g, ''))) return '';
-
 return raw;
 }
 
@@ -1413,7 +1518,7 @@ badgeClass: "score-mid",
 isUnknown: true,
 analysisText: "Sajnos ehhez a termékhez a nyilvános adatbázisban még nem töltötték fel az összetevők teljes listáját.",
 problematicIngredients: [],
-diyTitle: "💡 Így ellenőrizheted a boltban:",
+diyTitle: "💡 Így ellenőrizhed a boltban:",
 diyContent: "<div style='font-size: 0.82rem;'>Forgasd meg a dobozt a kezedben! Ha nem látsz benne hozzáadott cukrot, pálmaolajat vagy mesterséges E-számokat, a termék nyugodtan fogyasztható.</div>",
 vilgainRecommend: "🛒 Garantáltan tiszta alternatíva: Vilgain BIO Termékek."
 };
@@ -1906,6 +2011,9 @@ switchModule(e.target.getAttribute('data-module'));
 });
 });
 
+document.getElementById('sub-tab-barcode')?.addEventListener('click', () => switchSubSection('barcode'));
+document.getElementById('sub-tab-raw')?.addEventListener('click', () => switchSubSection('raw'));
+
 document.querySelectorAll('.demo-btn').forEach(btn => {
 btn.addEventListener('click', (e) => {
 const code = e.target.getAttribute('data-demo');
@@ -1953,6 +2061,42 @@ startCamBtn.textContent = 'Kamera indítása';
 const stopCamBtn = document.getElementById('btn-stop-camera');
 if (stopCamBtn) stopCamBtn.addEventListener('click', stopCamera);
 
+const rawInputEl = document.getElementById('raw-search-input');
+const rawAutoListEl = document.getElementById('raw-autocomplete-list');
+if (rawInputEl && rawAutoListEl) {
+rawInputEl.addEventListener('input', (e) => {
+const val = normalizeStr(e.target.value.trim());
+rawAutoListEl.innerHTML = '';
+if (!val) {
+rawAutoListEl.classList.add('hidden');
+return;
+}
+const matches = Object.keys(RAW_INGREDIENTS_DATABASE).filter(key => {
+const item = RAW_INGREDIENTS_DATABASE[key];
+return normalizeStr(item.name).includes(val) || normalizeStr(key).includes(val);
+});
+
+if (matches.length === 0) {
+rawAutoListEl.classList.add('hidden');
+return;
+}
+
+matches.forEach(mKey => {
+const item = RAW_INGREDIENTS_DATABASE[mKey];
+const div = document.createElement('div');
+div.className = 'autocomplete-item';
+div.textContent = item.name;
+div.addEventListener('click', () => {
+rawInputEl.value = item.name;
+rawAutoListEl.classList.add('hidden');
+renderRawIngredientInfo(mKey);
+});
+rawAutoListEl.appendChild(div);
+});
+rawAutoListEl.classList.remove('hidden');
+});
+}
+
 const pantryInputEl = document.getElementById('pantry-search-input');
 const autocompleteListEl = document.getElementById('autocomplete-list');
 if (pantryInputEl) {
@@ -1988,6 +2132,9 @@ autocompleteListEl.classList.remove('hidden');
 document.addEventListener('click', (e) => {
 if (pantryInputEl && autocompleteListEl && !pantryInputEl.contains(e.target) && !autocompleteListEl.contains(e.target)) {
 autocompleteListEl.classList.add('hidden');
+}
+if (rawInputEl && rawAutoListEl && !rawInputEl.contains(e.target) && !rawAutoListEl.contains(e.target)) {
+rawAutoListEl.classList.add('hidden');
 }
 });
 
