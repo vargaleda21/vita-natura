@@ -590,21 +590,17 @@ margin-top: 14px;
 <div class="brand-title">daleday</div>
 <div class="brand-subtitle">Ahol a tudatosság természetessé válik.</div>
 </header>
-
 <div class="module-switch-container">
 <button class="tab-btn active" id="tab-ellenor" data-module="ellenor">Alapanyag-ellenőr</button>
 <button class="tab-btn" id="tab-kamra" data-module="kamra">Kamra-asszisztens</button>
 <button class="tab-btn" id="tab-cycle" data-module="cycle">Ciklusszinkron</button>
 </div>
-
-<!-- ALAPANYAG-ELLENŐR MODUL -->
 <div id="module-ellenor">
 <div class="card">
 <div class="card-header">
 <div class="card-title">Alapanyag-ellenőr</div>
 <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Olvasd be vagy add meg a vonalkódot</div>
 </div>
-
 <div style="display: flex; flex-direction: column; gap: 10px;">
 <div style="display: flex; gap: 8px;">
 <input type="text" id="manual-barcode" class="custom-input" placeholder="Vonalkód (pl. 3017620422003)">
@@ -612,12 +608,10 @@ margin-top: 14px;
 </div>
 <button id="btn-start-camera" class="btn-secondary" style="width: 100%;">Kamera indítása</button>
 </div>
-
 <div id="scanner-container" class="hidden">
 <div id="reader" style="width: 100%;"></div>
 <button id="btn-stop-camera" class="btn-secondary" style="width: 100%; margin-top: 6px; background: #1B2C36; color: #D3B5B3; border: none;">Kamera bezárása</button>
 </div>
-
 <div class="demo-buttons-bar">
 <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-heading);">Demó termékek:</span>
 <button class="demo-btn" data-demo="granola">Hagyományos granola</button>
@@ -625,9 +619,7 @@ margin-top: 14px;
 <button class="demo-btn" data-demo="pesto">Vilgain BIO pesto</button>
 </div>
 </div>
-
 <div id="ellenor-result-card" class="card hidden"></div>
-
 <div class="methodology-box-flexible">
 <div class="methodology-title">Pontozási metodológia és kategóriák</div>
 <div class="methodology-item">
@@ -641,34 +633,26 @@ margin-top: 14px;
 </div>
 </div>
 </div>
-
-<!-- KAMRA MODUL -->
 <div id="module-kamra" class="hidden">
 <div class="card">
 <div class="card-header">
 <div class="card-title">Mi van a kamrádban?</div>
 <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Válassz alapanyagokat a szűréshez</div>
 </div>
-
 <div class="input-wrapper">
 <input type="text" id="pantry-search-input" class="custom-input" placeholder="Alapanyag keresése..." autocomplete="off">
 <div id="autocomplete-list" class="autocomplete-dropdown hidden"></div>
 </div>
-
 <div class="pantry-tags-container" id="pantry-tags"></div>
 </div>
-
 <div id="pantry-recipes-container"></div>
 </div>
-
-<!-- CIKLUSSZINKRON MODUL -->
 <div id="module-cycle" class="hidden">
 <div class="card">
 <div class="card-header">
 <div class="card-title">Ciklus-kalkulátor</div>
 <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Hormonális fázisok szerinti tervező</div>
 </div>
-
 <div class="form-group">
 <div class="input-wrapper">
 <label class="input-label">Utolsó menstruáció első napja</label>
@@ -679,7 +663,6 @@ margin-top: 14px;
 <input type="number" id="cycle-length" class="custom-input" value="28" min="20" max="40">
 </div>
 </div>
-
 <div class="cycle-visualizer">
 <div class="cycle-ring-container">
 <svg class="cycle-ring-svg" viewBox="0 0 160 160">
@@ -700,27 +683,21 @@ margin-top: 14px;
 A fázis leírása betöltés alatt...
 </div>
 </div>
-
 <div class="booster-box">
 <div style="font-weight: 700; color: var(--text-heading); font-size: 0.9rem; margin-bottom: 4px;">Ezeket érdemes jelenleg fogyasztanod</div>
 <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Kattints a szuperfood csempékre a receptek szűréséhez:</div>
 <div class="superfood-bar" id="superfood-chips-container"></div>
 </div>
-
 <div class="disclaimer-text">
 Tájékoztatás: A daleday életmód- és táplálkozási felület. Nem minősül orvosi diagnózisnak.
 </div>
 </div>
-
 <div id="cycle-recipe-container"></div>
 </div>
 </div>
-
 <script>
 let html5QrCode = null;
-
 const FALLBACK_IMAGE_URL = 'assets/images/fallback-food.jpg';
-
 const SCANNER_DATABASE = {
 "mogyorokrem": {
 product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
@@ -765,7 +742,6 @@ image_url: 'assets/images/pesto.jpg',
 nutriscore_grade: 'a'
 }
 };
-
 const availableIngredients = [
 'zabpehely', 'mogyoróvaj', 'méz', 'tojás', 'banán', 'chia mag', 
 'mandulatej', 'avokádó', 'csirkemell', 'quinoa', 'spenót', 'fokhagyma', 'olívaolaj', 'paradicsom',
@@ -773,7 +749,6 @@ const availableIngredients = [
 'lencse', 'vöröshagyma', 'citrom', 'mandula', 'kesudió', 'étcsokoládé', 'kakaópor', 'fahéj', 'gyömbér'
 ];
 let selectedIngredients = [];
-
 const pantryRecipesData = [
 {
 title: 'Pirított csirkemellcsíkok basmati rizzsel és párolt brokkolival, zöldfűszeres tahinimártással',
@@ -824,7 +799,6 @@ description: 'Főzd meg a quinoát, majd keverd össze a friss spenóttal, kock�
 vilgain: 'Ajánlott Vilgain elem: Vilgain Extra Szűz Olívaolaj és BIO Quinoa.'
 }
 ];
-
 const cyclePhasesInfo = {
 menstrual: {
 name: "Menstruációs fázis",
@@ -845,7 +819,7 @@ title: "Vasdús krémes spenótos csicseriborsó-ragu tahinivel és citromlével
 time: "20 perc",
 ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
 description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
-justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik felszívódik.",
+justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel a szervezetben.",
 supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
 vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
 }
@@ -927,7 +901,6 @@ vilgain: "Ajánlott Vilgain elem: Vilgain Omega-3 Olaj."
 ]
 }
 };
-
 let activeCycleSuperfoodFilter = null;
 
 function switchModule(moduleName) {
@@ -950,17 +923,13 @@ if (moduleName === 'cycle') updateCycleCalculator();
 
 function translateIngredientsToHungarian(rawText) {
 if (!rawText || rawText.trim() === '') return "A hozzávalók nem érhetők el az adatbázisban.";
-
 let text = rawText;
-
 text = text.replace(/\(hu\)/gi, '');
 text = text.replace(/minőségét\s+megön\s+[a-z]+/gi, '');
 text = text.replace(/minimalni\s+trvanlivost\s+do\s+[a-z]*/gi, '');
 text = text.replace(/najlepiej\s+spożyć\s+do/gi, '');
 text = text.replace(/ital\s+maarzellert/gi, '');
-
 text = text.toLowerCase();
-
 const typoDict = {
 'büzát': 'búzát',
 'büzalizst': 'búzaliszt',
@@ -970,7 +939,6 @@ const typoDict = {
 for (let typo in typoDict) {
 text = text.replace(new RegExp(typo, 'g'), typoDict[typo]);
 }
-
 const dict = {
 'glucose syrup': 'glükózszirup',
 'fructose syrup': 'fruktózszirup',
@@ -1011,30 +979,60 @@ const dict = {
 for (let key in dict) {
 text = text.replace(new RegExp(key, 'g'), dict[key]);
 }
-
 text = text.replace(/\s+/g, ' ').replace(/,\s*,/g, ',').trim();
 return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-function generateSmartAnalysis(product) {
-const name = (product.product_name_hu || product.product_name || '').toLowerCase();
-
-let rawIngredients = product.ingredients_text_hu || product.ingredients_text || product.ingredients_text_en || '';
-if (!rawIngredients && product.ingredients && product.ingredients.length > 0) {
-rawIngredients = product.ingredients.map(i => i.text || i.id || '').join(', ');
+// REKURZÍV ADAT-KINYERÉS AZ OPEN FOOD FACTS MINTÁKBÓL
+function extractIngredients(product) {
+let raw = product.ingredients_text_hu || product.ingredients_text || product.ingredients_text_en || '';
+if (!raw && product.ingredients && Array.isArray(product.ingredients) && product.ingredients.length > 0) {
+raw = product.ingredients.map(i => i.text || i.id || '').filter(Boolean).join(', ');
+}
+if (!raw && product.ingredients_tags && Array.isArray(product.ingredients_tags) && product.ingredients_tags.length > 0) {
+raw = product.ingredients_tags.map(t => t.replace(/^[a-z]{2}:/, '').replace(/-/g, ' ')).join(', ');
+}
+return raw;
 }
 
+function generateSmartAnalysis(product) {
+const name = (product.product_name_hu || product.product_name || '').toLowerCase();
+const rawIngredients = extractIngredients(product);
 const ingText = rawIngredients.toLowerCase().trim();
 
-if (!ingText || ingText.length < 5) {
+// TÉNYLEGESEN HIÁNYZÓ ÖSSZETEVŐK KEZELÉSE – NUTRI-SCORE ÉS NOVA FALLBACK
+if (!ingText || ingText.length < 3) {
+let fallbackScore = 65;
+let badgeClass = "score-mid";
+let text = "Ehhez a termékhez a nyílt adatbázisban a részletes összetevőlista nem áll rendelkezésre.";
+
+if (product.nutriscore_grade) {
+const ns = String(product.nutriscore_grade).toLowerCase();
+if (ns === 'a' || ns === 'b') { fallbackScore = 88; badgeClass = "score-high"; text += " A hivatalos Nutri-Score alapján a termék jó tápértékű."; }
+else if (ns === 'd' || ns === 'e') { fallbackScore = 35; badgeClass = "score-low"; text += " A hivatalos Nutri-Score alapján a termék tápértéke alacsony / erősen feldolgozott."; }
+} else if (product.nova_group) {
+if (product.nova_group == 1 || product.nova_group == 2) { fallbackScore = 85; badgeClass = "score-high"; }
+else if (product.nova_group == 4) { fallbackScore = 38; badgeClass = "score-low"; }
+} else {
 return {
 score: "N/A",
 badgeClass: "score-mid",
 isUnknown: true,
-analysisText: "Sajnos ehhez a termékhez a nyilvános adatbázisban még nem töltötték fel az összetevők listáját.",
+analysisText: "Ehhez a termékhez a nyilvános adatbázisban még nem töltötték fel az összetevők listáját.",
 problematicIngredients: [],
 diyTitle: "💡 Így ellenőrizheted a boltban:",
-diyContent: "<div style='font-size: 0.82rem;'>Nézd meg a doboz hátoldalát! Ha az összetevők között nem szerepel <strong>pálmaolaj, hozzáadott cukor, glükózszirup vagy mesterséges aromák</strong>, a termék biztonsággal fogyasztható.</div>",
+diyContent: "<div style='font-size: 0.82rem;'>Forgasd meg a dobozt a kezedben! Ha nem látsz benne hozzáadott cukrot, pálmaolajat vagy mesterséges E-számokat, a termék nyugodtan fogyasztható.</div>",
+vilgainRecommend: "🛒 Garantáltan tiszta alternatíva: Vilgain BIO Termékek."
+};
+}
+
+return {
+score: fallbackScore,
+badgeClass: badgeClass,
+analysisText: text,
+problematicIngredients: [],
+diyTitle: "💡 Vásárlási tanács",
+diyContent: "<div style='font-size: 0.82rem;'>Mindig érdemes a fizikai csomagoláson is megtekinteni az összetevőket a vásárlás előtt!</div>",
 vilgainRecommend: "🛒 Garantáltan tiszta alternatíva: Vilgain BIO Termékek."
 };
 }
@@ -1142,12 +1140,7 @@ const resultCard = document.getElementById('ellenor-result-card');
 const analysis = generateSmartAnalysis(product);
 
 const imageUrl = product.image_url || product.image_front_url || product.image_small_url || FALLBACK_IMAGE_URL;
-
-let rawIngredients = product.ingredients_text_hu || product.ingredients_text || product.ingredients_text_en || '';
-if (!rawIngredients && product.ingredients && product.ingredients.length > 0) {
-rawIngredients = product.ingredients.map(i => i.text || i.id || '').join(', ');
-}
-
+const rawIngredients = extractIngredients(product);
 const translatedIngredients = translateIngredientsToHungarian(rawIngredients);
 
 let warningHTML = "";
@@ -1221,8 +1214,10 @@ ingredients_text_hu: prod.ingredients_text_hu || '',
 ingredients_text: prod.ingredients_text || '',
 ingredients_text_en: prod.ingredients_text_en || '',
 ingredients: prod.ingredients || null,
-image_url: prod.image_url || prod.image_front_url || prod.image_small_url || null,
-nutriscore_grade: prod.nutriscore_grade || 'c'
+ingredients_tags: prod.ingredients_tags || null,
+nutriscore_grade: prod.nutriscore_grade || null,
+nova_group: prod.nova_group || null,
+image_url: prod.image_url || prod.image_front_url || prod.image_small_url || null
 };
 renderProductResult(formattedProduct);
 } else {
