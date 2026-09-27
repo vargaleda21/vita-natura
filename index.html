@@ -889,7 +889,7 @@
                     time: "20 perc",
                     ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
                     description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
-                    justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel a szervezetben.",
+                    justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik felszívódik.",
                     supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
                 }
@@ -999,7 +999,7 @@
         let diyTitle = "Házi készítési opció (Alternatíva)";
         let diyContent = "";
 
-        if (name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('krém') || name.includes('nutella') || name.includes('3017620422003')) {
+        if (name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('krém') || name.includes('nutella')) {
             score = 35;
             analysisText = "Gyulladáskeltő hatású: Magas finomított cukor- és pálmaolaj-tartalom jellemzi, amely kedvezőtlenül befolyásolja a bélflórát és a szervezet gyulladásos folyamatait.";
             diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
@@ -1017,11 +1017,11 @@
                 <ol style="margin-left: 18px; font-size: 0.82rem;">
                     <li>A pörkölt törökmogyorót tedd egy nagyteljesítményű konyhai aprítóba vagy turmixgépbe. Kezdd el magas fokozaton darálni.</li>
                     <li>Körülbelül 5-8 perc alatt a mogyoró kiengedi a saját olaját, és teljesen sima, folyékony, krémes állagúvá válik (időnként iktass be 1 perc szünetet, hogy a gép ne melegedjen túl).</li>
-                    <li>Add hozzá a holland kakaóport, a juharszirupot, a mogyoróolajat, a vaníliát és a csipet sót.</li>
+                    <li>Add hozzá a holland kakaópor, a juharszirupot, a mogyoróolajat, a vaníliát és a csipet sót.</li>
                     <li>Turmixold további 1-2 percig, amíg egyenletesen selyemfényű, homogén krémet nem kapsz. Töltsd tiszta üvegbe; hűtve 3 hétig eltartható.</li>
                 </ol>
             `;
-        } else if (name.includes('granola') || name.includes('müzli') || name.includes('muzli') || name.includes('5900512300211')) {
+        } else if (name.includes('granola') || name.includes('müzli') || name.includes('muzli')) {
             score = 42;
             analysisText = "Gyulladáskeltő hatású: Rejtett cukrokat és finomított növényi olajokat tartalmaz, amelyek hirtelen vércukorszint-ingadozást okozhatnak.";
             diyTitle = "Készítsd el otthon: Ropogós mézes-magos granola";
@@ -1106,25 +1106,52 @@
         resultCard.classList.remove('hidden');
         resultCard.innerHTML = '<div style="padding:16px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
 
+        // 1. Megnézzük a helyi demó adatbázisban
         if (SCANNER_DATABASE[barcode]) {
             renderProductResult(SCANNER_DATABASE[barcode]);
-        } else {
-            resultCard.innerHTML = `
-                <div class="score-box">
-                    <div class="score-badge-circle score-mid">
-                        <span>?</span>
-                        <span class="score-badge-sub">/ 100 pt</span>
-                    </div>
-                    <div>
-                        <div style="font-weight: 700; font-size: 1.05rem; color: var(--text-heading);">A termék nem található</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Vonalkód: ${barcode}</div>
-                    </div>
-                </div>
-                <div style="font-size: 0.82rem; font-weight: 600; text-align: center; padding: 8px; color: var(--text-muted);">
-                    A megadott vonalkód még nem szerepel a helyi adatbázisban. Próbáld ki a demó gombokat az elemzés teszteléséhez!
-                </div>
-            `;
+            return;
         }
+
+        // 2. HA NINCS A LOKÁLIS ADATBÁZISBAN: Lekérdezzük az Open Food Facts nemzetközi élő adatbázisát (ONLINE API)
+        fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 1 && data.product) {
+                    const prod = data.product;
+                    const formattedProduct = {
+                        product_name_hu: prod.product_name_hu || prod.product_name || 'Ismeretlen nevű termék',
+                        brands: prod.brands || 'Kereskedelmi márkás termék',
+                        ingredients_text_hu: prod.ingredients_text_hu || prod.ingredients_text || 'A hozzávalók nem érhetők el az adatbázisban.',
+                        nutriscore_grade: prod.nutriscore_grade || 'c'
+                    };
+                    renderProductResult(formattedProduct);
+                } else {
+                    renderNotFoundUI(barcode);
+                }
+            })
+            .catch(err => {
+                renderNotFoundUI(barcode);
+            });
+    }
+
+    function renderNotFoundUI(barcode) {
+        const resultCard = document.getElementById('ellenor-result-card');
+        if (!resultCard) return;
+        resultCard.innerHTML = `
+            <div class="score-box">
+                <div class="score-badge-circle score-mid">
+                    <span>?</span>
+                    <span class="score-badge-sub">/ 100 pt</span>
+                </div>
+                <div>
+                    <div style="font-weight: 700; font-size: 1.05rem; color: var(--text-heading);">A termék nem található</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Vonalkód: ${barcode}</div>
+                </div>
+            </div>
+            <div style="font-size: 0.82rem; font-weight: 600; text-align: center; padding: 8px; color: var(--text-muted);">
+                A megadott vonalkód még nem szerepel az adatbázisban. Próbáld ki a demó gombokat az elemzés teszteléséhez!
+            </div>
+        `;
     }
 
     function stopCamera() {
@@ -1285,7 +1312,7 @@
             });
         }
 
-        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL
+        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL & ELKÜLÖNÍTETT TEÁKKAL
         const recipeContainer = document.getElementById('cycle-recipe-container');
         if (recipeContainer) {
             recipeContainer.innerHTML = '';
@@ -1335,14 +1362,12 @@
 
     // DOM Betöltéskori inicializáció
     document.addEventListener('DOMContentLoaded', () => {
-        // Modulváltó tabok
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 switchModule(e.target.getAttribute('data-module'));
             });
         });
 
-        // Demó gombok golyóálló bekötése
         document.querySelectorAll('.demo-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const code = e.target.getAttribute('data-demo');
@@ -1352,7 +1377,6 @@
             });
         });
 
-        // Kézi keresés gomb
         const searchBtn = document.getElementById('btn-manual-search');
         if (searchBtn) {
             searchBtn.addEventListener('click', () => {
@@ -1363,7 +1387,6 @@
             });
         }
 
-        // Kamera gombok
         const startCamBtn = document.getElementById('btn-start-camera');
         if (startCamBtn) {
             startCamBtn.addEventListener('click', () => {
@@ -1437,7 +1460,6 @@
         }
         if (cycleLengthInputEl) cycleLengthInputEl.addEventListener('input', updateCycleCalculator);
 
-        // Kezdő nézetek inicializálása
         renderPantryTags();
         updateCycleCalculator();
     });
