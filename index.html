@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root {
 --transition-speed: 0.35s;
@@ -233,6 +234,10 @@ border-radius: var(--radius-sm);
 font-weight: 700;
 font-size: 0.8rem;
 cursor: pointer;
+}
+.btn-secondary:disabled {
+opacity: 0.6;
+cursor: not-allowed;
 }
 .demo-buttons-bar {
 display: flex;
@@ -620,6 +625,28 @@ font-weight: 800;
 color: var(--text-muted);
 cursor: pointer;
 }
+.spinner {
+display: inline-block;
+width: 24px;
+height: 24px;
+border: 3px solid rgba(0,0,0,0.1);
+border-radius: 50%;
+border-top-color: var(--primary);
+animation: spin 0.8s ease-in-out infinite;
+margin-bottom: 8px;
+}
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+.recap-card-export {
+background: #1B2C36;
+color: #FFFCEA;
+padding: 20px;
+border-radius: var(--radius-md);
+text-align: center;
+margin: 14px 0;
+border: 1px solid #D3B5B3;
+}
 .disclaimer-text {
 font-size: 0.7rem;
 color: var(--text-muted);
@@ -774,14 +801,17 @@ Tájékoztatás: A daleday életmód- és táplálkozási felület. Nem minősü
 <div style="font-size: 0.8rem; color: var(--text-muted);" id="user-display-email">email@domain.com</div>
 </div>
 
-<div style="background: var(--bg-card-alt); border-radius: var(--radius-md); padding: 14px; margin: 14px 0; text-align: center;">
-<div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Ebben a hónapban elért eredményed</div>
-<div style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--primary);" id="stat-clean-percent">0% Tiszta döntés</div>
-<div style="font-size: 0.82rem; font-weight: 600; color: var(--text-main); margin-top: 4px;" id="stat-skipped-count">🛑 0 káros terméket hagytál a polcon</div>
-<div style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);" id="stat-additives-count">🧪 0 elutasított E-szám / adalék</div>
-<div style="font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-top: 8px; border-top: 1px dashed var(--border-color); padding-top: 6px;" id="stat-rank-text">Rang: Kezdő Ételmentő</div>
+<div id="recap-card-to-export" class="recap-card-export">
+<div style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: #D3B5B3; margin-bottom: 2px;">daleday monthly recap</div>
+<div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #849398; margin-bottom: 12px;">Saját Egészség-Mérlegem</div>
+<div style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; color: #FFFCEA;" id="stat-clean-percent">0% Tiszta döntés</div>
+<div style="font-size: 0.85rem; font-weight: 600; margin-top: 6px;" id="stat-skipped-count">🛑 0 káros terméket hagytál a polcon</div>
+<div style="font-size: 0.85rem; font-weight: 600;" id="stat-additives-count">🧪 0 elutasított E-szám / adalék</div>
+<div style="font-size: 0.8rem; font-weight: 700; color: #D3B5B3; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px;" id="stat-rank-text">Rang: Kezdő Ételmentő</div>
+<div style="font-size: 0.65rem; color: #849398; margin-top: 8px;">Ahol a tudatosság természetessé válik. ➔ daleday.hu</div>
 </div>
 
+<button id="btn-download-story" class="btn-primary" style="width: 100%; margin-bottom: 10px; background: #2E7D32;">📸 Havi kártya mentése Story-ba</button>
 <button id="btn-logout" class="btn-secondary" style="width: 100%; color: #800020;">Kijelentkezés</button>
 </div>
 </div>
@@ -934,10 +964,46 @@ signOut(auth).then(() => {
 document.getElementById('auth-modal')?.classList.add('hidden');
 });
 });
+
+document.getElementById('btn-download-story')?.addEventListener('click', () => {
+const element = document.getElementById('recap-card-to-export');
+if (!element || !window.html2canvas) {
+alert("A kártya generáló modul még töltődik, próbáld újra egy pillanat múlva!");
+return;
+}
+
+window.html2canvas(element, { 
+scale: 2,
+useCORS: true,
+backgroundColor: '#1B2C36'
+}).then(canvas => {
+const imageData = canvas.toDataURL('image/png');
+
+const link = document.createElement('a');
+link.download = 'daleday-monthly-recap.png';
+link.href = imageData;
+
+if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+const newTab = window.open();
+if (newTab) {
+newTab.document.write(`<img src="${imageData}" style="width:100%; height:auto;" />`);
+newTab.document.write('<p style="text-align:center; font-family:sans-serif; margin-top:10px;">Tartsd hosszan nyomva a képet a mentéshez!</p>');
+} else {
+link.click();
+}
+} else {
+link.click();
+}
+}).catch(err => {
+console.error("Kártya generálási hiba:", err);
+alert("Nem sikerült a kártya kigenerálása.");
+});
+});
 </script>
 
 <script>
 let html5QrCode = null;
+let activeCycleSuperfoodFilter = null;
 const FALLBACK_IMAGE_URL = 'assets/images/fallback-food.jpg';
 
 const SCANNER_DATABASE = {
@@ -1106,7 +1172,7 @@ title: "Vasdús krémes spenótos csicseriborsó-ragu tahinivel és citromlével
 time: "20 perc",
 ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
 description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
-justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik felszívódik.",
+justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel.",
 supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
 vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
 }
@@ -1547,7 +1613,12 @@ function fetchBarcodeData(barcode) {
 const resultCard = document.getElementById('ellenor-result-card');
 if (!resultCard) return;
 resultCard.classList.remove('hidden');
-resultCard.innerHTML = '<div style="padding:16px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
+resultCard.innerHTML = `
+<div style="padding: 24px; text-align: center; font-weight: 600; color: var(--text-muted);">
+<div class="spinner"></div>
+<div>Adatok betöltése és elemzése...</div>
+</div>
+`;
 
 if (SCANNER_DATABASE[barcode]) {
 renderProductResult(SCANNER_DATABASE[barcode], barcode);
@@ -1603,6 +1674,11 @@ A megadott vonalkód még nem szerepel az adatbázisban. Próbáld ki a demó go
 }
 
 function stopCamera() {
+const startBtn = document.getElementById('btn-start-camera');
+if (startBtn) {
+startBtn.disabled = false;
+startBtn.textContent = 'Kamera indítása';
+}
 if (html5QrCode) {
 html5QrCode.stop().then(() => {
 const el = document.getElementById('scanner-container');
@@ -1852,6 +1928,8 @@ fetchBarcodeData(input.value.trim());
 const startCamBtn = document.getElementById('btn-start-camera');
 if (startCamBtn) {
 startCamBtn.addEventListener('click', () => {
+startCamBtn.disabled = true;
+startCamBtn.textContent = 'Kamera indítása...';
 const container = document.getElementById('scanner-container');
 container.classList.remove('hidden');
 html5QrCode = new Html5Qrcode("reader");
@@ -1866,6 +1944,8 @@ stopCamera();
 (error) => {}
 ).catch(err => {
 alert("Nem sikerült elindítani a kamerát.");
+startCamBtn.disabled = false;
+startCamBtn.textContent = 'Kamera indítása';
 });
 });
 }
