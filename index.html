@@ -721,6 +721,13 @@ ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sa
 image_url: 'assets/images/pesto.jpg',
 nutriscore_grade: 'a'
 },
+"8586022771699": {
+product_name_hu: 'Snidlinges Májas',
+brands: 'Kaiser',
+ingredients_text_hu: 'Ivóvíz, sertésmáj (25%), sertésszalonna, sertésbőrke, búzakeményítő, metélőhagyma (snidling) 1.5%, nitrites pácsó (E250), búzaliszt, fűszerek, aromák.',
+image_url: 'assets/images/fallback-food.jpg',
+nutriscore_grade: 'e'
+},
 "5998304069739": {
 product_name_hu: 'Sertés Májkrém',
 brands: 'Hazai márka',
@@ -1043,8 +1050,46 @@ const name = (product.product_name_hu || product.product_name || '').toLowerCase
 const rawIngredients = extractIngredients(product, barcode);
 const ingText = rawIngredients.toLowerCase().trim();
 
+const isMajkremName = name.includes('máj') || name.includes('maj') || name.includes('pástétom') || name.includes('pastetom');
+const isInstantName = name.includes('leves') || name.includes('tészta') || name.includes('smack') || name.includes('nissin') || name.includes('instant') || name.includes('ramen');
+const isNutellaName = name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('nutella');
+
 if (!ingText || ingText.length < 5) {
-let fallbackScore = 75;
+if (isMajkremName) {
+return {
+score: 38,
+badgeClass: "score-low",
+analysisText: "Ultra-feldolgozott húskészítmény: A bolti konzervek és műbeles májasok jellemzően nitrites pácsót (E250), mechanikusan lefejtett húst, belsőségeket és magas sótartalmat tartalmaznak, amelyek terhelik a szervezetet.",
+problematicIngredients: ["Hagyományos ipari májkrém-alapanyagok (nitrites pácsó E250, mechanikusan lefejtett hús, magas nátrium)"],
+diyTitle: "Készítsd el otthon: Tápanyagdús házi csirkemáj-kence",
+diyContent: `
+<div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong></div>
+<ul style="margin-left: 18px; margin-bottom: 10px; font-size: 0.82rem;">
+<li>250g friss csirkemáj</li>
+<li>1 fej vöröshagyma és 2 gerezd fokhagyma</li>
+<li>2 ek minőségi vaj vagy ghee</li>
+<li>Friss kakukkfű, só, bors (opcionálisan friss snidling)</li>
+</ul>
+<div style="margin-bottom: 6px;"><strong>Elkészítés:</strong></div>
+<div style="font-size: 0.82rem;">Dinszteld meg a hagymát vajon, add hozzá a májat és a fűszereket, süsd 6-8 percig, majd turmixold krémesre. Adalékmentes, vasban és A-vitaminban gazdag.</div>
+`,
+vilgainRecommend: "🛒 Bolti tiszta alternatíva: Vilgain Ghee (Tisztított Vaj) + BIO Fűszerek."
+};
+}
+
+if (isInstantName) {
+return {
+score: 35,
+badgeClass: "score-low",
+analysisText: "Ultra-feldolgozott instant tészta/leves: Magas nátrium-, ízfokozó (E621) és finomított szénhidráttartalmú ipari készítmény.",
+problematicIngredients: ["Instant levesalap (E621 ízfokozó, pálmaolaj, magas só)"],
+diyTitle: "Készítsd el otthon: Tápláló házi ramen / tésztaleves",
+diyContent: "<div style='font-size: 0.82rem;'>Forralj fel valódi csontlevest gyömbérrel, fokhagymával, üvegtésztával és lágy tojással!</div>",
+vilgainRecommend: "🛒 Bolti tiszta alternatíva: Vilgain BIO Hajdina Tészta + Organikus Zöldségleves Alaplé."
+};
+}
+
+let fallbackScore = 65;
 let badgeClass = "score-mid";
 let text = "Ehhez a termékhez a nyílt adatbázisban a részletes összetevőlista még nem áll rendelkezésre.";
 
@@ -1060,7 +1105,7 @@ return {
 score: "N/A",
 badgeClass: "score-mid",
 isUnknown: true,
-analysisText: "Sajnos ehhez a termékhez a nyilvános adatbázisban még nem érhető el az összetevők teljes listája.",
+analysisText: "Sajnos ehhez a termékhez a nyilvános adatbázisban még nem töltötték fel az összetevők teljes listáját.",
 problematicIngredients: [],
 diyTitle: "💡 Így ellenőrizheted a boltban:",
 diyContent: "<div style='font-size: 0.82rem;'>Forgasd meg a dobozt a kezedben! Ha nem látsz benne hozzáadott cukrot, pálmaolajat vagy mesterséges E-számokat, a termék nyugodtan fogyasztható.</div>",
@@ -1104,18 +1149,16 @@ score -= 10;
 problematicIngredients.push("Finomított búzaliszt / ipari tésztaalap");
 }
 
-const isInstantSoup = /\b(leves|tészta|smack|nissin|instant|ramen)\b/i.test(name) || ingText.includes('tészta 91%');
-
 let analysisText = "";
 let diyTitle = "Házi készítési opció (Alternatíva)";
 let diyContent = "";
 let vilgainRecommend = "";
 
-if (score <= 50 || isInstantSoup || problematicIngredients.length >= 2) {
+if (score <= 50 || isInstantName || isMajkremName || problematicIngredients.length >= 2) {
 score = Math.min(score, 38); 
 analysisText = "Ultra-feldolgozott élelmiszer: Magas finomított szénhidrát-, pálmaolaj- és adalékanyag-tartalma miatt gyulladáskeltő hatású, megterheli az emésztést és vércukorszint-ingadozást okoz.";
 
-if (name.includes('májkrém') || name.includes('majkrem') || name.includes('pástétom')) {
+if (isMajkremName) {
 diyTitle = "Készítsd el otthon: Tápanyagdús házi csirkemáj-kence";
 diyContent = `
 <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong></div>
@@ -1123,13 +1166,13 @@ diyContent = `
 <li>250g friss csirkemáj</li>
 <li>1 fej vöröshagyma és 2 gerezd fokhagyma</li>
 <li>2 ek minőségi vaj vagy ghee</li>
-<li>Friss kakukkfű, só, bors</li>
+<li>Friss kakukkfű, só, bors (opcionálisan friss snidling)</li>
 </ul>
 <div style="margin-bottom: 6px;"><strong>Elkészítés:</strong></div>
-<div style="font-size: 0.82rem;">Dinszteld meg a hagymát vajon, add hozzá a májat és a kakukkfüvet, süsd 6-8 percig, majd turmixold krémesre. Adalékmentes, vasban és A-vitaminban gazdag.</div>
+<div style="font-size: 0.82rem;">Dinszteld meg a hagymát vajon, add hozzá a májat és a fűszereket, süsd 6-8 percig, majd turmixold krémesre. Adalékmentes, vasban és A-vitaminban gazdag.</div>
 `;
 vilgainRecommend = "🛒 Bolti tiszta alternatíva: Vilgain Ghee (Tisztított Vaj) + BIO Fűszerek.";
-} else if (isInstantSoup) {
+} else if (isInstantName) {
 diyTitle = "Készítsd el otthon: Tápláló házi ramen / tésztaleves";
 diyContent = `
 <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong></div>
@@ -1149,7 +1192,7 @@ diyContent = `
 </ol>
 `;
 vilgainRecommend = "🛒 Bolti tiszta alternatíva: Vilgain BIO Hajdina Tészta + Vilgain Organikus Zöldségleves Alaplé.";
-} else if (name.includes('mogyorókrém') || name.includes('nutella')) {
+} else if (isNutellaName) {
 diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
 diyContent = `
 <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong> 150g pörkölt törökmogyoró, 30g kakaópor, 2 ek méz, csipet vanília.</div>
