@@ -22,52 +22,55 @@
             --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.08);
         }
 
+        /* 1. ALAPANYAG-ELLENŐR PALETTA */
         [data-theme="ellenor"], body[data-theme="ellenor"] {
-            --bg-main: #F9F6F0;
-            --bg-card: #E8D9C1;
-            --bg-card-alt: #F2E8D8;
-            --bg-recipe-box: #E8D9C1;
-            --primary: #800020;
-            --primary-light: #F7EBE1;
-            --accent-vilgain: #4B1D3F;
-            --accent-vilgain-bg: #4B1D3F;
-            --accent-vilgain-border: #800020;
-            --text-main: #1B1B1B;
-            --text-muted: #4A4A4A;
-            --text-heading: #800020;
-            --border-color: #D4C2A8;
+            --bg-main: #9E7476;
+            --bg-card: #849398;
+            --bg-card-alt: #D3B5B3;
+            --bg-recipe-box: #849398;
+            --primary: #1B2C36;
+            --primary-light: #D3B5B3;
+            --accent-vilgain: #1B2C36;
+            --accent-vilgain-bg: #1B2C36;
+            --accent-vilgain-border: #D3B5B3;
+            --text-main: #1B2C36;
+            --text-muted: #2A3C47;
+            --text-heading: #1B2C36;
+            --border-color: #6E7E83;
         }
 
+        /* 2. KAMRA-ASSZISZTENS PALETTA */
         [data-theme="kamra"], body[data-theme="kamra"] {
-            --bg-main: #FCF8F5;
+            --bg-main: #FFFCEA;
             --bg-card: #FFFFFF;
-            --bg-card-alt: #F7F3EE;
-            --bg-recipe-box: #FAF6F0;
-            --primary: #556B2F;
-            --primary-light: #EBF0EA;
-            --accent-vilgain: #4D0E15;
-            --accent-vilgain-bg: #F9EBEA;
-            --accent-vilgain-border: #E5DEC9;
-            --text-main: #333333;
-            --text-muted: #525B65;
-            --text-heading: #3E4F22;
-            --border-color: #E5DEC9;
+            --bg-card-alt: #C1DBE8;
+            --bg-recipe-box: #FFFCEA;
+            --primary: #380513;
+            --primary-light: #C1DBE8;
+            --accent-vilgain: #380513;
+            --accent-vilgain-bg: #380513;
+            --accent-vilgain-border: #C1DBE8;
+            --text-main: #380513;
+            --text-muted: #571C27;
+            --text-heading: #380513;
+            --border-color: #A3C9DC;
         }
 
+        /* 3. CIKLUSSZINKRON PALETTA */
         [data-theme="cycle"], body[data-theme="cycle"] {
-            --bg-main: #FAF4F4;
-            --bg-card: #FFFFFF;
-            --bg-card-alt: #F9EBEA;
-            --bg-recipe-box: #F5E8E8;
-            --primary: #9E2A2B;
-            --primary-light: #F4E3E3;
-            --accent-vilgain: #4D0E15;
-            --accent-vilgain-bg: #F9EBEA;
-            --accent-vilgain-border: #EAC8C8;
-            --text-main: #2B1E1E;
-            --text-muted: #5C4747;
-            --text-heading: #541718;
-            --border-color: #EAC8C8;
+            --bg-main: #DEC4C9;
+            --bg-card: #977272;
+            --bg-card-alt: #DEC4C9;
+            --bg-recipe-box: #977272;
+            --primary: #594E4C;
+            --primary-light: #DEC4C9;
+            --accent-vilgain: #181717;
+            --accent-vilgain-bg: #181717;
+            --accent-vilgain-border: #DEC4C9;
+            --text-main: #181717;
+            --text-muted: #3D3534;
+            --text-heading: #181717;
+            --border-color: #7D5C5C;
         }
 
         * {
@@ -149,8 +152,13 @@
         .tab-btn.active {
             background: var(--bg-card);
             color: var(--primary);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             font-weight: 700;
+        }
+
+        [data-theme="cycle"] .tab-btn.active {
+            color: #FFFCEA !important;
+            background: #594E4C !important;
         }
 
         .card {
@@ -205,7 +213,7 @@
             padding: 10px 12px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
-            background: var(--bg-main);
+            background: rgba(255, 255, 255, 0.85);
             color: var(--text-main);
             font-family: var(--font-body);
             font-size: 0.88rem;
@@ -226,6 +234,10 @@
             font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
+        }
+
+        [data-theme="ellenor"] .btn-primary {
+            color: #D3B5B3;
         }
 
         .btn-secondary {
@@ -261,8 +273,8 @@
         }
 
         .demo-btn:hover {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: var(--primary);
+            color: #FFFFFF;
         }
 
         #scanner-container {
@@ -277,11 +289,21 @@
             padding: 16px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
-            background: var(--bg-recipe-box);
+            background: rgba(255, 255, 255, 0.25);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 14px;
+        }
+
+        .product-img-thumb {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: #FFF;
+            flex-shrink: 0;
         }
 
         .score-badge-circle {
@@ -312,11 +334,12 @@
         .score-low { background: #800020; }
 
         .analysis-section {
-            background: var(--bg-main);
+            background: rgba(255, 255, 255, 0.75);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 14px;
             margin-top: 14px;
+            color: var(--text-main);
         }
 
         .analysis-title {
@@ -330,7 +353,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background: var(--bg-card-alt);
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 16px;
@@ -356,27 +379,29 @@
 
         .swap-box {
             background: var(--accent-vilgain-bg);
-            border: 1px solid var(--accent-vilgain-border);
+            border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 16px;
             margin-top: 14px;
-            color: #F7EBE1;
+            color: #DEC4C9;
         }
+
+        [data-theme="ellenor"] .swap-box { color: #D3B5B3; }
+        [data-theme="kamra"] .swap-box { color: #FFFCEA; }
+        [data-theme="cycle"] .swap-box { color: #DEC4C9; }
 
         .swap-title {
             font-weight: 700;
-            color: #F7EBE1;
             font-size: 0.98rem;
             margin-bottom: 8px;
         }
 
         .home-recipe-card {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--radius-sm);
             padding: 12px;
             margin-top: 8px;
-            color: #F7EBE1;
         }
 
         .autocomplete-dropdown {
@@ -476,7 +501,7 @@
         }
 
         .supplement-box {
-            background: rgba(128, 0, 32, 0.06);
+            background: rgba(0, 0, 0, 0.06);
             border: 1px dashed var(--primary);
             padding: 8px 10px;
             border-radius: 6px;
@@ -488,14 +513,17 @@
 
         .vilgain-box {
             background: var(--accent-vilgain-bg);
-            border: 1px solid var(--accent-vilgain-border);
+            border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             padding: 10px;
             margin-top: 10px;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #F7EBE1;
         }
+
+        [data-theme="ellenor"] .vilgain-box { color: #D3B5B3; }
+        [data-theme="kamra"] .vilgain-box { color: #FFFCEA; }
+        [data-theme="cycle"] .vilgain-box { color: #DEC4C9; }
 
         .cycle-visualizer {
             display: flex;
@@ -667,7 +695,7 @@
 
             <div id="scanner-container" class="hidden">
                 <div id="reader" style="width: 100%;"></div>
-                <button id="btn-stop-camera" class="btn-secondary" style="width: 100%; margin-top: 6px; background: #800020; color: #FFF; border: none;">Kamera bezárása</button>
+                <button id="btn-stop-camera" class="btn-secondary" style="width: 100%; margin-top: 6px; background: #1B2C36; color: #D3B5B3; border: none;">Kamera bezárása</button>
             </div>
 
             <div class="demo-buttons-bar">
@@ -776,36 +804,42 @@
             product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
             brands: 'Kereskedelmi márka',
             ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
+            image_url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&auto=format&fit=crop&q=80',
             nutriscore_grade: 'e'
         },
         "granola": {
             product_name_hu: 'Ropogós csokoládés granola',
             brands: 'Ipari müzli termék',
             ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
+            image_url: 'https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=200&auto=format&fit=crop&q=80',
             nutriscore_grade: 'd'
         },
         "pesto": {
             product_name_hu: 'Vilgain BIO Basil Pesto',
             brands: 'Vilgain',
             ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
+            image_url: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=200&auto=format&fit=crop&q=80',
             nutriscore_grade: 'a'
         },
         "3017620422003": {
             product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
             brands: 'Kereskedelmi márka',
             ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
+            image_url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&auto=format&fit=crop&q=80',
             nutriscore_grade: 'e'
         },
         "5900512300211": {
             product_name_hu: 'Ropogós csokoládés granola',
             brands: 'Ipari müzli termék',
             ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
+            image_url: 'https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=200&auto=format&fit=crop&q=80',
             nutriscore_grade: 'd'
         },
         "8594073300123": {
             product_name_hu: 'Vilgain BIO Basil Pesto',
             brands: 'Vilgain',
             ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
+            image_url: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=200&auto=format&fit=crop&q=80',
             nutriscore_grade: 'a'
         }
     };
@@ -889,7 +923,7 @@
                     time: "20 perc",
                     ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
                     description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
-                    justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik felszívódik.",
+                    justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel a szervezetben.",
                     supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
                 }
@@ -992,6 +1026,46 @@
         if (moduleName === 'cycle') updateCycleCalculator();
     }
 
+    function translateIngredientsToHungarian(rawText) {
+        if (!rawText || rawText.trim() === '') return "A hozzávalók nem érhetők el az adatbázisban.";
+        let text = rawText.toLowerCase();
+        const dict = {
+            'glucose syrup': 'glükózszirup',
+            'fructose syrup': 'fruktózszirup',
+            'invert sugar syrup': 'inverz cukorszirup',
+            'palm oil': 'pálmaolaj',
+            'sunflower oil': 'napraforgóolaj',
+            'rapeseed oil': 'repceolaj',
+            'olive oil': 'olívaolaj',
+            'wheat flour': 'búzaliszt',
+            'oat flakes': 'zabpehely',
+            'cocoa mass': 'kakaómassza',
+            'cocoa butter': 'kakaóvaj',
+            'cane sugar': 'nádcukor',
+            'water': 'víz',
+            'sugar': 'cukor',
+            'salt': 'só',
+            'honey': 'méz',
+            'peanuts': 'földimogyoró',
+            'almonds': 'mandula',
+            'hazelnuts': 'mogyoró',
+            'chocolate pieces': 'csokoládédarabok',
+            'chocolate': 'csokoládé',
+            'emulsifier': 'emulgeálószer',
+            'lecithin': 'lecitin',
+            'flavouring': 'aroma',
+            'modified starch': 'módosított keményítő',
+            'preservative': 'tartósítószer',
+            'milk': 'tej',
+            'skimmed milk powder': 'sovány tejpor',
+            'fat reduced cocoa powder': 'zsírszegény kakaópor'
+        };
+        for (let key in dict) {
+            text = text.replace(new RegExp(key, 'g'), dict[key]);
+        }
+        return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
     function generateSmartAnalysis(product) {
         const name = (product.product_name_hu || product.product_name || '').toLowerCase();
         let score = 75;
@@ -1017,7 +1091,7 @@
                 <ol style="margin-left: 18px; font-size: 0.82rem;">
                     <li>A pörkölt törökmogyorót tedd egy nagyteljesítményű konyhai aprítóba vagy turmixgépbe. Kezdd el magas fokozaton darálni.</li>
                     <li>Körülbelül 5-8 perc alatt a mogyoró kiengedi a saját olaját, és teljesen sima, folyékony, krémes állagúvá válik (időnként iktass be 1 perc szünetet, hogy a gép ne melegedjen túl).</li>
-                    <li>Add hozzá a holland kakaópor, a juharszirupot, a mogyoróolajat, a vaníliát és a csipet sót.</li>
+                    <li>Add hozzá a holland kakaóport, a juharszirupot, a mogyoróolajat, a vaníliát és a csipet sót.</li>
                     <li>Turmixold további 1-2 percig, amíg egyenletesen selyemfényű, homogén krémet nem kapsz. Töltsd tiszta üvegbe; hűtve 3 hétig eltartható.</li>
                 </ol>
             `;
@@ -1067,8 +1141,13 @@
         const resultCard = document.getElementById('ellenor-result-card');
         const analysis = generateSmartAnalysis(product);
 
+        const imageUrl = product.image_url || product.image_front_url || product.image_small_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&auto=format&fit=crop&q=80';
+        const rawIngredients = product.ingredients_text_hu || product.ingredients_text || (product.ingredients ? product.ingredients.map(i => i.text).join(', ') : '');
+        const translatedIngredients = translateIngredientsToHungarian(rawIngredients);
+
         resultCard.innerHTML = `
             <div class="score-box">
+                <img src="${imageUrl}" alt="${product.product_name_hu}" class="product-img-thumb" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&auto=format&fit=crop&q=80'">
                 <div class="score-badge-circle ${analysis.badgeClass}">
                     <span>${analysis.score}</span>
                     <span class="score-badge-sub">/ 100 pt</span>
@@ -1087,7 +1166,7 @@
 
             <div class="analysis-section" style="margin-top: 10px;">
                 <div class="analysis-title">Összetevők listája</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">${product.ingredients_text_hu}</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; line-height: 1.4;">${translatedIngredients}</div>
             </div>
 
             <div class="swap-box">
@@ -1106,22 +1185,22 @@
         resultCard.classList.remove('hidden');
         resultCard.innerHTML = '<div style="padding:16px; text-align:center; font-weight:600;">Adatok betöltése és elemzése...</div>';
 
-        // 1. Megnézzük a helyi demó adatbázisban
         if (SCANNER_DATABASE[barcode]) {
             renderProductResult(SCANNER_DATABASE[barcode]);
             return;
         }
 
-        // 2. HA NINCS A LOKÁLIS ADATBÁZISBAN: Lekérdezzük az Open Food Facts nemzetközi élő adatbázisát (ONLINE API)
         fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`)
             .then(res => res.json())
             .then(data => {
                 if (data.status === 1 && data.product) {
                     const prod = data.product;
                     const formattedProduct = {
-                        product_name_hu: prod.product_name_hu || prod.product_name || 'Ismeretlen nevű termék',
+                        product_name_hu: prod.product_name_hu || prod.product_name || 'Beolvasott termék',
                         brands: prod.brands || 'Kereskedelmi márkás termék',
-                        ingredients_text_hu: prod.ingredients_text_hu || prod.ingredients_text || 'A hozzávalók nem érhetők el az adatbázisban.',
+                        ingredients_text_hu: prod.ingredients_text_hu || prod.ingredients_text || '',
+                        ingredients: prod.ingredients || null,
+                        image_url: prod.image_url || prod.image_front_url || prod.image_small_url || null,
                         nutriscore_grade: prod.nutriscore_grade || 'c'
                     };
                     renderProductResult(formattedProduct);
