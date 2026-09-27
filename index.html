@@ -208,6 +208,15 @@ background: rgba(27, 44, 54, 0.03); border-left: 3px solid var(--primary);
 padding: 14px 16px; border-radius: 4px; font-size: 0.85rem; color: var(--text-main); margin-bottom: 20px; line-height: 1.5;
 }
 
+/* DIY HOMEMADE CARD */
+.diy-box {
+background: var(--bg-card-alt); border: 1px solid var(--border-color);
+border-radius: var(--radius-md); padding: 20px; margin-bottom: 20px;
+}
+.diy-title {
+font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text-heading); margin-bottom: 8px;
+}
+
 .partner-box {
 background: #1B2C36; color: #FFFCEA; border-radius: var(--radius-md);
 padding: 18px; margin-top: 20px; font-size: 0.85rem; line-height: 1.5;
@@ -339,10 +348,12 @@ border-radius: 50%; border-top-color: var(--primary); animation: spin 0.8s ease-
 <!-- DEMO / PRODUCT RESULT -->
 <div id="ellenor-result-card" class="card-result hidden"></div>
 
-<!-- PHILOSOPHY -->
+<!-- PHILOSOPHY (FRISSÍTETT SZÖVEG) -->
 <div class="philosophy-card">
-<div class="philosophy-title">Nem tökéletesen kell enned.</div>
-<div class="philosophy-text">Csak jó döntéseket szeretnénk könnyebbé tenni. A Daleday nem tiltólista, nem diétás rendőrség, és nem mondja meg, mit szabad fogyasztanod. Segít értelmezni, mit választasz.</div>
+<div class="philosophy-title">A tudatosságról.</div>
+<div class="philosophy-text">
+A tudatosság nem lemondás, hanem tisztánlátás. A daleday leegyszerűsíti a mindennapi döntéseket: átláthatóvá teszi, mi van az élelmiszerekben, hogy mindig magabiztosan választhass. Legyen szó egy tisztább bolti alternatíváról vagy egy otthon elkészített fogásról, a döntés öröme és szabadsága mindig a tiéd marad.
+</div>
 </div>
 </div>
 
@@ -569,24 +580,31 @@ newTab.document.write('<p style="text-align:center; font-family:sans-serif; marg
 let html5QrCode = null;
 const FALLBACK_IMAGE_URL = 'assets/images/fallback-food.jpg';
 
+/* DEMÓ DB HÁZI ELKÉSZÍTÉSI RECEPTEKKEL (DIY) */
 const SCANNER_DATABASE = {
 "mogyorokrem": {
 product_name_hu: 'Hagyományos Mogyorókrém Cukorral',
 brands: 'Ipari édesség márka',
 ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
-image_url: 'assets/images/hazelnut-cream.jpg'
+image_url: 'assets/images/hazelnut-cream.jpg',
+diyTitle: 'Prémium Házi Mogyorókrém (Adalékmentes)',
+diyContent: '<strong>Hozzávalók:</strong> 150g pörkölt törökmogyoró, 30g tiszta kakaópor, 2 ek méz, csipet vanília.<br><strong>Elkészítés:</strong> Turmixold a pörkölt mogyorót konyhai aprítóban 5-8 percig, amíg krémes mogyoróvajjá válik, majd keverd hozzá a kakaót és a mézet.'
 },
 "granola": {
 product_name_hu: 'Ropogós Csokoládés Granola',
 brands: 'Ipari müzli márkatermék',
 ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
-image_url: 'assets/images/granola.jpg'
+image_url: 'assets/images/granola.jpg',
+diyTitle: 'Házi Serpenyős Ropogós Granola',
+diyContent: '<strong>Hozzávalók:</strong> Zabpehely, méz, kókuszolaj, tetszőleges magvak és étcsoki darabok.<br><strong>Elkészítés:</strong> Kis kókuszolajon és mézen pirítsd át a zabpelyhet és a magvakat serpenyőben 6-8 perc alatt aranybarnára.'
 },
 "pesto": {
 product_name_hu: 'Vilgain BIO Basil Pesto',
 brands: 'Vilgain',
 ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
-image_url: 'assets/images/pesto.jpg'
+image_url: 'assets/images/pesto.jpg',
+diyTitle: 'Friss Friss Bazsalikomos Pesto',
+diyContent: '<strong>Hozzávalók:</strong> Friss bazsalikomlevél, extra szűz olívaolaj, fenyőmag vagy kesudió, fokhagyma, parmezán.<br><strong>Elkészítés:</strong> Turmixold vagy törd össze mozsárban a hozzávalókat. Azonnal tálalható!'
 }
 };
 
@@ -629,6 +647,7 @@ if (tabKey === 'cycle') updateCycleCalculator();
 }
 
 function generateSmartAnalysis(product, barcode) {
+const name = (product.product_name_hu || product.product_name || '').toLowerCase();
 const ingText = (product.ingredients_text_hu || product.ingredients_text || '').toLowerCase();
 let score = 82;
 let whyPositives = [];
@@ -650,7 +669,24 @@ if (whyNegatives.length > 0) {
 whyExplanation += " Érdemes figyelembe venni viszont a következőt: " + whyNegatives.join(', ') + ".";
 }
 
-return { score, statusText, badgeClass, whyExplanation };
+/* AUTOMATIKUS DIY RECEPT GENERÁLÁS INSTANT/MÁJ/ÉDESSÉG ESETÉN */
+let diyTitle = product.diyTitle || "Készítsd el otthon egyszerűen!";
+let diyContent = product.diyContent || "";
+
+if (!diyContent) {
+if (name.includes('máj') || name.includes('maj')) {
+diyTitle = "Készítsd el otthon: Tápanyagdús Házi Csirkemáj-kence";
+diyContent = "<strong>Hozzávalók:</strong> 250g csirkemáj, 1 fej vöröshagyma, fokhagyma, 2 ek vaj vagy ghee, kakukkfű.<br><strong>Elkészítés:</strong> Dinszteld meg a hagymát vajon, süsd át rajta a májat 6-8 perc alatt, majd turmixold krémesre. Adalékmentes és vasban gazdag!";
+} else if (name.includes('leves') || name.includes('tészta') || name.includes('ramen')) {
+diyTitle = "Készítsd el otthon: Tápláló Házi Ramen / Tésztaleves";
+diyContent = "<strong>Hozzávalók:</strong> Ázsiai üvegtészta, 500ml csontleves, szójaszósz, friss spenót, sárgarépa és lágy tojás.<br><strong>Elkészítés:</strong> Forrald fel az alaplevet gyömbérrel, dobd bele a tésztát és a zöldségeket 3 percre, majd tálald lágy tojással.";
+} else {
+diyTitle = "Készítsd el otthon, természetes összetevőkből!";
+diyContent = "Friss, feldolgozatlan alapanyagokból otthon elkészítve még könnyebben elkerülheted a felesleges adalékanyagokat és rejtett cukrokat.";
+}
+}
+
+return { score, statusText, badgeClass, whyExplanation, diyTitle, diyContent };
 }
 
 function renderProductResult(product, barcode) {
@@ -660,6 +696,7 @@ const pName = product.product_name_hu || product.product_name || 'Beolvasott ter
 const imageUrl = product.image_url || FALLBACK_IMAGE_URL;
 
 resultCard.innerHTML = `
+<!-- 1. TERMÉK & PONTOZÁS -->
 <div class="score-badge-header">
 <img src="${imageUrl}" class="product-thumb" onerror="this.src='${FALLBACK_IMAGE_URL}'">
 <div class="score-circle ${analysis.badgeClass}">${analysis.score}</div>
@@ -670,27 +707,40 @@ resultCard.innerHTML = `
 </div>
 </div>
 
+<!-- 2. MI ALAPJÁN? -->
 <div class="why-box">
 <div class="result-section-title">Mi alapján?</div>
 <div class="why-text">${analysis.whyExplanation}</div>
 </div>
 
+<!-- 3. ÖSSZETEVŐK -->
 <div style="margin-bottom: 20px;">
 <div class="result-section-title">Összetevők & Összetétel</div>
 <div style="font-size: 0.88rem; color:var(--text-main); line-height: 1.55;">${product.ingredients_text_hu || 'A részletes összetevőlista elérhető a csomagolás fizikai címkéjén.'}</div>
 </div>
 
+<!-- 4. MIT JELENT EZ NEKED? -->
 <div class="meaning-box">
 <div style="font-weight:700; margin-bottom:4px;">Mit jelent ez a mindennapokban?</div>
 Ez az élelmiszer mértékkel beilleszthető egy kiegyensúlyozott étrendbe. Ha szeretnéd elkerülni a vércukorszint gyors ingadozását, fogyaszd lassan felszívódó rostokkal vagy minőségi fehérjével kiegészítve.
 </div>
 
+<!-- 5. ✨ KÉSZÍTSD EL OTTHON! (DIY RECEPT KÁRTYA) -->
+<div class="diy-box">
+<div class="diy-title">✨ ${analysis.diyTitle}</div>
+<div style="font-size: 0.88rem; color: var(--text-main); line-height: 1.55;">
+${analysis.diyContent}
+</div>
+</div>
+
+<!-- 6. ALTERNATÍVÁK (PARTNERTERMÉK OBJEKTÍVEN) -->
 <div class="partner-box">
 <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:#D3B5B3; font-weight:700; margin-bottom:4px;">Alternatívák</div>
 <div style="font-weight:700; font-size:0.95rem; margin-bottom:6px;">Ha hasonló, egyszerűbb összetételű alternatívát keresel:</div>
 Válassz hozzá adalékanyag-mentes, minimálisan feldolgozott alapanyagokat – például a Vilgain BIO termékcsalád tiszta opcióit.
 </div>
 
+<!-- 7. GYAKORLATI AKCIÓK -->
 <div class="action-bar-neutral">
 <button id="btn-action-save" class="btn-action-neutral">📌 Mentés a profilba</button>
 <button id="btn-action-pantry" class="btn-action-neutral">🌱 Kamra szűrés</button>
@@ -766,7 +816,6 @@ renderPantryTags();
 renderPantryRecipes();
 }
 
-/* JAVÍTVA: Tiszta renderPantryRecipes függvény */
 function renderPantryRecipes() {
 const container = document.getElementById('pantry-recipes-container');
 if (!container) return;
@@ -786,7 +835,6 @@ container.appendChild(card);
 });
 }
 
-/* JAVÍTVA: Dátumszámítási képlet helyreállított szorzókkal */
 function updateCycleCalculator() {
 const lastPeriodInput = document.getElementById('last-period-date');
 if (!lastPeriodInput) return;
