@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
 :root {
 --transition-speed: 0.35s;
@@ -88,6 +89,15 @@ margin: 0 auto;
 header {
 text-align: center;
 margin-bottom: 24px;
+position: relative;
+}
+.user-bar {
+position: absolute;
+top: 0;
+right: 0;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 .brand-title {
 font-family: var(--font-heading);
@@ -117,6 +127,11 @@ border: 1px solid var(--border-color);
 .module-switch-container {
 grid-template-columns: 1fr;
 border-radius: 16px;
+}
+.user-bar {
+position: relative;
+justify-content: center;
+margin-bottom: 10px;
 }
 }
 .tab-btn {
@@ -574,6 +589,37 @@ color: #FFFFFF;
 border-color: var(--primary);
 box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
+.modal-backdrop {
+position: fixed;
+top: 0; left: 0; width: 100vw; height: 100vh;
+background: rgba(0,0,0,0.6);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+padding: 14px;
+}
+.modal-content {
+background: var(--bg-card);
+border-radius: var(--radius-lg);
+padding: 24px;
+max-width: 420px;
+width: 100%;
+box-shadow: var(--shadow-hover);
+border: 1px solid var(--border-color);
+position: relative;
+}
+.close-modal-btn {
+position: absolute;
+top: 12px;
+right: 14px;
+background: transparent;
+border: none;
+font-size: 1.2rem;
+font-weight: 800;
+color: var(--text-muted);
+cursor: pointer;
+}
 .disclaimer-text {
 font-size: 0.7rem;
 color: var(--text-muted);
@@ -587,6 +633,9 @@ margin-top: 14px;
 <body data-theme="ellenor">
 <div class="container">
 <header>
+<div class="user-bar">
+<button id="btn-auth-trigger" class="btn-secondary" style="font-size: 0.75rem; padding: 6px 12px; border-radius: 100px;">👤 Bejelentkezés</button>
+</div>
 <div class="brand-title">daleday</div>
 <div class="brand-subtitle">Ahol a tudatosság természetessé válik.</div>
 </header>
@@ -695,6 +744,198 @@ Tájékoztatás: A daleday életmód- és táplálkozási felület. Nem minősü
 <div id="cycle-recipe-container"></div>
 </div>
 </div>
+
+<div id="auth-modal" class="modal-backdrop hidden">
+<div class="modal-content">
+<button class="close-modal-btn" id="btn-close-auth">&times;</button>
+<div style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700; color: var(--text-heading); margin-bottom: 4px;">daleday profil</div>
+<div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px;">Mentsd el a jó döntéseidet és építsd a havi egészség-mérlegedet!</div>
+
+<div id="auth-logged-out-view">
+<button id="btn-google-login" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; background: #FFF; color: #000;">
+<span>🌐 Bejelentkezés Google fiókkal</span>
+</button>
+<div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin: 8px 0;">vagy e-mail címmel</div>
+<div class="input-wrapper" style="margin-bottom: 8px;">
+<input type="email" id="auth-email" class="custom-input" placeholder="E-mail cím">
+</div>
+<div class="input-wrapper" style="margin-bottom: 12px;">
+<input type="password" id="auth-password" class="custom-input" placeholder="Jelszó">
+</div>
+<div style="display: flex; gap: 8px;">
+<button id="btn-email-login" class="btn-primary" style="flex: 1;">Bejelentkezés</button>
+<button id="btn-email-signup" class="btn-secondary" style="flex: 1;">Regisztráció</button>
+</div>
+</div>
+
+<div id="auth-logged-in-view" class="hidden">
+<div style="text-align: center; padding: 10px 0;">
+<div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading);" id="user-display-name">Felhasználó</div>
+<div style="font-size: 0.8rem; color: var(--text-muted);" id="user-display-email">email@domain.com</div>
+</div>
+
+<div style="background: var(--bg-card-alt); border-radius: var(--radius-md); padding: 14px; margin: 14px 0; text-align: center;">
+<div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Ebben a hónapban elért eredményed</div>
+<div style="font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--primary);" id="stat-clean-percent">0% Tiszta döntés</div>
+<div style="font-size: 0.82rem; font-weight: 600; color: var(--text-main); margin-top: 4px;" id="stat-skipped-count">🛑 0 káros terméket hagytál a polcon</div>
+<div style="font-size: 0.82rem; font-weight: 600; color: var(--text-main);" id="stat-additives-count">🧪 0 elutasított E-szám / adalék</div>
+<div style="font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-top: 8px; border-top: 1px dashed var(--border-color); padding-top: 6px;" id="stat-rank-text">Rang: Kezdő Ételmentő</div>
+</div>
+
+<button id="btn-logout" class="btn-secondary" style="width: 100%; color: #800020;">Kijelentkezés</button>
+</div>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyB9UURa1AtJmhe13xTztcYJQWtYHDEsOq8",
+authDomain: "daleday-app.firebaseapp.com",
+projectId: "daleday-app",
+storageBucket: "daleday-app.firebasestorage.app",
+messagingSenderId: "868051959992",
+appId: "1:868051959992:web:500236f37d04d9a20eb44d",
+measurementId: "G-F7BKX90QP1"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
+
+onAuthStateChanged(auth, async (user) => {
+currentUser = user;
+const triggerBtn = document.getElementById('btn-auth-trigger');
+if (user) {
+if (triggerBtn) triggerBtn.textContent = '👤 ' + (user.displayName ? user.displayName.split(' ')[0] : 'Profil');
+updateUserStatsUI();
+} else {
+if (triggerBtn) triggerBtn.textContent = '👤 Bejelentkezés';
+}
+});
+
+async function updateUserStatsUI() {
+if (!currentUser) return;
+const nameEl = document.getElementById('user-display-name');
+const emailEl = document.getElementById('user-display-email');
+if (nameEl) nameEl.textContent = currentUser.displayName || 'Tudatos Vásárló';
+if (emailEl) emailEl.textContent = currentUser.email;
+
+const currentMonthKey = new Date().toISOString().slice(0,7);
+const userRef = doc(db, "users", currentUser.uid, "monthly_stats", currentMonthKey);
+const docSnap = await getDoc(userRef);
+
+if (docSnap.exists()) {
+const data = docSnap.data();
+const skipped = data.skippedProductsCount || 0;
+const bought = data.boughtProductsCount || 0;
+const additives = data.avoidedAdditivesCount || 0;
+const total = skipped + bought;
+const cleanPercent = total > 0 ? Math.round((skipped / total) * 100) : 100;
+
+document.getElementById('stat-clean-percent').textContent = cleanPercent + '% Tiszta döntés';
+document.getElementById('stat-skipped-count').textContent = `🛑 ${skipped} káros terméket hagytál a polcon`;
+document.getElementById('stat-additives-count').textContent = `🧪 ${additives} elutasított E-szám / adalék`;
+
+let rank = "Kezdő Ételmentő";
+if (cleanPercent >= 85 && total >= 5) rank = "🌿 Tudatos Ételmentő – A-Szint";
+else if (cleanPercent >= 70) rank = "🛡️ Tudatos Vásárló – Haladó";
+document.getElementById('stat-rank-text').textContent = "Rang: " + rank;
+}
+}
+
+window.logUserDecision = async function(barcode, productName, wasBought, problematicCount) {
+if (!currentUser) {
+alert("A döntéseid elmentéséhez és a havi kártyád építéséhez kérjük, jelentkezz be!");
+openAuthModal();
+return;
+}
+
+const currentMonthKey = new Date().toISOString().slice(0,7);
+const userRef = doc(db, "users", currentUser.uid, "monthly_stats", currentMonthKey);
+
+try {
+if (!wasBought) {
+await setDoc(userRef, {
+skippedProductsCount: increment(1),
+avoidedAdditivesCount: increment(problematicCount || 1),
+lastUpdated: new Date()
+}, { merge: true });
+
+if (window.confetti) {
+window.confetti({ particleCount: 70, spread: 60, origin: { y: 0.8 } });
+}
+alert("🎉 +1 jó döntés elmentve! Ezzel is óvod a szervezetedet.");
+} else {
+await setDoc(userRef, {
+boughtProductsCount: increment(1),
+lastUpdated: new Date()
+}, { merge: true });
+alert("Termék megvásárolva és rögzítve.");
+}
+updateUserStatsUI();
+} catch (e) {
+console.error("Hiba a mentés során:", e);
+}
+};
+
+function openAuthModal() {
+const modal = document.getElementById('auth-modal');
+const loggedOutView = document.getElementById('auth-logged-out-view');
+const loggedInView = document.getElementById('auth-logged-in-view');
+if (!modal) return;
+modal.classList.remove('hidden');
+if (currentUser) {
+if (loggedOutView) loggedOutView.classList.add('hidden');
+if (loggedInView) loggedInView.classList.remove('hidden');
+updateUserStatsUI();
+} else {
+if (loggedOutView) loggedOutView.classList.remove('hidden');
+if (loggedInView) loggedInView.classList.add('hidden');
+}
+}
+
+document.getElementById('btn-auth-trigger')?.addEventListener('click', openAuthModal);
+document.getElementById('btn-close-auth')?.addEventListener('click', () => {
+document.getElementById('auth-modal')?.classList.add('hidden');
+});
+
+document.getElementById('btn-google-login')?.addEventListener('click', () => {
+const provider = new GoogleAuthProvider();
+signInWithPopup(auth, provider).then(() => {
+document.getElementById('auth-modal')?.classList.add('hidden');
+}).catch(err => alert("Hiba a Google bejelentkezés során: " + err.message));
+});
+
+document.getElementById('btn-email-login')?.addEventListener('click', () => {
+const email = document.getElementById('auth-email').value;
+const pass = document.getElementById('auth-password').value;
+if (!email || !pass) return alert("Kérjük, add meg az e-mail címed és a jelszavad!");
+signInWithEmailAndPassword(auth, email, pass).then(() => {
+document.getElementById('auth-modal')?.classList.add('hidden');
+}).catch(err => alert("Bejelentkezési hiba: " + err.message));
+});
+
+document.getElementById('btn-email-signup')?.addEventListener('click', () => {
+const email = document.getElementById('auth-email').value;
+const pass = document.getElementById('auth-password').value;
+if (!email || !pass) return alert("Kérjük, add meg az e-mail címed és a jelszavad!");
+createUserWithEmailAndPassword(auth, email, pass).then(() => {
+document.getElementById('auth-modal')?.classList.add('hidden');
+}).catch(err => alert("Regisztrációs hiba: " + err.message));
+});
+
+document.getElementById('btn-logout')?.addEventListener('click', () => {
+signOut(auth).then(() => {
+document.getElementById('auth-modal')?.classList.add('hidden');
+});
+});
+</script>
+
 <script>
 let html5QrCode = null;
 const FALLBACK_IMAGE_URL = 'assets/images/fallback-food.jpg';
@@ -865,7 +1106,7 @@ title: "Vasdús krémes spenótos csicseriborsó-ragu tahinivel és citromlével
 time: "20 perc",
 ingredients: ["spenót", "csicseriborsó", "fokhagyma", "olívaolaj"],
 description: "Fűszeres olívaolajon pirítsd meg a csicseriborsót, add hozzá a spenótot, párold össze, majd selymesítsd tahinivel és friss citromlével.",
-justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik fel a szervezetben.",
+justification: "A csicseriborsó és a spenót növényi vasa a friss citromlé C-vitaminjával kombinálva maximális hatékonysággal szívódik felszívódik.",
 supplement: "🍵 Ajánlott tea & kiegészítő: Csalántea + Omega-3 zsírsavak.",
 vilgain: "Ajánlott Vilgain elem: Vilgain BIO Csicseriborsó és Extra Szűz Olívaolaj."
 }
@@ -947,7 +1188,6 @@ vilgain: "Ajánlott Vilgain elem: Vilgain Omega-3 Olaj."
 ]
 }
 };
-let activeCycleSuperfoodFilter = null;
 
 function switchModule(moduleName) {
 document.body.setAttribute('data-theme', moduleName);
@@ -1252,17 +1492,19 @@ warningHTML = `
 }
 
 const scoreSubText = analysis.isUnknown ? 'ADAT' : '/ 100 pt';
+const pName = product.product_name_hu || product.product_name || 'Beolvasott termék';
+const pCount = analysis.problematicIngredients ? analysis.problematicIngredients.length : 0;
 
 resultCard.innerHTML = `
 <div class="score-box">
-<img src="${imageUrl}" alt="${product.product_name_hu || product.product_name}" class="product-img-thumb" onerror="this.src='${FALLBACK_IMAGE_URL}'">
+<img src="${imageUrl}" alt="${pName}" class="product-img-thumb" onerror="this.src='${FALLBACK_IMAGE_URL}'">
 <div class="score-badge-circle ${analysis.badgeClass}">
 <span>${analysis.score}</span>
 <span class="score-badge-sub">${scoreSubText}</span>
 </div>
 <div>
 <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Elemzés eredménye</div>
-<div style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--text-heading);">${product.product_name_hu || product.product_name || 'Beolvasott termék'}</div>
+<div style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--text-heading);">${pName}</div>
 <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">${product.brands || ''}</div>
 </div>
 </div>
@@ -1284,6 +1526,18 @@ ${warningHTML}
 ${analysis.diyContent}
 </div>
 ${analysis.vilgainRecommend ? `<div style="margin-top: 10px; font-weight: 700; font-size: 0.82rem; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px;">${analysis.vilgainRecommend}</div>` : ''}
+</div>
+
+<div style="margin-top: 14px; padding: 12px; background: rgba(0,0,0,0.06); border-radius: var(--radius-md); text-align: center;">
+<div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Mit teszel ezzel a termékkel?</div>
+<div style="display: flex; gap: 8px; justify-content: center;">
+<button onclick="window.logUserDecision('${barcode}', '${pName}', false, ${pCount})" class="btn-primary" style="background: #800020; color: #FFFCEA;">
+🛑 A polcon hagyom!
+</button>
+<button onclick="window.logUserDecision('${barcode}', '${pName}', true, 0)" class="btn-secondary">
+🛒 Megveszem
+</button>
+</div>
 </div>
 `;
 resultCard.classList.remove('hidden');
