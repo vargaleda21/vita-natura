@@ -1068,62 +1068,79 @@
 
     function generateSmartAnalysis(product) {
         const name = (product.product_name_hu || product.product_name || '').toLowerCase();
-        let score = 75;
-        let analysisText = "A termék összetétele mérsékelten feldolgozott elemeket tartalmaz.";
+        const rawIngredients = product.ingredients_text_hu || product.ingredients_text || (product.ingredients ? product.ingredients.map(i => i.text).join(', ') : '');
+        const ingText = rawIngredients.toLowerCase();
+
+        let score = 85; 
+        let problematicIngredients = [];
+
+        // 1. KÁROS / GYULLADÁSKELTŐ ÖSSZETEVŐK RÉSZLETES SZŰRÉSE
+        if (ingText.includes('pálma') || ingText.includes('palm') || ingText.includes('növényi zsír')) {
+            score -= 25;
+            problematicIngredients.push("Finomított pálmaolaj / növényi zsír (gyulladáskeltő)");
+        }
+        if (ingText.includes('cukor') || ingText.includes('sugar') || ingText.includes('szirup') || ingText.includes('syrup')) {
+            score -= 20;
+            problematicIngredients.push("Hozzáadott cukor / glükózszirup (vércukorszint-ingadozás)");
+        }
+        if (ingText.includes('aroma') || ingText.includes('flavour') || ingText.includes('ízfokozó') || ingText.includes('e621') || ingText.includes('e500')) {
+            score -= 15;
+            problematicIngredients.push("Mesterséges aromák / ízfokozók / adalékok");
+        }
+        if (ingText.includes('búzaliszt') || ingText.includes('tészta 91') || ingText.includes('finomított')) {
+            score -= 10;
+            problematicIngredients.push("Finomított szénhidrátok / búzaliszt");
+        }
+
+        const isInstantSoup = name.includes('leves') || name.includes('tészta') || name.includes('smack') || name.includes('nissin') || name.includes('instant');
+
+        let analysisText = "";
         let diyTitle = "Házi készítési opció (Alternatíva)";
         let diyContent = "";
 
-        if (name.includes('mogyorókrém') || name.includes('mogyorokrem') || name.includes('krém') || name.includes('nutella')) {
-            score = 35;
-            analysisText = "Gyulladáskeltő hatású: Magas finomított cukor- és pálmaolaj-tartalom jellemzi, amely kedvezőtlenül befolyásolja a bélflórát és a szervezet gyulladásos folyamatait.";
-            diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
-            diyContent = `
-                <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong></div>
-                <ul style="margin-left: 18px; margin-bottom: 10px; font-size: 0.82rem;">
-                    <li>150g pörkölt törökmogyoró</li>
-                    <li>30g minőségi holland kakaópor</li>
-                    <li>2 ek hidegen sajtolt mogyoróolaj vagy kókuszolaj</li>
-                    <li>2-3 ek juharszirup vagy tiszta méz</li>
-                    <li>1 tk valódi vaníliakivonat</li>
-                    <li>Csipet tengeri só</li>
-                </ul>
-                <div style="margin-bottom: 6px;"><strong>Elkészítési útmutató lépésről lépésre:</strong></div>
-                <ol style="margin-left: 18px; font-size: 0.82rem;">
-                    <li>A pörkölt törökmogyorót tedd egy nagyteljesítményű konyhai aprítóba vagy turmixgépbe. Kezdd el magas fokozaton darálni.</li>
-                    <li>Körülbelül 5-8 perc alatt a mogyoró kiengedi a saját olaját, és teljesen sima, folyékony, krémes állagúvá válik (időnként iktass be 1 perc szünetet, hogy a gép ne melegedjen túl).</li>
-                    <li>Add hozzá a holland kakaóport, a juharszirupot, a mogyoróolajat, a vaníliát és a csipet sót.</li>
-                    <li>Turmixold további 1-2 percig, amíg egyenletesen selyemfényű, homogén krémet nem kapsz. Töltsd tiszta üvegbe; hűtve 3 hétig eltartható.</li>
-                </ol>
-            `;
-        } else if (name.includes('granola') || name.includes('müzli') || name.includes('muzli')) {
-            score = 42;
-            analysisText = "Gyulladáskeltő hatású: Rejtett cukrokat és finomított növényi olajokat tartalmaz, amelyek hirtelen vércukorszint-ingadozást okozhatnak.";
-            diyTitle = "Készítsd el otthon: Ropogós mézes-magos granola";
-            diyContent = `
-                <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong></div>
-                <ul style="margin-left: 18px; margin-bottom: 10px; font-size: 0.82rem;">
-                    <li>200g nagyszemű zabpehely</li>
-                    <li>50g mandula vagy pekándió durvára vágva</li>
-                    <li>30g lenmag vagy chia mag</li>
-                    <li>3 ek olvasztott kókuszolaj</li>
-                    <li>4 ek tiszta méz vagy juharszirup</li>
-                    <li>1 tk Ceylon fahéj és egy csipet só</li>
-                </ul>
-                <div style="margin-bottom: 6px;"><strong>Elkészítési útmutató lépésről lépésre:</strong></div>
-                <ol style="margin-left: 18px; font-size: 0.82rem;">
-                    <li>Melegítsd elő a sütőt 160 Celsius-fokra, és bélelj ki egy tepsit sütőpapírral.</li>
-                    <li>Egy nagy tálban keverd össze a zabpelyhet, az aprított magvakat, a fahéjat és a sót.</li>
-                    <li>Egy kis edényben langyosítsd össze a kókuszolajat a mézzel, majd öntsd a száraz keverékre, és alaposan forgasd át, hogy minden szem pillekönnyen bevonódjon.</li>
-                    <li>Terítsd szét a tepsiben egyenletesen, és süsd 20-25 percig. Félidőben óvatosan keverd át, amíg aranybarna és ropogós nem lesz. Teljes kihűlés után zárd le.</li>
-                </ol>
-            `;
+        // 2. SZIGORÚ BESOROLÁSI LOGIKA
+        if (score <= 50 || isInstantSoup || problematicIngredients.length >= 2) {
+            score = Math.min(score, 38); 
+            analysisText = "Ultra-feldolgozott élelmiszer: Magas finomított szénhidrát-, pálmaolaj- és adalékanyag-tartalma miatt gyulladáskeltő hatású, megterheli az emésztést és vércukorszint-ingadozást okoz.";
+            
+            if (isInstantSoup) {
+                diyTitle = "Készítsd el otthon: Tápláló házi ramen / tésztaleves";
+                diyContent = `
+                    <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong></div>
+                    <ul style="margin-left: 18px; margin-bottom: 10px; font-size: 0.82rem;">
+                        <li>100g ázsiai üvegtészta vagy hajdina soba tészta</li>
+                        <li>500ml valódi csontleves vagy zöldségalaplé</li>
+                        <li>1 ek Miso paszta vagy jó minőségű tamari/szójaszósz</li>
+                        <li>1 marék friss spenót és reszelt sárgarépa</li>
+                        <li>1 db lágyra főtt tojás</li>
+                        <li>Friss gyömbér és fokhagyma</li>
+                    </ul>
+                    <div style="margin-bottom: 6px;"><strong>Elkészítési útmutató:</strong></div>
+                    <ol style="margin-left: 18px; font-size: 0.82rem;">
+                        <li>Forrald fel a csontlevest a reszelt gyömbérrel és fokhagymával.</li>
+                        <li>Keverd bele a miso pasztát, majd dobd bele a tésztát és a friss zöldségeket 3-4 percre.</li>
+                        <li>Tálald félbevágott lágy tojással és friss újhagymával. Tápanyagdús, mesterséges adalékok nélkül.</li>
+                    </ol>
+                `;
+            } else if (name.includes('mogyorókrém') || name.includes('nutella')) {
+                diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
+                diyContent = `
+                    <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong> 150g pörkölt törökmogyoró, 30g kakaópor, 2 ek méz, csipet vanília.</div>
+                    <div style="margin-bottom: 6px;"><strong>Elkészítés:</strong> Turmixold a mogyorót 5-8 percig krémesre, majd keverd hozzá a többi hozzávalót.</div>
+                `;
+            } else {
+                diyTitle = "Egészséges tiszta alternatíva";
+                diyContent = `<div style="font-size: 0.82rem;">Ezt a terméket érdemes feldolgozatlan, természetes alapanyagokból készült alternatívára cserélni a hormonális egyensúly és az emésztés védelme érdekében.</div>`;
+            }
+        } else if (score < 80) {
+            analysisText = "Mértékkel fogyasztandó: Tartalmaz hasznos tápanyagokat is, de finomított összetevői miatt érdemes odafigyelni a rendszeres fogyasztására.";
+            diyTitle = "Tipp a jobb tápértékért";
+            diyContent = `<div style="font-size: 0.82rem;">Egészítsd ki friss zöldségekkel és minőségi fehérjével a vércukorszint-ingadozás elkerülésére.</div>`;
         } else {
             score = 92;
             analysisText = "Kiváló minőségű, tiszta összetételű termék, minimális feldolgoztsággal és mesterséges adalékanyagok nélkül.";
             diyTitle = "Ajánlott kiegészítő gasztrotipp";
-            diyContent = `
-                <div style="font-size: 0.82rem;">Ez a termék kiválóan beilleszthető a tiszta forrású étrendbe. Ha otthon szeretnéd magasabb szintre emelni, fogyaszd friss zöldségekkel vagy prémium hidegen sajtolt olajokkal a tökéletes tápanyag-felszívódás érdekében.</div>
-            `;
+            diyContent = `<div style="font-size: 0.82rem;">Ez a termék kiválóan beilleszthető a tiszta forrású étrendbe.</div>`;
         }
 
         let badgeClass = score >= 80 ? 'score-high' : (score >= 50 ? 'score-mid' : 'score-low');
@@ -1132,6 +1149,7 @@
             score,
             badgeClass,
             analysisText,
+            problematicIngredients,
             diyTitle,
             diyContent
         };
@@ -1144,6 +1162,15 @@
         const imageUrl = product.image_url || product.image_front_url || product.image_small_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&auto=format&fit=crop&q=80';
         const rawIngredients = product.ingredients_text_hu || product.ingredients_text || (product.ingredients ? product.ingredients.map(i => i.text).join(', ') : '');
         const translatedIngredients = translateIngredientsToHungarian(rawIngredients);
+
+        let warningHTML = "";
+        if (analysis.problematicIngredients && analysis.problematicIngredients.length > 0) {
+            warningHTML = `
+                <div style="margin-top: 8px; font-size: 0.78rem; color: #800020; font-weight: 700;">
+                    ⚠️ Kifogásolt összetevők: ${analysis.problematicIngredients.join(', ')}
+                </div>
+            `;
+        }
 
         resultCard.innerHTML = `
             <div class="score-box">
@@ -1162,6 +1189,7 @@
             <div class="analysis-section">
                 <div class="analysis-title">Szakértői értékelés & hatás</div>
                 <div style="font-size: 0.85rem; color: var(--text-main); font-weight: 600;">${analysis.analysisText}</div>
+                ${warningHTML}
             </div>
 
             <div class="analysis-section" style="margin-top: 10px;">
