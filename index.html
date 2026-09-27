@@ -22,7 +22,7 @@
             --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.08);
         }
 
-        /* 1. ALAPANYAG-ELLENŐR PALETTA */
+        /* 1. ALAPANYAG-ELLENŐR PALETTA (Magas kontraszttal) */
         [data-theme="ellenor"], body[data-theme="ellenor"] {
             --bg-main: #9E7476;
             --bg-card: #849398;
@@ -56,20 +56,20 @@
             --border-color: #A3C9DC;
         }
 
-        /* 3. CIKLUSSZINKRON PALETTA */
+        /* 3. CIKLUSSZINKRON PALETTA (Javított WCAG kontraszt) */
         [data-theme="cycle"], body[data-theme="cycle"] {
             --bg-main: #DEC4C9;
-            --bg-card: #977272;
+            --bg-card: #8C6262;
             --bg-card-alt: #DEC4C9;
-            --bg-recipe-box: #977272;
-            --primary: #594E4C;
+            --bg-recipe-box: #8C6262;
+            --primary: #3D3332;
             --primary-light: #DEC4C9;
             --accent-vilgain: #181717;
             --accent-vilgain-bg: #181717;
             --accent-vilgain-border: #DEC4C9;
-            --text-main: #181717;
-            --text-muted: #3D3534;
-            --text-heading: #181717;
+            --text-main: #FFFCEA;
+            --text-muted: #F2E4E6;
+            --text-heading: #FFFFFF;
             --border-color: #7D5C5C;
         }
 
@@ -158,7 +158,7 @@
 
         [data-theme="cycle"] .tab-btn.active {
             color: #FFFCEA !important;
-            background: #594E4C !important;
+            background: #3D3332 !important;
         }
 
         .card {
@@ -213,8 +213,8 @@
             padding: 10px 12px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.85);
-            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.95);
+            color: #1B2C36;
             font-family: var(--font-body);
             font-size: 0.88rem;
             outline: none;
@@ -237,7 +237,7 @@
         }
 
         [data-theme="ellenor"] .btn-primary {
-            color: #D3B5B3;
+            color: #FFFCEA;
         }
 
         .btn-secondary {
@@ -334,17 +334,17 @@
         .score-low { background: #800020; }
 
         .analysis-section {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.85);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 14px;
             margin-top: 14px;
-            color: var(--text-main);
+            color: #1B2C36;
         }
 
         .analysis-title {
             font-weight: 700;
-            color: var(--text-heading);
+            color: #1B2C36;
             margin-bottom: 6px;
             font-size: 0.9rem;
         }
@@ -409,7 +409,8 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: var(--bg-card);
+            background: #FFFFFF;
+            color: #1B2C36;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow-hover);
@@ -424,7 +425,7 @@
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 600;
-            border-bottom: 1px solid var(--bg-card-alt);
+            border-bottom: 1px solid #E5E5E5;
         }
 
         .autocomplete-item:hover {
@@ -501,7 +502,7 @@
         }
 
         .supplement-box {
-            background: rgba(0, 0, 0, 0.06);
+            background: rgba(0, 0, 0, 0.08);
             border: 1px dashed var(--primary);
             padding: 8px 10px;
             border-radius: 6px;
@@ -799,47 +800,50 @@
 <script>
     let html5QrCode = null;
 
+    // LOCAL FALLBACK KÉPEK A SAJÁT DOMAIN ALATTI STRUKTÚRÁRA CSERÉLVE
+    const FALLBACK_IMAGE_URL = 'assets/images/fallback-food.jpg';
+
     const SCANNER_DATABASE = {
         "mogyorokrem": {
             product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
             brands: 'Kereskedelmi márka',
             ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
-            image_url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&auto=format&fit=crop&q=80',
+            image_url: 'assets/images/hazelnut-cream.jpg',
             nutriscore_grade: 'e'
         },
         "granola": {
             product_name_hu: 'Ropogós csokoládés granola',
             brands: 'Ipari müzli termék',
             ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
-            image_url: 'https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=200&auto=format&fit=crop&q=80',
+            image_url: 'assets/images/granola.jpg',
             nutriscore_grade: 'd'
         },
         "pesto": {
             product_name_hu: 'Vilgain BIO Basil Pesto',
             brands: 'Vilgain',
             ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
-            image_url: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=200&auto=format&fit=crop&q=80',
+            image_url: 'assets/images/pesto.jpg',
             nutriscore_grade: 'a'
         },
         "3017620422003": {
             product_name_hu: 'Hagyományos mogyorókrém cukorral és pálmaolajjal',
             brands: 'Kereskedelmi márka',
             ingredients_text_hu: 'Cukor, pálmaolaj, mogyoró (13%), sovány tejpor, zsírszegény kakaópor, emulgeálószer: lecitinek (szója), vanillin.',
-            image_url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&auto=format&fit=crop&q=80',
+            image_url: 'assets/images/hazelnut-cream.jpg',
             nutriscore_grade: 'e'
         },
         "5900512300211": {
             product_name_hu: 'Ropogós csokoládés granola',
             brands: 'Ipari müzli termék',
             ingredients_text_hu: 'Zabpehely, cukor, pálmaolaj, glükózszirup, csokoládédarabok, emulgeálószer.',
-            image_url: 'https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=200&auto=format&fit=crop&q=80',
+            image_url: 'assets/images/granola.jpg',
             nutriscore_grade: 'd'
         },
         "8594073300123": {
             product_name_hu: 'Vilgain BIO Basil Pesto',
             brands: 'Vilgain',
             ingredients_text_hu: 'Bazsalikom, extra szűz olívaolaj, kesudió, parmezán sajt, só.',
-            image_url: 'https://images.unsplash.com/photo-1516714435131-44d6b64dc6a2?w=200&auto=format&fit=crop&q=80',
+            image_url: 'assets/images/pesto.jpg',
             nutriscore_grade: 'a'
         }
     };
@@ -848,7 +852,7 @@
         'zabpehely', 'mogyoróvaj', 'méz', 'tojás', 'banán', 'chia mag', 
         'mandulatej', 'avokádó', 'csirkemell', 'quinoa', 'spenót', 'fokhagyma', 'olívaolaj', 'paradicsom',
         'marhahús', 'lazac', 'basmati rizs', 'édesburgonya', 'brokkoli', 'cukkini', 'fekete bab', 'csicseriborsó',
-        'lencse', 'vöröshagyma', 'citrom', 'mandula', 'kesudió', 'étcsokoládé', 'kakaópor', 'fahéj'
+        'lencse', 'vöröshagyma', 'citrom', 'mandula', 'kesudió', 'étcsokoládé', 'kakaópor', 'fahéj', 'gyömbér'
     ];
     let selectedIngredients = [];
 
@@ -964,7 +968,7 @@
                     time: "15 perc",
                     ingredients: ["quinoa", "paradicsom", "avokádó", "olívaolaj", "bazsalikom"],
                     description: "Keverd össze a főtt quinoát az aprított paradicsommal, avokádóval és olívaolajos bazsalikomos öntettel.",
-                    justification: "Az avokádó és az olívaolaj egészséges zsírsavai elengedhetetlenek a tüszőrepedéshez és a hormonok szintéziséhez.",
+                    justification: "Az avokádó és az olívaolaj egészséges zsírsavai elengedhetetlenek a tüszőrepedéshez és a hormonok szintézisőhöz.",
                     supplement: "🍵 Ajánlott tea & kiegészítő: Kamillatea + Cink & Kollagén.",
                     vilgain: "Ajánlott Vilgain elem: Vilgain Extra Szűz Olívaolaj."
                 },
@@ -1054,11 +1058,17 @@
             'emulsifier': 'emulgeálószer',
             'lecithin': 'lecitin',
             'flavouring': 'aroma',
-            'modified starch': 'módosított keményítő',
+            'flavor enhancer': 'ízfokozó',
             'preservative': 'tartósítószer',
+            'acidifier': 'savanyúságot szabályozó anyag',
+            'thickener': 'sűrítőanyag',
+            'modified starch': 'módosított keményítő',
             'milk': 'tej',
             'skimmed milk powder': 'sovány tejpor',
-            'fat reduced cocoa powder': 'zsírszegény kakaópor'
+            'fat reduced cocoa powder': 'zsírszegény kakaópor',
+            'monosodium glutamate': 'nátrium-glutamát (E621)',
+            'citric acid': 'citromsav (E330)',
+            'xanthan gum': 'xantángumi (E415)'
         };
         for (let key in dict) {
             text = text.replace(new RegExp(key, 'g'), dict[key]);
@@ -1071,34 +1081,50 @@
         const rawIngredients = product.ingredients_text_hu || product.ingredients_text || (product.ingredients ? product.ingredients.map(i => i.text).join(', ') : '');
         const ingText = rawIngredients.toLowerCase();
 
+        if (!ingText || ingText.length < 10) {
+            return {
+                score: 50,
+                badgeClass: 'score-mid',
+                analysisText: "Hiányos adatbázis-összetétel: A termék összetevőlistája nem áll rendelkezésre a független adatbázisban, ezért kézi ellenőrzés javasolt.",
+                problematicIngredients: ["Nem ellenőrizhető összetevők"],
+                diyTitle: "💡 Tipp a vásárláshoz",
+                diyContent: "<div style='font-size: 0.82rem;'>Mindig ellenőrizd a csomagolás hátoldalán a fizikai összetevőlistát: kerüld a finomított olajokat és a hozzáadott cukrokat!</div>",
+                vilgainRecommend: "🛒 Biztos tiszta alternatíva: Vilgain Garantáltan BIO Alapanyagok."
+            };
+        }
+
         let score = 85; 
         let problematicIngredients = [];
 
-        // 1. KÁROS / GYULLADÁSKELTŐ ÖSSZETEVŐK RÉSZLETES SZŰRÉSE
-        if (ingText.includes('pálma') || ingText.includes('palm') || ingText.includes('növényi zsír')) {
+        const hasPalmNegative = /(mentes|free)\b/i.test(ingText) && ingText.includes('pálma');
+        if (!hasPalmNegative && /\b(pálmaolaj|pálmazsír|palm oil|palm fat|növényi zsír)\b/i.test(ingText)) {
             score -= 25;
             problematicIngredients.push("Finomított pálmaolaj / növényi zsír (gyulladáskeltő)");
         }
-        if (ingText.includes('cukor') || ingText.includes('sugar') || ingText.includes('szirup') || ingText.includes('syrup')) {
+
+        const isBetterSugar = /(kókuszvirág|kókusz|nádcukor|eritrit|xilit|stevia|stívia)/i.test(ingText);
+        if (!isBetterSugar && /\b(cukor|sugar|glükózszirup|fruktózszirup|glucose syrup|invert sugar)\b/i.test(ingText)) {
             score -= 20;
-            problematicIngredients.push("Hozzáadott cukor / glükózszirup (vércukorszint-ingadozás)");
-        }
-        if (ingText.includes('aroma') || ingText.includes('flavour') || ingText.includes('ízfokozó') || ingText.includes('e621') || ingText.includes('e500')) {
-            score -= 15;
-            problematicIngredients.push("Mesterséges aromák / ízfokozók / adalékok");
-        }
-        if (ingText.includes('búzaliszt') || ingText.includes('tészta 91') || ingText.includes('finomított')) {
-            score -= 10;
-            problematicIngredients.push("Finomított szénhidrátok / búzaliszt");
+            problematicIngredients.push("Finomított fehércukor / szirupok (vércukorszint-ingadozás)");
         }
 
-        const isInstantSoup = name.includes('leves') || name.includes('tészta') || name.includes('smack') || name.includes('nissin') || name.includes('instant');
+        if (/\b(aroma|flavour|flavor|ízfokozó|e621|glutamát|e500|e250)\b/i.test(ingText)) {
+            score -= 15;
+            problematicIngredients.push("Mesterséges aromák / ízfokozók / E-számok");
+        }
+
+        if (/\b(búzaliszt|finomított búzaliszt|tészta 91|wheat flour)\b/i.test(ingText)) {
+            score -= 10;
+            problematicIngredients.push("Finomított búzaliszt / ipari tésztaalap");
+        }
+
+        const isInstantSoup = /\b(leves|tészta|smack|nissin|instant|ramen)\b/i.test(name) || ingText.includes('tészta 91%');
 
         let analysisText = "";
         let diyTitle = "Házi készítési opció (Alternatíva)";
         let diyContent = "";
+        let vilgainRecommend = "";
 
-        // 2. SZIGORÚ BESOROLÁSI LOGIKA
         if (score <= 50 || isInstantSoup || problematicIngredients.length >= 2) {
             score = Math.min(score, 38); 
             analysisText = "Ultra-feldolgozott élelmiszer: Magas finomított szénhidrát-, pálmaolaj- és adalékanyag-tartalma miatt gyulladáskeltő hatású, megterheli az emésztést és vércukorszint-ingadozást okoz.";
@@ -1122,25 +1148,34 @@
                         <li>Tálald félbevágott lágy tojással és friss újhagymával. Tápanyagdús, mesterséges adalékok nélkül.</li>
                     </ol>
                 `;
+                vilgainRecommend = "🛒 Bolti tiszta alternatíva: Vilgain BIO Hajdina Tészta + Vilgain Organikus Zöldségleves Alaplé.";
             } else if (name.includes('mogyorókrém') || name.includes('nutella')) {
                 diyTitle = "Készítsd el otthon: Prémium csokoládés mogyorókrém";
                 diyContent = `
                     <div style="margin-bottom: 8px;"><strong>Szükséges hozzávalók:</strong> 150g pörkölt törökmogyoró, 30g kakaópor, 2 ek méz, csipet vanília.</div>
                     <div style="margin-bottom: 6px;"><strong>Elkészítés:</strong> Turmixold a mogyorót 5-8 percig krémesre, majd keverd hozzá a többi hozzávalót.</div>
                 `;
+                vilgainRecommend = "🛒 Bolti tiszta alternatíva: Vilgain Mogyoróvaj 100% törökmogyoróból (hozzáadott cukor és pálmaolaj nélkül).";
             } else {
                 diyTitle = "Egészséges tiszta alternatíva";
                 diyContent = `<div style="font-size: 0.82rem;">Ezt a terméket érdemes feldolgozatlan, természetes alapanyagokból készült alternatívára cserélni a hormonális egyensúly és az emésztés védelme érdekében.</div>`;
+                vilgainRecommend = "🛒 Bolti tiszta alternatíva: Vilgain Tiszta BIO Alapanyagok.";
             }
         } else if (score < 80) {
             analysisText = "Mértékkel fogyasztandó: Tartalmaz hasznos tápanyagokat is, de finomított összetevői miatt érdemes odafigyelni a rendszeres fogyasztására.";
             diyTitle = "Tipp a jobb tápértékért";
-            diyContent = `<div style="font-size: 0.82rem;">Egészítsd ki friss zöldségekkel és minőségi fehérjével a vércukorszint-ingadozás elkerülésére.</div>`;
+            diyContent = `<div style="font-size: 0.82rem;">Egészítsd ki friss zöldségekkel, magvakkal és minőségi fehérjével a vércukorszint-ingadozás elkerülésére.</div>`;
+            vilgainRecommend = "🛒 Ajánlott Vilgain kiegészítés: Vilgain Magkeverékek és Hidegen Sajtolt Olajok.";
         } else {
             score = 92;
             analysisText = "Kiváló minőségű, tiszta összetételű termék, minimális feldolgoztsággal és mesterséges adalékanyagok nélkül.";
-            diyTitle = "Ajánlott kiegészítő gasztrotipp";
-            diyContent = `<div style="font-size: 0.82rem;">Ez a termék kiválóan beilleszthető a tiszta forrású étrendbe.</div>`;
+            diyTitle = "💡 Gasztrotipp & Tápanyag-booster";
+            diyContent = `
+                <div style="font-size: 0.82rem; line-height: 1.45;">
+                    Ez a termék kiváló alapja a tiszta táplálkozásnak. A tápanyagok még hatékonyabb felszívódásáért csepegtesd meg <strong>extra szűz olívaolajjal</strong>, szórd meg <strong>friss zöldfűszerekkel vagy mikrozöldekkel</strong>, és fogyaszd lassan felszívódó rostokkal!
+                </div>
+            `;
+            vilgainRecommend = "🛒 Prémium bolti ajánló: Vilgain Extra Szűz BIO Olívaolaj vagy Vilgain Szezámmag & Lenmag.";
         }
 
         let badgeClass = score >= 80 ? 'score-high' : (score >= 50 ? 'score-mid' : 'score-low');
@@ -1151,7 +1186,8 @@
             analysisText,
             problematicIngredients,
             diyTitle,
-            diyContent
+            diyContent,
+            vilgainRecommend
         };
     }
 
@@ -1159,7 +1195,7 @@
         const resultCard = document.getElementById('ellenor-result-card');
         const analysis = generateSmartAnalysis(product);
 
-        const imageUrl = product.image_url || product.image_front_url || product.image_small_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&auto=format&fit=crop&q=80';
+        const imageUrl = product.image_url || product.image_front_url || product.image_small_url || FALLBACK_IMAGE_URL;
         const rawIngredients = product.ingredients_text_hu || product.ingredients_text || (product.ingredients ? product.ingredients.map(i => i.text).join(', ') : '');
         const translatedIngredients = translateIngredientsToHungarian(rawIngredients);
 
@@ -1174,7 +1210,7 @@
 
         resultCard.innerHTML = `
             <div class="score-box">
-                <img src="${imageUrl}" alt="${product.product_name_hu}" class="product-img-thumb" onerror="this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&auto=format&fit=crop&q=80'">
+                <img src="${imageUrl}" alt="${product.product_name_hu}" class="product-img-thumb" onerror="this.src='${FALLBACK_IMAGE_URL}'">
                 <div class="score-badge-circle ${analysis.badgeClass}">
                     <span>${analysis.score}</span>
                     <span class="score-badge-sub">/ 100 pt</span>
@@ -1202,6 +1238,7 @@
                 <div class="home-recipe-card">
                     ${analysis.diyContent}
                 </div>
+                ${analysis.vilgainRecommend ? `<div style="margin-top: 10px; font-weight: 700; font-size: 0.82rem; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px;">${analysis.vilgainRecommend}</div>` : ''}
             </div>
         `;
         resultCard.classList.remove('hidden');
@@ -1276,7 +1313,6 @@
         }
     }
 
-    // KAMRA LOGIKA ÉS AUTOCOMPLETE
     function normalizeStr(str) {
         return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
@@ -1310,12 +1346,31 @@
         });
     }
 
+    function getAllCombinedRecipes() {
+        let combined = [...pantryRecipesData];
+        for (let phase in cyclePhasesInfo) {
+            cyclePhasesInfo[phase].recipes.forEach(r => {
+                combined.push({
+                    title: r.title,
+                    time: r.time,
+                    difficulty: "Hormonális recept",
+                    ingredients: r.ingredients,
+                    description: r.description,
+                    vilgain: r.vilgain
+                });
+            });
+        }
+        return combined;
+    }
+
     function renderPantryRecipes() {
         const pantryRecipesContainer = document.getElementById('pantry-recipes-container');
         if (!pantryRecipesContainer) return;
         pantryRecipesContainer.innerHTML = '';
 
-        const scoredRecipes = pantryRecipesData.map(recipe => {
+        const allRecipes = getAllCombinedRecipes();
+
+        const scoredRecipes = allRecipes.map(recipe => {
             const matchCount = recipe.ingredients.filter(ing => selectedIngredients.includes(ing)).length;
             return { ...recipe, matchCount };
         });
@@ -1340,7 +1395,7 @@
                 <div class="recipe-meta-bar">
                     <span>⏱️ ${rec.time}</span>
                     <span>📊 ${rec.difficulty}</span>
-                    <span style="color: ${rec.matchCount > 0 ? 'var(--primary)' : 'var(--text-muted)'};">
+                    <span style="color: ${rec.matchCount > 0 ? 'var(--primary)' : 'var(--text-muted)'}; font-weight:800;">
                         Találat: ${rec.matchCount} / ${rec.ingredients.length} alapanyag ${hasAll ? '✨ (Teljes egyezés!)' : ''}
                     </span>
                 </div>
@@ -1355,7 +1410,6 @@
         });
     }
 
-    // CIKLUS LOGIKA
     function updateCycleCalculator() {
         const lastPeriodInput = document.getElementById('last-period-date');
         const cycleLengthInput = document.getElementById('cycle-length');
@@ -1399,7 +1453,6 @@
         const ringEl = document.getElementById('cycle-progress-ring');
         if (ringEl) ringEl.style.strokeDashoffset = progressOffset;
 
-        // SUPERFOOD CSEMPÉK RENDERELÉSE
         const chipsContainer = document.getElementById('superfood-chips-container');
         if (chipsContainer) {
             chipsContainer.innerHTML = '';
@@ -1419,7 +1472,6 @@
             });
         }
 
-        // CIKLUS RECEPTEK RENDERELÉSE SZŰRÉSSEL & ELKÜLÖNÍTETT TEÁKKAL
         const recipeContainer = document.getElementById('cycle-recipe-container');
         if (recipeContainer) {
             recipeContainer.innerHTML = '';
@@ -1467,7 +1519,6 @@
         }
     }
 
-    // DOM Betöltéskori inicializáció
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -1518,7 +1569,6 @@
         const stopCamBtn = document.getElementById('btn-stop-camera');
         if (stopCamBtn) stopCamBtn.addEventListener('click', stopCamera);
 
-        // Kamra autocomplete bekötése
         const pantryInputEl = document.getElementById('pantry-search-input');
         const autocompleteListEl = document.getElementById('autocomplete-list');
         if (pantryInputEl) {
@@ -1557,7 +1607,6 @@
             }
         });
 
-        // Ciklus inputok eseménykezelői
         const lastPeriodInputEl = document.getElementById('last-period-date');
         const cycleLengthInputEl = document.getElementById('cycle-length');
         if (lastPeriodInputEl) {
