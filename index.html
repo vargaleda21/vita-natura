@@ -59,7 +59,7 @@
   --border-color: #E8D5D8;
 }
 
-/* JAVÍTVA: Csillag (*) univerzális szelektor */
+/* JAVÍTVA ÉS ELLENŐRIZVE: Csillag (*) univerzális szelektor */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -79,13 +79,8 @@ body {
   transition: background-color 0.4s ease;
 }
 
-.container { 
-  max-width: 680px; 
-  width: 100%; 
-  margin: 0 auto; 
-}
+.container { max-width: 680px; width: 100%; margin: 0 auto; }
 
-/* HEADER & NAVIGATION */
 header {
   padding: 28px 0 20px 0;
   display: flex;
@@ -104,270 +99,116 @@ header {
   line-height: 1;
 }
 
-.header-nav { 
-  display: flex; 
-  gap: 18px; 
-  align-items: center; 
-}
+.header-nav { display: flex; gap: 18px; align-items: center; }
 
 .nav-link {
-  background: none; 
-  border: none; 
-  font-family: var(--font-body);
-  font-size: 0.84rem; 
-  font-weight: 600; 
-  color: var(--text-muted);
-  cursor: pointer; 
-  transition: color 0.2s;
+  background: none; border: none; font-family: var(--font-body);
+  font-size: 0.84rem; font-weight: 600; color: var(--text-muted);
+  cursor: pointer; transition: color 0.2s;
 }
 
-.nav-link:hover, .nav-link.active { 
-  color: var(--primary); 
-}
+.nav-link:hover, .nav-link.active { color: var(--primary); }
 
 .btn-user-profile {
-  background: var(--bg-card-alt); 
-  color: var(--primary);
-  border: 1px solid var(--border-color); 
-  padding: 8px 18px;
-  border-radius: 100px; 
-  font-weight: 700; 
-  font-size: 0.8rem; 
-  cursor: pointer;
+  background: var(--bg-card-alt); color: var(--primary);
+  border: 1px solid var(--border-color); padding: 8px 18px;
+  border-radius: 100px; font-weight: 700; font-size: 0.8rem; cursor: pointer;
 }
 
-/* HERO SECTION */
-.hero-section { 
-  text-align: center; 
-  padding: 10px 0 32px 0; 
-}
+.hero-section { text-align: center; padding: 10px 0 32px 0; }
 
 .hero-headline {
-  font-family: var(--font-heading); 
-  font-size: 2.8rem; 
-  font-weight: 700;
-  color: var(--text-heading); 
-  line-height: 1.15; 
-  margin-bottom: 14px;
+  font-family: var(--font-heading); font-size: 2.8rem; font-weight: 700;
+  color: var(--text-heading); line-height: 1.15; margin-bottom: 14px;
 }
 
 .hero-subtitle {
-  font-size: 0.95rem; 
-  color: var(--text-muted); 
-  max-width: 520px;
-  margin: 0 auto 28px auto; 
-  font-weight: 400;
+  font-size: 0.95rem; color: var(--text-muted); max-width: 520px;
+  margin: 0 auto 28px auto; font-weight: 400;
 }
 
-/* SCANNER CARD */
 .scanner-primary-card {
-  background: var(--bg-card); 
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg); 
-  padding: 32px 24px;
-  box-shadow: var(--shadow-soft); 
-  margin-bottom: 40px; 
-  text-align: center;
-  position: relative;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg); padding: 32px 24px;
+  box-shadow: var(--shadow-soft); margin-bottom: 40px; text-align: center; position: relative;
 }
 
 .btn-camera-signature {
-  background: var(--primary); 
-  color: #F9F6F0; 
-  border: none; 
-  width: 100%;
-  max-width: 440px; 
-  padding: 16px 24px; 
-  border-radius: 100px;
-  font-size: 0.95rem; 
-  font-weight: 700; 
-  cursor: pointer;
-  letter-spacing: 0.03em; 
-  transition: background 0.2s; 
-  margin-bottom: 18px;
+  background: var(--primary); color: #F9F6F0; border: none; width: 100%;
+  max-width: 440px; padding: 16px 24px; border-radius: 100px;
+  font-size: 0.95rem; font-weight: 700; cursor: pointer;
+  letter-spacing: 0.03em; transition: background 0.2s; margin-bottom: 18px;
 }
 
-.btn-camera-signature:hover { 
-  background: #403D3B; 
-}
+.btn-camera-signature:hover { background: #403D3B; }
+.btn-camera-signature:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.btn-camera-signature:disabled { 
-  opacity: 0.6; 
-  cursor: not-allowed; 
-}
-
-.manual-input-group { 
-  display: flex; 
-  gap: 8px; 
-  max-width: 440px; 
-  margin: 0 auto; 
-}
+.manual-input-group { display: flex; gap: 8px; max-width: 440px; margin: 0 auto; }
 
 .custom-input {
-  flex: 1; 
-  padding: 12px 16px; 
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color); 
-  background: #FFF;
-  color: var(--text-main); 
-  font-family: var(--font-body); 
-  font-size: 0.88rem; 
-  outline: none;
+  flex: 1; padding: 12px 16px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color); background: #FFF;
+  color: var(--text-main); font-family: var(--font-body); font-size: 0.88rem; outline: none;
 }
 
-.custom-input:focus { 
-  border-color: var(--primary); 
-}
+.custom-input:focus { border-color: var(--primary); }
 
 .demo-bar {
-  margin-top: 24px; 
-  padding-top: 18px; 
-  border-top: 1px dashed var(--border-color);
-  display: flex; 
-  flex-wrap: wrap; 
-  justify-content: center; 
-  gap: 8px; 
-  align-items: center;
+  margin-top: 24px; padding-top: 18px; border-top: 1px dashed var(--border-color);
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; align-items: center;
 }
 
-.demo-label { 
-  font-size: 0.72rem; 
-  font-weight: 700; 
-  color: var(--text-muted); 
-  text-transform: uppercase; 
-  letter-spacing: 0.05em; 
-}
+.demo-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
 .demo-chip {
-  background: var(--bg-card-alt); 
-  border: 1px solid var(--border-color);
-  color: var(--text-heading); 
-  padding: 6px 14px; 
-  border-radius: 100px;
-  font-size: 0.78rem; 
-  font-weight: 600; 
-  cursor: pointer; 
-  transition: all 0.2s;
+  background: var(--bg-card-alt); border: 1px solid var(--border-color);
+  color: var(--text-heading); padding: 6px 14px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
 }
 
-.demo-chip:hover { 
-  background: var(--primary); 
-  color: #FFF; 
-}
+.demo-chip:hover { background: var(--primary); color: #FFF; }
 
 #scanner-container {
-  border-radius: var(--radius-md); 
-  overflow: hidden; 
-  background: #000;
-  margin-top: 16px; 
-  padding: 8px;
+  border-radius: var(--radius-md); overflow: hidden; background: #000;
+  margin-top: 16px; padding: 8px;
 }
 
-/* HOW IT WORKS GRID */
 .how-it-works-grid {
-  display: grid; 
-  grid-template-columns: 1fr 1fr 1fr; 
-  gap: 20px;
-  margin-bottom: 56px; 
-  text-align: center;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+  margin-bottom: 56px; text-align: center;
 }
 
-@media (max-width: 540px) { 
-  .how-it-works-grid { 
-    grid-template-columns: 1fr; 
-  } 
-}
+@media (max-width: 540px) { .how-it-works-grid { grid-template-columns: 1fr; } }
 
 .step-card {
-  background: rgba(255,255,255,0.7); 
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md); 
-  padding: 22px 16px;
+  background: rgba(255,255,255,0.7); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); padding: 22px 16px;
 }
 
-.step-num { 
-  font-family: var(--font-heading); 
-  font-size: 1.2rem; 
-  font-weight: 700; 
-  color: var(--primary-light); 
-  margin-bottom: 4px; 
-}
+.step-num { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--primary-light); margin-bottom: 4px; }
+.step-title { font-weight: 700; font-size: 0.92rem; color: var(--text-heading); margin-bottom: 6px; }
+.step-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; }
 
-.step-title { 
-  font-weight: 700; 
-  font-size: 0.92rem; 
-  color: var(--text-heading); 
-  margin-bottom: 6px; 
-}
+.section-header-editorial { text-align: center; margin-bottom: 28px; }
+.section-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block; }
+.section-title-editorial { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; color: var(--text-heading); }
 
-.step-desc { 
-  font-size: 0.82rem; 
-  color: var(--text-muted); 
-  line-height: 1.45; 
-}
-
-/* EDITORIAL HEADINGS */
-.section-header-editorial { 
-  text-align: center; 
-  margin-bottom: 28px; 
-}
-
-.section-tag { 
-  font-size: 0.72rem; 
-  text-transform: uppercase; 
-  letter-spacing: 0.08em; 
-  font-weight: 700; 
-  color: var(--text-muted); 
-  margin-bottom: 4px; 
-  display: block; 
-}
-
-.section-title-editorial { 
-  font-family: var(--font-heading); 
-  font-size: 2.2rem; 
-  font-weight: 700; 
-  color: var(--text-heading); 
-}
-
-/* PRODUCT RESULT CARD */
 .card-result {
-  background: var(--bg-card); 
-  border-radius: var(--radius-lg);
-  padding: 28px; 
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-soft); 
-  margin-bottom: 40px;
+  background: var(--bg-card); border-radius: var(--radius-lg);
+  padding: 28px; border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft); margin-bottom: 40px;
 }
 
 .score-badge-header {
-  display: flex; 
-  align-items: center; 
-  gap: 20px; 
-  margin-bottom: 24px;
-  padding-bottom: 20px; 
-  border-bottom: 1px solid var(--border-color);
+  display: flex; align-items: center; gap: 20px; margin-bottom: 24px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border-color);
 }
 
-.product-thumb { 
-  width: 70px; 
-  height: 70px; 
-  object-fit: cover; 
-  border-radius: var(--radius-sm); 
-  border: 1px solid var(--border-color); 
-}
+.product-thumb { width: 70px; height: 70px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color); }
 
 .score-circle {
-  width: 64px; 
-  height: 64px; 
-  border-radius: 50%; 
-  display: flex; 
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
-  font-weight: 700; 
-  font-size: 1.15rem; 
-  color: #FFF; 
-  flex-shrink: 0;
+  width: 64px; height: 64px; border-radius: 50%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; font-weight: 700; font-size: 1.15rem; color: #FFF; flex-shrink: 0;
 }
 
 .score-green { background: var(--status-green); }
@@ -375,276 +216,105 @@ header {
 .score-terracotta { background: var(--status-terracotta); }
 .score-red { background: var(--status-red); }
 
-.result-section-title { 
-  font-weight: 700; 
-  font-size: 0.8rem; 
-  color: var(--text-muted); 
-  text-transform: uppercase; 
-  letter-spacing: 0.06em; 
-  margin-bottom: 8px; 
-}
+.result-section-title { font-weight: 700; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
 
-.facts-box { 
-  background: var(--bg-card-alt); 
-  border-radius: var(--radius-md); 
-  padding: 18px; 
-  margin-bottom: 20px; 
-}
-
-.fact-item { 
-  font-size: 0.88rem; 
-  color: var(--text-main); 
-  line-height: 1.5; 
-  margin-bottom: 6px; 
-}
+.facts-box { background: var(--bg-card-alt); border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px; }
+.fact-item { font-size: 0.88rem; color: var(--text-main); line-height: 1.5; margin-bottom: 6px; }
 
 .diy-box {
-  background: var(--bg-card-alt); 
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md); 
-  padding: 20px; 
-  margin-bottom: 20px;
+  background: var(--bg-card-alt); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); padding: 20px; margin-bottom: 20px;
 }
 
-.diy-title {
-  font-family: var(--font-heading); 
-  font-size: 1.25rem; 
-  font-weight: 700; 
-  color: var(--text-heading); 
-  margin-bottom: 8px;
-}
+.diy-title { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--text-heading); margin-bottom: 8px; }
 
 .partner-box {
-  background: #2C2A29; 
-  color: #F9F6F0; 
-  border-radius: var(--radius-md);
-  padding: 18px; 
-  margin-top: 20px; 
-  font-size: 0.85rem; 
-  line-height: 1.5;
+  background: #2C2A29; color: #F9F6F0; border-radius: var(--radius-md);
+  padding: 18px; margin-top: 20px; font-size: 0.85rem; line-height: 1.5;
 }
 
 .action-bar-neutral {
-  display: flex; 
-  flex-wrap: wrap; 
-  gap: 10px; 
-  margin-top: 24px; 
-  padding-top: 20px; 
-  border-top: 1px solid var(--border-color);
+  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);
 }
 
 .btn-action-neutral {
-  flex: 1; 
-  min-width: 140px; 
-  padding: 11px 16px; 
-  border-radius: var(--radius-sm); 
-  font-weight: 700; 
-  font-size: 0.82rem; 
-  cursor: pointer; 
-  text-align: center; 
-  border: 1px solid var(--border-color); 
-  background: var(--bg-card-alt); 
-  color: var(--text-heading); 
-  transition: all 0.2s;
+  flex: 1; min-width: 140px; padding: 11px 16px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; text-align: center; border: 1px solid var(--border-color); background: var(--bg-card-alt); color: var(--text-heading); transition: all 0.2s;
 }
 
-.btn-action-neutral:hover { 
-  background: var(--primary); 
-  color: #F9F6F0; 
-}
+.btn-action-neutral:hover { background: var(--primary); color: #F9F6F0; }
 
-/* PHILOSOPHY CARD */
 .philosophy-card {
-  background: var(--primary); 
-  color: #F9F6F0; 
-  border-radius: var(--radius-lg);
-  padding: 36px 28px; 
-  text-align: center; 
-  margin-bottom: 48px;
+  background: var(--primary); color: #F9F6F0; border-radius: var(--radius-lg);
+  padding: 36px 28px; text-align: center; margin-bottom: 48px;
 }
 
-.philosophy-title { 
-  font-family: var(--font-heading); 
-  font-size: 1.8rem; 
-  font-weight: 700; 
-  margin-bottom: 10px; 
-}
+.philosophy-title { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+.philosophy-text { font-size: 0.88rem; color: var(--bg-card-alt); max-width: 500px; margin: 0 auto; line-height: 1.6; }
 
-.philosophy-text { 
-  font-size: 0.88rem; 
-  color: var(--bg-card-alt); 
-  max-width: 500px; 
-  margin: 0 auto; 
-  line-height: 1.6; 
-}
-
-/* MODAL & ONBOARDING */
 .modal-backdrop {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100vw; 
-  height: 100vh;
-  background: rgba(44, 42, 41, 0.4); 
-  backdrop-filter: blur(4px);
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  z-index: 1000; 
-  padding: 16px;
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(44, 42, 41, 0.4); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 16px;
 }
 
 .modal-content {
-  background: var(--bg-card); 
-  border-radius: var(--radius-lg); 
-  padding: 32px 28px;
-  max-width: 440px; 
-  width: 100%; 
-  box-shadow: var(--shadow-hover); 
-  border: 1px solid var(--border-color); 
-  position: relative;
+  background: var(--bg-card); border-radius: var(--radius-lg); padding: 32px 28px;
+  max-width: 440px; width: 100%; box-shadow: var(--shadow-hover); border: 1px solid var(--border-color); position: relative;
 }
 
 .goal-card {
-  background: var(--bg-card-alt); 
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm); 
-  padding: 14px 16px; 
-  margin-bottom: 10px;
-  cursor: pointer; 
-  transition: all 0.2s; 
-  text-align: left;
+  background: var(--bg-card-alt); border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 10px;
+  cursor: pointer; transition: all 0.2s; text-align: left;
 }
 
-.goal-card:hover, .goal-card.selected { 
-  border-color: var(--primary); 
-  background: #FFF; 
-}
-
-.goal-title { 
-  font-weight: 700; 
-  font-size: 0.9rem; 
-  color: var(--text-heading); 
-}
-
-.goal-desc { 
-  font-size: 0.78rem; 
-  color: var(--text-muted); 
-  margin-top: 2px; 
-}
+.goal-card:hover, .goal-card.selected { border-color: var(--primary); background: #FFF; }
+.goal-title { font-weight: 700; font-size: 0.9rem; color: var(--text-heading); }
+.goal-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
 
 .btn-primary-full {
-  width: 100%; 
-  background: var(--primary); 
-  color: #F9F6F0; 
-  border: none;
-  padding: 14px; 
-  border-radius: 100px; 
-  font-weight: 700; 
-  font-size: 0.88rem; 
-  cursor: pointer; 
-  margin-top: 12px;
+  width: 100%; background: var(--primary); color: #F9F6F0; border: none;
+  padding: 14px; border-radius: 100px; font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 12px;
 }
 
 .btn-text-skip {
-  background: none; 
-  border: none; 
-  color: var(--text-muted); 
-  font-size: 0.8rem;
-  font-weight: 600; 
-  cursor: pointer; 
-  width: 100%; 
-  text-align: center; 
-  margin-top: 10px;
+  background: none; border: none; color: var(--text-muted); font-size: 0.8rem;
+  font-weight: 600; cursor: pointer; width: 100%; text-align: center; margin-top: 10px;
 }
 
 .recap-card-export {
-  background: #2C2A29; 
-  color: #F9F6F0; 
-  padding: 24px; 
-  border-radius: var(--radius-md);
-  text-align: center; 
-  margin: 18px 0; 
-  border: 1px solid #A89F81;
+  background: #2C2A29; color: #F9F6F0; padding: 24px; border-radius: var(--radius-md);
+  text-align: center; margin: 18px 0; border: 1px solid #A89F81;
 }
 
 .autocomplete-dropdown {
-  position: absolute; 
-  top: 100%; 
-  left: 0; 
-  right: 0; 
-  background: #FFFFFF;
-  color: #2C2A29; 
-  border: 1px solid var(--border-color); 
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-hover); 
-  max-height: 180px; 
-  overflow-y: auto; 
-  z-index: 100; 
-  margin-top: 4px;
+  position: absolute; top: 100%; left: 0; right: 0; background: #FFFFFF;
+  color: #2C2A29; border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-hover); max-height: 180px; overflow-y: auto; z-index: 100; margin-top: 4px;
 }
 
-.autocomplete-item { 
-  padding: 10px 14px; 
-  cursor: pointer; 
-  font-size: 0.85rem; 
-  font-weight: 600; 
-  border-bottom: 1px solid #F0F0F0; 
-}
-
-.autocomplete-item:hover { 
-  background: var(--bg-card-alt); 
-}
+.autocomplete-item { padding: 10px 14px; cursor: pointer; font-size: 0.85rem; font-weight: 600; border-bottom: 1px solid #F0F0F0; }
+.autocomplete-item:hover { background: var(--bg-card-alt); }
 
 .pantry-tag {
-  background: var(--primary-light); 
-  color: #FFF; 
-  border: 1px solid var(--border-color);
-  padding: 6px 14px; 
-  border-radius: 100px; 
-  font-size: 0.8rem; 
-  font-weight: 700; 
-  display: inline-flex; 
-  align-items: center; 
-  gap: 6px; 
-  margin: 4px;
+  background: var(--primary-light); color: #FFF; border: 1px solid var(--border-color);
+  padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; margin: 4px;
 }
 
-.pantry-tag button { 
-  background: none; 
-  border: none; 
-  color: #FFF; 
-  font-weight: 800; 
-  cursor: pointer; 
-}
+.pantry-tag button { background: none; border: none; color: #FFF; font-weight: 800; cursor: pointer; }
 
 .recipe-card-box {
-  background: var(--bg-card); 
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md); 
-  padding: 22px; 
-  margin-bottom: 18px; 
-  box-shadow: var(--shadow-soft);
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); padding: 22px; margin-bottom: 18px; box-shadow: var(--shadow-soft);
 }
 
 .spinner {
-  display: inline-block; 
-  width: 22px; 
-  height: 22px; 
-  border: 2px solid var(--border-color);
-  border-radius: 50%; 
-  border-top-color: var(--primary); 
-  animation: spin 0.8s ease-in-out infinite; 
-  margin-bottom: 8px;
+  display: inline-block; width: 22px; height: 22px; border: 2px solid var(--border-color);
+  border-radius: 50%; border-top-color: var(--primary); animation: spin 0.8s ease-in-out infinite; margin-bottom: 8px;
 }
 
-@keyframes spin { 
-  to { transform: rotate(360deg); } 
-}
-
-.hidden { 
-  display: none !important; 
-}
+@keyframes spin { to { transform: rotate(360deg); } }
+.hidden { display: none !important; }
 </style>
 </head>
 <body data-theme="ellenor">
@@ -1044,24 +714,45 @@ const PRODUCT_DATABASE = {
 const availableIngredients = ['csirkemell', 'cukkini', 'rizs', 'olívaolaj', 'citrom', 'spenót', 'fokhagyma', 'avokádó', 'édesburgonya', 'brokkoli'];
 let selectedIngredients = [];
 
+/* BŐVÍTETT, KIEGYENSÚLYOZOTT TÁPANYAG-ARÁNYÚ RECEPTADATBÁZIS */
 const pantryRecipesData = [
 {
-  title: 'Pirított csirkemellcsíkok basmati rizzsel és párolt cukkínivel',
+  title: 'Teriyaki csirkemell csíkok brokkolival és basmati rizzsel',
   time: '25 perc',
-  ingredients: ['csirkemell', 'rizs', 'cukkini', 'olívaolaj'],
-  description: 'Szaftos csirkemell csíkok pirítva, roppanós cukkínivel és selymes öntettel.',
-  vilgain: 'Vilgain Extra Szűz BIO Olívaolaj.'
+  ingredients: ['csirkemell', 'brokkoli', 'rizs', 'olívaolaj', 'fokhagyma'],
+  description: 'Magas fehérje- és rostdús fogás. Szaftos csirkemell csíkok pirított brokkolirózsákkal, szezámos házi teriyaki öntettel és basmati rizzsel.',
+  vilgain: 'Vilgain BIO Szójaszósz & Szezámolaj'
 },
 {
-  title: 'Rozmaringos sült lazacfilé selymes avokókrémmel és fokhagymás spenóttal',
+  title: 'Rozmaringos sült csirkemell tejszínes-fokhagymás spenóttal és édesburgonyával',
+  time: '30 perc',
+  ingredients: ['csirkemell', 'spenót', 'édesburgonya', 'fokhagyma', 'olívaolaj'],
+  description: 'Kiegyensúlyozott lassan felszívódó szénhidrát- és vasforrás. Omlós csirkemell krémes fokhagymás spenótágyon, ropogósra sült édesburgonya kockákkal.',
+  vilgain: 'Vilgain Extra Szűz BIO Olívaolaj'
+},
+{
+  title: 'Citromos-fokhagymás csirkemell roppanós cukkinivel és ricottás jázminrizzsel',
   time: '20 perc',
-  ingredients: ['lazac', 'spenót', 'avokádó', 'fokhagyma'],
-  description: 'Ropogós bőrű lazacfilé friss avokókrémmel és párolt fokhagymás spenóttal.',
-  vilgain: 'Vilgain Omega 3 Fish Oil.'
+  ingredients: ['csirkemell', 'cukkini', 'rizs', 'citrom', 'fokhagyma'],
+  description: 'Könnyű, jól emészthető fehérjedús ebéd. Serpenyőben pirított citromos csirkemell szeletek cukkínivel és selymes jázminrizzsel.',
+  vilgain: 'Vilgain BIO Kókuszolaj'
+},
+{
+  title: 'Rozmaringos sült lazacfilé selymes avokádókrémmel és spenótsalátával',
+  time: '20 perc',
+  ingredients: ['lazac', 'spenót', 'avokádó', 'citrom', 'fokhagyma'],
+  description: 'Omega-3 zsírsavakban és antioxidánsokban gazdag, alacsony szénhidráttartalmú vacsora friss lime-os avokádókrémmel.',
+  vilgain: 'Vilgain Omega 3 Fish Oil'
+},
+{
+  title: 'Párolt brokkolis és édesburgonyás wok-zöldség gőzölt rizzsel',
+  time: '15 perc',
+  ingredients: ['brokkoli', 'édesburgonya', 'rizs', 'olívaolaj', 'citrom'],
+  description: 'Könnyű vegetáriánus rostbomba. Gyömbéres-szójás wok-zöldségek édesburgonyával és roppanós brokkolival.',
+  vilgain: 'Vilgain BIO Szezámolaj'
 }
 ];
 
-// FÁZIS-SPECIFIKUS ADATBÁZIS A CIKLUSSZINKRONHOZ
 const cyclePhasesInfo = {
   1: {
     name: "Menstruációs fázis (1-5. nap)",
@@ -1115,14 +806,32 @@ function switchMainTab(tabKey) {
   if (tabKey === 'cycle') updateCycleCalculator();
 }
 
+/* JAVÍTOTT PONTSZÁM- ÉS ADATHIÁNY-SZÁMÍTÁSI LOGIKA */
 function calculateProductScore(product) {
   let score = 100;
   let facts = [];
 
-  // Tápérték komponens
+  const nameLower = (product.name || '').toLowerCase();
+  const catLower = (product.category || '').toLowerCase();
+  const ingLower = (product.ingredients || '').toLowerCase();
+
+  const isInstantNoodle = nameLower.includes('soba') || nameLower.includes('teriyaki') || nameLower.includes('tészta') || nameLower.includes('noodle') || catLower.includes('noodle');
+  const isPor = nameLower.includes('por') || nameLower.includes('csípős') || ingLower.includes('fűszerkeverék') || ingLower.includes('ízfokozó');
+  const isPorridge = nameLower.includes('kása') || nameLower.includes('rizskása') || nameLower.includes('porridge') || catLower.includes('porridge');
+
+  const isDataIncomplete = !product.ingredients || product.ingredients.length < 20 || product.ingredients.includes('csomagolás szerint') || !product.additives_tags || product.additives_tags.length === 0;
+
+  // 1. TARTALMI & EGÉSZSÉGÜGYI INDOKLÁS ADATHIÁNY ESETÉN (ROBUST KATEGÓRIA BÜNTETÉS)
+  if ((isInstantNoodle || isPor) && isDataIncomplete) {
+    score -= 45;
+    facts.push('⚠️ Ultra-feldolgozott készétel (NOVA 4): Finomított búzalisztet és iparilag hidrolizált keményítőket tartalmaz, amik hirtelen vércukorszint-kiugrást okoznak.');
+    facts.push('⚠️ Pálmazsírban elősütött tésztaalap: Magas a telített zsírsavtartalma, ami fokozza a szervezetben a gyulladásos folyamatokat.');
+    facts.push('⚠️ Nátrium-túlsúly & Ízfokozók: Az instant szószok általában kritikusan magas sót és nátrium-glutamátot (E621) tartalmaznak a természetes aromák hiánya miatt.');
+  }
+
   if (product.sugar_g > 15) {
     score -= 22; facts.push('Magas cukortartalom (' + product.sugar_g + 'g / 100g).');
-  } else if (product.sugar_g <= 3) {
+  } else if (product.sugar_g <= 3 && !isInstantNoodle) {
     facts.push('Alacsony cukortartalom.');
   }
 
@@ -1130,7 +839,6 @@ function calculateProductScore(product) {
     score -= 20; facts.push('Pálmaolajat / pálmazsírt tartalmaz.');
   }
 
-  // Adalékanyag komponens (Tudományos E-szám szűrés)
   let additivePenalty = 0;
   let highRiskCount = 0;
   let moderateRiskCount = 0;
@@ -1156,22 +864,21 @@ function calculateProductScore(product) {
     facts.push(`${highRiskCount} db magas egészségügyi kockázatú adalékanyagot tartalmaz.`);
   } else if (moderateRiskCount > 0) {
     facts.push(`${moderateRiskCount} db mérsékelt kockázatú állományjavítót/édesítőt tartalmaz.`);
-  } else {
+  } else if (!isInstantNoodle && !isPor) {
     facts.push('Kritikus vagy mesterséges E-számoktól mentes összetétel.');
   }
 
   if (product.bio) facts.push('Hivatalos EU Bio tanúsítvány.');
-  else score -= 5;
+  else if (!isPorridge) score -= 5;
 
-  // CÉLOK MODAL DINAMIKUS DÖNTÉSI MÁTRIXA
   const activeGoals = JSON.parse(localStorage.getItem('daleday_goals') || '[]');
   if (activeGoals.includes('sugar') && product.sugar_g > 10) {
     facts.unshift('⚠️ Cukor & Diéta fókusz: Ez a termék a beállított céljaidhoz képest magas cukortartalmú!');
   }
-  if (activeGoals.includes('children') && highRiskCount > 0) {
-    facts.unshift('⚠️ Gyermek fókusz: Kockázatos mesterséges adalékanyagot / színezéket tartalmaz!');
+  if (activeGoals.includes('children') && (highRiskCount > 0 || isPor)) {
+    facts.unshift('⚠️ Gyermek fókusz: Kockázatos mesterséges adalékanyagot vagy ipari összetevőt tartalmaz!');
   }
-  if (activeGoals.includes('clean') && (product.has_palm || highRiskCount > 0)) {
+  if (activeGoals.includes('clean') && (product.has_palm || highRiskCount > 0 || isInstantNoodle)) {
     facts.unshift('⚠️ Clean Eating fókusz: Nem illeszkedik a tiszta, feldolgozatlan étrendbe.');
   }
 
@@ -1184,16 +891,34 @@ function calculateProductScore(product) {
   else if (score < 50 && score >= 25) { statusText = 'Mérsékelt minőség'; colorClass = 'score-terracotta'; }
   else if (score < 25) { statusText = 'Ultra-feldolgozott termék'; colorClass = 'score-red'; }
 
-  return { score, statusText, colorClass, facts };
+  // 2. DINAMIKUS DIY ÉS ALTERNATÍVA GENERÁLÁS KATEGÓRIA ALAPJÁN
+  let diyTitle = null;
+  let diyContent = null;
+  let partnerText = null;
+
+  if (isPorridge) {
+    diyTitle = "Készítsd el otthon egyszerűen és táplálóan!";
+    diyContent = "<strong>Ajánlott kiegészítők a rizskásához:</strong> Friss bogyós gyümölcsök (áfonya, málna), banánszeletek, csipet fahéj, aprított mandula vagy dió, és 1 teáskanál tiszta méz/kókuszvirágcukor a természetes édességért.";
+    partnerText = "<strong>Szuper kiegészítők a kásádhoz:</strong> Tiszta 100%-os mogyoróvaj, magvajak, Freeze-dried (fagyasztva szárított) gyümölcsök, chia mag vagy natúr növényi fehérjeporok.";
+  } else if (isInstantNoodle || isPor) {
+    diyTitle = "Tiszta házi wok tészta 15 perc alatt";
+    diyContent = "<strong>Hozzávalók:</strong> Soba vagy teljes kiőrlésű tészta, kaliforniai paprika, sárgarépa, brokkoli, tiszta szójaszósz, szezámolaj és reszelt gyömbér.<br><strong>Elkészítés:</strong> Főzd kifelé a tésztát, wokban pirítsd át a friss zöldségeket, majd forgasd össze a természetes szójaszósszal.";
+    partnerText = "<strong>Tiszta alternatívák készételek helyett:</strong> BIO hajdina vagy soba tészták, tiszta hozzáadott cukormentes wok szószok és préselt szezámolaj.";
+  }
+
+  return { score, statusText, colorClass, facts, diyTitle, diyContent, partnerText };
 }
 
+/* JAVÍTOTT RENDERELÉS: DINAMIKUS DIY ÉS ALTERNATÍVA ELSŐBBSÉG */
 function renderProductResult(product, barcode) {
   triggerDiscreetHaptic();
   const resultCard = document.getElementById('ellenor-result-card');
   const analysis = calculateProductScore(product);
 
-  let diyTitle = product.diyTitle || "Készítsd el otthon egyszerűen!";
-  let diyContent = product.diyContent || "Friss, feldolgozatlan alapanyagokból otthon elkészítve még könnyebben elkerülheted a felesleges adalékanyagokat és rejtett cukrokat.";
+  // Kifejezett elsőbbség az analysis-ből származó dinamikus kategóriaértékeknek
+  let diyTitle = analysis.diyTitle || product.diyTitle || "Készítsd el otthon egyszerűen!";
+  let diyContent = analysis.diyContent || product.diyContent || "Friss, feldolgozatlan alapanyagokból otthon elkészítve még könnyebben elkerülheted a felesleges adalékanyagokat és rejtett cukrokat.";
+  let partnerText = analysis.partnerText || "Válassz hozzá adalékanyag-mentes, minimálisan feldolgozott alapanyagokat – például a Vilgain BIO termékcsalád tiszta opcióit.";
 
   resultCard.innerHTML = `
   <div class="score-badge-header">
@@ -1212,7 +937,7 @@ function renderProductResult(product, barcode) {
   </div>
 
   <div style="margin-bottom: 20px;">
-    <div class="result-section-title">Összetevők</div>
+    <div class="result-section-title">Összetevők & Adatlap</div>
     <div style="font-size: 0.88rem; color:var(--text-main); line-height: 1.5;">${product.ingredients}</div>
   </div>
 
@@ -1222,9 +947,9 @@ function renderProductResult(product, barcode) {
   </div>
 
   <div class="partner-box">
-    <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:#A89F81; font-weight:700; margin-bottom:4px;">Alternatívák</div>
-    <div style="font-weight:700; font-size:0.95rem; margin-bottom:6px;">Ha hasonló, egyszerűbb összetételű alternatívát keresel:</div>
-    Válassz hozzá adalékanyag-mentes, minimálisan feldolgozott alapanyagokat – például a Vilgain BIO termékcsalád tiszta opcióit.
+    <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:#A89F81; font-weight:700; margin-bottom:4px;">Alternatívák & Kiegészítők</div>
+    <div style="font-weight:700; font-size:0.95rem; margin-bottom:6px;">Ajánlott tiszta kombinációk:</div>
+    ${partnerText}
   </div>
 
   <div class="action-bar-neutral">
@@ -1240,6 +965,7 @@ function renderProductResult(product, barcode) {
   document.getElementById('btn-action-pantry')?.addEventListener('click', () => switchMainTab('kamra'));
 }
 
+/* JAVÍTOTT FETCH: NEM FÜGG FIX MAGYAR MONDATOKTÓL */
 function fetchBarcodeData(barcode) {
   const resultCard = document.getElementById('ellenor-result-card');
   resultCard.classList.remove('hidden');
@@ -1255,11 +981,12 @@ function fetchBarcodeData(barcode) {
   .then(data => {
     if (data.status === 1 && data.product) {
       const p = data.product;
+      const rawIng = p.ingredients_text_hu || p.ingredients_text || '';
       renderProductResult({
         name: p.product_name_hu || p.product_name || 'Beolvasott termék',
         brand: p.brands || 'Ismeretlen márka',
-        category: 'generic',
-        ingredients: p.ingredients_text_hu || p.ingredients_text || 'Részletes összetevők a csomagolás szerint.',
+        category: p.categories || 'generic',
+        ingredients: rawIng.length > 0 ? rawIng : 'Részletes összetevők hiányoznak a csomagolási adatlapból.',
         sugar_g: p.nutriments ? p.nutriments.sugars_100g || 0 : 0,
         has_palm: p.ingredients_analysis_tags ? p.ingredients_analysis_tags.includes('en:palm-oil') : false,
         additives_tags: p.additives_tags || [],
@@ -1307,7 +1034,7 @@ function renderPantryTags() {
   renderPantryRecipes();
 }
 
-/* DINAMIKUS KAMRA RECEPTSZŰRŐ LOGIKA */
+/* 3. KAMRA RECEPTSZŰRŐ RUGALMAS VAGY-LOGIKÁVAL */
 function renderPantryRecipes() {
   const container = document.getElementById('pantry-recipes-container');
   if (!container) return;
@@ -1340,7 +1067,6 @@ function renderPantryRecipes() {
   });
 }
 
-/* DINAMIKUS CIKLUSSZINKRON KALKULÁTOR */
 function updateCycleCalculator() {
   const lastPeriodInput = document.getElementById('last-period-date');
   const cycleLengthInput = document.getElementById('cycle-length');
@@ -1382,7 +1108,6 @@ function updateCycleCalculator() {
   });
 }
 
-/* INITIALIZATION */
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-link[data-tab]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -1435,7 +1160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-stop-camera')?.addEventListener('click', stopCamera);
 
-  // Onboarding Modal
   const goalsModal = document.getElementById('goals-modal');
   const goalCards = document.querySelectorAll('.goal-card');
 
@@ -1467,7 +1191,6 @@ document.addEventListener('DOMContentLoaded', () => {
     goalsModal.classList.add('hidden');
   });
 
-  // Ciklusszinkron eseménykezelők
   const lastPeriodInput = document.getElementById('last-period-date');
   const cycleLengthInput = document.getElementById('cycle-length');
   if (lastPeriodInput) {
@@ -1478,7 +1201,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cycleLengthInput.addEventListener('input', updateCycleCalculator);
   }
 
-  // Pantry Autocomplete
   const pantryInput = document.getElementById('pantry-search-input');
   const autoList = document.getElementById('autocomplete-list');
   if (pantryInput && autoList) {
