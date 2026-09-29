@@ -59,8 +59,8 @@
   --border-color: #E8D5D8;
 }
 
-/* KÖZVETLEN ELEMSZELEKTOROK - A HIBÁS SZELEKTOR TELJESEN ELTÁVOLÍTVA */
-  *{
+/* JAVÍTVA: Csillag (*) univerzális szelektor */
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -168,6 +168,7 @@ header {
   box-shadow: var(--shadow-soft); 
   margin-bottom: 40px; 
   text-align: center;
+  position: relative;
 }
 
 .btn-camera-signature {
@@ -656,8 +657,7 @@ header {
     <button class="nav-link active" data-tab="ellenor">Termékellenőr</button>
     <button class="nav-link" data-tab="kamra">Mit főzzek?</button>
     <button class="nav-link" data-tab="cycle">Női jóllét</button>
-    <button id="btn-open-goals" class="nav-link">Céljaim</button>
-    <button id="btn-auth-trigger" class="btn-user-profile">Profil</button>
+    <button id="btn-auth-trigger" class="btn-user-profile">👤 Profil</button>
   </nav>
 </header>
 
@@ -668,7 +668,9 @@ header {
     <p class="hero-subtitle">Szkenneld be egy csomagolt élelmiszer vonalkódját, és nézd meg egy helyen a tiszta összetevőket, a szempontjaidat és a független alternatívákat.</p>
 
     <div class="scanner-primary-card">
-      <button id="btn-start-camera" class="btn-camera-signature">VONALKÓD BEOLVASÁSA</button>
+      <button id="btn-open-goals" style="position: absolute; top: 12px; right: 16px; background: none; border: none; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); cursor: pointer;">⚙️ Céljaim beállítása</button>
+      
+      <button id="btn-start-camera" class="btn-camera-signature">📷 VONALKÓD BEOLVASÁSA</button>
 
       <div id="scanner-container" class="hidden">
         <div id="reader" style="width: 100%;"></div>
@@ -806,7 +808,7 @@ header {
   </div>
 </div>
 
-<!-- PROFILE MODAL (FIREBASE INTEGRÁCIÓVAL ÉS STORY EXPORTTAL) -->
+<!-- PROFILE MODAL -->
 <div id="auth-modal" class="modal-backdrop hidden">
   <div class="modal-content">
     <button class="close-modal-btn" id="btn-close-auth" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.2rem; cursor:pointer;">&times;</button>
@@ -814,7 +816,7 @@ header {
     <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">Kövesd a tudatos választásaidat és mentsd el a kedvenc termékeidet.</div>
 
     <div id="auth-logged-out-view">
-      <button id="btn-google-login" style="width: 100%; padding: 11px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: #FFF; font-weight: 700; cursor: pointer; margin-bottom: 12px;">Bejelentkezés Google fiókkal</button>
+      <button id="btn-google-login" style="width: 100%; padding: 11px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: #FFF; font-weight: 700; cursor: pointer; margin-bottom: 12px;">🌐 Bejelentkezés Google fiókkal</button>
       <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin: 8px 0;">vagy e-mail címmel</div>
       <input type="email" id="auth-email" class="custom-input" placeholder="E-mail cím" style="margin-bottom: 8px;">
       <input type="password" id="auth-password" class="custom-input" placeholder="Jelszó" style="margin-bottom: 16px;">
@@ -834,10 +836,10 @@ header {
         <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: #A89F81;">daleday monthly recap</div>
         <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: #EFECE6; margin-bottom: 10px;">Saját Döntési Mérlegem</div>
         <div style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; color: #F9F6F0;" id="stat-clean-percent">100% Tudatosság</div>
-        <div style="font-size: 0.82rem; margin-top: 6px;" id="stat-skipped-count">0 ellenőrzött élelmiszer ebben a hónapban</div>
+        <div style="font-size: 0.82rem; margin-top: 6px;" id="stat-skipped-count">🔍 0 ellenőrzött élelmiszer ebben a hónapban</div>
       </div>
 
-      <button id="btn-download-story" style="width: 100%; padding: 11px; background: #8A9A86; color: #FFF; border: none; border-radius: var(--radius-sm); font-weight: 700; cursor: pointer; margin-bottom: 10px;">Havi kártya mentése Story-ba</button>
+      <button id="btn-download-story" style="width: 100%; padding: 11px; background: #8A9A86; color: #FFF; border: none; border-radius: var(--radius-sm); font-weight: 700; cursor: pointer; margin-bottom: 10px;">📸 Havi kártya mentése Story-ba</button>
       <button id="btn-logout" style="width: 100%; padding: 10px; background: transparent; color: #9E4B3B; border: none; font-weight: 700; cursor: pointer;">Kijelentkezés</button>
     </div>
   </div>
@@ -868,10 +870,10 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   const triggerBtn = document.getElementById('btn-auth-trigger');
   if (user) {
-    if (triggerBtn) triggerBtn.textContent = (user.displayName ? user.displayName.split(' ')[0] : 'Profil');
+    if (triggerBtn) triggerBtn.textContent = '👤 ' + (user.displayName ? user.displayName.split(' ')[0] : 'Profil');
     updateUserStatsUI();
   } else {
-    if (triggerBtn) triggerBtn.textContent = 'Profil';
+    if (triggerBtn) triggerBtn.textContent = '👤 Profil';
   }
 });
 
@@ -889,7 +891,7 @@ async function updateUserStatsUI() {
   if (docSnap.exists()) {
     const data = docSnap.data();
     const checked = Number(data.checkedProductsCount) || 0;
-    document.getElementById('stat-skipped-count').textContent = `${checked} ellenőrzött élelmiszer ebben a hónapban`;
+    document.getElementById('stat-skipped-count').textContent = `🔍 ${checked} ellenőrzött élelmiszer ebben a hónapban`;
   }
 }
 
@@ -906,7 +908,7 @@ window.logUserDecision = async function(barcode, productName) {
   try {
     await setDoc(userRef, { checkedProductsCount: increment(1), lastUpdated: new Date() }, { merge: true });
     if (window.confetti) { window.confetti({ particleCount: 50, spread: 50, origin: { y: 0.8 } }); }
-    alert("Termék elmentve a profilodba!");
+    alert("📌 Termék elmentve a profilodba!");
     updateUserStatsUI();
   } catch (e) { console.error("Hiba a mentés során:", e); }
 };
@@ -1059,22 +1061,37 @@ const pantryRecipesData = [
 }
 ];
 
-const cycleRecipesData = [
-{
-  title: 'Melegítő cékla-krémleves gyömbérrel és pirított tökmaggal',
-  time: '30 perc',
-  phase: 'Menstruációs fázis',
-  description: 'Süsd meg a céklát, majd turmixold össze zöldségalaplével és friss reszelt gyömbérrel.',
-  tip: 'A cékla magas vastartalma támogatja a vérképzést ebben a fázisban.'
-},
-{
-  title: 'Frissítő bogyós gyümölcsös zabkása chia maggal és mandulával',
-  time: '10 perc',
-  phase: 'Follikuláris fázis',
-  description: 'Főzd meg a zabpelyhet növényi tejjel, majd szórd meg chia maggal és friss bogyós gyümölcsökkel.',
-  tip: 'Stabil energiát nyújt az emelkedő ösztrogénszint idején.'
-}
-];
+// FÁZIS-SPECIFIKUS ADATBÁZIS A CIKLUSSZINKRONHOZ
+const cyclePhasesInfo = {
+  1: {
+    name: "Menstruációs fázis (1-5. nap)",
+    desc: "Alacsony energiaszint, regenerálódás. Fókuszban a melegítő, vasdús és gyulladáscsökkentő ételek.",
+    recipes: [
+      { title: "Melegítő cékla-krémleves gyömbérrel", time: "30 perc", desc: "Süsd meg a céklát, majd turmixold össze zöldségalaplével és friss reszelt gyömbérrel.", tip: "A cékla magas vastartalma támogatja a vérképzést." }
+    ]
+  },
+  2: {
+    name: "Follikuláris fázis (6-13. nap)",
+    desc: "Emelkedő energiaszint és ösztrogén. Könnyed, frissítő és fermentált ételek időszaka.",
+    recipes: [
+      { title: "Frissítő bogyós gyümölcsös zabkása chia maggal", time: "10 perc", desc: "Főzd meg a zabpelyhet növényi tejjel, szórd meg chia maggal és friss áfonyával.", tip: "Stabil energiát és antioxidánsokat nyújt." }
+    ]
+  },
+  3: {
+    name: "Ovulációs fázis (14-16. nap)",
+    desc: "Csúcsenergiaszint. Rostdús zöldségek és könnyű fehérjék az ösztrogén lebontásához.",
+    recipes: [
+      { title: "Sült lazacfilé quinoa salátával és citromos dresszinggel", time: "20 perc", desc: "Pirítsd meg a lazacot, tálald főtt quinoával, madársalátával és olívaolajjal.", tip: "Támogatja a hormonális egyensúlyt." }
+    ]
+  },
+  4: {
+    name: "Luteális fázis (17-28. nap)",
+    desc: "Lassan csökkenő energia. B6-vitaminban és magnéziumban gazdag ételek a PMS megelőzésére.",
+    recipes: [
+      { title: "Rozmaringos sült édesburgonya csirkemellel", time: "35 perc", desc: "Süsd tepsiben az édesburgonyát és a fűszeres csirkemellet olívaolajon.", tip: "Segít stabilan tartani a vércukorszintet." }
+    ]
+  }
+};
 
 function triggerDiscreetHaptic() {
   if ('vibrate' in navigator) { navigator.vibrate([35]); }
@@ -1149,13 +1166,13 @@ function calculateProductScore(product) {
   // CÉLOK MODAL DINAMIKUS DÖNTÉSI MÁTRIXA
   const activeGoals = JSON.parse(localStorage.getItem('daleday_goals') || '[]');
   if (activeGoals.includes('sugar') && product.sugar_g > 10) {
-    facts.unshift('Cukor & Diéta fókusz: Ez a termék a beállított céljaidhoz képest magas cukortartalmú!');
+    facts.unshift('⚠️ Cukor & Diéta fókusz: Ez a termék a beállított céljaidhoz képest magas cukortartalmú!');
   }
   if (activeGoals.includes('children') && highRiskCount > 0) {
-    facts.unshift('Gyermek fókusz: Kockázatos mesterséges adalékanyagot / színezéket tartalmaz!');
+    facts.unshift('⚠️ Gyermek fókusz: Kockázatos mesterséges adalékanyagot / színezéket tartalmaz!');
   }
   if (activeGoals.includes('clean') && (product.has_palm || highRiskCount > 0)) {
-    facts.unshift('Clean Eating fókusz: Nem illeszkedik a tiszta, feldolgozatlan étrendbe.');
+    facts.unshift('⚠️ Clean Eating fókusz: Nem illeszkedik a tiszta, feldolgozatlan étrendbe.');
   }
 
   score = Math.max(12, Math.min(100, score));
@@ -1200,7 +1217,7 @@ function renderProductResult(product, barcode) {
   </div>
 
   <div class="diy-box">
-    <div class="diy-title">${diyTitle}</div>
+    <div class="diy-title">✨ ${diyTitle}</div>
     <div style="font-size: 0.88rem; color: var(--text-main); line-height: 1.55;">${diyContent}</div>
   </div>
 
@@ -1211,8 +1228,8 @@ function renderProductResult(product, barcode) {
   </div>
 
   <div class="action-bar-neutral">
-    <button id="btn-action-save" class="btn-action-neutral">Mentés a profilba</button>
-    <button id="btn-action-pantry" class="btn-action-neutral">Kamra szűrés</button>
+    <button id="btn-action-save" class="btn-action-neutral">📌 Mentés a profilba</button>
+    <button id="btn-action-pantry" class="btn-action-neutral">🌱 Kamra szűrés</button>
   </div>
   `;
 
@@ -1260,7 +1277,7 @@ function fetchBarcodeData(barcode) {
 
 function stopCamera() {
   const startBtn = document.getElementById('btn-start-camera');
-  if (startBtn) { startBtn.disabled = false; startBtn.textContent = 'VONALKÓD BEOLVASÁSA'; }
+  if (startBtn) { startBtn.disabled = false; startBtn.textContent = '📷 VONALKÓD BEOLVASÁSA'; }
   if (html5QrCode) {
     html5QrCode.stop().then(() => {
       document.getElementById('scanner-container').classList.add('hidden');
@@ -1290,15 +1307,29 @@ function renderPantryTags() {
   renderPantryRecipes();
 }
 
+/* DINAMIKUS KAMRA RECEPTSZŰRŐ LOGIKA */
 function renderPantryRecipes() {
   const container = document.getElementById('pantry-recipes-container');
   if (!container) return;
   container.innerHTML = '';
-  pantryRecipesData.forEach(rec => {
+
+  let filteredRecipes = pantryRecipesData;
+  if (selectedIngredients.length > 0) {
+    filteredRecipes = pantryRecipesData.filter(rec => 
+      rec.ingredients.some(ing => selectedIngredients.includes(ing))
+    );
+  }
+
+  if (filteredRecipes.length === 0) {
+    container.innerHTML = `<div style="padding:20px; text-align:center; font-size:0.85rem; color:var(--text-muted);">Sajnos nem találtunk receptet a kiválasztott alapanyagokkal. Próbálj ki más elemeket!</div>`;
+    return;
+  }
+
+  filteredRecipes.forEach(rec => {
     const card = document.createElement('div');
     card.className = 'recipe-card-box';
     card.innerHTML = `
-    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">${rec.time}</div>
+    <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">⏱️ ${rec.time}</div>
     <div style="font-family:var(--font-heading); font-size:1.35rem; font-weight:700; color:var(--text-heading); margin:4px 0;">${rec.title}</div>
     <div style="font-size:0.88rem; color:var(--text-main); margin-bottom:10px; line-height:1.5;">${rec.description}</div>
     <div style="background:var(--bg-card-alt); padding:10px 14px; border-radius:var(--radius-sm); font-size:0.82rem; font-weight:600;">
@@ -1309,24 +1340,43 @@ function renderPantryRecipes() {
   });
 }
 
+/* DINAMIKUS CIKLUSSZINKRON KALKULÁTOR */
 function updateCycleCalculator() {
   const lastPeriodInput = document.getElementById('last-period-date');
-  if (!lastPeriodInput) return;
-  const dateVal = new Date(lastPeriodInput.value || new Date());
-  const diffDays = Math.ceil(Math.abs(new Date() - dateVal) / (1000 * 60 * 60 * 24)) % 28;
-  document.getElementById('cycle-day-text').textContent = (diffDays === 0 ? 1 : diffDays) + '. nap';
+  const cycleLengthInput = document.getElementById('cycle-length');
+  if (!lastPeriodInput || !lastPeriodInput.value) return;
+
+  const dateVal = new Date(lastPeriodInput.value);
+  const cycleLength = parseInt(cycleLengthInput?.value || 28, 10);
+  const today = new Date();
+  
+  const diffTime = Math.abs(today - dateVal);
+  const diffDays = (Math.floor(diffTime / (1000 * 60 * 60 * 24)) % cycleLength) + 1;
+
+  document.getElementById('cycle-day-text').textContent = diffDays + '. nap';
+
+  let phaseKey = 1;
+  if (diffDays >= 1 && diffDays <= 5) phaseKey = 1;
+  else if (diffDays >= 6 && diffDays <= 13) phaseKey = 2;
+  else if (diffDays >= 14 && diffDays <= 16) phaseKey = 3;
+  else phaseKey = 4;
+
+  const phaseData = cyclePhasesInfo[phaseKey];
+  document.getElementById('phase-name-text').textContent = phaseData.name;
+  document.getElementById('phase-description-text').textContent = phaseData.desc;
 
   const container = document.getElementById('cycle-recipe-container');
   if (!container) return;
   container.innerHTML = '';
-  cycleRecipesData.forEach(rec => {
+
+  phaseData.recipes.forEach(rec => {
     const card = document.createElement('div');
     card.className = 'recipe-card-box';
     card.innerHTML = `
-    <div style="font-size:0.75rem; font-weight:700; color:var(--primary); text-transform:uppercase;">${rec.time} • ${rec.phase}</div>
+    <div style="font-size:0.75rem; font-weight:700; color:var(--primary); text-transform:uppercase;">⏱️ ${rec.time} • ${phaseData.name.split(' ')[0]}</div>
     <div style="font-family:var(--font-heading); font-size:1.35rem; font-weight:700; color:var(--text-heading); margin:4px 0;">${rec.title}</div>
-    <div style="font-size:0.88rem; color:var(--text-main); margin-bottom:10px; line-height:1.5;">${rec.description}</div>
-    <div style="background:var(--bg-card-alt); padding:10px 14px; border-radius:var(--radius-sm); font-size:0.82rem; font-weight:600;">${rec.tip}</div>
+    <div style="font-size:0.88rem; color:var(--text-main); margin-bottom:10px; line-height:1.5;">${rec.desc}</div>
+    <div style="background:var(--bg-card-alt); padding:10px 14px; border-radius:var(--radius-sm); font-size:0.82rem; font-weight:600;">💡 ${rec.tip}</div>
     `;
     container.appendChild(card);
   });
@@ -1416,6 +1466,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-skip-goals')?.addEventListener('click', () => {
     goalsModal.classList.add('hidden');
   });
+
+  // Ciklusszinkron eseménykezelők
+  const lastPeriodInput = document.getElementById('last-period-date');
+  const cycleLengthInput = document.getElementById('cycle-length');
+  if (lastPeriodInput) {
+    lastPeriodInput.valueAsDate = new Date();
+    lastPeriodInput.addEventListener('change', updateCycleCalculator);
+  }
+  if (cycleLengthInput) {
+    cycleLengthInput.addEventListener('input', updateCycleCalculator);
+  }
 
   // Pantry Autocomplete
   const pantryInput = document.getElementById('pantry-search-input');
