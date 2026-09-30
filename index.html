@@ -1114,7 +1114,7 @@ const pantryRecipesData = [
 }
 ];
 
-/* CIKLUSSZINKRON FÁZIS ÉS ALAPANYAG ADATBÁZIS (MÁJ ELEMMEL JAVÍTVA) */
+/* CIKLUSSZINKRON FÁZIS ÉS ALAPANYAG ADATBÁZIS (MÁJ ÉS AVOKÁDÓ RECEPTEKKEL BŐVÍTVE) */
 const cyclePhasesInfo = {
   menstruation: {
     name: 'Menstruációs fázis',
@@ -1134,6 +1134,13 @@ const cyclePhasesInfo = {
         ingredients: ['spenót', 'lencse'],
         description: 'Gyorsan elkészíthető, melegítő tál spenótból és lencséből.',
         tip: 'A C-vitaminban dús citromos öntet segíti a növényi vas felszívódását.'
+      },
+      {
+        title: 'Hagymás pirított csirkemáj spenóttal és lencsével',
+        time: '25 perc',
+        ingredients: ['máj', 'spenót', 'lencse'],
+        description: 'Serpenyőben pirított friss csirkemáj krémes fokhagymás spenótágyon és párolt lencsével.',
+        tip: 'A csirkemáj az egyik legkoncentráltabb jól felszívódó hem-vas és B12-vitamin forrás.'
       }
     ]
   },
@@ -1148,6 +1155,13 @@ const cyclePhasesInfo = {
         ingredients: ['zabpehely', 'áfonya', 'chia mag'],
         description: 'Főzd meg a zabpelyhet növényi tejjel, majd szórd meg chia maggal és friss bogyós gyümölcsökkel.',
         tip: 'Stabil energiát nyújt az emelkedő ösztrogénszint idején.'
+      },
+      {
+        title: 'Selymes avokádókrém pirítóssal és friss áfonyával',
+        time: '10 perc',
+        ingredients: ['avokádó', 'áfonya'],
+        description: 'Friss lime-os avokádókrém teljes kiőrlésű tönkölykenyéren, friss áfonyaszemekkel tálalva.',
+        tip: 'Az avokádó egészséges monotelítetlen zsírsavai támogatják a tüszőérést és a hormontermelést.'
       }
     ]
   },
@@ -1216,7 +1230,8 @@ function calculateProductScore(product) {
   const categoryLower = (product.category || '').toLowerCase();
   const ingredientsLower = (product.ingredients || '').toLowerCase();
 
-  const isInstantOrWok = ['soba', 'teriyaki', 'tészta', 'noodle', 'szószpor', 'instant', 'wok', 'készétel'].some(k => 
+  // KIBŐVÍTETT KULCSSZÓTÖMB SMACK ÉS INSTANT LEVESEKRE
+  const isInstantOrWok = ['soba', 'teriyaki', 'tészta', 'noodle', 'szószpor', 'instant', 'wok', 'készétel', 'smack', 'leves', 'ramen'].some(k => 
     productNameLower.includes(k) || categoryLower.includes(k) || ingredientsLower.includes(k)
   );
 
@@ -1224,31 +1239,31 @@ function calculateProductScore(product) {
     productNameLower.includes(k) || categoryLower.includes(k) || ingredientsLower.includes(k)
   );
 
-  // Finomított adathiány-ellenőrzés
+  // PONTOSÍTOTT ADATHIÁNY FELTÉTEL
   const isDataIncomplete = ingredientsLower.includes('csomagolás szerint') || 
                            ingredientsLower.length < 10 || 
                            (!product.additives_tags || product.additives_tags.length === 0);
 
-  // 1. DINAMIKUS DIY ÉS ALTERNATÍVA GENERÁLÁS (KÁSÁK ÉS INSTANT TÉSZTÁK)
+  // 1. DINAMIKUS DIY ÉS ALTERNATÍVA GENERÁLÁS SPECIFIKUSAN LEVESEKRE ÉS KÁSÁKRA
   if (isPorridge) {
     diyTitle = 'Tápláló Házi Kása Tiszta Alapanyagokból (5 perc)';
     diyContent = '<strong>Hozzávalók:</strong> 50g natúr zabpehely vagy rizspehely, 200ml kókusz- vagy mandulatej, friss bogyós gyümölcsök (áfonya, málna), banánszeletek, csipet fahéj, 1 tk tiszta méz.<br><strong>Elkészítés:</strong> Főzd össze a pelyhet a növényi tejjel 3-5 perc alatt krémesre, majd díszítsd a friss gyümölcsökkel, fahéjjal és mézzel.';
     partnerText = 'Hozzáadott cukros instant kásaporok helyett válogass tiszta 100%-os magvajakat (mogyoróvaj, mandulavaj), Freeze-dried gyümölcsöket és natúr növényi fehérjeporokat kiegészítésként.';
-  } else if (isInstantOrWok && isDataIncomplete) {
-    diyTitle = 'Házi Wok Tészta Friss Zöldségekkel (15 perc)';
-    diyContent = '<strong>Hozzávalók:</strong> 100g ázsiai száraztészta, 1 ek szójaszósz, 1 tk méz, reszelt gyömbér, fokhagyma, friss brokkoli és sárgarépa csíkok.<br><strong>Elkészítés:</strong> Főzd ki a tésztát 3 perc alatt. Dinszteld meg a fokhagymát és gyömbért egy kevés olajon, dobáld rá a zöldségeket, keverd hozzá a szójaszószt, végül forgasd össze a tésztával.';
-    partnerText = 'Ipari szószporok helyett válassz adalékanyag-mentes, tiszta szójaszószt és hidegen sajtolt szezámolajat a természetes ízekhez.';
+  } else if (isInstantOrWok) {
+    diyTitle = 'Gyors Házi Ramen Leves Friss Alapanyagokból (10 perc)';
+    diyContent = '<strong>Hozzávalók:</strong> 100g tiszta ázsiai száraztészta vagy üvegtészta, 3 dl szűrt zöldség- vagy csontleves alaplé, 1 ek natúr szójaszósz, 1 főtt tojás, friss újhagyma és gomba szeletek.<br><strong>Elkészítés:</strong> Forrald fel az alaplevet a szójaszósszal, főzd bele a tésztát 3 perc alatt, majd tálald a félbevágott főtt tojással és friss újhagymával.';
+    partnerText = 'E-számokkal és ízfokozókkal teli levesporok helyett használj tiszta BIO levesalapleveket és adalékmentes szójaszószt a gyors ramen elkészítéséhez.';
   }
 
-  // 2. ADATHIÁNYOS INSTANT WOK TÉSZTA BÜNTETÉS (SCORE LEVONÁS ÉS INDOKLÁSOK)
-  if (isInstantOrWok && isDataIncomplete) {
+  // 2. SZIGORÚ BÜNTETÉS SMACK ÉS INSTANT LEVESEKRE (FÜGGETLENÜL AZ ADATHIÁNYTÓL)
+  if (isInstantOrWok) {
     score -= 45;
     facts.push('Finomított búzaliszt és iparilag hidrolizált keményítők (vércukorszint-kiugrás).');
     facts.push('Pálmazsíros elősütött tésztaalap (magas telített zsírsav és gyulladásfokozó hatás).');
     facts.push('Nátrium-túlsúly és ízfokozók (E621 nátrium-glutamát).');
   }
 
-  // 3. TELJES, HIÁNYTALAN PONTSZÁMÍTÁSI LOGIKA
+  // 3. PONTSZÁMÍTÁSI LOGIKA
   if (product.sugar_g > 15) {
     score -= 22; facts.push('Magas cukortartalom (' + product.sugar_g + 'g / 100g).');
   } else if (product.sugar_g <= 3) {
@@ -1280,14 +1295,14 @@ function calculateProductScore(product) {
   additivePenalty = Math.min(30, additivePenalty);
   score -= additivePenalty;
 
+  // E-SZÁM TÉNYEK SZIGORÚAN KIZÁRVA INSTANT ÉTELEKNÉL
   if (highRiskCount > 0) {
     facts.push(`${highRiskCount} db magas egészségügyi kockázatú adalékanyagot tartalmaz.`);
   } else if (moderateRiskCount > 0) {
     facts.push(`${moderateRiskCount} db mérsékelt kockázatú állományjavítót/édesítőt tartalmaz.`);
   } else if (isInstantOrWok && isDataIncomplete) {
-    // JAVÍTVA & ELLENŐRIZVE: Adathiányos instant ételeknél KIZÁRÓLAG ezt a tárgyilagos megjegyzést adja hozzá, SOSEM az E-szám mentes mondatot!
     facts.push('Adathiányos adatlap: Az E-számok nincsenek részletezve az adatbázisban.');
-  } else {
+  } else if (!isInstantOrWok) {
     facts.push('Kritikus vagy mesterséges E-számoktól mentes összetétel.');
   }
 
@@ -1298,11 +1313,11 @@ function calculateProductScore(product) {
   if (activeGoals.includes('sugar') && product.sugar_g > 10) {
     facts.unshift('⚠️ Cukor & Diéta fókusz: Ez a termék a beállított céljaidhoz képest magas cukortartalmú!');
   }
-  if (activeGoals.includes('children') && ((isInstantOrWok && isDataIncomplete) || product.additives_risk === 'high' || highRiskCount > 0)) {
+  if (activeGoals.includes('children') && (isInstantOrWok || product.additives_risk === 'high' || highRiskCount > 0)) {
     facts.unshift('⚠️ Gyermek fókusz: Kockázatos mesterséges adalékanyagot / színezéket tartalmaz!');
   }
-  if (activeGoals.includes('clean') && (product.has_palm || (isInstantOrWok && isDataIncomplete))) {
-    facts.unshift('⚠️ Clean Eating fókusz: Nem illeszkedik a tiszta, feldolgozatlan étrendbe.');
+  if (activeGoals.includes('clean') && (product.has_palm || isInstantOrWok)) {
+    facts.unshift('⚠️️ Clean Eating fókusz: Nem illeszkedik a tiszta, feldolgozatlan étrendbe.');
   }
 
   score = Math.max(12, Math.min(100, score));
@@ -1322,10 +1337,10 @@ function renderProductResult(product, barcode) {
   const resultCard = document.getElementById('ellenor-result-card');
   const analysis = calculateProductScore(product);
 
-  /* EXPLICIT PRIO: AZ ANALYSIS-BŐL SZÁRMAZÓ DINAMIKUS ÉRTÉKEK FELÜLÍRJÁK A TERMÉK ÉS SABLON ADATOKAT */
-  let diyTitle = analysis.diyTitle !== null ? analysis.diyTitle : (product.diyTitle || "Készítsd el otthon egyszerűen!");
-  let diyContent = analysis.diyContent !== null ? analysis.diyContent : (product.diyContent || "Friss, feldolgozatlan alapanyagokból otthon elkészítve még könnyebben elkerülheted a felesleges adalékanyagokat és rejtett cukrokat.");
-  let partnerText = analysis.partnerText !== null ? analysis.partnerText : "Válassz hozzá adalékanyag-mentes, minimálisan feldolgozott alapanyagokat – például a Vilgain BIO termékcsalád tiszta opcióit.";
+  /* DINAMIKUS DIY ÉS ALTERNATÍVA BLOKK ABSZOLÚT ELSŐBBSÉGE */
+  let diyTitle = Boolean(analysis.diyTitle) ? analysis.diyTitle : (product.diyTitle || "Készítsd el otthon egyszerűen!");
+  let diyContent = Boolean(analysis.diyContent) ? analysis.diyContent : (product.diyContent || "Friss, feldolgozatlan alapanyagokból otthon elkészítve még könnyebben elkerülheted a felesleges adalékanyagokat és rejtett cukrokat.");
+  let partnerText = Boolean(analysis.partnerText) ? analysis.partnerText : "Válassz hozzá adalékanyag-mentes, minimálisan feldolgozott alapanyagokat – például a Vilgain BIO termékcsalád tiszta opcióit.";
 
   resultCard.innerHTML = `
   <div class="score-badge-header">
