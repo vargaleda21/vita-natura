@@ -1285,7 +1285,7 @@ function calculateProductScore(product) {
   } else if (moderateRiskCount > 0) {
     facts.push(`${moderateRiskCount} db mérsékelt kockázatú állományjavítót/édesítőt tartalmaz.`);
   } else if (isInstantOrWok && isDataIncomplete) {
-    // JAVÍTVA: Adathiányos instant ételeknél KIZÁRÓLAG ezt a tárgyilagos megjegyzést adja hozzá, SOSEM az E-szám mentes mondatot!
+    // JAVÍTVA & ELLENŐRIZVE: Adathiányos instant ételeknél KIZÁRÓLAG ezt a tárgyilagos megjegyzést adja hozzá, SOSEM az E-szám mentes mondatot!
     facts.push('Adathiányos adatlap: Az E-számok nincsenek részletezve az adatbázisban.');
   } else {
     facts.push('Kritikus vagy mesterséges E-számoktól mentes összetétel.');
