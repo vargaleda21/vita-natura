@@ -1,0 +1,22 @@
+{
+  "name": "daleday - Clean Living & Baba-Mama",
+  "short_name": "daleday",
+  "description": "Tiszta termékellenőrző és életmód asszisztens.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#FBF9F4",
+  "theme_color": "#2D4A3E",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/2D4A3E/FFFFFF?text=daleday",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/2D4A3E/FFFFFF?text=daleday",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
