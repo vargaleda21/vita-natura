@@ -42,10 +42,10 @@
       --warning-amber: #D99B26;
       --success-forest: #2D6A4F;
       --border-light: rgba(45, 74, 62, 0.08);
-      --radius-sm: 10px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --shadow-soft: 0 10px 30px rgba(45, 74, 62, 0.05);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-soft: 0 8px 24px rgba(45, 74, 62, 0.04);
     }
 
     * {
@@ -57,38 +57,39 @@
 
     body {
       background-color: var(--bg-organic);
-      background-image: radial-gradient(circle at 50% 0%, rgba(212, 163, 89, 0.05), transparent 70%);
+      background-image: radial-gradient(circle at 50% 0%, rgba(212, 163, 89, 0.04), transparent 70%);
       color: var(--text-main);
-      padding: 16px;
-      max-width: 600px;
+      padding: 14px;
+      max-width: 520px;
       margin: 0 auto;
-      line-height: 1.6;
-      padding-bottom: 90px;
+      line-height: 1.5;
+      font-size: 0.88rem;
+      padding-bottom: 85px;
     }
 
     h1, h2, h3, .serif-font {
       font-family: 'Playfair Display', Georgia, serif;
       font-weight: 600;
       color: var(--accent-eucalyptus);
-      letter-spacing: -0.3px;
+      letter-spacing: -0.2px;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding: 8px 0;
+      margin-bottom: 16px;
+      padding: 4px 0;
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       line-height: 1.1;
     }
 
     p.subtitle {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 500;
     }
 
@@ -96,24 +97,29 @@
       background: var(--card-bg);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-md);
-      padding: 20px;
-      margin-bottom: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
       box-shadow: var(--shadow-soft);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
     }
 
     .scanner-box {
       display: flex;
-      gap: 10px;
-      margin-top: 12px;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="number"] {
       flex: 1;
-      padding: 12px 16px;
+      padding: 9px 12px;
       border: 1px solid var(--border-light);
       background: #FAFAFA;
       border-radius: var(--radius-sm);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       color: var(--text-main);
       outline: none;
       transition: all 0.2s;
@@ -128,16 +134,16 @@
       background: var(--accent-eucalyptus);
       color: #FFF;
       border: none;
-      padding: 12px 20px;
+      padding: 9px 15px;
       border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 0.9rem;
+      font-weight: 600;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: transform 0.15s, background 0.2s;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     button:hover {
@@ -151,6 +157,7 @@
     button.btn-secondary {
       background: #EFECE6;
       color: var(--text-main);
+      font-weight: 600;
     }
 
     button.btn-secondary:hover {
@@ -160,26 +167,26 @@
     .score-capsule {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: var(--radius-md);
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
       background: #F8FAF7;
-      border: 1px solid rgba(45, 106, 79, 0.12);
-      margin-bottom: 16px;
+      border: 1px solid rgba(45, 106, 79, 0.1);
+      margin-bottom: 12px;
     }
 
     .score-ring {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.05rem;
       color: #FFF;
-      box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.3);
       flex-shrink: 0;
     }
 
@@ -190,21 +197,21 @@
     .partner-advisory-box {
       background: #F1F4F0;
       border: 1px dashed var(--accent-sage);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-top: 18px;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      margin-top: 14px;
     }
 
     .advisory-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
+      gap: 4px;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--accent-gold);
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .affiliate-btn {
@@ -213,13 +220,13 @@
       background: var(--accent-eucalyptus);
       color: #FFFFFF !important;
       text-align: center;
-      padding: 14px 20px;
+      padding: 10px 14px;
       border-radius: var(--radius-sm);
-      font-weight: 700;
+      font-weight: 600;
       text-decoration: none;
-      font-size: 0.95rem;
-      margin-top: 12px;
-      box-shadow: 0 4px 12px rgba(45, 74, 62, 0.15);
+      font-size: 0.85rem;
+      margin-top: 10px;
+      box-shadow: 0 3px 10px rgba(45, 74, 62, 0.12);
       transition: all 0.2s;
     }
 
@@ -228,29 +235,29 @@
     }
 
     ul.fact-list {
-      margin-left: 20px;
-      margin-top: 8px;
+      margin-left: 18px;
+      margin-top: 6px;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.82rem;
     }
 
     ul.fact-list li {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .chip-container {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 8px;
-      margin-top: 12px;
+      padding-bottom: 4px;
+      margin-top: 10px;
     }
 
     .chip {
       background: #EFECE6;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.78rem;
       font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
@@ -265,26 +272,26 @@
 
     .nav-bar {
       position: fixed;
-      bottom: 16px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      width: calc(100% - 32px);
-      max-width: 560px;
-      background: rgba(251, 249, 244, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      width: calc(100% - 28px);
+      max-width: 480px;
+      background: rgba(251, 249, 244, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: var(--radius-lg);
       display: flex;
       justify-content: space-around;
-      padding: 10px 0;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      padding: 8px 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
       z-index: 900;
     }
 
     .nav-item {
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
@@ -292,12 +299,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
 
     .nav-item.active {
       color: var(--accent-eucalyptus);
-      font-weight: 800;
+      font-weight: 700;
     }
 
     .nav-item.active::after {
@@ -307,19 +314,19 @@
       height: 4px;
       background: var(--accent-gold);
       border-radius: 50%;
-      margin-top: 2px;
+      margin-top: 1px;
     }
 
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(28, 36, 33, 0.5);
-      backdrop-filter: blur(6px);
+      background: rgba(28, 36, 33, 0.4);
+      backdrop-filter: blur(4px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 14px;
     }
 
     .modal.active {
@@ -328,32 +335,32 @@
 
     .modal-content {
       background: #FFF;
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      max-width: 480px;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      max-width: 420px;
       width: 100%;
-      max-height: 90vh;
+      max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.1);
     }
 
     #reader {
       width: 100%;
-      margin-top: 10px;
+      margin-top: 8px;
       border-radius: var(--radius-sm);
       overflow: hidden;
     }
 
     .spinner {
       display: inline-block;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border: 2px solid rgba(45, 74, 62, 0.2);
       border-radius: 50%;
       border-top-color: var(--accent-eucalyptus);
       animation: spin 0.8s linear infinite;
       vertical-align: middle;
-      margin-right: 8px;
+      margin-right: 6px;
     }
 
     @keyframes spin {
@@ -361,8 +368,8 @@
     }
 
     .icon-svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: currentColor;
     }
 
@@ -370,12 +377,12 @@
       display: inline-block;
       background: #EFECE6;
       color: var(--accent-eucalyptus);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 12px;
-      margin-right: 6px;
-      margin-bottom: 6px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      margin-right: 4px;
+      margin-bottom: 4px;
     }
   </style>
 </head>
@@ -396,7 +403,7 @@
   <div id="tab-scanner" class="tab-view">
     <div class="card">
       <h3>Termék ellenőrzése</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
         Írd be a vonalkódot vagy használd a kamerát! <br>
         Próbáld ki: <code>5099514000020</code> (WaterWipes), <code>5011082138032</code> (Sudocrem), <code>4001638098310</code> (Weleda)
       </p>
@@ -406,7 +413,7 @@
         <button onclick="handleScanInput()">Keresés</button>
       </div>
 
-      <div style="margin-top: 12px;">
+      <div style="margin-top: 10px;">
         <button style="width: 100%;" onclick="startCameraScanner()">
           <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
           Vonalkód beolvasása kamerával
@@ -422,47 +429,23 @@
     <div id="resultContainer"></div>
   </div>
 
-  <!-- 2. TAB: KAMRA ASSZISZTENS -->
-  <div id="tab-kamra" class="tab-view" style="display: none;">
-    <div class="card">
-      <h3>Kamra asszisztens</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
-        Válaszd ki a meglévő alapanyagaidat a tiszta receptek szűréséhez:
-      </p>
-
-      <div class="chip-container" id="pantryChips">
-        <div class="chip" onclick="togglePantryItem(this, 'zabpehely')">Zabpehely</div>
-        <div class="chip" onclick="togglePantryItem(this, 'chia')">Chia mag</div>
-        <div class="chip" onclick="togglePantryItem(this, 'spenot')">Spenót</div>
-        <div class="chip" onclick="togglePantryItem(this, 'tojas')">Tojás</div>
-        <div class="chip" onclick="togglePantryItem(this, 'avokado')">Avokádó</div>
-        <div class="chip" onclick="togglePantryItem(this, 'gyomber')">Gyömbér</div>
-      </div>
-
-      <div style="margin-top: 16px;">
-        <h4 style="font-size: 0.95rem; font-weight: 700;">Talált receptek (OR / VAGY logika):</h4>
-        <div id="pantryRecipesList" style="margin-top: 10px;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. TAB: CIKLUSSZINKRON NAPTÁRRAL ÉS AUTOMATIKUS SZÁMÍTÁSSAL -->
+  <!-- 2. TAB: CIKLUSSZINKRON NAPTÁRRAL ÉS AUTOMATIKUS SZÁMÍTÁSSAL -->
   <div id="tab-cycle" class="tab-view" style="display: none;">
     <div class="card">
       <h3>Ciklusszinkron és hormonális egyensúly</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
         Kövesd a ciklusodat és támogatási opciókat kapsz a hormonális egyensúlyodért!
       </p>
 
       <!-- NAPTÁR ÉS DÁTUMVÁLASZTÓ KÁRTYA -->
-      <div style="background: #F8FAF7; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); margin-top: 12px;">
-        <strong style="font-size: 0.9rem; color: var(--accent-eucalyptus);">Utolsó menstruáció időpontja:</strong>
-        <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
-          <input type="date" id="lastPeriodDate" style="flex: 1; min-width: 140px;">
-          <input type="number" id="cycleLength" value="28" min="20" max="40" placeholder="Ciklus hossza (nap)" style="width: 110px;">
+      <div style="background: #F8FAF7; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); margin-top: 10px;">
+        <strong style="font-size: 0.82rem; color: var(--accent-eucalyptus);">Utolsó menstruáció időpontja:</strong>
+        <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
+          <input type="date" id="lastPeriodDate" style="flex: 1; min-width: 130px;">
+          <input type="number" id="cycleLength" value="28" min="20" max="40" placeholder="Ciklus hossza" style="width: 95px;">
           <button onclick="calculateCyclePhaseFromDate()">Számítás</button>
         </div>
-        <div id="cycleCalcResult" style="margin-top: 10px; font-weight: 600; font-size: 0.85rem; color: var(--accent-eucalyptus);"></div>
+        <div id="cycleCalcResult" style="margin-top: 8px; font-weight: 600; font-size: 0.82rem; color: var(--accent-eucalyptus);"></div>
       </div>
 
       <div class="chip-container" id="cycleChips">
@@ -472,7 +455,7 @@
         <div class="chip" id="chip-menstrual" onclick="selectCyclePhase('menstrual', this)">Menstruációs fázis</div>
       </div>
 
-      <div id="cyclePhaseContent" style="margin-top: 16px;"></div>
+      <div id="cyclePhaseContent" style="margin-top: 12px;"></div>
     </div>
   </div>
 
@@ -481,10 +464,6 @@
     <div class="nav-item active" id="nav-scanner" onclick="switchTab('scanner')">
       <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
       <div>Szkenner</div>
-    </div>
-    <div class="nav-item" id="nav-kamra" onclick="switchTab('kamra')">
-      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M22 9h-4.79l-4.38-6.56a1 1 0 0 0-1.66 0L6.79 9H2c-.55 0-1 .45-1 1 0 .09.05.18.08.27l2.54 10.09c.24.96 1.1 1.64 2.09 1.64h12.58c.99 0 1.85-.68 2.09-1.64l2.54-10.09c.03-.09.08-.18.08-.27 0-.55-.45-1-1-1zm-9.85-4.5L15.12 9H8.88l2.97-4.5z"/></svg>
-      <div>Kamra</div>
     </div>
     <div class="nav-item" id="nav-cycle" onclick="switchTab('cycle')">
       <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
@@ -495,12 +474,12 @@
   <!-- ONBOARDING MODAL -->
   <div class="modal" id="onboardingModal">
     <div class="modal-content">
-      <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Üdvözöl a daleday</h2>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">
+      <h2 style="font-size: 1.3rem; margin-bottom: 6px;">Üdvözöl a daleday</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem;">
         Kezdd el a tiszta életmódot (Clean living) és a tiszta baba-mama ápolást. 
         Szkenneld be a kozmetikumokat és élelmiszereket, derítsd ki a káros adalékokat és kőolajszármazékokat, és találj vegyszermentes alternatívákat azonnal!
       </p>
-      <div style="margin-top: 24px;">
+      <div style="margin-top: 18px;">
         <button style="width: 100%;" onclick="closeOnboarding()">Kezdjük el!</button>
       </div>
     </div>
@@ -509,8 +488,8 @@
   <!-- AUTHENTIKÁCIÓS MODAL -->
   <div class="modal" id="authModal">
     <div class="modal-content">
-      <h3 id="authTitle" style="font-size: 1.4rem; margin-bottom: 12px;">Bejelentkezés / Regisztráció</h3>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h3 id="authTitle" style="font-size: 1.15rem; margin-bottom: 10px;">Bejelentkezés / Regisztráció</h3>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
         <input type="email" id="authEmail" placeholder="Email cím">
         <input type="password" id="authPassword" placeholder="Jelszó">
         <button onclick="handleEmailAuth()">Folytatás emaillel</button>
@@ -524,7 +503,7 @@
        1. FIREBASE BEÁLLÍTÁSOK
        ========================================================================== */
     const firebaseConfig = {
-      apiKey: "AIzaSyDummyKeyForDaledayCleanLiving2025",
+      apiKey: "AIzaSyDummyKeyForDaledayCleanLiving2026",
       authDomain: "daleday-app.firebaseapp.com",
       projectId: "daleday-app",
       storageBucket: "daleday-app.appspot.com",
@@ -700,7 +679,7 @@
     };
 
     /* ==========================================================================
-       3. ELEMZŐMOTOR (calculateProductScore) - JAVÍTOTT KIVÉTELEKKEL
+       3. ELEMZŐMOTOR (calculateProductScore)
        ========================================================================== */
     function calculateProductScore(product) {
       let score = 100;
@@ -737,7 +716,6 @@
         facts.push('Tartósítószert / Phenoxyethanolt tartalmaz (érzékeny bőrnél irritációt/ekcémát okozhat).');
       }
 
-      // Gyümölcs- és zöldségpürék, bébiételek és kozmetikumok mentesülnek a cukorbüntetés alól
       const isExemptCategory = ['popsikrem', 'torlokendo', 'kozmetikum', 'bebietel'].includes(product.category);
       if (!isExemptCategory && product.sugar_g > 10) {
         score -= 15;
@@ -787,48 +765,48 @@
         partnerTitle = 'Ez a termék megfelel a daleday tiszta kritériumainak. Ha további tiszta terméket keresel:';
       }
 
-      const partnerText = product.partnerText ? `<p style="font-size:0.88rem; color:var(--text-muted); margin-top:4px;">${product.partnerText}</p>` : '';
+      const partnerText = product.partnerText ? `<p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">${product.partnerText}</p>` : '';
 
       container.innerHTML = `
         <div class="card" id="exportCard">
           <div class="score-capsule">
             <div class="score-ring ${ringBg}">${score}</div>
             <div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.05em;">daleday Clean Score</div>
-              <div style="font-size: 1rem; font-weight: 700; color: var(--text-main);">${statusText}</div>
+              <div style="font-size: 0.7rem; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.05em;">daleday Clean Score</div>
+              <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-main);">${statusText}</div>
             </div>
           </div>
 
-          <h2>${product.name}</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 2px;">Márka: <strong>${product.brand || 'Ismeretlen'}</strong></p>
+          <h2 style="font-size: 1.1rem; margin-bottom: 2px;">${product.name}</h2>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">Márka: <strong>${product.brand || 'Ismeretlen'}</strong></p>
           
-          <div style="margin-top: 14px;">
-            <strong style="font-size: 0.9rem;">Összetevők:</strong>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">${product.ingredients || 'Nincs megadva'}</p>
+          <div style="margin-top: 12px;">
+            <strong style="font-size: 0.85rem;">Összetevők:</strong>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4;">${product.ingredients || 'Nincs megadva'}</p>
           </div>
 
-          <div style="margin-top: 14px;">
-            <strong style="font-size: 0.9rem;">Elemzés és tények:</strong>
+          <div style="margin-top: 12px;">
+            <strong style="font-size: 0.85rem;">Elemzés és tények:</strong>
             <ul class="fact-list">
               ${facts.map(f => `<li>${f}</li>`).join('')}
             </ul>
           </div>
 
           ${product.diyTitle ? `
-            <div style="margin-top: 16px; padding: 14px; background: #F8FAF7; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-sage);">
-              <strong style="color: var(--accent-eucalyptus); font-size: 0.9rem;">${product.diyTitle}</strong>
-              <p style="font-size: 0.85rem; color: var(--text-main); margin-top: 4px;">${product.diyContent}</p>
+            <div style="margin-top: 14px; padding: 12px; background: #F8FAF7; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-sage);">
+              <strong style="color: var(--accent-eucalyptus); font-size: 0.85rem;">${product.diyTitle}</strong>
+              <p style="font-size: 0.8rem; color: var(--text-main); margin-top: 2px;">${product.diyContent}</p>
             </div>
           ` : ''}
 
           <div class="partner-advisory-box">
             <div class="advisory-badge">daleday tiszta ajánlás</div>
-            <div style="font-weight:700; font-size:0.95rem;">${partnerTitle}</div>
+            <div style="font-weight:700; font-size:0.88rem;">${partnerTitle}</div>
             ${partnerText}
             ${partnerActionHtml}
           </div>
 
-          <div style="margin-top: 16px;">
+          <div style="margin-top: 14px;">
             <button class="btn-secondary" style="width: 100%;" onclick="exportToStory()">Elemzés mentése képként</button>
           </div>
         </div>
@@ -886,7 +864,7 @@
         container.innerHTML = `
           <div class="card">
             <h3>Termék nem található</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">
               A(z) <code>${code}</code> vonalkód még nem szerepel az adatbázisban.
             </p>
           </div>
@@ -945,64 +923,7 @@
     }
 
     /* ==========================================================================
-       7. KAMRA RECEPTASSZISZTENS
-       ========================================================================== */
-    const KAMRA_RECIPES = [
-      {
-        title: 'Ciklusszinkron zabkása chia maggal',
-        ingredients: ['zabpehely', 'chia'],
-        desc: 'Szuper tiszta reggeli lassú felszívódású szénhidrátokkal és omega-3 zsírsavakkal.'
-      },
-      {
-        title: 'Zöld istennő avokádós spenót turmix',
-        ingredients: ['spenot', 'avokado', 'gyomber'],
-        desc: 'Méregtelenítő és gyulladáscsökkentő zöld turmix a természet erejével.'
-      },
-      {
-        title: 'Kímélő proteines rántotta spenóttal',
-        ingredients: ['tojas', 'spenot'],
-        desc: 'Tiszta fehérjedús reggeli tápláló spenóttal.'
-      }
-    ];
-
-    let selectedPantryItems = [];
-
-    function togglePantryItem(el, item) {
-      el.classList.toggle('active');
-      if (selectedPantryItems.includes(item)) {
-        selectedPantryItems = selectedPantryItems.filter(i => i !== item);
-      } else {
-        selectedPantryItems.push(item);
-      }
-      filterPantryRecipes();
-    }
-
-    function filterPantryRecipes() {
-      const container = document.getElementById('pantryRecipesList');
-      if (selectedPantryItems.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Válassz ki legalább egy alapanyagot!</p>';
-        return;
-      }
-
-      const matched = KAMRA_RECIPES.filter(recipe => 
-        recipe.ingredients.some(ing => selectedPantryItems.includes(ing))
-      );
-
-      if (matched.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Nincs a kiválasztott alapanyagoknak megfelelő recept.</p>';
-        return;
-      }
-
-      container.innerHTML = matched.map(r => `
-        <div style="background: #F8FAF7; padding: 12px; border-radius: var(--radius-sm); margin-bottom: 8px; border: 1px solid var(--border-light);">
-          <strong style="color: var(--accent-eucalyptus);">${r.title}</strong>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">${r.desc}</p>
-        </div>
-      `).join('');
-    }
-
-    /* ==========================================================================
-       8. CIKLUSSZINKRON MODUL & NAPTÁR SZÁMÍTÁSSAL
+       7. CIKLUSSZINKRON MODUL & NAPTÁR SZÁMÍTÁSSAL
        ========================================================================== */
     const CYCLE_PHASES = {
       follicular: {
@@ -1093,19 +1014,19 @@
       const foodBadges = data.foods.map(f => `<span class="food-tag-badge">${f}</span>`).join('');
 
       container.innerHTML = `
-        <div style="background: #F8FAF7; padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
-          <h4 style="color: var(--accent-eucalyptus); font-size: 1rem;">${data.title}</h4>
-          <p style="font-size: 0.88rem; color: var(--text-main); margin-top: 6px;">${data.desc}</p>
+        <div style="background: #F8FAF7; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+          <h4 style="color: var(--accent-eucalyptus); font-size: 0.95rem;">${data.title}</h4>
+          <p style="font-size: 0.82rem; color: var(--text-main); margin-top: 4px;">${data.desc}</p>
           
-          <div style="margin-top: 12px;">
-            <strong style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Ajánlott tápanyagok és alapanyagok:</strong>
+          <div style="margin-top: 10px;">
+            <strong style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Ajánlott tápanyagok és alapanyagok:</strong>
             ${foodBadges}
           </div>
 
-          <div style="margin-top: 14px; border-top: 1px dashed #DDD; padding-top: 12px;">
-            <strong style="font-size: 0.85rem; color: var(--accent-gold);">Ajánlott tiszta recept:</strong>
-            <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-top: 2px;">${data.recipe}</p>
-            <button style="margin-top: 10px; width: 100%; font-size: 0.85rem;" onclick="requestPhaseRecipe('${data.recipe}')">Recept kérése ehhez a fázishoz</button>
+          <div style="margin-top: 12px; border-top: 1px dashed #DDD; padding-top: 10px;">
+            <strong style="font-size: 0.8rem; color: var(--accent-gold);">Ajánlott tiszta recept:</strong>
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-top: 2px;">${data.recipe}</p>
+            <button style="margin-top: 8px; width: 100%; font-size: 0.8rem;" onclick="requestPhaseRecipe('${data.recipe}')">Recept kérése ehhez a fázishoz</button>
           </div>
         </div>
       `;
@@ -1116,7 +1037,7 @@
     }
 
     /* ==========================================================================
-       9. STORY EXPORTÁLÁS
+       8. STORY EXPORTÁLÁS
        ========================================================================== */
     function exportToStory() {
       const card = document.getElementById('exportCard');
@@ -1132,7 +1053,7 @@
     }
 
     /* ==========================================================================
-       10. NAVIGÁCIÓ, AUTH ÉS ONBOARDING
+       9. NAVIGÁCIÓ, AUTH ÉS ONBOARDING
        ========================================================================== */
     function switchTab(tabName) {
       document.querySelectorAll('.tab-view').forEach(t => t.style.display = 'none');
@@ -1185,7 +1106,6 @@
       if (dateEl) dateEl.value = todayStr;
 
       selectCyclePhase('follicular', null);
-      filterPantryRecipes();
     });
   </script>
 </body>
