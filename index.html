@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>daleday - Clean Living & Baba-Mama</title>
   
-  <!-- Firebase App & Auth & Firestore CDN -->
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Firebase CDN -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
@@ -18,123 +23,196 @@
 
   <style>
     :root {
-      --bg-color: #F7F5F0;
+      --bg-organic: #FBF9F4;
       --card-bg: #FFFFFF;
-      --text-main: #2C3531;
-      --text-muted: #6B705C;
-      --accent-green: #8A9A86;
-      --accent-brown: #A89F81;
-      --danger-color: #D96B27;
-      --warning-color: #E6A100;
-      --success-color: #4A7C59;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --text-main: #1C2421;
+      --text-muted: #5A6561;
+      --accent-eucalyptus: #2D4A3E;
+      --accent-sage: #8A9A86;
+      --accent-gold: #D4A359;
+      --danger-terracotta: #B84A39;
+      --warning-amber: #D99B26;
+      --success-forest: #2D6A4F;
+      --border-light: rgba(45, 74, 62, 0.08);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-soft: 0 10px 30px rgba(45, 74, 62, 0.05);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg-organic);
+      background-image: radial-gradient(circle at 50% 0%, rgba(212, 163, 89, 0.05), transparent 70%);
       color: var(--text-main);
       padding: 16px;
       max-width: 600px;
       margin: 0 auto;
-      line-height: 1.5;
-      padding-bottom: 80px;
+      line-height: 1.6;
+      padding-bottom: 90px;
+    }
+
+    h1, h2, h3, .serif-font {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 600;
+      color: var(--accent-eucalyptus);
+      letter-spacing: -0.3px;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      padding: 8px 0;
     }
 
     h1 {
-      font-size: 1.8rem;
-      color: var(--text-main);
-      letter-spacing: -0.5px;
+      font-size: 2rem;
+      line-height: 1.1;
     }
 
     p.subtitle {
       color: var(--text-muted);
       font-size: 0.85rem;
+      font-weight: 500;
     }
 
     .card {
       background: var(--card-bg);
+      border: 1px solid var(--border-light);
       border-radius: var(--radius-md);
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-soft);
     }
 
     .scanner-box {
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 10px;
+      margin-top: 12px;
     }
 
     input[type="text"], input[type="email"], input[type="password"] {
       flex: 1;
-      padding: 10px 14px;
-      border: 1px solid #DDD;
+      padding: 12px 16px;
+      border: 1px solid var(--border-light);
+      background: #FAFAFA;
       border-radius: var(--radius-sm);
       font-size: 0.95rem;
+      color: var(--text-main);
       outline: none;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent-sage);
+      background: #FFF;
     }
 
     button {
-      background: var(--accent-green);
+      background: var(--accent-eucalyptus);
       color: #FFF;
       border: none;
-      padding: 10px 16px;
+      padding: 12px 20px;
       border-radius: var(--radius-sm);
       font-weight: 700;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: transform 0.15s, background 0.2s;
     }
 
     button:hover {
-      background: #788874;
+      background: #233B31;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
 
     button.btn-secondary {
-      background: #EAE6DF;
+      background: #EFECE6;
       color: var(--text-main);
     }
 
     button.btn-secondary:hover {
-      background: #DDD8CE;
+      background: #E4E0D6;
     }
 
-    .score-badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
+    .score-capsule {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      background: #F8FAF7;
+      border: 1px solid rgba(45, 106, 79, 0.12);
+      margin-bottom: 16px;
+    }
+
+    .score-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 800;
-      color: white;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
+      font-size: 1.25rem;
+      color: #FFF;
+      box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
     }
 
-    .score-high { background-color: var(--success-color); }
-    .score-medium { background-color: var(--warning-color); }
-    .score-low { background-color: var(--danger-color); }
+    .score-high-bg { background: var(--success-forest); }
+    .score-medium-bg { background: var(--warning-amber); }
+    .score-low-bg { background: var(--danger-terracotta); }
 
-    .partner-box {
-      background: #F2F5F1;
-      border: 1px solid #D5E0D3;
+    .partner-advisory-box {
+      background: #F1F4F0;
+      border: 1px dashed var(--accent-sage);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 18px;
+    }
+
+    .advisory-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-gold);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .affiliate-btn {
+      display: block;
+      width: 100%;
+      background: var(--accent-eucalyptus);
+      color: #FFFFFF !important;
+      text-align: center;
+      padding: 14px 20px;
       border-radius: var(--radius-sm);
-      padding: 12px;
-      margin-top: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-top: 12px;
+      box-shadow: 0 4px 12px rgba(45, 74, 62, 0.15);
+      transition: all 0.2s;
+    }
+
+    .affiliate-btn:hover {
+      background: #1F362D;
     }
 
     ul.fact-list {
@@ -145,7 +223,7 @@
     }
 
     ul.fact-list li {
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .chip-container {
@@ -153,30 +231,75 @@
       gap: 8px;
       overflow-x: auto;
       padding-bottom: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .chip {
-      background: #EAE6DF;
-      padding: 6px 14px;
-      border-radius: 16px;
+      background: #EFECE6;
+      padding: 8px 16px;
+      border-radius: 20px;
       font-size: 0.85rem;
+      font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
+      transition: all 0.2s;
     }
 
     .chip.active {
-      background: var(--accent-green);
+      background: var(--accent-eucalyptus);
       color: white;
     }
 
-    /* Modal Ablakok (Onboarding, Login, Camera) */
+    .nav-bar {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 560px;
+      background: rgba(251, 249, 244, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-lg);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      z-index: 900;
+    }
+
+    .nav-item {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--accent-eucalyptus);
+      font-weight: 800;
+    }
+
+    .nav-item.active::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      margin: 2px auto 0 auto;
+    }
+
     .modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(28, 36, 33, 0.5);
+      backdrop-filter: blur(6px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -190,55 +313,29 @@
     .modal-content {
       background: #FFF;
       border-radius: var(--radius-lg);
-      padding: 24px;
+      padding: 28px;
       max-width: 480px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
-    }
-
-    /* Navigáció */
-    .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 600px;
-      background: #FFF;
-      border-top: 1px solid #EEE;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    }
-
-    .nav-item {
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .nav-item.active {
-      color: var(--accent-green);
-      font-weight: 700;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
     }
 
     #reader {
       width: 100%;
       margin-top: 10px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
     }
 
-    /* Töltő Animáció (Spinner) */
     .spinner {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(138, 154, 134, 0.3);
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(45, 74, 62, 0.2);
       border-radius: 50%;
-      border-top-color: var(--accent-green);
-      animation: spin 0.8s ease-in-out infinite;
+      border-top-color: var(--accent-eucalyptus);
+      animation: spin 0.8s linear infinite;
       vertical-align: middle;
       margin-right: 8px;
     }
@@ -254,22 +351,20 @@
   <header>
     <div>
       <h1>daleday</h1>
-      <p class="subtitle">Clean Living & Baba-Mama</p>
+      <p class="subtitle">Clean Living & Tiszta Baba-Mama</p>
     </div>
     <div id="userProfileBtn">
       <button class="btn-secondary" onclick="openAuthModal()" id="authBtnLabel">Bejelentkezés</button>
     </div>
   </header>
 
-  <!-- FŐ TARTALOM NÉZETEK -->
-  
   <!-- 1. TAB: SZKENNER ÉS KERESŐ -->
   <div id="tab-scanner" class="tab-view">
     <div class="card">
       <h3>Termék ellenőrzése</h3>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
         Írd be a vonalkódot vagy használd a kamerát! <br>
-        Próbáld ki: <code>5099514000020</code> (WaterWipes), <code>5011082138032</code> (Sudocrem), <code>5997255700012</code> (Smack)
+        Próbáld ki: <code>5099514000020</code> (WaterWipes), <code>5011082138032</code> (Sudocrem), <code>4001638098310</code> (Weleda)
       </p>
 
       <div class="scanner-box">
@@ -277,7 +372,7 @@
         <button onclick="handleScanInput()">Keresés</button>
       </div>
 
-      <div style="margin-top: 10px;">
+      <div style="margin-top: 12px;">
         <button style="width: 100%;" onclick="startCameraScanner()">📷 Vonalkód Beolvasása Kamerával</button>
       </div>
 
@@ -287,7 +382,6 @@
       </div>
     </div>
 
-    <!-- Eredmény Megjelenítő Kártya -->
     <div id="resultContainer"></div>
   </div>
 
@@ -308,8 +402,8 @@
         <div class="chip" onclick="togglePantryItem(this, 'gyomber')">🫚 Gyömbér</div>
       </div>
 
-      <div style="margin-top: 14px;">
-        <h4>Talált receptek (OR / VAGY logika):</h4>
+      <div style="margin-top: 16px;">
+        <h4 style="font-size: 0.95rem; font-weight: 700;">Talált receptek (OR / VAGY logika):</h4>
         <div id="pantryRecipesList" style="margin-top: 10px;"></div>
       </div>
     </div>
@@ -330,22 +424,22 @@
         <div class="chip" onclick="selectCyclePhase('menstrual', this)">Menstruációs fázis</div>
       </div>
 
-      <div id="cyclePhaseContent" style="margin-top: 14px;"></div>
+      <div id="cyclePhaseContent" style="margin-top: 16px;"></div>
     </div>
   </div>
 
-  <!-- ALSÓ NAVIGÁCIÓS BÁR -->
+  <!-- FLOATING GLASS NAVIGÁCIÓS BÁR -->
   <div class="nav-bar">
     <div class="nav-item active" id="nav-scanner" onclick="switchTab('scanner')">
-      <div>🔍</div>
+      <div style="font-size: 1.1rem;">🔍</div>
       <div>Szkenner</div>
     </div>
     <div class="nav-item" id="nav-kamra" onclick="switchTab('kamra')">
-      <div>🥣</div>
+      <div style="font-size: 1.1rem;">🥣</div>
       <div>Kamra</div>
     </div>
     <div class="nav-item" id="nav-cycle" onclick="switchTab('cycle')">
-      <div>🌸</div>
+      <div style="font-size: 1.1rem;">🌸</div>
       <div>Ciklus</div>
     </div>
   </div>
@@ -353,12 +447,12 @@
   <!-- ONBOARDING MODAL -->
   <div class="modal" id="onboardingModal">
     <div class="modal-content">
-      <h2>Üdvözöl a daleday! 🌿</h2>
-      <p style="margin-top: 10px; color: var(--text-muted); font-size: 0.95rem;">
+      <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Üdvözöl a daleday! 🌿</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
         Kezdd el a Tiszta Életmódot (Clean Living) és a Tiszta Baba-Mama ápolást. 
         Szkenneld be a kozmetikumokat és élelmiszereket, derítsd ki a káros adalékokat és kőolajszármazékokat, és találj vegyszermentes alternatívákat azonnal!
       </p>
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 24px;">
         <button style="width: 100%;" onclick="closeOnboarding()">Kezdjük el!</button>
       </div>
     </div>
@@ -367,8 +461,8 @@
   <!-- AUTHENTIKÁCIÓS MODAL -->
   <div class="modal" id="authModal">
     <div class="modal-content">
-      <h3 id="authTitle">Bejelentkezés / Regisztráció</h3>
-      <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+      <h3 id="authTitle" style="font-size: 1.4rem; margin-bottom: 12px;">Bejelentkezés / Regisztráció</h3>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
         <input type="email" id="authEmail" placeholder="Email cím">
         <input type="password" id="authPassword" placeholder="Jelszó">
         <button onclick="handleEmailAuth()">Folytatás Emaillel</button>
@@ -402,7 +496,6 @@
        2. BABA-MAMA ÉS ÉLELMISZER TÖRZSADATBÁZIS (PRODUCT_DATABASE)
        ========================================================================== */
     const PRODUCT_DATABASE = {
-      // MEGLÉVŐ ÉLELMISZEREK
       "5997255700012": {
         name: 'Smack Csirke Ízű Instant Tésztás Leves',
         brand: 'Smack',
@@ -420,25 +513,6 @@
         affiliateUrl: 'https://kifli.hu',
         affiliateBtnText: '🛒 Vegyszermentes Alapanyagok a Kifli.hu-n'
       },
-      "5900000000001": {
-        name: 'Bio Mogyorókrém',
-        brand: 'BioOrganic',
-        category: 'mogyorokrem',
-        ingredients: 'Mogyoró 50%, bio nádcukor, zsírszegény kakaópor',
-        sugar_g: 12,
-        has_palm: false,
-        additives_tags: [],
-        additives_risk: 'none',
-        bio: true,
-        image: FALLBACK_IMAGE_URL,
-        diyTitle: 'Házi Tiszta Mogyoróvaj',
-        diyContent: 'Piríts meg 200g törökmogyorót, és turmixold krémesre egy csipet tengeri sóval.',
-        partnerText: 'Tiszta bio összetevők a Kifli.hu-n:',
-        affiliateUrl: 'https://kifli.hu',
-        affiliateBtnText: '🛒 Megveszem a Kifli.hu-n'
-      },
-
-      // ÚJ BABA-MAMA ÉS CLEAN BEAUTY TÖRZSADATOK
       "5099514000020": {
         name: 'WaterWipes Biológiailag Lebomló Babatörlőkendő',
         brand: 'WaterWipes',
@@ -493,32 +567,28 @@
     };
 
     /* ==========================================================================
-       3. ELEMZŐMOTOR (calculateProductScore) - PRECÍZ INCI ÉS KATEGÓRIA SZŰRÉS
+       3. ELEMZŐMOTOR (calculateProductScore)
        ========================================================================== */
     function calculateProductScore(product) {
       let score = 100;
       let facts = [];
 
-      // Instant ételek szigorú büntetése (-45 pont)
       if (product.category === 'instant' || (product.name && product.name.toLowerCase().includes('smack'))) {
         score -= 45;
         facts.push('Ultra-feldolgozott instant étel (-45 pont: ízfokozók és finomított adalékok).');
       }
 
-      // Bio minősítés
       if (product.bio) {
         facts.push('Minősített bio / tiszta (Clean) termék.');
       } else {
         score -= 5;
       }
 
-      // Pálmaolaj
       if (product.has_palm) {
         score -= 10;
         facts.push('Pálmaolajat tartalmaz.');
       }
 
-      // KŐOLAJSZÁRMAZÉK ÉS TARTÓSÍTÓSZER DETEKTÁLÁS (Bővített INCI lista)
       const ingredientsLower = (product.ingredients || '').toLowerCase();
       
       const hasMineralOil = ['paraffin', 'petrolatum', 'mineral oil', 'microcrystalline', 'ozokerite', 'vaseline'].some(k => ingredientsLower.includes(k));
@@ -534,13 +604,11 @@
         facts.push('Tartósítószert / Phenoxyethanolt tartalmaz (érzékeny bőrnél irritációt/ekcémát okozhat).');
       }
 
-      // CUKORVIZSGÁLAT (Kizárólag élelmiszereknél érvényes)
       if (product.category !== 'popsikrem' && product.category !== 'torlokendo' && product.sugar_g > 10) {
         score -= 15;
         facts.push(`Magas cukortartalom (${product.sugar_g}g).`);
       }
 
-      // Adalékanyagok
       if (product.additives_risk === 'high') {
         score -= 20;
         facts.push('Kockázatos adalékanyagot tartalmaz.');
@@ -554,26 +622,28 @@
     }
 
     /* ==========================================================================
-       4. EREDMÉNY RENDERELÉSE (renderProductResult) + AFFILIATE GOMB
+       4. EREDMÉNY RENDERELÉSE (renderProductResult)
        ========================================================================== */
     function renderProductResult(product) {
       const { score, facts } = calculateProductScore(product);
       const container = document.getElementById('resultContainer');
 
-      let badgeClass = 'score-high';
-      if (score < 50) badgeClass = 'score-low';
-      else if (score < 80) badgeClass = 'score-medium';
+      let ringBg = 'score-high-bg';
+      let statusText = 'Garantáltan Tiszta Termék';
+      if (score < 50) {
+        ringBg = 'score-low-bg';
+        statusText = 'Súlyos Kockázati Tényezők';
+      } else if (score < 80) {
+        ringBg = 'score-medium-bg';
+        statusText = 'Mérsékelt Összetevők';
+      }
 
-      // Affiliate / Partner gomb generálása
       let partnerActionHtml = '';
       if (product.affiliateUrl) {
         partnerActionHtml = `
-          <div style="margin-top: 14px;">
-            <a href="${product.affiliateUrl}" target="_blank" rel="noopener noreferrer" 
-               style="display: inline-block; width: 100%; background: #8A9A86; color: #FFFFFF; text-align: center; padding: 12px 18px; border-radius: var(--radius-sm); font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: background 0.2s;">
-              ${product.affiliateBtnText || '🛒 Megtekintés és Vásárlás'}
-            </a>
-          </div>
+          <a href="${product.affiliateUrl}" target="_blank" rel="noopener noreferrer" class="affiliate-btn">
+            ${product.affiliateBtnText || '🛒 Megtekintés és Vásárlás'}
+          </a>
         `;
       }
 
@@ -581,37 +651,44 @@
 
       container.innerHTML = `
         <div class="card" id="exportCard">
-          <div class="score-badge ${badgeClass}">${score} / 100 Pont</div>
-          <h2>${product.name}</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Márka: <strong>${product.brand || 'Ismeretlen'}</strong></p>
-          
-          <div style="margin-top: 12px;">
-            <strong>Összetevők:</strong>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">${product.ingredients || 'Nincs megadva'}</p>
+          <div class="score-capsule">
+            <div class="score-ring ${ringBg}">${score}</div>
+            <div>
+              <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: var(--text-muted); letter-spacing: 0.05em;">daleday Clean Score</div>
+              <div style="font-size: 1rem; font-weight: 700; color: var(--text-main);">${statusText}</div>
+            </div>
           </div>
 
-          <div style="margin-top: 12px;">
-            <strong>Tények és Elemzés:</strong>
+          <h2>${product.name}</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 2px;">Márka: <strong>${product.brand || 'Ismeretlen'}</strong></p>
+          
+          <div style="margin-top: 14px;">
+            <strong style="font-size: 0.9rem;">Összetevők (INCI):</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">${product.ingredients || 'Nincs megadva'}</p>
+          </div>
+
+          <div style="margin-top: 14px;">
+            <strong style="font-size: 0.9rem;">Elemzés és tények:</strong>
             <ul class="fact-list">
               ${facts.map(f => `<li>${f}</li>`).join('')}
             </ul>
           </div>
 
           ${product.diyTitle ? `
-            <div style="margin-top: 14px; padding: 10px; background: #F7F5F0; border-radius: var(--radius-sm);">
-              <strong style="color: var(--accent-green);">${product.diyTitle}</strong>
+            <div style="margin-top: 16px; padding: 14px; background: #F8FAF7; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-sage);">
+              <strong style="color: var(--accent-eucalyptus); font-size: 0.9rem;">${product.diyTitle}</strong>
               <p style="font-size: 0.85rem; color: var(--text-main); margin-top: 4px;">${product.diyContent}</p>
             </div>
           ` : ''}
 
-          <div class="partner-box">
-            <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:#A89F81; font-weight:700; margin-bottom:4px;">Tiszta Alternatíva & Ajánlás</div>
-            <div style="font-weight:700; font-size:0.95rem; margin-bottom:6px;">Ha vegyszermentes, tiszta alternatívát keresel:</div>
+          <div class="partner-advisory-box">
+            <div class="advisory-badge">🌿 daleday Tiszta Alternatíva</div>
+            <div style="font-weight:700; font-size:0.95rem;">Ha vegyszermentes, tiszta alternatívát keresel:</div>
             ${partnerText}
             ${partnerActionHtml}
           </div>
 
-          <div style="margin-top: 14px;">
+          <div style="margin-top: 16px;">
             <button class="btn-secondary" style="width: 100%;" onclick="exportToStory()">📸 Mentés Story-ként (html2canvas)</button>
           </div>
         </div>
@@ -619,11 +696,11 @@
     }
 
     /* ==========================================================================
-       5. OPENFOODFACTS API & KERESÉS LEKEZELÉSE (TIMEOUT-TAL)
+       5. OPENFOODFACTS API LEKEZELÉS (TIMEOUT-TAL)
        ========================================================================== */
     async function fetchFromOpenFoodFacts(barcode) {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 mp várakozási limit
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
 
       try {
         const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, {
@@ -657,13 +734,11 @@
       const container = document.getElementById('resultContainer');
       container.innerHTML = '<div class="card"><p><span class="spinner"></span>Termék keresése folyamatban...</p></div>';
 
-      // 1. Saját belső JSON törzsadatbázis ellenőrzése
       if (PRODUCT_DATABASE[code]) {
         renderProductResult(PRODUCT_DATABASE[code]);
         return;
       }
 
-      // 2. OpenFoodFacts nyílt API fallback
       const offProduct = await fetchFromOpenFoodFacts(code);
       if (offProduct) {
         renderProductResult(offProduct);
@@ -689,7 +764,7 @@
     }
 
     /* ==========================================================================
-       6. KAMERÁS SZKENNER (html5-qrcode) - STABILIZÁLT INDÍTÁSSAL
+       6. KAMERÁS SZKENNER (html5-qrcode)
        ========================================================================== */
     let html5QrcodeScanner = null;
 
@@ -697,7 +772,6 @@
       const readerContainer = document.getElementById('readerContainer');
       readerContainer.style.display = 'block';
 
-      // Dom megjelenítés után inicializálunk a helyes méretezésért
       setTimeout(() => {
         if (!html5QrcodeScanner) {
           html5QrcodeScanner = new Html5Qrcode("reader");
@@ -710,9 +784,7 @@
             document.getElementById('barcodeInput').value = decodedText;
             handleScanCode(decodedText);
           },
-          (errorMessage) => {
-            // Folyamatos olvasási próba
-          }
+          (errorMessage) => {}
         ).catch(err => {
           alert("A kamera nem indítható el: " + err);
           readerContainer.style.display = 'none';
@@ -733,7 +805,7 @@
     }
 
     /* ==========================================================================
-       7. KAMRA RECEPTASSZISZTENS (some() LOGIKA)
+       7. KAMRA RECEPTASSZISZTENS
        ========================================================================== */
     const KAMRA_RECIPES = [
       {
@@ -772,7 +844,6 @@
         return;
       }
 
-      // MŰKÖDŐ some() [VAGY] LOGIKA
       const matched = KAMRA_RECIPES.filter(recipe => 
         recipe.ingredients.some(ing => selectedPantryItems.includes(ing))
       );
@@ -783,8 +854,8 @@
       }
 
       container.innerHTML = matched.map(r => `
-        <div style="background: #F7F5F0; padding: 10px; border-radius: var(--radius-sm); margin-bottom: 8px;">
-          <strong>${r.title}</strong>
+        <div style="background: #F8FAF7; padding: 12px; border-radius: var(--radius-sm); margin-bottom: 8px; border: 1px solid var(--border-light);">
+          <strong style="color: var(--accent-eucalyptus);">${r.title}</strong>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">${r.desc}</p>
         </div>
       `).join('');
@@ -824,11 +895,11 @@
       const container = document.getElementById('cyclePhaseContent');
       
       container.innerHTML = `
-        <div style="background: #F7F5F0; padding: 12px; border-radius: var(--radius-sm);">
-          <h4 style="color: var(--accent-green);">${data.title}</h4>
+        <div style="background: #F8FAF7; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+          <h4 style="color: var(--accent-eucalyptus);">${data.title}</h4>
           <p style="font-size: 0.88rem; color: var(--text-main); margin-top: 6px;">${data.desc}</p>
-          <div style="margin-top: 10px; border-top: 1px dashed #CCC; padding-top: 8px;">
-            <strong style="font-size: 0.85rem;">Ajánlott Tiszta Recept:</strong>
+          <div style="margin-top: 12px; border-top: 1px dashed #DDD; padding-top: 10px;">
+            <strong style="font-size: 0.85rem; color: var(--accent-gold);">Ajánlott Tiszta Recept:</strong>
             <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-top: 2px;">${data.recipe}</p>
           </div>
         </div>
@@ -836,7 +907,7 @@
     }
 
     /* ==========================================================================
-       9. STORY EXPORTÁLÁS (html2canvas)
+       9. STORY EXPORTÁLÁS
        ========================================================================== */
     function exportToStory() {
       const card = document.getElementById('exportCard');
@@ -884,7 +955,6 @@
       document.getElementById('onboardingModal').classList.remove('active');
     }
 
-    // Inicializálás az oldal betöltésekor
     window.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem('daleday_onboarded')) {
         document.getElementById('onboardingModal').classList.add('active');
