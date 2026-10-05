@@ -4,7 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>daleday - Clean Living & Baba-Mama</title>
-  
+
+  <!-- PWA BEÁLLÍTÁSOK -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2D4A3E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="daleday">
+  <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/2D4A3E/FFFFFF?text=daleday">
+
   <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,10 +22,10 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-  
+
   <!-- html5-qrcode a kamerás vonalkód olvasáshoz -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-  
+
   <!-- html2canvas a Story exportáláshoz -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -669,7 +677,7 @@
     };
 
     /* ==========================================================================
-       3. ELEMZŐMOTOR (calculateProductScore) - JAVÍTOTT CUKOR KIVÉTEL
+       3. ELEMZŐMOTOR (calculateProductScore)
        ========================================================================== */
     function calculateProductScore(product) {
       let score = 100;
@@ -706,7 +714,6 @@
         facts.push('Tartósítószert / Phenoxyethanolt tartalmaz (érzékeny bőrnél irritációt/ekcémát okozhat).');
       }
 
-      // Javított kivétel: 'bebietel' hozzáadva, hogy a természetes gyümölcscukor ne büntessen!
       if (product.category !== 'popsikrem' && product.category !== 'torlokendo' && product.category !== 'kozmetikum' && product.category !== 'bebietel' && product.sugar_g > 10) {
         score -= 15;
         facts.push(`Magas hozzáadott cukortartalom (${product.sugar_g}g).`);
@@ -1061,6 +1068,17 @@
     function closeOnboarding() {
       localStorage.setItem('daleday_onboarded', 'true');
       document.getElementById('onboardingModal').classList.remove('active');
+    }
+
+    // SERVICE WORKER REGISZTRÁCIÓ PWA Telepítéshez
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+          console.log('daleday PWA Service Worker sikeresen regisztrálva:', reg.scope);
+        }).catch((err) => {
+          console.log('Service Worker regisztrációs hiba:', err);
+        });
+      });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
