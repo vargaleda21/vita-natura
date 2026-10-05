@@ -126,6 +126,10 @@
       font-size: 0.9rem;
       cursor: pointer;
       transition: transform 0.15s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     button:hover {
@@ -277,6 +281,10 @@
       color: var(--text-muted);
       cursor: pointer;
       transition: color 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
     }
 
     .nav-item.active {
@@ -291,7 +299,7 @@
       height: 4px;
       background: var(--accent-gold);
       border-radius: 50%;
-      margin: 2px auto 0 auto;
+      margin-top: 2px;
     }
 
     .modal {
@@ -343,6 +351,12 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    .icon-svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
   </style>
 </head>
 <body>
@@ -373,7 +387,10 @@
       </div>
 
       <div style="margin-top: 12px;">
-        <button style="width: 100%;" onclick="startCameraScanner()">📷 Vonalkód Beolvasása Kamerával</button>
+        <button style="width: 100%;" onclick="startCameraScanner()">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+          Vonalkód Beolvasása Kamerával
+        </button>
       </div>
 
       <div id="readerContainer" style="display: none;">
@@ -394,12 +411,12 @@
       </p>
 
       <div class="chip-container" id="pantryChips">
-        <div class="chip" onclick="togglePantryItem(this, 'zabpehely')">🌾 Zabpehely</div>
-        <div class="chip" onclick="togglePantryItem(this, 'chia')">🌱 Chia mag</div>
-        <div class="chip" onclick="togglePantryItem(this, 'spenot')">🥬 Spenót</div>
-        <div class="chip" onclick="togglePantryItem(this, 'tojas')">🥚 Tojás</div>
-        <div class="chip" onclick="togglePantryItem(this, 'avokado')">🥑 Avokádó</div>
-        <div class="chip" onclick="togglePantryItem(this, 'gyomber')">🫚 Gyömbér</div>
+        <div class="chip" onclick="togglePantryItem(this, 'zabpehely')">Zabpehely</div>
+        <div class="chip" onclick="togglePantryItem(this, 'chia')">Chia mag</div>
+        <div class="chip" onclick="togglePantryItem(this, 'spenot')">Spenót</div>
+        <div class="chip" onclick="togglePantryItem(this, 'tojas')">Tojás</div>
+        <div class="chip" onclick="togglePantryItem(this, 'avokado')">Avokádó</div>
+        <div class="chip" onclick="togglePantryItem(this, 'gyomber')">Gyömbér</div>
       </div>
 
       <div style="margin-top: 16px;">
@@ -431,15 +448,15 @@
   <!-- FLOATING GLASS NAVIGÁCIÓS BÁR -->
   <div class="nav-bar">
     <div class="nav-item active" id="nav-scanner" onclick="switchTab('scanner')">
-      <div style="font-size: 1.1rem;">🔍</div>
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
       <div>Szkenner</div>
     </div>
     <div class="nav-item" id="nav-kamra" onclick="switchTab('kamra')">
-      <div style="font-size: 1.1rem;">🥣</div>
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M22 9h-4.79l-4.38-6.56a1 1 0 0 0-1.66 0L6.79 9H2c-.55 0-1 .45-1 1 0 .09.05.18.08.27l2.54 10.09c.24.96 1.1 1.64 2.09 1.64h12.58c.99 0 1.85-.68 2.09-1.64l2.54-10.09c.03-.09.08-.18.08-.27 0-.55-.45-1-1-1zm-9.85-4.5L15.12 9H8.88l2.97-4.5z"/></svg>
       <div>Kamra</div>
     </div>
     <div class="nav-item" id="nav-cycle" onclick="switchTab('cycle')">
-      <div style="font-size: 1.1rem;">🌸</div>
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
       <div>Ciklus</div>
     </div>
   </div>
@@ -447,7 +464,7 @@
   <!-- ONBOARDING MODAL -->
   <div class="modal" id="onboardingModal">
     <div class="modal-content">
-      <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Üdvözöl a daleday! 🌿</h2>
+      <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Üdvözöl a daleday</h2>
       <p style="color: var(--text-muted); font-size: 0.95rem;">
         Kezdd el a Tiszta Életmódot (Clean Living) és a Tiszta Baba-Mama ápolást. 
         Szkenneld be a kozmetikumokat és élelmiszereket, derítsd ki a káros adalékokat és kőolajszármazékokat, és találj vegyszermentes alternatívákat azonnal!
@@ -493,14 +510,14 @@
     const FALLBACK_IMAGE_URL = 'https://via.placeholder.com/150?text=daleday+Clean';
 
     /* ==========================================================================
-       2. BABA-MAMA ÉS ÉLELMISZER TÖRZSADATBÁZIS (PRODUCT_DATABASE)
+       2. BABA-MAMA ÉS ÉLELMISZER TÖRZSADATBÁZIS
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5997255700012": {
         name: 'Smack Csirke Ízű Instant Tésztás Leves',
         brand: 'Smack',
         category: 'instant',
-        ingredients: 'Búzaliszt, pálmaolaj, só, ízfokozók (E621, E635), cukor, ízesítők...',
+        ingredients: 'Búzaliszt, pálmaolaj, só, ízfokozók (nátrium-glutamát E621, disó-inozinát E635), cukor, csirke aroma...',
         sugar_g: 2,
         has_palm: true,
         additives_tags: ['en:e621', 'en:e635'],
@@ -511,13 +528,13 @@
         diyContent: 'Készíts gyors házi alaplevet friss gyömbérrel, fokhagymával, tiszta tésztával és friss zöldségekkel az ultra-feldolgozott ízfokozók helyett.',
         partnerText: 'Tiszta, adalékmentes alapanyagok friss főzéshez.',
         affiliateUrl: 'https://kifli.hu',
-        affiliateBtnText: '🛒 Vegyszermentes Alapanyagok a Kifli.hu-n'
+        affiliateBtnText: 'Megveszem a Kifli.hu-n'
       },
       "5099514000020": {
         name: 'WaterWipes Biológiailag Lebomló Babatörlőkendő',
         brand: 'WaterWipes',
         category: 'torlokendo',
-        ingredients: 'Water (Aqua) 99.9%, Citrus Grandis (Grapefruit) seed extract 0.1%',
+        ingredients: 'Tisztított víz 99.9%, grapefruitmag-kivonat 0.1%',
         sugar_g: 0,
         has_palm: false,
         additives_tags: [],
@@ -526,15 +543,15 @@
         image: FALLBACK_IMAGE_URL,
         diyTitle: '100% Vegyszer- és Illatmentes Vizes Törlőkendő',
         diyContent: 'Műanyagmentes, 99.9% tisztított vízzel és természetes grapefruit-mag kivonattal készült. Nem tartalmaz műanyagot, alkoholt, parabéneket vagy szintetikus illatanyagot, így garantáltan nem irritálja a csecsemők érzékeny bőrét.',
-        partnerText: 'Tiszta, vegyszermentes alternatíva közvetlen házhozszállítással.',
+        partnerText: 'Ez a termék megfelel a daleday tiszta kritériumainak. Ha további tiszta terméket keresel:',
         affiliateUrl: 'https://kifli.hu/search?q=waterwipes',
-        affiliateBtnText: '🛒 Megveszem a Kifli.hu-n'
+        affiliateBtnText: 'Megveszem a Kifli.hu-n'
       },
       "5011082138032": {
         name: 'Sudocrem Védőkrém (125g)',
         brand: 'Sudocrem',
         category: 'popsikrem',
-        ingredients: 'Aqua, Paraffinum Liquidum, Zinc Oxide, Paraffin, Lanolin, Cera Microcristallina, Benzyl Benzoate, Benzyl Cinnamate, Synthetic Beeswax, Benzyl Alcohol, Propylene Glycol, Linalyl Acetate, Lavender Oil...',
+        ingredients: 'Víz, folyékony paraffin (kőolajszármazék), cink-oxid, paraffin, lanolin, mikrokristályos viasz, benzil-benzoát, szintetikus méhviasz, levendulaolaj...',
         sugar_g: 0,
         has_palm: false,
         additives_tags: ['en:e210'],
@@ -542,16 +559,16 @@
         bio: false,
         image: FALLBACK_IMAGE_URL,
         diyTitle: 'Tiszta Növényi Körömvirágos Popsiápolás',
-        diyContent: 'Kőolajszármazékok (Paraffinum Liquidum, Paraffin) és szintetikus illatanyagok helyett válassz hidegen sajtolt bio növényi olajokat és cink-oxidot tartalmazó balzsamot, ami engedi lélegezni a baba bőrét.',
+        diyContent: 'Kőolajszármazékok és szintetikus illatanyagok helyett válassz hidegen sajtolt bio növényi olajokat és cink-oxidot tartalmazó balzsamot, ami engedi lélegezni a baba bőrét.',
         partnerText: 'Kőolajmentes, 100%-ban természetes BIO növényi alternatíva:',
         affiliateUrl: 'https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/',
-        affiliateBtnText: '🛒 Weleda BIO Popsikrém a Notino-n'
+        affiliateBtnText: 'Weleda BIO Popsikrém a Notino-n'
       },
       "4001638098310": {
         name: 'Weleda Bio Körömvirágos Baby Popsikrém',
         brand: 'Weleda',
         category: 'popsikrem',
-        ingredients: 'Water (Aqua), Prunus Amygdalus Dulcis (Sweet Almond) Oil, Sesamum Indicum (Sesame) Seed Oil, Zinc Oxide, Beeswax (Cera Alba), Lanolin, Calendula Officinalis Flower Extract...',
+        ingredients: 'Víz, édesmandula-olaj, szezámolaj, cink-oxid, méhviasz, lanolin, bio körömvirág kivonat, kamillakivonat',
         sugar_g: 0,
         has_palm: false,
         additives_tags: [],
@@ -560,14 +577,99 @@
         image: FALLBACK_IMAGE_URL,
         diyTitle: '100% Természetes Bio Összetétel',
         diyContent: 'Kőolajmentes, tiszta bio édesmandula- és szezámolajból, valamint bio körömvirág kivonatból készült. Megnyugtatja az irritált bőrt és természetes védőréteget képez.',
-        partnerText: 'Minősített Tiszta Baba-Mama termék.',
+        partnerText: 'Ez a termék megfelel a daleday tiszta kritériumainak. Ha további tiszta terméket keresel:',
         affiliateUrl: 'https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/',
-        affiliateBtnText: '🛒 Megveszem a Notino-n'
+        affiliateBtnText: 'Megveszem a Notino-n'
+      },
+      "4015400682283": {
+        name: 'Pampers Aqua Pure Nedves Babatörlőkendő (48 db)',
+        brand: 'Pampers',
+        category: 'torlokendo',
+        ingredients: 'Víz, citromsav, PEG-40 hidrogénezett ricinusolaj, nátrium-citrát, nátrium-benzoát, disó-EDTA, kaprilil-glikol',
+        sugar_g: 0,
+        has_palm: false,
+        additives_tags: [],
+        additives_risk: 'none',
+        bio: false,
+        image: FALLBACK_IMAGE_URL,
+        diyTitle: '99% Vizes Babatörlő Opció',
+        diyContent: 'Bár 99% tisztított vizet és bio pamutot tartalmaz, a fennmaradó 1%-ban szintetikus emulgeálószereket (PEG-40) és tartósítószereket alkalmaz a penészedés ellen. Tiszta alternatívaként a 100% vegyszermentes vizes kendők ajánlottak.',
+        partnerText: 'Rendeld meg közvetlen Kifli.hu kiszállítással:',
+        affiliateUrl: 'https://kifli.hu/search?q=pampers%20aqua%20pure',
+        affiliateBtnText: 'Pampers Aqua Pure a Kifli.hu-n'
+      },
+      "4062100015523": {
+        name: 'HiPP Bio Sárgarépa Főzelék (125g)',
+        brand: 'HiPP',
+        category: 'bebietel',
+        ingredients: 'Bio sárgarépa 90%, ivóvíz',
+        sugar_g: 4.8,
+        has_palm: false,
+        additives_tags: [],
+        additives_risk: 'none',
+        bio: true,
+        image: FALLBACK_IMAGE_URL,
+        diyTitle: '100% Minősített Bio Zöldséges Hozzátáplálás',
+        diyContent: 'Hozzáadott cukortól, sótól, állományjavítóktól és növényi olajoktól mentes, szigorúan ellenőrzött bio sárgarépa püré. Tökéletes választás a hozzátáplálás első lépéseihez.',
+        partnerText: 'Ez a termék megfelel a daleday tiszta kritériumainak. Ha további tiszta terméket keresel:',
+        affiliateUrl: 'https://kifli.hu/search?q=hipp%20bio%20sargarapa',
+        affiliateBtnText: 'HiPP Bio Bébiétel a Kifli.hu-n'
+      },
+      "5391520942470": {
+        name: 'Lactacyd Sensitive Intim Mosakodó (200ml)',
+        brand: 'Lactacyd',
+        category: 'kozmetikum',
+        ingredients: 'Víz, lauril-glükozid, kokamidopropil-betain, tejsav, kókusz-glükozid, glicerin, nátrium-benzoát',
+        sugar_g: 0,
+        has_palm: false,
+        additives_tags: [],
+        additives_risk: 'none',
+        bio: false,
+        image: FALLBACK_IMAGE_URL,
+        diyTitle: 'Illatmentes, Tejsavas Kismama Intimápolás',
+        diyContent: 'Kifejezetten az érzékeny, várandós és szülés utáni intim zóna védelmére fejlesztett illatmentes formula, természetes tejsavval a pH-egyensúly fenntartásáért.',
+        partnerText: 'Vásárold meg a tiszta kismama ápolási terméket:',
+        affiliateUrl: 'https://www.notino.hu/lactacyd/sensitive-gyenged-intim-mosakodo-gel/',
+        affiliateBtnText: 'Lactacyd Sensitive a Notino-n'
+      },
+      "5997086100128": {
+        name: 'Neogranormon Kenőcs (25g)',
+        brand: 'Neogranormon',
+        category: 'popsikrem',
+        ingredients: 'Folyékony paraffin (kőolajszármazék), víz, lanolin, cink-oxid, méhviasz, csukamájolaj (A- és D-vitamin)',
+        sugar_g: 0,
+        has_palm: false,
+        additives_tags: [],
+        additives_risk: 'moderate',
+        bio: false,
+        image: FALLBACK_IMAGE_URL,
+        diyTitle: 'Hagyományos Cink-Oxidos Hámképző Kenőcs',
+        diyContent: 'A hatékony A- és D-vitaminos hámképző összetevők mellett finomított kőolajszármazékot (Paraffinum Liquidum) és lanolint tartalmaz. Mindennapi megelőzésre kőolajmentes bio növényi opciók javasoltak.',
+        partnerText: 'Kőolajmentes, 100%-ban természetes BIO növényi alternatíva:',
+        affiliateUrl: 'https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/',
+        affiliateBtnText: 'Weleda BIO Popsikrém a Notino-n'
+      },
+      "5060107030800": {
+        name: 'Ella\'s Kitchen Bio Alma & Eper Gyümölcspüré (120g)',
+        brand: 'Ella\'s Kitchen',
+        category: 'bebietel',
+        ingredients: 'Bio alma 79%, bio eper 21%, csipetnyi bio citromlé sűrítmény',
+        sugar_g: 11.2,
+        has_palm: false,
+        additives_tags: [],
+        additives_risk: 'none',
+        bio: true,
+        image: FALLBACK_IMAGE_URL,
+        diyTitle: '100% BIO Gyümölcsadalék-mentes Püré',
+        diyContent: 'Összetevője kizárólag érett bio gyümölcs. Nem tartalmaz hozzáadott cukrot, vizet, sűrítőanyagokat vagy mesterséges aromákat.',
+        partnerText: 'Ez a termék megfelel a daleday tiszta kritériumainak. Ha további tiszta terméket keresel:',
+        affiliateUrl: 'https://kifli.hu/search?q=ellas%20kitchen',
+        affiliateBtnText: 'Ella\'s Kitchen a Kifli.hu-n'
       }
     };
 
     /* ==========================================================================
-       3. ELEMZŐMOTOR (calculateProductScore)
+       3. ELEMZŐMOTOR (calculateProductScore) - JAVÍTOTT CUKOR KIVÉTEL
        ========================================================================== */
     function calculateProductScore(product) {
       let score = 100;
@@ -591,7 +693,7 @@
 
       const ingredientsLower = (product.ingredients || '').toLowerCase();
       
-      const hasMineralOil = ['paraffin', 'petrolatum', 'mineral oil', 'microcrystalline', 'ozokerite', 'vaseline'].some(k => ingredientsLower.includes(k));
+      const hasMineralOil = ['paraffin', 'petrolatum', 'mineral oil', 'microcrystalline', 'ozokerite', 'vaseline', 'kőolajszármazék'].some(k => ingredientsLower.includes(k));
       const hasParabensOrPhenoxy = ['paraben', 'phenoxyethanol', 'phenoxy-ethanol'].some(k => ingredientsLower.includes(k));
 
       if (hasMineralOil) {
@@ -604,9 +706,10 @@
         facts.push('Tartósítószert / Phenoxyethanolt tartalmaz (érzékeny bőrnél irritációt/ekcémát okozhat).');
       }
 
-      if (product.category !== 'popsikrem' && product.category !== 'torlokendo' && product.sugar_g > 10) {
+      // Javított kivétel: 'bebietel' hozzáadva, hogy a természetes gyümölcscukor ne büntessen!
+      if (product.category !== 'popsikrem' && product.category !== 'torlokendo' && product.category !== 'kozmetikum' && product.category !== 'bebietel' && product.sugar_g > 10) {
         score -= 15;
-        facts.push(`Magas cukortartalom (${product.sugar_g}g).`);
+        facts.push(`Magas hozzáadott cukortartalom (${product.sugar_g}g).`);
       }
 
       if (product.additives_risk === 'high') {
@@ -642,9 +745,14 @@
       if (product.affiliateUrl) {
         partnerActionHtml = `
           <a href="${product.affiliateUrl}" target="_blank" rel="noopener noreferrer" class="affiliate-btn">
-            ${product.affiliateBtnText || '🛒 Megtekintés és Vásárlás'}
+            ${product.affiliateBtnText || 'Megtekintés és Vásárlás'}
           </a>
         `;
+      }
+
+      let partnerTitle = 'Ha vegyszermentes, tiszta alternatívát keresel:';
+      if (score >= 80 || product.bio) {
+        partnerTitle = 'Ez a termék megfelel a daleday tiszta kritériumainak. Ha további tiszta terméket keresel:';
       }
 
       const partnerText = product.partnerText ? `<p style="font-size:0.88rem; color:var(--text-muted); margin-top:4px;">${product.partnerText}</p>` : '';
@@ -663,7 +771,7 @@
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 2px;">Márka: <strong>${product.brand || 'Ismeretlen'}</strong></p>
           
           <div style="margin-top: 14px;">
-            <strong style="font-size: 0.9rem;">Összetevők (INCI):</strong>
+            <strong style="font-size: 0.9rem;">Összetevők:</strong>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">${product.ingredients || 'Nincs megadva'}</p>
           </div>
 
@@ -682,14 +790,14 @@
           ` : ''}
 
           <div class="partner-advisory-box">
-            <div class="advisory-badge">🌿 daleday Tiszta Alternatíva</div>
-            <div style="font-weight:700; font-size:0.95rem;">Ha vegyszermentes, tiszta alternatívát keresel:</div>
+            <div class="advisory-badge">daleday Tiszta Ajánlás</div>
+            <div style="font-weight:700; font-size:0.95rem;">${partnerTitle}</div>
             ${partnerText}
             ${partnerActionHtml}
           </div>
 
           <div style="margin-top: 16px;">
-            <button class="btn-secondary" style="width: 100%;" onclick="exportToStory()">📸 Mentés Story-ként (html2canvas)</button>
+            <button class="btn-secondary" style="width: 100%;" onclick="exportToStory()">Mentés Story-ként (html2canvas)</button>
           </div>
         </div>
       `;
@@ -721,7 +829,7 @@
             bio: p.labels_tags ? p.labels_tags.includes('en:organic') : false,
             partnerText: 'Keress tiszta alternatívát partnereinknél!',
             affiliateUrl: 'https://kifli.hu',
-            affiliateBtnText: '🛒 Keresés a Kifli.hu-n'
+            affiliateBtnText: 'Keresés a Kifli.hu-n'
           };
         }
       } catch (e) {
@@ -868,22 +976,22 @@
       follicular: {
         title: 'Folliculáris Fázis (Érési szakasz)',
         desc: 'Ebben a fázisban az ösztrogénszint emelkedik. Fókuszálj a friss, fermentált ételekre és a könnyű proteinekre!',
-        recipe: '🥗 Friss Kerti Saláta Fermentált Zöldségekkel és Csírákkal'
+        recipe: 'Friss Kerti Saláta Fermentált Zöldségekkel és Csírákkal'
       },
       ovulatory: {
         title: 'Ovulációs Fázis (Kiugró energia)',
         desc: 'A legmagasabb energiaszint. Válassz antioxidánsokban és rostokban gazdag ételeket a felesleges hormonok kiürüléséhez!',
-        recipe: '🍓 Bogyós Gyümölcs Turmix Chia Maggal és Nyers Kakaóval'
+        recipe: 'Bogyós Gyümölcs Turmix Chia Maggal és Nyers Kakaóval'
       },
       luteal: {
         title: 'Luteális Fázis (Felkészülés)',
         desc: 'A progeszteron dominál. Szükséged lehet több B-vitaminra és magnéziumra a jó közérzethez és a sóvárgás csökkentésére.',
-        recipe: '🎃 Sült Sütőtök Krémleves Gyömbérrel és Pirított Tökmaggal'
+        recipe: 'Sült Sütőtök Krémleves Gyömbérrel és Pirított Tökmaggal'
       },
       menstrual: {
         title: 'Menstruációs Fázis (Pihenés és Töltődés)',
         desc: 'A hormonok a legalacsonyabb szinten vannak. Tápláld a tested vassal, melengető levesekkel és pihentető teákkal!',
-        recipe: '🍲 Lassú Tűzön Főtt Dús Zöldségleves Csontleves Alappal'
+        recipe: 'Lassú Tűzön Főtt Dús Zöldségleves Csontleves Alappal'
       }
     };
 
