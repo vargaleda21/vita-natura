@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>daleday - Clean Living & Baba-Mama</title>
+  <title>daleday - Clean living & tiszta baba-mama</title>
 
   <!-- PWA BEÁLLÍTÁSOK -->
   <link rel="manifest" href="manifest.json">
@@ -107,7 +107,7 @@
       margin-top: 12px;
     }
 
-    input[type="text"], input[type="email"], input[type="password"] {
+    input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="number"] {
       flex: 1;
       padding: 12px 16px;
       border: 1px solid var(--border-light);
@@ -365,6 +365,18 @@
       height: 18px;
       fill: currentColor;
     }
+
+    .food-tag-badge {
+      display: inline-block;
+      background: #EFECE6;
+      color: var(--accent-eucalyptus);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 <body>
@@ -434,19 +446,30 @@
     </div>
   </div>
 
-  <!-- 3. TAB: CIKLUSSZINKRON -->
+  <!-- 3. TAB: CIKLUSSZINKRON NAPTÁRRAL ÉS AUTOMATIKUS SZÁMÍTÁSSAL -->
   <div id="tab-cycle" class="tab-view" style="display: none;">
     <div class="card">
-      <h3>Ciklusszinkron & hormonális egyensúly</h3>
+      <h3>Ciklusszinkron és hormonális egyensúly</h3>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
-        Támogasd a szervezetedet a ciklusod egyes fázisaiban tiszta ételekkel!
+        Kövesd a ciklusodat és támogatási opciókat kapsz a hormonális egyensúlyodért!
       </p>
 
+      <!-- NAPTÁR ÉS DÁTUMVÁLASZTÓ KÁRTYA -->
+      <div style="background: #F8FAF7; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); margin-top: 12px;">
+        <strong style="font-size: 0.9rem; color: var(--accent-eucalyptus);">Utolsó menstruáció időpontja:</strong>
+        <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+          <input type="date" id="lastPeriodDate" style="flex: 1; min-width: 140px;">
+          <input type="number" id="cycleLength" value="28" min="20" max="40" placeholder="Ciklus hossza (nap)" style="width: 110px;">
+          <button onclick="calculateCyclePhaseFromDate()">Számítás</button>
+        </div>
+        <div id="cycleCalcResult" style="margin-top: 10px; font-weight: 600; font-size: 0.85rem; color: var(--accent-eucalyptus);"></div>
+      </div>
+
       <div class="chip-container" id="cycleChips">
-        <div class="chip active" onclick="selectCyclePhase('follicular', this)">Folliculáris fázis</div>
-        <div class="chip" onclick="selectCyclePhase('ovulatory', this)">Ovulációs fázis</div>
-        <div class="chip" onclick="selectCyclePhase('luteal', this)">Luteális fázis</div>
-        <div class="chip" onclick="selectCyclePhase('menstrual', this)">Menstruációs fázis</div>
+        <div class="chip active" id="chip-follicular" onclick="selectCyclePhase('follicular', this)">Folliculáris fázis</div>
+        <div class="chip" id="chip-ovulatory" onclick="selectCyclePhase('ovulatory', this)">Ovulációs fázis</div>
+        <div class="chip" id="chip-luteal" onclick="selectCyclePhase('luteal', this)">Luteális fázis</div>
+        <div class="chip" id="chip-menstrual" onclick="selectCyclePhase('menstrual', this)">Menstruációs fázis</div>
       </div>
 
       <div id="cyclePhaseContent" style="margin-top: 16px;"></div>
@@ -474,7 +497,7 @@
     <div class="modal-content">
       <h2 style="font-size: 1.6rem; margin-bottom: 8px;">Üdvözöl a daleday</h2>
       <p style="color: var(--text-muted); font-size: 0.95rem;">
-        Kezdd el a tiszta életmódot (Clean Living) és a tiszta baba-mama ápolást. 
+        Kezdd el a tiszta életmódot (Clean living) és a tiszta baba-mama ápolást. 
         Szkenneld be a kozmetikumokat és élelmiszereket, derítsd ki a káros adalékokat és kőolajszármazékokat, és találj vegyszermentes alternatívákat azonnal!
       </p>
       <div style="margin-top: 24px;">
@@ -677,7 +700,7 @@
     };
 
     /* ==========================================================================
-       3. ELEMZŐMOTOR (calculateProductScore)
+       3. ELEMZŐMOTOR (calculateProductScore) - JAVÍTOTT KIVÉTELEKKEL
        ========================================================================== */
     function calculateProductScore(product) {
       let score = 100;
@@ -714,7 +737,9 @@
         facts.push('Tartósítószert / Phenoxyethanolt tartalmaz (érzékeny bőrnél irritációt/ekcémát okozhat).');
       }
 
-      if (product.category !== 'popsikrem' && product.category !== 'torlokendo' && product.category !== 'kozmetikum' && product.category !== 'bebietel' && product.sugar_g > 10) {
+      // Gyümölcs- és zöldségpürék, bébiételek és kozmetikumok mentesülnek a cukorbüntetés alól
+      const isExemptCategory = ['popsikrem', 'torlokendo', 'kozmetikum', 'bebietel'].includes(product.category);
+      if (!isExemptCategory && product.sugar_g > 10) {
         score -= 15;
         facts.push(`Magas hozzáadott cukortartalom (${product.sugar_g}g).`);
       }
@@ -977,48 +1002,117 @@
     }
 
     /* ==========================================================================
-       8. CIKLUSSZINKRON MODUL & RECEPTEK
+       8. CIKLUSSZINKRON MODUL & NAPTÁR SZÁMÍTÁSSAL
        ========================================================================== */
     const CYCLE_PHASES = {
       follicular: {
         title: 'Folliculáris fázis (Érési szakasz)',
         desc: 'Ebben a fázisban az ösztrogénszint emelkedik. Fókuszálj a friss, fermentált ételekre és a könnyű proteinekre!',
+        foods: ['Fermentált zöldségek', 'Csírák', 'Zabpehely', 'Avokádó', 'Lencse'],
         recipe: 'Friss kerti saláta fermentált zöldségekkel és csírákkal'
       },
       ovulatory: {
         title: 'Ovulációs fázis (Kiugró energia)',
         desc: 'A legmagasabb energiaszint. Válassz antioxidánsokban és rostokban gazdag ételeket a felesleges hormonok kiürüléséhez!',
+        foods: ['Bogyós gyümölcsök', 'Spenót', 'Chia mag', 'Nyers kakaó', 'Quinoa'],
         recipe: 'Bogyós gyümölcs turmix chia maggal és nyers kakaóval'
       },
       luteal: {
         title: 'Luteális fázis (Felkészülés)',
         desc: 'A progeszteron dominál. Szükséged lehet több B-vitaminra és magnéziumra a jó közérzethez és a sóvárgás csökkentésére.',
+        foods: ['Sütőtök', 'Édesburgonya', 'Tökmag', 'Gyömbér', 'Barna rizs'],
         recipe: 'Sült sütőtök krémleves gyömbérrel és pirított tökmaggal'
       },
       menstrual: {
         title: 'Menstruációs fázis (Pihenés és töltődés)',
         desc: 'A hormonok a legalacsonyabb szinten vannak. Tápláld a tested vassal, melengető levesekkel és pihentető teákkal!',
+        foods: ['Cékla', 'Vöröshús/Csontleves', 'Hüvelyesek', 'Kakaó', 'Diófélék'],
         recipe: 'Lassú tűzön főtt dús zöldségleves csontleves alappal'
       }
     };
 
+    let activeCyclePhaseKey = 'follicular';
+
+    function calculateCyclePhaseFromDate() {
+      const dateInput = document.getElementById('lastPeriodDate').value;
+      const cycleLengthInput = parseInt(document.getElementById('cycleLength').value) || 28;
+      const resultDiv = document.getElementById('cycleCalcResult');
+
+      if (!dateInput) {
+        alert('Kérjük, válaszd ki az utolsó menstruációd első napját!');
+        return;
+      }
+
+      const lastDate = new Date(dateInput);
+      const today = new Date();
+      const diffTime = today - lastDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 0) {
+        resultDiv.innerText = 'A megadott dátum nem lehet a jövőben!';
+        return;
+      }
+
+      const cycleDay = (diffDays % cycleLengthInput) + 1;
+      let calculatedPhase = 'follicular';
+      let phaseName = 'Folliculáris fázis';
+
+      if (cycleDay >= 1 && cycleDay <= 5) {
+        calculatedPhase = 'menstrual';
+        phaseName = 'Menstruációs fázis';
+      } else if (cycleDay >= 6 && cycleDay <= 12) {
+        calculatedPhase = 'follicular';
+        phaseName = 'Folliculáris fázis';
+      } else if (cycleDay >= 13 && cycleDay <= 16) {
+        calculatedPhase = 'ovulatory';
+        phaseName = 'Ovulációs fázis';
+      } else {
+        calculatedPhase = 'luteal';
+        phaseName = 'Luteális fázis';
+      }
+
+      resultDiv.innerText = `A ciklusod ${cycleDay}. napján vagy. Jelenlegi szakasz: ${phaseName}.`;
+
+      const chipEl = document.getElementById(`chip-${calculatedPhase}`);
+      selectCyclePhase(calculatedPhase, chipEl);
+    }
+
     function selectCyclePhase(phaseKey, el) {
+      activeCyclePhaseKey = phaseKey;
       document.querySelectorAll('#cycleChips .chip').forEach(c => c.classList.remove('active'));
-      if (el) el.classList.add('active');
+      if (el) {
+        el.classList.add('active');
+      } else {
+        const targetChip = document.getElementById(`chip-${phaseKey}`);
+        if (targetChip) targetChip.classList.add('active');
+      }
 
       const data = CYCLE_PHASES[phaseKey];
       const container = document.getElementById('cyclePhaseContent');
       
+      const foodBadges = data.foods.map(f => `<span class="food-tag-badge">${f}</span>`).join('');
+
       container.innerHTML = `
-        <div style="background: #F8FAF7; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
-          <h4 style="color: var(--accent-eucalyptus);">${data.title}</h4>
+        <div style="background: #F8FAF7; padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+          <h4 style="color: var(--accent-eucalyptus); font-size: 1rem;">${data.title}</h4>
           <p style="font-size: 0.88rem; color: var(--text-main); margin-top: 6px;">${data.desc}</p>
-          <div style="margin-top: 12px; border-top: 1px dashed #DDD; padding-top: 10px;">
+          
+          <div style="margin-top: 12px;">
+            <strong style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Ajánlott tápanyagok és alapanyagok:</strong>
+            ${foodBadges}
+          </div>
+
+          <div style="margin-top: 14px; border-top: 1px dashed #DDD; padding-top: 12px;">
             <strong style="font-size: 0.85rem; color: var(--accent-gold);">Ajánlott tiszta recept:</strong>
             <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-top: 2px;">${data.recipe}</p>
+            <button style="margin-top: 10px; width: 100%; font-size: 0.85rem;" onclick="requestPhaseRecipe('${data.recipe}')">Recept kérése ehhez a fázishoz</button>
           </div>
         </div>
       `;
+    }
+
+    function requestPhaseRecipe(recipeName) {
+      alert(`Recept kérése elküldve a daleday konyhának: "${recipeName}"! Hamarosan elkészül a részletes elkészítési útmutató.`);
     }
 
     /* ==========================================================================
@@ -1085,6 +1179,10 @@
       if (!localStorage.getItem('daleday_onboarded')) {
         document.getElementById('onboardingModal').classList.add('active');
       }
+
+      const todayStr = new Date().toISOString().split('T')[0];
+      const dateEl = document.getElementById('lastPeriodDate');
+      if (dateEl) dateEl.value = todayStr;
 
       selectCyclePhase('follicular', null);
       filterPantryRecipes();
