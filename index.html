@@ -13,10 +13,10 @@
   <meta name="apple-mobile-web-app-title" content="daleday">
   <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/2D4A3E/FFFFFF?text=daleday">
 
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- External JS Libraries -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -56,11 +56,10 @@
       padding-bottom: 90px;
     }
 
-    h1, h2, h3, .serif-font {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-weight: 600;
+    h1, h2, h3 {
+      font-weight: 700;
       color: var(--accent-eucalyptus);
-      letter-spacing: -0.2px;
+      letter-spacing: -0.3px;
     }
 
     header {
@@ -73,7 +72,7 @@
     }
 
     h1.brand-logo {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       cursor: pointer;
     }
 
@@ -96,7 +95,7 @@
     }
 
     .hero-title {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       margin-bottom: 6px;
     }
 
@@ -292,6 +291,37 @@
       border-radius: var(--radius-sm);
     }
 
+    /* Modal export képhez */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(28, 36, 33, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-card {
+      background: #FFF;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-card img {
+      width: 100%;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      margin: 12px 0;
+    }
+
     .spinner {
       display: inline-block;
       width: 16px;
@@ -422,6 +452,19 @@
     </div>
   </div>
 
+  <!-- EXPORT IMAGE MODAL -->
+  <div class="modal-overlay" id="imageExportModal">
+    <div class="modal-card">
+      <h3 style="font-size:1rem;">Kártya mentése</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Tartsd nyomva a képet a mentéshez, vagy oszd meg közvetlenül!</p>
+      <div id="modalImageContainer"></div>
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button style="flex:1;" onclick="shareGeneratedImage()">Megosztás</button>
+        <button class="btn-secondary" style="flex:1;" onclick="closeImageModal()">Bezárás</button>
+      </div>
+    </div>
+  </div>
+
   <!-- FLOATING GLASS NAVIGÁCIÓS BÁR -->
   <div class="nav-bar">
     <div class="nav-item active" id="nav-scanner" onclick="switchTab('scanner')">
@@ -457,7 +500,6 @@
       return url.startsWith('https://');
     }
 
-    // Hivatalos GS1 / GTIN Luhn-Check-Digit validátor
     function validateBarcode(rawCode) {
       if (!rawCode) return null;
       const cleanCode = String(rawCode).replace(/[^0-9]/g, '');
@@ -503,7 +545,7 @@
             whatIsIt: 'Ásványiolaj-alapú, tisztított összetevő.',
             whyIsItUsed: 'A bőr felszínén védő, okkluzív réteget képez, amely segít csökkenteni a vízvesztést.',
             thingsToKnow: 'Az ásványiolaj-alapú összetevőket kozmetikai formulákban széles körben használják. Ha kifejezetten ásványiolaj-mentes terméket keresel, ez számodra releváns választási szempont lehet.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['mineral-oil']
           },
           {
@@ -511,7 +553,7 @@
             whatIsIt: 'Ásványi vegyület.',
             whyIsItUsed: 'Bőrvédő összetevő, amelyet többek között védőkrémekben és popsikrémekben használnak.',
             thingsToKnow: 'Bőrvédő és hámvédő tulajdonságairól ismert komponens.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['sensitive-skin', 'baby']
           },
           {
@@ -519,7 +561,7 @@
             whatIsIt: 'Gyapjúból származó viaszos anyag.',
             whyIsItUsed: 'Bőrpuhító és nedvességmegkötő összetevő.',
             thingsToKnow: 'Vízmegkötő tulajdonságú összetevő; az egyéni összetevő-érzékenység lehet választási szempont.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['sensitive-skin']
           }
         ],
@@ -550,7 +592,7 @@
             whatIsIt: 'Tisztított víz.',
             whyIsItUsed: 'A formulában a tisztítás alapját képezi.',
             thingsToKnow: 'Alapvető tisztító komponens.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['sensitive-skin', 'baby']
           },
           {
@@ -558,7 +600,7 @@
             whatIsIt: 'Növényi eredetű kivonat.',
             whyIsItUsed: 'A gyártó által meghatározott formulafunkció alapján kerül a termékbe.',
             thingsToKnow: 'Erről az összetevőről a daleday jelenlegi adatbázisában nincs elegendő információ a részletesebb értelmezéshez.',
-            isKnown: "partial",
+            isKnown: true,
             relevanceTags: ['sensitive-skin']
           }
         ],
@@ -582,7 +624,7 @@
             whatIsIt: 'Növényi eredetű olaj.',
             whyIsItUsed: 'A kozmetikai formulákban bőrpuhítóként használják.',
             thingsToKnow: 'Növényi olaj komponensek.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['sensitive-skin', 'baby']
           },
           {
@@ -590,7 +632,7 @@
             whatIsIt: 'Növényi kivonat.',
             whyIsItUsed: 'Kozmetikai készítményekben használt gyógynövénykivonat.',
             thingsToKnow: 'Kozmetikai termékek gyakori komponense.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['sensitive-skin']
           }
         ],
@@ -614,7 +656,7 @@
             whatIsIt: 'Bio minősítésű sárgarépa.',
             whyIsItUsed: 'A termék fő alapanyaga.',
             thingsToKnow: 'Zöldségösszetevő.',
-            isKnown: "true",
+            isKnown: true,
             relevanceTags: ['baby', 'food-ingredients']
           }
         ],
@@ -761,18 +803,18 @@
     }
 
     /* ==========================================================================
-       5. TERMÉKOLDAL RENDERELÉSE (Értsd, mit választasz)
+       5. TERMÉKOLDAL RENDERELÉSE (Összhang a beállításokkal)
        ========================================================================== */
     function renderProductView(product) {
       const container = document.getElementById('resultContainer');
       const prefs = getSavedPreferences();
 
-      // Tényszerű relevancia kiemelés
+      // Tényszerű, konkrét relevancia elemzés
       let relevanceNotes = [];
       if (prefs.includes('avoid-mineral')) {
         const hasMineral = product.ingredientsList.some(i => i.relevanceTags && i.relevanceTags.includes('mineral-oil'));
         if (hasMineral) {
-          relevanceNotes.push('A profilodban megjelölted, hogy fontos számodra az ásványiolaj-mentesség: ez a termék ásványiolaj-alapú összetevőt tartalmaz.');
+          relevanceNotes.push('A profilodban jelölted, hogy kerülni szeretnéd az ásványi olajokat. Ez a termék Folyékony paraffint tartalmaz.');
         }
       }
 
@@ -869,7 +911,7 @@
 
           ${relevanceNotes.length > 0 ? `
             <div class="relevance-box">
-              <strong style="font-size:0.82rem; color:var(--accent-eucalyptus);">A te szempontjaid alapján ezt érdemes lehet megnézned:</strong>
+              <strong style="font-size:0.82rem; color:var(--accent-eucalyptus);">Összhang a beállításaiddal:</strong>
               <p style="font-size:0.82rem; color:var(--text-main); margin-top:4px;">${relevanceNotes.map(n => escapeHtml(n)).join('<br>')}</p>
             </div>
           ` : `
@@ -889,7 +931,7 @@
           ${alternativesHtml}
 
           <div style="margin-top:14px;">
-            <button class="btn-secondary" style="width:100%; font-size:0.8rem;" onclick="exportToImage()">Elemzés mentése képként</button>
+            <button class="btn-secondary" style="width:100%; font-size:0.8rem;" onclick="exportToImageModal()">Elemzés mentése képként</button>
           </div>
         </div>
       `;
@@ -1039,18 +1081,44 @@
     }
 
     /* ==========================================================================
-       7. MEGOSZTÁS ÉS EXPORT
+       7. MEGOSZTÁS ÉS EXPORT MODAL
        ========================================================================== */
-    function exportToImage() {
+    let currentExportCanvas = null;
+
+    function exportToImageModal() {
       const card = document.getElementById('exportCard');
       if (!card) return;
 
       html2canvas(card).then(canvas => {
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement('a');
-        link.download = 'daleday-termek-ertelmezo.png';
-        link.href = image;
-        link.click();
+        currentExportCanvas = canvas;
+        const imageData = canvas.toDataURL("image/png");
+        const modalContainer = document.getElementById('modalImageContainer');
+        modalContainer.innerHTML = `<img src="${imageData}" alt="daleday kártya">`;
+        document.getElementById('imageExportModal').classList.add('active');
+      });
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageExportModal').classList.remove('active');
+    }
+
+    async function shareGeneratedImage() {
+      if (!currentExportCanvas) return;
+      currentExportCanvas.toBlob(async (blob) => {
+        const file = new File([blob], 'daleday-termek.png', { type: 'image/png' });
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'daleday termékértelmező',
+              text: 'Nézd meg ezt a termékértelmezést a daleday-en!'
+            });
+          } catch (e) {
+            console.log('Megosztási hiba vagy megszakítás:', e);
+          }
+        } else {
+          alert('A natív megosztás ezen az eszközön nem támogatott. Tartsd nyomva a képet a mentéshez!');
+        }
       });
     }
 
