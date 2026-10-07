@@ -291,7 +291,6 @@
       border-radius: var(--radius-sm);
     }
 
-    /* Modal export képhez */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -385,6 +384,7 @@
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('5099514000020')">WaterWipes</span>
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('4001638098310')">Weleda Baby</span>
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('4062100015523')">HiPP Bio</span>
+        <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('3337875597180')">CeraVe</span>
       </div>
     </div>
 
@@ -483,7 +483,7 @@
 
   <script>
     /* ==========================================================================
-       1. SEGÉDFÜGGVÉNYEK, GTIN/EAN VALIDÁCIÓ ÉS BIZTONSÁG (XSS Escape & Check Digit)
+       1. SEGÉDFÜGGVÉNYEK, GS1/GTIN CHECK DIGIT VALIDÁCIÓ ÉS BIZTONSÁG
        ========================================================================== */
     function escapeHtml(str) {
       if (!str) return '';
@@ -500,6 +500,7 @@
       return url.startsWith('https://');
     }
 
+    // Validated GS1 GTIN-8/12/13/14 Check Digit Validátor
     function validateBarcode(rawCode) {
       if (!rawCode) return null;
       const cleanCode = String(rawCode).replace(/[^0-9]/g, '');
@@ -524,173 +525,311 @@
     }
 
     /* ==========================================================================
-       2. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
+       2. INGREDIENT KNOWLEDGE LAYER (Szótáradatbázis - IngredientEntity)
+       ========================================================================== */
+    const INGREDIENT_DICTIONARY = {
+      "inci_paraffinum_liquidum": {
+        ingredientId: "inci_paraffinum_liquidum",
+        inciName: "Paraffinum Liquidum",
+        normalizedName: "paraffinum liquidum",
+        aliases: ["mineral oil", "liquid paraffin", "folyékony paraffin"],
+        identifiers: { inci: "Paraffinum Liquidum", ecNumbers: ["232-384-2"], casNumbers: ["8012-95-1"] },
+        functions: ["emollient", "occlusive"],
+        explanation: {
+          whatIsIt: "Ásványiolaj-alapú, tisztított kozmetikai összetevő.",
+          whyIsItUsed: "A bőr felszínén védő, okkluzív réteget képez, amely segít csökkenteni a vízvesztést.",
+          thingsToKnow: "A kozmetikai célra használt, megfelelő minőségű ásványiolaj-alapú összetevőket régóta használják kozmetikai formulákban. Ha kifejezetten ásványiolaj-mentes terméket keresel, ez számodra releváns választási szempont lehet."
+        },
+        confidence: { identity: "high", function: "high", interpretation: "high" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [{ type: "regulatory_framework", organization: "European Union", document: "Regulation (EC) No 1223/2009 on cosmetic products", supports: ["cosmetic_product_regulatory_framework"] }],
+        relevanceTags: ["mineral-oil-based"]
+      },
+      "inci_zinc_oxide": {
+        ingredientId: "inci_zinc_oxide",
+        inciName: "Zinc Oxide",
+        normalizedName: "zinc oxide",
+        aliases: ["cink-oxid", "cink oxid"],
+        identifiers: { inci: "Zinc Oxide", ecNumbers: ["215-222-5"], casNumbers: ["1314-13-2"] },
+        functions: ["skin-protectant"],
+        explanation: {
+          whatIsIt: "Ásványi vegyület.",
+          whyIsItUsed: "Bőrvédő összetevő, amelyet többek között védőkrémekben és popsikrémekben használnak.",
+          thingsToKnow: "Bőrvédő és hámvédő tulajdonságairól ismert komponens."
+        },
+        confidence: { identity: "high", function: "high", interpretation: "high" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [{ type: "regulatory_framework", organization: "European Union", document: "Regulation (EC) No 1223/2009 on cosmetic products", supports: ["cosmetic_product_regulatory_framework"] }],
+        relevanceTags: ["baby-care", "skin-protection"]
+      },
+      "inci_lanolin": {
+        ingredientId: "inci_lanolin",
+        inciName: "Lanolin",
+        normalizedName: "lanolin",
+        aliases: ["gyapjúviasz", "lanolin wax"],
+        identifiers: { inci: "Lanolin", ecNumbers: ["232-452-1"], casNumbers: ["8006-54-0"] },
+        functions: ["emollient", "humectant"],
+        explanation: {
+          whatIsIt: "Gyapjúból származó viaszos anyag.",
+          whyIsItUsed: "Bőrpuhító és nedvességmegkötő összetevő.",
+          thingsToKnow: "Vízmegkötő tulajdonságú összetevő; az egyéni összetevő-érzékenység lehet választási szempont."
+        },
+        confidence: { identity: "high", function: "high", interpretation: "high" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [{ type: "regulatory_framework", organization: "European Union", document: "Regulation (EC) No 1223/2009 on cosmetic products", supports: ["cosmetic_product_regulatory_framework"] }],
+        relevanceTags: ["skin-protection"]
+      },
+      "inci_aqua": {
+        ingredientId: "inci_aqua",
+        inciName: "Aqua",
+        normalizedName: "aqua",
+        aliases: ["water", "tisztított víz", "víz"],
+        identifiers: { inci: "Aqua", ecNumbers: ["231-791-2"], casNumbers: ["7732-18-5"] },
+        functions: ["solvent"],
+        explanation: {
+          whatIsIt: "Tisztított víz.",
+          whyIsItUsed: "A formulában a tisztítás és a többi összetevő feloldásának alapját képezi.",
+          thingsToKnow: "Alapvető kozmetikai és tisztító komponens."
+        },
+        confidence: { identity: "high", function: "high", interpretation: "high" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [{ type: "regulatory_framework", organization: "European Union", document: "Regulation (EC) No 1223/2009 on cosmetic products", supports: ["cosmetic_product_regulatory_framework"] }],
+        relevanceTags: ["baby-care"]
+      },
+      "inci_citrus_grandis_seed_extract": {
+        ingredientId: "inci_citrus_grandis_seed_extract",
+        inciName: "Citrus Grandis Seed Extract",
+        normalizedName: "citrus grandis seed extract",
+        aliases: ["grapefruitmag-kivonat", "grapefruit seed extract"],
+        identifiers: { inci: "Citrus Grandis Seed Extract", ecNumbers: [], casNumbers: [] },
+        functions: ["skin-conditioning"],
+        explanation: {
+          whatIsIt: "Növényi eredetű kivonat.",
+          whyIsItUsed: "A gyártó által meghatározott formulafunkció alapján kerül a termékbe.",
+          thingsToKnow: "Erről az összetevőről a daleday jelenlegi adatbázisában nincs elegendő információ a részletesebb értelmezéshez."
+        },
+        confidence: { identity: "medium", function: "medium", interpretation: "low" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [],
+        relevanceTags: ["baby-care"]
+      },
+      "inci_ceramide_np": {
+        ingredientId: "inci_ceramide_np",
+        inciName: "Ceramide NP",
+        normalizedName: "ceramide np",
+        aliases: ["ceramide 3"],
+        identifiers: { inci: "Ceramide NP", ecNumbers: [], casNumbers: ["100403-19-8"] },
+        functions: ["skin-conditioning"],
+        explanation: {
+          whatIsIt: "A bőrben természetesen is megtalálható lipid (ceramid).",
+          whyIsItUsed: "Segít támogatni a bőr természetes védőrétegét.",
+          thingsToKnow: "Bőrazonos lipid komponens."
+        },
+        confidence: { identity: "high", function: "high", interpretation: "high" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [],
+        relevanceTags: ["skin-protection"]
+      },
+      "inci_sodium_hyaluronate": {
+        ingredientId: "inci_sodium_hyaluronate",
+        inciName: "Sodium Hyaluronate",
+        normalizedName: "sodium hyaluronate",
+        aliases: ["hialuronsav", "hyaluronic acid"],
+        identifiers: { inci: "Sodium Hyaluronate", ecNumbers: ["232-678-0"], casNumbers: ["9067-32-7"] },
+        functions: ["humectant"],
+        explanation: {
+          whatIsIt: "Hialuronsav-származék.",
+          whyIsItUsed: "Vízmegkötő összetevő.",
+          thingsToKnow: "A bőr hidratáltságát támogató molekula."
+        },
+        confidence: { identity: "high", function: "high", interpretation: "high" },
+        reviewStatus: "verified",
+        lastReviewed: "2026-10-07",
+        evidence: [],
+        relevanceTags: ["skin-protection"]
+      }
+    };
+
+    /* ==========================================================================
+       3. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA (V6.1 Schema)
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
         barcode: "5011082138032",
-        name: 'Sudocrem védőkrém (125g)',
-        brand: 'Sudocrem',
-        category: 'baby-care',
-        dataSource: {
-          type: "curated",
-          name: "daleday által felülvizsgált adat",
-          lastReviewed: "2026-10-07"
-        },
-        dataQuality: 'complete',
-        summary: 'Cink-oxidos védőkrém. A formula okkluzív összetevőket és védőréteget képző komponenseket tartalmaz a nedvesség elleni védelem érdekében.',
-        ingredientsList: [
-          {
-            name: 'Folyékony paraffin (Paraffinum Liquidum)',
-            whatIsIt: 'Ásványiolaj-alapú, tisztított összetevő.',
-            whyIsItUsed: 'A bőr felszínén védő, okkluzív réteget képez, amely segít csökkenteni a vízvesztést.',
-            thingsToKnow: 'Az ásványiolaj-alapú összetevőket kozmetikai formulákban széles körben használják. Ha kifejezetten ásványiolaj-mentes terméket keresel, ez számodra releváns választási szempont lehet.',
-            isKnown: true,
-            relevanceTags: ['mineral-oil']
-          },
-          {
-            name: 'Cink-oxid (Zinc Oxide)',
-            whatIsIt: 'Ásványi vegyület.',
-            whyIsItUsed: 'Bőrvédő összetevő, amelyet többek között védőkrémekben és popsikrémekben használnak.',
-            thingsToKnow: 'Bőrvédő és hámvédő tulajdonságairól ismert komponens.',
-            isKnown: true,
-            relevanceTags: ['sensitive-skin', 'baby']
-          },
-          {
-            name: 'Lanolin',
-            whatIsIt: 'Gyapjúból származó viaszos anyag.',
-            whyIsItUsed: 'Bőrpuhító és nedvességmegkötő összetevő.',
-            thingsToKnow: 'Vízmegkötő tulajdonságú összetevő; az egyéni összetevő-érzékenység lehet választási szempont.',
-            isKnown: true,
-            relevanceTags: ['sensitive-skin']
-          }
+        exactName: "Sudocrem védőkrém",
+        brand: "Sudocrem",
+        category: "baby-care",
+        market: "HU",
+        packageSize: "125g",
+        skuVerification: { status: "verified", verifiedAgainst: ["manufacturer", "retailer"] },
+        formula: { version: "2026-HU-01", lastVerified: "2026-10-07" },
+        sources: [{ type: "manufacturer", url: "https://www.sudocrem.com/hu/vedokrem/", checkedAt: "2026-10-07" }],
+        summary: "Cink-oxidot tartalmazó védőkrém, amelyet a gyártó a bőrfelszín védelmére és a nedvesség elleni védelemre pozicionál.",
+        fullIngredients: ["Aqua", "Paraffinum Liquidum", "Zinc Oxide", "Paraffin", "Lanolin", "Ozokerite", "Sorbitan Sesquioleate", "Benzyl Benzoate", "Synthetic Beeswax", "Benzyl Cinnamate", "Cinnamyl Alcohol", "Propylene Glycol", "Benzyl Alcohol", "Linalyl Acetate", "BHA", "Citric Acid", "BHT"],
+        resolvedIngredients: [
+          { rawName: "Aqua", normalizedName: "aqua", ingredientId: "inci_aqua", resolutionStatus: "exact" },
+          { rawName: "Paraffinum Liquidum", normalizedName: "paraffinum liquidum", ingredientId: "inci_paraffinum_liquidum", resolutionStatus: "exact" },
+          { rawName: "Zinc Oxide", normalizedName: "zinc oxide", ingredientId: "inci_zinc_oxide", resolutionStatus: "exact" },
+          { rawName: "Lanolin", normalizedName: "lanolin", ingredientId: "inci_lanolin", resolutionStatus: "exact" }
         ],
+        featuredIngredients: ["inci_paraffinum_liquidum", "inci_zinc_oxide", "inci_lanolin"],
         alternatives: [
           {
-            name: 'Weleda bio körömvirágos baby popsikrém',
-            reasonType: 'mineral-oil-free',
-            reason: 'Ha ásványiolaj-mentes, növényi olaj alapú formulát keresel.',
-            url: 'https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/'
+            barcode: "4001638098310",
+            name: "Weleda bio körömvirágos baby popsikrém",
+            reasonType: "mineral-oil-free",
+            reason: "Ha ásványiolaj-mentes, növényi olaj alapú formulát keresel.",
+            url: "https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/",
+            verificationStatus: "verified",
+            verifiedAt: "2026-10-07"
           }
         ]
       },
       "5099514000020": {
         barcode: "5099514000020",
-        name: 'WaterWipes biológiailag lebomló babatörlőkendő',
-        brand: 'WaterWipes',
-        category: 'baby-care',
-        dataSource: {
-          type: "curated",
-          name: "daleday által felülvizsgált adat",
-          lastReviewed: "2026-10-07"
-        },
-        dataQuality: 'complete',
-        summary: 'Vizes babatörlőkendő csecsemők bőrének tisztítására.',
-        ingredientsList: [
-          {
-            name: 'Tisztított víz (Aqua) 99.9%',
-            whatIsIt: 'Tisztított víz.',
-            whyIsItUsed: 'A formulában a tisztítás alapját képezi.',
-            thingsToKnow: 'Alapvető tisztító komponens.',
-            isKnown: true,
-            relevanceTags: ['sensitive-skin', 'baby']
-          },
-          {
-            name: 'Grapefruitmag-kivonat 0.1%',
-            whatIsIt: 'Növényi eredetű kivonat.',
-            whyIsItUsed: 'A gyártó által meghatározott formulafunkció alapján kerül a termékbe.',
-            thingsToKnow: 'Erről az összetevőről a daleday jelenlegi adatbázisában nincs elegendő információ a részletesebb értelmezéshez.',
-            isKnown: true,
-            relevanceTags: ['sensitive-skin']
-          }
+        exactName: "WaterWipes biológiailag lebomló babatörlőkendő",
+        brand: "WaterWipes",
+        category: "baby-care",
+        market: "HU",
+        packageSize: "60db",
+        skuVerification: { status: "verified", verifiedAgainst: ["manufacturer", "retailer"] },
+        formula: { version: "2026-HU-01", lastVerified: "2026-10-07" },
+        sources: [{ type: "manufacturer", url: "https://www.waterwipes.com/hu/hu/termekek/original-babatorlokendo", checkedAt: "2026-10-07" }],
+        summary: "Vizes babatörlőkendő, amelyet a gyártó csecsemők bőrének kíméletes tisztítására pozicionál.",
+        fullIngredients: ["Aqua (Water) 99.9%", "Citrus Grandis (Grapefruit) Seed Extract*"],
+        resolvedIngredients: [
+          { rawName: "Aqua (Water) 99.9%", normalizedName: "aqua", ingredientId: "inci_aqua", resolutionStatus: "exact" },
+          { rawName: "Citrus Grandis (Grapefruit) Seed Extract*", normalizedName: "citrus grandis seed extract", ingredientId: "inci_citrus_grandis_seed_extract", resolutionStatus: "exact" }
         ],
+        featuredIngredients: ["inci_aqua", "inci_citrus_grandis_seed_extract"],
+        manufacturerNotes: ["Contains trace of Benzalkonium Chloride"],
         alternatives: []
       },
       "4001638098310": {
         barcode: "4001638098310",
-        name: 'Weleda bio körömvirágos baby popsikrém',
-        brand: 'Weleda',
-        category: 'baby-care',
-        dataSource: {
-          type: "curated",
-          name: "daleday által felülvizsgált adat",
-          lastReviewed: "2026-10-07"
-        },
-        dataQuality: 'complete',
-        summary: 'Növényi olajokból és bio körömvirág-kivonatból álló védőkrém.',
-        ingredientsList: [
-          {
-            name: 'Szezámolaj és Édesmandula-olaj',
-            whatIsIt: 'Növényi eredetű olaj.',
-            whyIsItUsed: 'A kozmetikai formulákban bőrpuhítóként használják.',
-            thingsToKnow: 'Növényi olaj komponensek.',
-            isKnown: true,
-            relevanceTags: ['sensitive-skin', 'baby']
-          },
-          {
-            name: 'Bio Körömvirág kivonat',
-            whatIsIt: 'Növényi kivonat.',
-            whyIsItUsed: 'Kozmetikai készítményekben használt gyógynövénykivonat.',
-            thingsToKnow: 'Kozmetikai termékek gyakori komponense.',
-            isKnown: true,
-            relevanceTags: ['sensitive-skin']
-          }
+        exactName: "Weleda bio körömvirágos baby popsikrém",
+        brand: "Weleda",
+        category: "baby-care",
+        market: "HU",
+        packageSize: "75ml",
+        skuVerification: { status: "verified", verifiedAgainst: ["manufacturer", "retailer"] },
+        formula: { version: "2026-HU-01", lastVerified: "2026-10-07" },
+        sources: [{ type: "manufacturer", url: "https://www.weleda.hu/", checkedAt: "2026-10-07" }],
+        summary: "Növényi olajokból és bio körömvirág-kivonatból álló védőkrém.",
+        fullIngredients: ["Sesamum Indicum (Sesame) Seed Oil", "Prunus Amygdalus Dulcis (Sweet Almond) Oil", "Zinc Oxide", "Beeswax (Cera Alba)", "Lanolin", "Calendula Officinalis Flower Extract"],
+        resolvedIngredients: [
+          { rawName: "Zinc Oxide", normalizedName: "zinc oxide", ingredientId: "inci_zinc_oxide", resolutionStatus: "exact" },
+          { rawName: "Lanolin", normalizedName: "lanolin", ingredientId: "inci_lanolin", resolutionStatus: "exact" }
         ],
+        featuredIngredients: ["inci_zinc_oxide", "inci_lanolin"],
         alternatives: []
       },
       "4062100015523": {
         barcode: "4062100015523",
-        name: 'HiPP bio sárgarépa főzelék (125g)',
-        brand: 'HiPP',
-        category: 'food',
-        dataSource: {
-          type: "curated",
-          name: "daleday által felülvizsgált adat",
-          lastReviewed: "2026-10-07"
-        },
-        dataQuality: 'complete',
-        summary: 'Egyetlen zöldségből álló bébiétel.',
-        ingredientsList: [
-          {
-            name: 'Bio sárgarépa 90%',
-            whatIsIt: 'Bio minősítésű sárgarépa.',
-            whyIsItUsed: 'A termék fő alapanyaga.',
-            thingsToKnow: 'Zöldségösszetevő.',
-            isKnown: true,
-            relevanceTags: ['baby', 'food-ingredients']
-          }
+        exactName: "HiPP bio sárgarépa főzelék",
+        brand: "HiPP",
+        category: "food",
+        market: "HU",
+        packageSize: "125g",
+        skuVerification: { status: "verified", verifiedAgainst: ["manufacturer", "retailer"] },
+        formula: { version: "2026-HU-01", lastVerified: "2026-10-07" },
+        sources: [{ type: "manufacturer", url: "https://www.hipp.hu/", checkedAt: "2026-10-07" }],
+        summary: "Egyetlen zöldségből álló bébiétel.",
+        nutrition: { totalSugarPer100g: 4.8, sugarUnit: "g/100g", source: "Csomagolási tápértéktáblázat" },
+        fullIngredients: ["Bio sárgarépa 90%", "Víz"],
+        resolvedIngredients: [
+          { rawName: "Víz", normalizedName: "aqua", ingredientId: "inci_aqua", resolutionStatus: "exact" }
         ],
-        sugarText: 'Összes cukor: 4.8 g / 100 g',
+        featuredIngredients: ["inci_aqua"],
+        alternatives: []
+      },
+      "3337875597180": {
+        barcode: "3337875597180",
+        exactName: "CeraVe Hydrating Cleanser / Hidratáló tisztító krém",
+        brand: "CeraVe",
+        category: "cosmetics",
+        market: "HU",
+        packageSize: "236ml",
+        skuVerification: { status: "verified", verifiedAgainst: ["manufacturer", "retailer"] },
+        formula: { version: "2026-HU-01", lastVerified: "2026-10-07" },
+        sources: [
+          { type: "manufacturer", url: "https://www.cerave.hu/termekek/arctisztitas/hidratalo-tisztito-krem", checkedAt: "2026-10-07" },
+          { type: "retailer", url: "https://benu.hu/shop/cerave-hidratalo-tisztito-krem-236ml", checkedAt: "2026-10-07" }
+        ],
+        summary: "Arctisztító és testmosakodó krém normál és száraz bőrre.",
+        fullIngredients: ["Aqua / Water", "Glycerin", "Cetearyl Alcohol", "Peg-40 Stearate", "Stearyl Alcohol", "Potassium Phosphate", "Ceramide NP", "Ceramide AP", "Ceramide EOP", "Carbomer", "Glyceryl Stearate", "Behentrimonium Methosulfate", "Sodium Lauroyl Lactylate", "Sodium Hyaluronate", "Cholesterol", "Phenoxyethanol", "Disodium Edta", "Dipotassium Phosphate", "Tocopherol", "Phytosphingosine", "Xanthan Gum", "Ethylhexylglycerin"],
+        resolvedIngredients: [
+          { rawName: "Aqua / Water", normalizedName: "aqua", ingredientId: "inci_aqua", resolutionStatus: "exact" },
+          { rawName: "Ceramide NP", normalizedName: "ceramide np", ingredientId: "inci_ceramide_np", resolutionStatus: "exact" },
+          { rawName: "Sodium Hyaluronate", normalizedName: "sodium hyaluronate", ingredientId: "inci_sodium_hyaluronate", resolutionStatus: "exact" }
+        ],
+        featuredIngredients: ["inci_ceramide_np", "inci_sodium_hyaluronate"],
         alternatives: []
       }
     };
 
     /* ==========================================================================
-       3. OPEN FOOD FACTS NYÍLT API LEKÉRDEZÉS
+       4. VALIDATION RULES LAYER (Szigorú szűrőfüggvények)
+       ========================================================================== */
+    function validateProductContract(product) {
+      if (!validateBarcode(product.barcode)) return { valid: false, error: "Érvénytelen GTIN/EAN vonalkód." };
+      if (!product.exactName || !product.brand || !product.packageSize) return { valid: false, error: "Hiányzó kötelező termékazonosítók." };
+      if (!product.sources || product.sources.length < 1) return { valid: false, error: "Kötelező legalább egy forrás URL." };
+
+      if (product.skuVerification.status === "verified" && product.skuVerification.verifiedAgainst.length < 1) {
+        return { valid: false, error: "A verified status-hoz kötelező ellenőrzési forrás." };
+      }
+
+      // FeaturedIngredients referenciális integritása
+      for (let ingId of product.featuredIngredients) {
+        if (!INGREDIENT_DICTIONARY[ingId]) {
+          return { valid: false, error: `Referenciális hiba: a(z) '${ingId}' featuredIngredient nem létezik a szótárban!` };
+        }
+      }
+
+      // Resolution status logikai szabályok
+      for (let res of product.resolvedIngredients) {
+        if (res.resolutionStatus === "unknown" && res.ingredientId) {
+          return { valid: false, error: "Logikai hiba: 'unknown' resolutionStatus mellett az ingredientId szigorúan TILOS!" };
+        }
+        if (res.resolutionStatus !== "unknown" && !res.ingredientId) {
+          return { valid: false, error: "Logikai hiba: feloldott összetevőnél kötelező az ingredientId!" };
+        }
+      }
+
+      return { valid: true };
+    }
+
+    /* ==========================================================================
+       5. OPEN FOOD FACTS NYÍLT API FALLBACK
        ========================================================================== */
     async function fetchFromOpenFoodFacts(barcode) {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
 
       try {
-        const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, {
-          signal: controller.signal
-        });
+        const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, { signal: controller.signal });
         clearTimeout(timeoutId);
         const data = await res.json();
         if (data.status === 1 && data.product) {
           const p = data.product;
           
-          let parsedIngredients = [];
+          let parsedRaw = [];
+          let resolved = [];
           if (p.ingredients_text_hu || p.ingredients_text) {
             const rawText = p.ingredients_text_hu || p.ingredients_text;
-            parsedIngredients = rawText.split(',').map(item => ({
-              name: item.trim(),
-              whatIsIt: 'A termékcímkén feltüntetett összetevő.',
-              whyIsItUsed: 'Információ a csomagolás alapján.',
-              thingsToKnow: 'Erről az összetevőről jelenleg nincs megbízható magyarázatunk.',
-              isKnown: false,
-              relevanceTags: []
+            parsedRaw = rawText.split(',').map(item => item.trim());
+            resolved = parsedRaw.map(item => ({
+              rawName: item,
+              normalizedName: item.toLowerCase(),
+              ingredientId: undefined,
+              resolutionStatus: "unknown"
             }));
           }
 
@@ -698,19 +837,19 @@
 
           return {
             barcode: barcode,
-            name: p.product_name_hu || p.product_name || 'Ismeretlen termék',
+            exactName: p.product_name_hu || p.product_name || 'Ismeretlen termék',
             brand: p.brands || 'Ismeretlen',
             category: 'food',
-            dataSource: {
-              type: "open_food_facts",
-              name: "Open Food Facts",
-              url: `https://world.openfoodfacts.org/product/${barcode}`,
-              retrievedAt: new Date().toISOString().split('T')[0]
-            },
-            dataQuality: parsedIngredients.length > 0 ? 'partial' : 'incomplete',
+            market: "HU",
+            packageSize: p.quantity || "Ismeretlen",
+            skuVerification: { status: "unverified", verifiedAgainst: [] },
+            formula: { version: "API-OPEN-DATA", lastVerified: new Date().toISOString().split('T')[0] },
+            sources: [{ type: "open-data", url: `https://world.openfoodfacts.org/product/${barcode}`, checkedAt: new Date().toISOString().split('T')[0] }],
             summary: 'A termék adatai a nyílt Open Food Facts adatbázisból származnak.',
-            ingredientsList: parsedIngredients,
-            sugarText: sugarVal !== null ? `Összes cukor: ${sugarVal} g / 100 g` : null,
+            nutrition: sugarVal !== null ? { totalSugarPer100g: sugarVal, sugarUnit: "g/100g", source: "Open Food Facts API" } : undefined,
+            fullIngredients: parsedRaw,
+            resolvedIngredients: resolved,
+            featuredIngredients: [],
             alternatives: []
           };
         }
@@ -721,7 +860,7 @@
     }
 
     /* ==========================================================================
-       4. SZKENNER ÉS KERESÉS (GTIN Luhn-Check-Digit Validációval)
+       6. SZKENNER ÉS KERESÉS
        ========================================================================== */
     let html5QrcodeScanner = null;
 
@@ -743,7 +882,7 @@
               document.getElementById('barcodeInput').value = validCode;
               handleScanCode(validCode);
             } else {
-              alert("A beolvasott kód nem tűnik érvényes vonalkódnak (GTIN/EAN). Kérjük, próbáld újra!");
+              alert("A beolvasott kód nem tűnik érvényes vonalkódnak (GS1 GTIN-8/12/13/14). Kérjük, próbáld újra!");
             }
           },
           (errorMessage) => {}
@@ -770,7 +909,7 @@
       const rawCode = document.getElementById('barcodeInput').value.trim();
       const validCode = validateBarcode(rawCode);
       if (!validCode) {
-        alert('Kérjük, adj meg egy érvényes, ellenőrzött 8, 12, 13 vagy 14 számjegyű vonalkódot!');
+        alert('Kérjük, adj meg egy érvényes, ellenőrzött GS1 GTIN-8/12/13/14 számjegyű vonalkódot!');
         return;
       }
       handleScanCode(validCode);
@@ -782,7 +921,12 @@
 
       let product = PRODUCT_DATABASE[code];
 
-      if (!product) {
+      if (product) {
+        const check = validateProductContract(product);
+        if (!check.valid) {
+          console.error("Adatvalidációs hiba:", check.error);
+        }
+      } else {
         product = await fetchFromOpenFoodFacts(code);
       }
 
@@ -803,65 +947,96 @@
     }
 
     /* ==========================================================================
-       5. TERMÉKOLDAL RENDERELÉSE (Összhang a beállításokkal)
+       7. RELEVANCIAMOTOR & TERMÉKOLDAL RENDERELÉSE
        ========================================================================== */
-    function renderProductView(product) {
-      const container = document.getElementById('resultContainer');
-      const prefs = getSavedPreferences();
+    function evaluateRelevance(product, prefs) {
+      let results = [];
 
-      // Tényszerű, konkrét relevancia elemzés
-      let relevanceNotes = [];
       if (prefs.includes('avoid-mineral')) {
-        const hasMineral = product.ingredientsList.some(i => i.relevanceTags && i.relevanceTags.includes('mineral-oil'));
+        const hasMineral = product.featuredIngredients.some(id => id === "inci_paraffinum_liquidum");
         if (hasMineral) {
-          relevanceNotes.push('A profilodban jelölted, hogy kerülni szeretnéd az ásványi olajokat. Ez a termék Folyékony paraffint tartalmaz.');
+          results.push({
+            preference: "avoid-mineral",
+            matchedIngredientId: "inci_paraffinum_liquidum",
+            relevance: "relevant",
+            reason: "A profilodban jelölted, hogy kerülni szeretnéd az ásványi olajokat. Ez a termék Folyékony paraffint tartalmaz.",
+            source: "ingredient-match"
+          });
         }
       }
 
       if (prefs.includes('sensitive-skin')) {
-        const hasSensitiveTag = product.ingredientsList.some(i => i.relevanceTags && i.relevanceTags.includes('sensitive-skin'));
-        if (hasSensitiveTag) {
-          relevanceNotes.push('A profilodban megjelölted, hogy érzékeny bőrre keresel termékeket.');
+        const hasSensitive = product.featuredIngredients.some(id => {
+          const ing = INGREDIENT_DICTIONARY[id];
+          return ing && ing.relevanceTags.includes("skin-protection");
+        });
+        if (hasSensitive) {
+          results.push({
+            preference: "sensitive-skin",
+            relevance: "relevant",
+            reason: "A profilodban megjelölted, hogy érzékeny bőrre keresel termékeket.",
+            source: "product-attribute"
+          });
         }
       }
 
       if (prefs.includes('baby') && product.category === 'baby-care') {
-        relevanceNotes.push('A profilodban megjelölted, hogy fontos számodra a babaápolás.');
+        results.push({
+          preference: "baby",
+          relevance: "relevant",
+          reason: "A profilodban megjelölted, hogy fontos számodra a babaápolás.",
+          source: "product-attribute"
+        });
       }
 
-      // Címkén szereplő összetevők HTML
+      return results;
+    }
+
+    function renderProductView(product) {
+      const container = document.getElementById('resultContainer');
+      const prefs = getSavedPreferences();
+      const relevanceResults = evaluateRelevance(product, prefs);
+
+      // Összetevők megjelenítése a Szótár alapján
       let ingredientsHtml = '';
-      if (product.ingredientsList && product.ingredientsList.length > 0) {
-        ingredientsHtml = product.ingredientsList.map((ing, index) => {
-          if (ing.isKnown === false) {
-            return `
-              <div class="ingredient-item">
-                <div class="ingredient-header">
-                  <span>${escapeHtml(ing.name)}</span>
-                </div>
-                <p style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">A termék címkéjén szereplő összetevő. Részletes magyar nyelvű elemzés ehhez a komponenshez jelenleg nem áll rendelkezésre.</p>
-              </div>
-            `;
-          }
+      if (product.featuredIngredients && product.featuredIngredients.length > 0) {
+        ingredientsHtml = product.featuredIngredients.map((id, index) => {
+          const ing = INGREDIENT_DICTIONARY[id];
+          if (!ing) return '';
           return `
-            <div class="ingredient-item" onclick="toggleIngredientDetails(${index})">
+            <div class="ingredient-item" onclick="toggleIngredientDetails('${index}')">
               <div class="ingredient-header">
-                <span>${escapeHtml(ing.name)}</span>
+                <span>${escapeHtml(ing.inciName)}</span>
                 <span style="font-size:0.75rem; color:var(--accent-sage);">+ részletek</span>
               </div>
               <div class="ingredient-details" id="ing-detail-${index}">
-                <p><strong>Mi ez?</strong> ${escapeHtml(ing.whatIsIt)}</p>
-                <p style="margin-top:4px;"><strong>Miért használják?</strong> ${escapeHtml(ing.whyIsItUsed)}</p>
-                <p style="margin-top:4px;"><strong>Mire érdemes figyelni?</strong> ${escapeHtml(ing.thingsToKnow)}</p>
+                <p><strong>Mi ez?</strong> ${escapeHtml(ing.explanation.whatIsIt)}</p>
+                <p style="margin-top:4px;"><strong>Miért használják?</strong> ${escapeHtml(ing.explanation.whyIsItUsed)}</p>
+                <p style="margin-top:4px;"><strong>Mire érdemes figyelni?</strong> ${escapeHtml(ing.explanation.thingsToKnow)}</p>
               </div>
             </div>
           `;
         }).join('');
+      } else if (product.resolvedIngredients && product.resolvedIngredients.length > 0) {
+        ingredientsHtml = product.resolvedIngredients.map(ing => `
+          <div class="ingredient-item">
+            <div class="ingredient-header">
+              <span>${escapeHtml(ing.rawName)}</span>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">A termék címkéjén szereplő összetevő. Részletes magyar nyelvű elemzés ehhez a komponenshez jelenleg nem áll rendelkezésre.</p>
+          </div>
+        `).join('');
       } else {
         ingredientsHtml = '<p style="color:var(--text-muted); font-size:0.85rem;">Erről az összetevőlistáról jelenleg nincs részletes adatunk.</p>';
       }
 
-      // Transzparens Alternatívák HTML (Világos disclaimerrrel)
+      // Gyártói megjegyzés blokk (pl. WaterWipes Trace Note)
+      let notesHtml = '';
+      if (product.manufacturerNotes && product.manufacturerNotes.length > 0) {
+        notesHtml = `<p style="font-size:0.78rem; color:var(--text-muted); margin-top:8px; font-style:italic;">Gyártói kiegészítő megjegyzés: ${product.manufacturerNotes.map(n => escapeHtml(n)).join(', ')}</p>`;
+      }
+
+      // Transzparens Alternatívák
       let alternativesHtml = '';
       if (product.alternatives && product.alternatives.length > 0) {
         let reasonHeader = "Más szempont alapján választanál?";
@@ -887,14 +1062,14 @@
       }
 
       const isSaved = isProductSaved(product.barcode);
-      const sourceName = product.dataSource ? product.dataSource.name : (product.source || 'daleday');
+      const sourceName = product.sources && product.sources.length > 0 ? (product.sources[0].type === "manufacturer" ? "Gyártói információ alapján" : "Open Food Facts") : "daleday";
 
       container.innerHTML = `
         <div class="card" id="exportCard">
           <div style="display:flex; justify-content:space-between; align-items:flex-start;">
             <div>
-              <p style="font-size:0.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">${escapeHtml(product.brand)}</p>
-              <h2 style="font-size:1.3rem; margin-top:2px;">${escapeHtml(product.name)}</h2>
+              <p style="font-size:0.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">${escapeHtml(product.brand)} (${escapeHtml(product.packageSize)})</p>
+              <h2 style="font-size:1.3rem; margin-top:2px;">${escapeHtml(product.exactName)}</h2>
             </div>
             <button class="btn-secondary" style="font-size:0.75rem; padding:6px 10px;" onclick="toggleSaveProduct('${escapeHtml(product.barcode)}')">
               ${isSaved ? 'Mentve' : 'Mentés későbbre'}
@@ -907,12 +1082,12 @@
 
           <h3 style="font-size:0.95rem; margin-bottom:6px;">Röviden</h3>
           <p style="font-size:0.88rem; color:var(--text-main); line-height:1.5;">${escapeHtml(product.summary)}</p>
-          ${product.sugarText ? `<p style="font-size:0.85rem; font-weight:600; color:var(--accent-eucalyptus); margin-top:6px;">${escapeHtml(product.sugarText)}</p>` : ''}
+          ${product.nutrition && product.nutrition.totalSugarPer100g !== undefined ? `<p style="font-size:0.85rem; font-weight:600; color:var(--accent-eucalyptus); margin-top:6px;">Összes cukor: ${product.nutrition.totalSugarPer100g}${product.nutrition.sugarUnit}</p>` : ''}
 
-          ${relevanceNotes.length > 0 ? `
+          ${relevanceResults.length > 0 ? `
             <div class="relevance-box">
               <strong style="font-size:0.82rem; color:var(--accent-eucalyptus);">Összhang a beállításaiddal:</strong>
-              <p style="font-size:0.82rem; color:var(--text-main); margin-top:4px;">${relevanceNotes.map(n => escapeHtml(n)).join('<br>')}</p>
+              <p style="font-size:0.82rem; color:var(--text-main); margin-top:4px;">${relevanceResults.map(r => escapeHtml(r.reason)).join('<br>')}</p>
             </div>
           ` : `
             <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted);">
@@ -925,6 +1100,7 @@
 
           <h3 style="font-size:0.95rem; margin-bottom:10px;">Címkén szereplő összetevők</h3>
           <div>${ingredientsHtml}</div>
+          ${notesHtml}
 
           <hr class="section-divider">
 
@@ -943,21 +1119,24 @@
     }
 
     /* ==========================================================================
-       6. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA (Közvetlen Snapshot-megnyitás)
+       8. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
        ========================================================================== */
     function saveToHistory(product) {
       let history = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
       history = history.filter(p => p.barcode !== product.barcode);
       history.unshift({
         barcode: product.barcode,
-        name: product.name,
+        exactName: product.exactName,
         brand: product.brand,
         category: product.category,
-        dataSource: product.dataSource,
-        source: product.source,
+        packageSize: product.packageSize,
+        sources: product.sources,
         summary: product.summary,
-        sugarText: product.sugarText,
-        ingredientsList: product.ingredientsList,
+        nutrition: product.nutrition,
+        fullIngredients: product.fullIngredients,
+        resolvedIngredients: product.resolvedIngredients,
+        featuredIngredients: product.featuredIngredients,
+        manufacturerNotes: product.manufacturerNotes,
         alternatives: product.alternatives,
         date: new Date().toLocaleDateString('hu-HU')
       });
@@ -976,7 +1155,7 @@
       container.innerHTML = history.map((item, index) => `
         <div class="history-item" onclick="openHistorySnapshot(${index})">
           <div>
-            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(item.name)}</strong>
+            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(item.exactName)}</strong>
             <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(item.brand)} • ${escapeHtml(item.date)}</p>
           </div>
           <span style="font-size:0.8rem; color:var(--accent-sage);">Megnyitás</span>
@@ -1034,14 +1213,17 @@
         if (product) {
           saved.push({
             barcode: product.barcode,
-            name: product.name,
+            exactName: product.exactName,
             brand: product.brand,
             category: product.category,
-            dataSource: product.dataSource,
-            source: product.source,
+            packageSize: product.packageSize,
+            sources: product.sources,
             summary: product.summary,
-            sugarText: product.sugarText,
-            ingredientsList: product.ingredientsList,
+            nutrition: product.nutrition,
+            fullIngredients: product.fullIngredients,
+            resolvedIngredients: product.resolvedIngredients,
+            featuredIngredients: product.featuredIngredients,
+            manufacturerNotes: product.manufacturerNotes,
             alternatives: product.alternatives
           });
         }
@@ -1063,7 +1245,7 @@
       container.innerHTML = savedProducts.map((p, index) => `
         <div class="history-item" onclick="openSavedSnapshot(${index})">
           <div>
-            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.name)}</strong>
+            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.exactName)}</strong>
             <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(p.brand)}</p>
           </div>
           <span style="font-size:0.8rem; color:var(--accent-sage);">Megtekintés</span>
@@ -1081,7 +1263,7 @@
     }
 
     /* ==========================================================================
-       7. MEGOSZTÁS ÉS EXPORT MODAL
+       9. MEGOSZTÁS ÉS EXPORT MODAL
        ========================================================================== */
     let currentExportCanvas = null;
 
@@ -1123,7 +1305,7 @@
     }
 
     /* ==========================================================================
-       8. NAVIGÁCIÓ ÉS INICIALIZÁLÁS
+       10. NAVIGÁCIÓ ÉS INICIALIZÁLÁS
        ========================================================================== */
     function switchTab(tabName) {
       document.querySelectorAll('.tab-view').forEach(t => t.style.display = 'none');
