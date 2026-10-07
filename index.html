@@ -182,22 +182,13 @@
       margin: 20px 0;
     }
 
-    /* VIZUÁLIS SKÁLA TENGELY STÍLUSOK */
+    /* LETISZTULT VIZUÁLIS SKÁLA STÍLUSOK */
     .spectrum-container {
       margin-bottom: 16px;
       background: var(--accent-soft);
-      padding: 12px;
+      padding: 14px 12px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--card-border);
-    }
-
-    .spectrum-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.82rem;
-      font-weight: 600;
-      margin-bottom: 8px;
     }
 
     .spectrum-bar-bg {
@@ -205,7 +196,7 @@
       height: 8px;
       border-radius: 4px;
       background: linear-gradient(to right, var(--spectrum-green) 0%, var(--spectrum-mid) 50%, var(--spectrum-rose) 100%);
-      margin: 8px 0;
+      margin: 6px 0 10px 0;
     }
 
     .spectrum-indicator {
@@ -217,7 +208,7 @@
       background-color: var(--text-main);
       border: 2px solid #FFF;
       border-radius: 50%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
       transition: left 0.3s ease;
     }
 
@@ -226,6 +217,7 @@
       justify-content: space-between;
       font-size: 0.72rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .ingredient-item {
@@ -584,7 +576,7 @@
     }
 
     /* ==========================================================================
-       2. INGREDIENT KNOWLEDGE LAYER (Szótáradatbázis - Magyarázó kártyák)
+       2. INGREDIENT KNOWLEDGE LAYER (Szótáradatbázis)
        ========================================================================== */
     const INGREDIENT_DICTIONARY = {
       "inci_paraffinum_liquidum": {
@@ -667,7 +659,7 @@
     };
 
     /* ==========================================================================
-       3. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA (Vizuális Tengely Értékekkel)
+       3. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
@@ -677,8 +669,7 @@
         category: "baby-care",
         market: "HU",
         packageSize: "125g",
-        spectrumValue: 75, // Mályva felé hajol (Hagyományos/Okkluzív, ásványiolaj alap)
-        spectrumLabel: "Hagyományos védőkrém / Alternatíva mérlegelhető",
+        spectrumValue: 75,
         sources: [{ type: "manufacturer", url: "https://www.sudocrem.com/hu/vedokrem/", checkedAt: "2026-10-07" }],
         summary: "Cink-oxidot tartalmazó védőkrém, amelyet a gyártó a bőrfelszín védelmére és a nedvesség elleni védelemre pozicionál.",
         fullIngredients: ["Aqua", "Paraffinum Liquidum", "Zinc Oxide", "Paraffin", "Lanolin", "Ozokerite", "Sorbitan Sesquioleate", "Benzyl Benzoate", "Synthetic Beeswax", "Benzyl Cinnamate", "Cinnamyl Alcohol", "Propylene Glycol", "Benzyl Alcohol", "Linalyl Acetate", "BHA", "Citric Acid", "BHT"],
@@ -700,8 +691,7 @@
         category: "baby-care",
         market: "HU",
         packageSize: "60db",
-        spectrumValue: 15, // Zöld felé hajol (Minimál növényi/vizes formula)
-        spectrumLabel: "Kímélő, vizes alapú formula",
+        spectrumValue: 15,
         sources: [{ type: "manufacturer", url: "https://www.waterwipes.com/hu/hu/termekek/original-babatorlokendo", checkedAt: "2026-10-07" }],
         summary: "Vizes babatörlőkendő, amelyet a gyártó csecsemők bőrének kíméletes tisztítására pozicionál.",
         fullIngredients: ["Aqua (Water) 99.9%", "Citrus Grandis (Grapefruit) Seed Extract*"],
@@ -716,8 +706,7 @@
         category: "baby-care",
         market: "HU",
         packageSize: "75ml",
-        spectrumValue: 10, // Zöld felé hajol (100% növényi olaj alap)
-        spectrumLabel: "Természetes, növényi fókuszú formula",
+        spectrumValue: 10,
         sources: [{ type: "manufacturer", url: "https://www.weleda.hu/", checkedAt: "2026-10-07" }],
         summary: "Növényi olajokból és bio körömvirág-kivonatból álló védőkrém.",
         fullIngredients: ["Sesamum Indicum (Sesame) Seed Oil", "Prunus Amygdalus Dulcis (Sweet Almond) Oil", "Zinc Oxide", "Beeswax (Cera Alba)", "Lanolin", "Calendula Officinalis Flower Extract"],
@@ -731,8 +720,7 @@
         category: "food",
         market: "HU",
         packageSize: "125g",
-        spectrumValue: 10, // Zöld felé hajol (Egyetlen bio összetevő)
-        spectrumLabel: "Tiszta, egyetlen zöldségből álló bébiétel",
+        spectrumValue: 10,
         sources: [{ type: "manufacturer", url: "https://www.hipp.hu/", checkedAt: "2026-10-07" }],
         summary: "Egyetlen zöldségből álló bébiétel.",
         nutrition: { totalSugarPer100g: 4.8, sugarUnit: "g/100g", source: "Csomagolási tápértéktáblázat" },
@@ -747,8 +735,7 @@
         category: "cosmetics",
         market: "HU",
         packageSize: "236ml",
-        spectrumValue: 45, // Középtartomány (Tudományos, kímélő szintetikus/bőrazonos összetevők)
-        spectrumLabel: "Dermatológiailag tesztelt, bőrazonos formula",
+        spectrumValue: 45,
         sources: [
           { type: "manufacturer", url: "https://www.cerave.hu/termekek/arctisztitas/hidratalo-tisztito-krem", checkedAt: "2026-10-07" }
         ],
@@ -787,7 +774,6 @@
             market: "HU",
             packageSize: p.quantity || "Ismeretlen",
             spectrumValue: 50,
-            spectrumLabel: "Nyílt adatbázisból származó termék",
             sources: [{ type: "open-data", url: `https://world.openfoodfacts.org/product/${barcode}`, checkedAt: new Date().toISOString().split('T')[0] }],
             summary: 'A termék adatai a nyílt Open Food Facts adatbázisból származnak.',
             nutrition: sugarVal !== null ? { totalSugarPer100g: sugarVal, sugarUnit: "g/100g", source: "Open Food Facts API" } : undefined,
@@ -928,7 +914,7 @@
       // Dinamikus Skála Érték Kiszámítás a Profil alapján
       let val = product.spectrumValue !== undefined ? product.spectrumValue : 50;
       if (prefs.includes('avoid-mineral') && product.featuredIngredients && product.featuredIngredients.includes("inci_paraffinum_liquidum")) {
-        val = 85; // Ha kerülni akarja az ásványi olajat és van benne, a skála a mályva felé mozdul
+        val = 85;
       }
 
       // Összetevők megjelenítése a Szótár alapján
@@ -1014,12 +1000,8 @@
 
           <hr class="section-divider">
 
-          <!-- VIZUÁLIS SKÁLA BLOKK -->
+          <!-- LETISZTULT VIZUÁLIS SKÁLA BLOKK (SZÖVEGES FELSŐ ZAJ NÉLKÜL) -->
           <div class="spectrum-container">
-            <div class="spectrum-header">
-              <span>Formulajellemző</span>
-              <span style="color:var(--text-main); font-weight:700;">${escapeHtml(product.spectrumLabel || "Ellenőrzött formula")}</span>
-            </div>
             <div class="spectrum-bar-bg">
               <div class="spectrum-indicator" style="left: ${val}%;"></div>
             </div>
@@ -1081,7 +1063,6 @@
         category: product.category,
         packageSize: product.packageSize,
         spectrumValue: product.spectrumValue,
-        spectrumLabel: product.spectrumLabel,
         sources: product.sources,
         summary: product.summary,
         nutrition: product.nutrition,
@@ -1169,7 +1150,6 @@
             category: product.category,
             packageSize: product.packageSize,
             spectrumValue: product.spectrumValue,
-            spectrumLabel: product.spectrumLabel,
             sources: product.sources,
             summary: product.summary,
             nutrition: product.nutrition,
