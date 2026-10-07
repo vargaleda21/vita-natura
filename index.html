@@ -61,7 +61,7 @@
       padding-bottom: 90px;
     }
 
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
       font-weight: 700;
       color: var(--text-main);
       letter-spacing: -0.3px;
@@ -85,6 +85,12 @@
     p.subtitle {
       color: var(--text-muted);
       font-size: 0.78rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
     }
 
     .card {
@@ -342,6 +348,7 @@
       border-radius: var(--radius-sm);
     }
 
+    /* MODAL OVERLAY (Általános felugró ablak stílus) */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -358,11 +365,12 @@
 
     .modal-card {
       background: #FFF;
-      padding: 20px;
+      padding: 22px;
       border-radius: var(--radius-md);
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
-      text-align: center;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
 
     .modal-card img {
@@ -395,8 +403,11 @@
       <h1 class="brand-logo" onclick="switchTab('scanner')">daleday</h1>
       <p class="subtitle">Értsd, mit választasz</p>
     </div>
-    <div>
-      <button class="btn-secondary" style="font-size:0.78rem; padding: 6px 12px;" onclick="switchTab('profile')">
+    <div class="header-actions">
+      <button class="btn-secondary" style="font-size:0.75rem; padding: 6px 10px;" onclick="openAboutModal()">
+        Mi a daleday?
+      </button>
+      <button class="btn-secondary" style="font-size:0.75rem; padding: 6px 10px;" onclick="switchTab('profile')">
         Az én daleday-m
       </button>
     </div>
@@ -437,6 +448,17 @@
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('4062100015523')">HiPP Bio</span>
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('3337875597180')">CeraVe</span>
       </div>
+    </div>
+
+    <!-- TUDÁSTÁR & ÉLETMÓD KÁRTYA -->
+    <div class="card" style="background: var(--accent-soft); border: 1px solid var(--card-border); margin-top: 16px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <h3 style="font-size: 1rem;">Tudástár & Életmód</h3>
+        <span style="font-size: 0.72rem; background: var(--bg-organic); padding: 3px 8px; border-radius: 10px; border: 1px solid var(--card-border); color: var(--text-muted);">Hamarosan</span>
+      </div>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.4;">
+        Gyakorlati útmutatók és gondolatok a fenntartható, tiszta otthon megteremtéséhez – a konyhától a babaápolásig.
+      </p>
     </div>
 
   </div>
@@ -503,9 +525,23 @@
     </div>
   </div>
 
+  <!-- ABOUT / MI A DALEDAY MODAL -->
+  <div class="modal-overlay" id="aboutModal">
+    <div class="modal-card">
+      <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Értsd, mit választasz.</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+        A daleday azért született, hogy visszahozza a tisztánlátást és a nyugalmat a mindennapi döntéseidbe. Nem kell kémiadiploma ahhoz, hogy lásd, mi kerül a bőrödre vagy a családod asztalára.
+      </p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
+        Nem állítunk fel önkényes pontszámokat, és nem riogatunk: átlátható tényeket adunk, amelyeket a saját szempontjaid szerint mérlegelhetsz. Egyszerűen, függetlenül, tudatosan.
+      </p>
+      <button style="width: 100%; padding: 10px;" onclick="closeAboutModal()">Rendben</button>
+    </div>
+  </div>
+
   <!-- EXPORT IMAGE MODAL -->
   <div class="modal-overlay" id="imageExportModal">
-    <div class="modal-card">
+    <div class="modal-card" style="text-align: center;">
       <h3 style="font-size:1rem;">Kártya mentése</h3>
       <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Tartsd nyomva a képet a mentéshez, vagy oszd meg közvetlenül!</p>
       <div id="modalImageContainer"></div>
@@ -1000,7 +1036,7 @@
 
           <hr class="section-divider">
 
-          <!-- LETISZTULT VIZUÁLIS SKÁLA BLOKK (SZÖVEGES FELSŐ ZAJ NÉLKÜL) -->
+          <!-- LETISZTULT VIZUÁLIS SKÁLA BLOKK -->
           <div class="spectrum-container">
             <div class="spectrum-bar-bg">
               <div class="spectrum-indicator" style="left: ${val}%;"></div>
@@ -1195,8 +1231,16 @@
     }
 
     /* ==========================================================================
-       8. MEGOSZTÁS ÉS EXPORT MODAL
+       8. MODAL KEZELŐ FÜGGVÉNYEK (About & Image Export)
        ========================================================================== */
+    function openAboutModal() {
+      document.getElementById('aboutModal').classList.add('active');
+    }
+
+    function closeAboutModal() {
+      document.getElementById('aboutModal').classList.remove('active');
+    }
+
     let currentExportCanvas = null;
 
     function exportToImageModal() {
