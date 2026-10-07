@@ -7,16 +7,16 @@
 
   <!-- PWA beállítások -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#3D231D">
+  <meta name="theme-color" content="#3C2415">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="daleday">
-  <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/3D231D/FFFFFF?text=daleday">
+  <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/3C2415/FFFFFF?text=daleday">
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts: Playfair Display (főcímekhez) & Plus Jakarta Sans (UI elemekhez) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- External JS Libraries -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -24,32 +24,33 @@
 
   <style>
     :root {
-      /* Luxury Terracotta & Espresso Paletta */
-      --bg-organic: #E8D8C8;
+      /* Espresso & Pale Oak Luxury Paletta */
+      --bg-organic: #DDD9CE; /* Pale Oak */
       --card-bg: #FFFFFF;
-      --card-border: rgba(61, 35, 29, 0.15);
-      --text-main: #3D231D;
-      --text-muted: #6B4E46;
-      --accent-espresso: #3D231D;
-      --accent-terracotta: #8B4226;
-      --accent-slate: #3C4A52;
-      --accent-soft: rgba(139, 66, 38, 0.08);
+      --card-border: rgba(60, 36, 21, 0.15);
+      --text-main: #3C2415; /* Espresso */
+      --text-muted: #6B4E41;
+      --accent-espresso: #3C2415;
+      --accent-soft: rgba(60, 36, 21, 0.06);
       
       /* Skála színek */
       --spectrum-green: #687A60;
-      --spectrum-mid: #A88E80;
+      --spectrum-mid: #A89C8C;
       --spectrum-rose: #B86B6B;
       
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
+
+      /* Betűtípusok */
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
@@ -60,13 +61,16 @@
       margin: 0 auto;
       line-height: 1.5;
       font-size: 0.9rem;
+      font-family: var(--font-sans);
       padding-bottom: 110px;
     }
 
-    h1, h2, h3, h4 {
-      font-weight: 700;
+    /* Elegant Serif Typo a főcímekhez */
+    h1, h2, h3, h4, .brand-logo, .hero-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
       color: var(--text-main);
-      letter-spacing: -0.3px;
+      letter-spacing: -0.2px;
     }
 
     header {
@@ -79,14 +83,16 @@
     }
 
     h1.brand-logo {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       color: var(--text-main);
       cursor: pointer;
+      font-style: italic;
     }
 
     p.subtitle {
       color: var(--text-muted);
       font-size: 0.78rem;
+      font-family: var(--font-sans);
     }
 
     .header-actions {
@@ -99,9 +105,9 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
-      padding: 18px;
+      padding: 20px;
       margin-bottom: 16px;
-      box-shadow: 0 4px 14px rgba(61, 35, 29, 0.04);
+      box-shadow: 0 4px 16px rgba(60, 36, 21, 0.04);
     }
 
     .hero-section {
@@ -110,15 +116,17 @@
     }
 
     .hero-title {
-      font-size: 1.7rem;
+      font-size: 1.9rem;
       color: var(--text-main);
       margin-bottom: 6px;
+      line-height: 1.25;
     }
 
     .hero-sub {
       color: var(--text-muted);
       font-size: 0.88rem;
       margin-bottom: 18px;
+      font-family: var(--font-sans);
     }
 
     .scanner-box {
@@ -135,11 +143,12 @@
       border-radius: var(--radius-sm);
       font-size: 0.88rem;
       color: var(--text-main);
+      font-family: var(--font-sans);
       outline: none;
     }
 
     input:focus {
-      border-color: var(--accent-terracotta);
+      border-color: var(--accent-espresso);
       background: #FFF;
     }
 
@@ -151,6 +160,7 @@
       border-radius: var(--radius-sm);
       font-weight: 600;
       font-size: 0.85rem;
+      font-family: var(--font-sans);
       cursor: pointer;
       transition: background 0.2s;
       display: inline-flex;
@@ -160,7 +170,7 @@
       white-space: nowrap;
     }
 
-    button:hover { background: #2A1713; }
+    button:hover { background: #26180D; }
 
     button.btn-secondary {
       background: var(--bg-organic);
@@ -168,7 +178,7 @@
       border: 1px solid var(--card-border);
     }
 
-    button.btn-secondary:hover { background: #DFCBBF; }
+    button.btn-secondary:hover { background: #D0C9BB; }
 
     .tag-badge {
       display: inline-block;
@@ -181,6 +191,7 @@
       border-radius: 12px;
       margin-right: 6px;
       margin-bottom: 6px;
+      font-family: var(--font-sans);
     }
 
     .section-divider {
@@ -225,6 +236,7 @@
       font-size: 0.72rem;
       color: var(--text-muted);
       font-weight: 500;
+      font-family: var(--font-sans);
     }
 
     .ingredient-item {
@@ -241,6 +253,7 @@
       align-items: center;
       font-weight: 600;
       color: var(--text-main);
+      font-family: var(--font-sans);
     }
 
     .ingredient-details {
@@ -251,6 +264,7 @@
       background: var(--accent-soft);
       padding: 12px;
       border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
     }
 
     .ingredient-details.active { display: block; }
@@ -262,14 +276,14 @@
       transform: translateX(-50%);
       width: calc(100% - 28px);
       max-width: 480px;
-      background: rgba(232, 216, 200, 0.94);
+      background: rgba(221, 217, 206, 0.94);
       backdrop-filter: blur(12px);
       border: 1px solid var(--card-border);
       border-radius: var(--radius-lg);
       display: flex;
       justify-content: space-around;
       padding: 8px 0;
-      box-shadow: 0 8px 24px rgba(61, 35, 29, 0.1);
+      box-shadow: 0 8px 24px rgba(60, 36, 21, 0.1);
       z-index: 900;
     }
 
@@ -283,10 +297,11 @@
       flex-direction: column;
       align-items: center;
       gap: 3px;
+      font-family: var(--font-sans);
     }
 
     .nav-item.active {
-      color: var(--accent-terracotta);
+      color: var(--accent-espresso);
       font-weight: 700;
     }
 
@@ -295,7 +310,7 @@
       display: block;
       width: 4px;
       height: 4px;
-      background: var(--accent-terracotta);
+      background: var(--accent-espresso);
       border-radius: 50%;
       margin-top: 1px;
     }
@@ -332,6 +347,7 @@
       font-size: 0.85rem;
       cursor: pointer;
       color: var(--text-main);
+      font-family: var(--font-sans);
     }
 
     #reader {
@@ -343,10 +359,11 @@
 
     .relevance-box {
       background: var(--accent-soft);
-      border-left: 3px solid var(--accent-terracotta);
+      border-left: 3px solid var(--accent-espresso);
       padding: 12px;
       margin-top: 14px;
       border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
     }
 
     /* MODAL OVERLAY */
@@ -354,7 +371,7 @@
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(61, 35, 29, 0.65);
+      background: rgba(60, 36, 21, 0.65);
       backdrop-filter: blur(5px);
       z-index: 1000;
       justify-content: center;
@@ -374,29 +391,6 @@
       box-shadow: 0 12px 36px rgba(0,0,0,0.18);
     }
 
-    .about-bullet-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    .about-bullet-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 0.85rem;
-      color: var(--text-main);
-      line-height: 1.45;
-    }
-
-    .about-bullet-icon {
-      color: var(--accent-terracotta);
-      font-weight: bold;
-      font-size: 0.9rem;
-      margin-top: 1px;
-    }
-
     /* OLDALALJI IMPRESSZUM STÍLUS */
     footer.app-footer {
       margin-top: 40px;
@@ -405,6 +399,7 @@
       font-size: 0.72rem;
       color: var(--text-muted);
       line-height: 1.5;
+      font-family: var(--font-sans);
     }
 
     footer.app-footer h5 {
@@ -413,6 +408,7 @@
       margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      font-family: var(--font-sans);
     }
 
     footer.app-footer p {
@@ -423,9 +419,9 @@
       display: inline-block;
       width: 16px;
       height: 16px;
-      border: 2px solid rgba(61, 35, 29, 0.2);
+      border: 2px solid rgba(60, 36, 21, 0.2);
       border-radius: 50%;
-      border-top-color: var(--accent-terracotta);
+      border-top-color: var(--accent-espresso);
       animation: spin 0.8s linear infinite;
       vertical-align: middle;
       margin-right: 6px;
@@ -479,7 +475,7 @@
 
     <!-- DEMÓ PRÓBALEHETŐSÉG -->
     <div class="card" style="margin-top: 20px;">
-      <h3 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Példatermékek teszteléshez:</h3>
+      <h3 style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 8px; font-family: var(--font-sans); font-weight:600;">Példatermékek teszteléshez:</h3>
       <div style="display: flex; flex-wrap: wrap; gap: 6px;">
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('5011082138032')">Sudocrem</span>
         <span class="tag-badge" style="cursor:pointer;" onclick="handleScanCode('5099514000020')">WaterWipes</span>
@@ -492,10 +488,10 @@
     <!-- TUDÁSTÁR & ÉLETMÓD KÁRTYA -->
     <div class="card" style="background: var(--accent-soft); border: 1px solid var(--card-border); margin-top: 16px;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-        <h3 style="font-size: 1rem;">Tudástár & Életmód</h3>
-        <span style="font-size: 0.72rem; background: var(--card-bg); padding: 3px 8px; border-radius: 10px; border: 1px solid var(--card-border); color: var(--text-muted);">Hamarosan</span>
+        <h3 style="font-size: 1.05rem;">Tudástár & Életmód</h3>
+        <span style="font-size: 0.72rem; background: var(--card-bg); padding: 3px 8px; border-radius: 10px; border: 1px solid var(--card-border); color: var(--text-muted); font-family: var(--font-sans);">Hamarosan</span>
       </div>
-      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.4;">
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.4; font-family: var(--font-sans);">
         Gyakorlati útmutatók és gondolatok a fenntartható, tiszta otthon megteremtéséhez – a konyhától a babaápolásig.
       </p>
     </div>
@@ -505,10 +501,10 @@
   <!-- 2. TAB: ELŐZMÉNYEK -->
   <div id="tab-history" class="tab-view" style="display: none;">
     <div class="card">
-      <h3>Legutóbb ellenőrzött termékek</h3>
-      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Az előzményeket biztonságosan ezen az eszközön tároljuk.</p>
+      <h3 style="font-size: 1.2rem; margin-bottom: 4px;">Legutóbb ellenőrzött termékek</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; font-family: var(--font-sans);">Az előzményeket biztonságosan ezen az eszközön tároljuk.</p>
       <div id="historyListContainer">
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Még nem ellenőriztél egyetlen terméket sem.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-sans);">Még nem ellenőriztél egyetlen terméket sem.</p>
       </div>
     </div>
   </div>
@@ -516,14 +512,14 @@
   <!-- 3. TAB: AZ ÉN DALEDAY-M (PROFIL ÉS BEÁLLÍTÁSOK) -->
   <div id="tab-profile" class="tab-view" style="display: none;">
     <div class="card">
-      <h3>Az én daleday-m</h3>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+      <h3 style="font-size: 1.2rem; margin-bottom: 4px;">Az én daleday-m</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted); font-family: var(--font-sans);">
         A daleday megjegyzi a beállításaidat ezen az eszközön, hogy számodra relevánsabb információkat emelhessen ki.
       </p>
 
       <hr class="section-divider">
 
-      <h4 style="font-size: 0.95rem; margin-bottom: 8px;">Mire szeretnél jobban figyelni?</h4>
+      <h4 style="font-size: 1rem; margin-bottom: 8px;">Mire szeretnél jobban figyelni?</h4>
       <div class="checkbox-group" id="userPreferencesGroup">
         <label class="checkbox-label">
           <input type="checkbox" value="understand" onchange="savePreferences()">
@@ -557,14 +553,14 @@
 
       <hr class="section-divider">
 
-      <h4 style="font-size: 0.95rem; margin-bottom: 8px;">Mentett termékek</h4>
+      <h4 style="font-size: 1rem; margin-bottom: 8px;">Mentett termékek</h4>
       <div id="savedProductsContainer">
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Még nem mentettél el termékeket.</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-sans);">Még nem mentettél el termékeket.</p>
       </div>
     </div>
   </div>
 
-  <!-- DISZKRÉT DISCLAMER ÉS IMPRESSZUM AZ OLDAL LEGESLEGALJÁN -->
+  <!-- DISZKRÉT IMPRESSZUM AZ OLDAL LEGESLEGALJÁN -->
   <footer class="app-footer">
     <h5>Impresszum & Nyilatkozat</h5>
     <p><strong>Szolgáltatás:</strong> daleday – Független termékértelmező PWA alkalmazás (MVP tesztüzem)</p>
@@ -577,33 +573,27 @@
   <!-- ABOUT MODAL -->
   <div class="modal-overlay" id="aboutModal">
     <div class="modal-card">
-      <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 4px;">Csendes útmutató a tudatos mindennapokhoz</h3>
-      <p style="font-size: 0.8rem; color: var(--accent-terracotta); font-weight: 600;">Miért jött létre a daleday?</p>
+      <h3 style="font-size: 1.25rem; color: var(--text-main); margin-bottom: 16px; line-height: 1.35;">
+        A daleday egy csendes útmutató a tudatos mindennapokhoz.
+      </h3>
+      
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; font-family: var(--font-sans);">
+        Azért született, hogy visszahozza a tisztánlátást és a nyugalmat a mindennapi döntéseidbe.
+      </p>
 
-      <div class="about-bullet-list">
-        <div class="about-bullet-item">
-          <span class="about-bullet-icon">✦</span>
-          <div><strong>Tisztánlátás szorongás nélkül:</strong> Visszahozza a nyugalmat a vásárlásba, hogy a boltok polcai előtt állva magabiztosan hozhass döntést.</div>
-        </div>
-        <div class="about-bullet-item">
-          <span class="about-bullet-icon">✦</span>
-          <div><strong>Közérthető nyelv:</strong> Kibogozza az összetevőlisták bonyolult világát, hogy azonnal lásd, mi kerül a bőrödre vagy a családod asztalára.</div>
-        </div>
-        <div class="about-bullet-item">
-          <span class="about-bullet-icon">✦</span>
-          <div><strong>Tények ítélkezés nélkül:</strong> Nem állítunk fel hamis pontszámokat – az adatokat a te saját szempontjaid szerint emeljük ki.</div>
-        </div>
-      </div>
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 22px; font-family: var(--font-sans);">
+        A daleday segít kibogozni az összetevőlisták bonyolult világát, hogy a boltok polcai előtt állva magabiztosan hozhass döntést és lásd, mi kerül a bőrödre vagy a családod asztalára.
+      </p>
 
-      <button style="width: 100%; padding: 12px; margin-top: 6px;" onclick="closeAboutModal()">Rendben</button>
+      <button style="width: 100%; padding: 12px;" onclick="closeAboutModal()">Rendben</button>
     </div>
   </div>
 
   <!-- EXPORT IMAGE MODAL -->
   <div class="modal-overlay" id="imageExportModal">
     <div class="modal-card" style="text-align: center;">
-      <h3 style="font-size:1rem;">Kártya mentése</h3>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Tartsd nyomva a képet a mentéshez, vagy oszd meg közvetlenül!</p>
+      <h3 style="font-size:1.1rem;">Kártya mentése</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px; font-family: var(--font-sans);">Tartsd nyomva a képet a mentéshez, vagy oszd meg közvetlenül!</p>
       <div id="modalImageContainer"></div>
       <div style="display:flex; gap:8px; margin-top:12px;">
         <button style="flex:1;" onclick="shareGeneratedImage()">Megosztás</button>
@@ -955,8 +945,8 @@
       } else {
         container.innerHTML = `
           <div class="card">
-            <h3>Ezt a terméket még nem találjuk a daleday adatbázisában</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 6px;">
+            <h3 style="font-size:1.2rem;">Ezt a terméket még nem találjuk a daleday adatbázisában</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 6px; font-family: var(--font-sans);">
               A(z) <code>${escapeHtml(code)}</code> vonalkódról jelenleg nincs elegendő megbízható adatunk.
             </p>
             <button class="btn-secondary" style="margin-top: 12px; width: 100%;" onclick="startCameraScanner()">Másik termék beolvasása</button>
@@ -1045,7 +1035,7 @@
 
       let notesHtml = '';
       if (product.manufacturerNotes && product.manufacturerNotes.length > 0) {
-        notesHtml = `<p style="font-size:0.78rem; color:var(--text-muted); margin-top:10px; font-style:italic;">Gyártói kiegészítő megjegyzés: ${product.manufacturerNotes.map(n => escapeHtml(n)).join(', ')}</p>`;
+        notesHtml = `<p style="font-size:0.78rem; color:var(--text-muted); margin-top:10px; font-style:italic; font-family:var(--font-sans);">Gyártói kiegészítő megjegyzés: ${product.manufacturerNotes.map(n => escapeHtml(n)).join(', ')}</p>`;
       }
 
       let alternativesHtml = '';
@@ -1057,17 +1047,17 @@
 
         alternativesHtml = `
           <div class="card" style="background:var(--accent-soft); border:1px dashed var(--card-border);">
-            <h4 style="font-size:0.88rem; margin-bottom:6px;">${reasonHeader}</h4>
+            <h4 style="font-size:0.95rem; margin-bottom:6px;">${reasonHeader}</h4>
             ${product.alternatives.map(alt => {
               const safeUrl = isValidUrl(alt.url) ? escapeHtml(alt.url) : '#';
               return `
-                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;">${escapeHtml(alt.reason)}</p>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:6px; font-family:var(--font-sans);">${escapeHtml(alt.reason)}</p>
                 <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="display:block; text-align:center;" class="btn-secondary">
                   ${escapeHtml(alt.name)} megtekintése
                 </a>
               `;
             }).join('')}
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px; font-style:italic;">Ez az opció nem jelent minőségi ítéletet a beszkennelt termékről, kizárólag a profilodban megadott szempontot tükrözi.</p>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:8px; font-style:italic; font-family:var(--font-sans);">Ez az opció nem jelent minőségi ítéletet a beszkennelt termékről, kizárólag a profilodban megadott szempontot tükrözi.</p>
           </div>
         `;
       }
@@ -1079,15 +1069,15 @@
         <div class="card" id="exportCard">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
             <div style="flex:1;">
-              <p style="font-size:0.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">${escapeHtml(product.brand)} (${escapeHtml(product.packageSize)})</p>
-              <h2 style="font-size:1.25rem; margin-top:2px; line-height:1.3;">${escapeHtml(product.exactName)}</h2>
+              <p style="font-size:0.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; font-family:var(--font-sans);">${escapeHtml(product.brand)} (${escapeHtml(product.packageSize)})</p>
+              <h2 style="font-size:1.45rem; margin-top:2px; line-height:1.25;">${escapeHtml(product.exactName)}</h2>
             </div>
             <button class="btn-secondary" style="font-size:0.75rem; padding:6px 10px; flex-shrink:0;" onclick="toggleSaveProduct('${escapeHtml(product.barcode)}')">
               ${isSaved ? 'Mentve' : 'Mentés későbbre'}
             </button>
           </div>
 
-          <p style="font-size:0.78rem; color:var(--text-muted); margin-top:6px;">Adatforrás: ${escapeHtml(sourceName)}</p>
+          <p style="font-size:0.78rem; color:var(--text-muted); margin-top:6px; font-family:var(--font-sans);">Adatforrás: ${escapeHtml(sourceName)}</p>
 
           <hr class="section-divider">
 
@@ -1102,9 +1092,9 @@
             </div>
           </div>
 
-          <h3 style="font-size:0.95rem; margin-bottom:6px;">Röviden</h3>
-          <p style="font-size:0.88rem; color:var(--text-main); line-height:1.5;">${escapeHtml(product.summary)}</p>
-          ${product.nutrition && product.nutrition.totalSugarPer100g !== undefined ? `<p style="font-size:0.85rem; font-weight:600; color:var(--text-main); margin-top:6px;">Összes cukor: ${product.nutrition.totalSugarPer100g}${product.nutrition.sugarUnit}</p>` : ''}
+          <h3 style="font-size:1rem; margin-bottom:6px;">Röviden</h3>
+          <p style="font-size:0.88rem; color:var(--text-main); line-height:1.5; font-family:var(--font-sans);">${escapeHtml(product.summary)}</p>
+          ${product.nutrition && product.nutrition.totalSugarPer100g !== undefined ? `<p style="font-size:0.85rem; font-weight:600; color:var(--text-main); margin-top:6px; font-family:var(--font-sans);">Összes cukor: ${product.nutrition.totalSugarPer100g}${product.nutrition.sugarUnit}</p>` : ''}
 
           ${relevanceResults.length > 0 ? `
             <div class="relevance-box">
@@ -1112,7 +1102,7 @@
               <p style="font-size:0.82rem; color:var(--text-main); margin-top:4px;">${relevanceResults.map(r => escapeHtml(r.reason)).join('<br>')}</p>
             </div>
           ` : `
-            <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted);">
+            <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted); font-family:var(--font-sans);">
               Szeretnéd, hogy a daleday a saját szempontjaid alapján emelje ki, mire érdemes figyelned?
               <span style="text-decoration:underline; cursor:pointer; color:var(--text-main);" onclick="switchTab('profile')">Beállítások megadása</span>
             </div>
@@ -1120,7 +1110,7 @@
 
           <hr class="section-divider">
 
-          <h3 style="font-size:0.95rem; margin-bottom:10px;">Címkén szereplő összetevők</h3>
+          <h3 style="font-size:1rem; margin-bottom:10px;">Címkén szereplő összetevők</h3>
           <div>${ingredientsHtml}</div>
           ${notesHtml}
 
@@ -1171,16 +1161,16 @@
       const container = document.getElementById('historyListContainer');
       const history = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
       if (history.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Még nem ellenőriztél egyetlen terméket sem.</p>';
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-sans);">Még nem ellenőriztél egyetlen terméket sem.</p>';
         return;
       }
       container.innerHTML = history.map((item, index) => `
         <div class="history-item" onclick="openHistorySnapshot(${index})">
           <div>
-            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(item.exactName)}</strong>
-            <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(item.brand)} • ${escapeHtml(item.date)}</p>
+            <strong style="font-size:0.88rem; color:var(--text-main); font-family: var(--font-sans);">${escapeHtml(item.exactName)}</strong>
+            <p style="font-size:0.78rem; color:var(--text-muted); font-family: var(--font-sans);">${escapeHtml(item.brand)} • ${escapeHtml(item.date)}</p>
           </div>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Megnyitás</span>
+          <span style="font-size:0.8rem; color:var(--text-muted); font-family: var(--font-sans);">Megnyitás</span>
         </div>
       `).join('');
     }
@@ -1261,16 +1251,16 @@
       const container = document.getElementById('savedProductsContainer');
       const savedProducts = JSON.parse(localStorage.getItem('daleday_saved_snapshots') || '[]');
       if (savedProducts.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Még nem mentettél el termékeket.</p>';
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem; font-family: var(--font-sans);">Még nem mentettél el termékeket.</p>';
         return;
       }
       container.innerHTML = savedProducts.map((p, index) => `
         <div class="history-item" onclick="openSavedSnapshot(${index})">
           <div>
-            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.exactName)}</strong>
-            <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(p.brand)}</p>
+            <strong style="font-size:0.88rem; color:var(--text-main); font-family: var(--font-sans);">${escapeHtml(p.exactName)}</strong>
+            <p style="font-size:0.78rem; color:var(--text-muted); font-family: var(--font-sans);">${escapeHtml(p.brand)}</p>
           </div>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Megtekintés</span>
+          <span style="font-size:0.8rem; color:var(--text-muted); font-family: var(--font-sans);">Megtekintés</span>
         </div>
       `).join('');
     }
