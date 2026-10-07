@@ -24,7 +24,7 @@
 
   <style>
     :root {
-      /* Új Luxury Terracotta & Espresso Paletta */
+      /* Luxury Terracotta & Espresso Paletta */
       --bg-organic: #E8D8C8;
       --card-bg: #FFFFFF;
       --card-border: rgba(61, 35, 29, 0.15);
@@ -60,7 +60,7 @@
       margin: 0 auto;
       line-height: 1.5;
       font-size: 0.9rem;
-      padding-bottom: 90px;
+      padding-bottom: 110px;
     }
 
     h1, h2, h3, h4 {
@@ -190,7 +190,6 @@
       margin: 20px 0;
     }
 
-    /* LETISZTULT VIZUÁLIS SKÁLA STÍLUSOK */
     .spectrum-container {
       margin-bottom: 16px;
       background: var(--accent-soft);
@@ -398,6 +397,28 @@
       margin-top: 1px;
     }
 
+    /* OLDALALJI IMPRESSZUM STÍLUS */
+    footer.app-footer {
+      margin-top: 40px;
+      padding: 20px 10px 10px 10px;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    footer.app-footer h5 {
+      font-size: 0.78rem;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    footer.app-footer p {
+      margin-bottom: 4px;
+    }
+
     .spinner {
       display: inline-block;
       width: 16px;
@@ -543,7 +564,17 @@
     </div>
   </div>
 
-  <!-- ABOUT MODAL (SZETVÁLASZTOTT, ÁTLÁTHATÓ SZÖVEGGEL) -->
+  <!-- DISZKRÉT DISCLAMER ÉS IMPRESSZUM AZ OLDAL LEGESLEGALJÁN -->
+  <footer class="app-footer">
+    <h5>Impresszum & Nyilatkozat</h5>
+    <p><strong>Szolgáltatás:</strong> daleday – Független termékértelmező PWA alkalmazás (MVP tesztüzem)</p>
+    <p><strong>Üzemeltető:</strong> Varga Léda (magánszemély / fejlesztési projekt)</p>
+    <p><strong>Kapcsolat:</strong> vargaleda21@gmail.com</p>
+    <p><strong>Tárhelyszolgáltató:</strong> GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA</p>
+    <p style="margin-top: 6px; font-style: italic;">Jogi nyilatkozat: A daleday felületén megjelenő adatok kizárólag tájékoztató jellegűek, nem minősülnek orvosi vagy szakkifejezett egészségügyi tanácsadásnak.</p>
+  </footer>
+
+  <!-- ABOUT MODAL -->
   <div class="modal-overlay" id="aboutModal">
     <div class="modal-card">
       <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 4px;">Csendes útmutató a tudatos mindennapokhoz</h3>
@@ -1025,7 +1056,7 @@
         }
 
         alternativesHtml = `
-          <div class="card" style="background:var(--accent-soft); border:1px dashed var(--accent-sand);">
+          <div class="card" style="background:var(--accent-soft); border:1px dashed var(--card-border);">
             <h4 style="font-size:0.88rem; margin-bottom:6px;">${reasonHeader}</h4>
             ${product.alternatives.map(alt => {
               const safeUrl = isValidUrl(alt.url) ? escapeHtml(alt.url) : '#';
