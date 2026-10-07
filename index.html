@@ -32,6 +32,12 @@
       --accent-olive: #555239;
       --accent-sand: #B8A898;
       --accent-soft: rgba(184, 168, 152, 0.18);
+      
+      /* Skála színek */
+      --spectrum-green: #8A9A7E;
+      --spectrum-mid: #B8A898;
+      --spectrum-rose: #C89696;
+      
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
@@ -174,6 +180,52 @@
       height: 1px;
       background: var(--card-border);
       margin: 20px 0;
+    }
+
+    /* VIZUÁLIS SKÁLA TENGELY STÍLUSOK */
+    .spectrum-container {
+      margin-bottom: 16px;
+      background: var(--accent-soft);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--card-border);
+    }
+
+    .spectrum-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .spectrum-bar-bg {
+      position: relative;
+      height: 8px;
+      border-radius: 4px;
+      background: linear-gradient(to right, var(--spectrum-green) 0%, var(--spectrum-mid) 50%, var(--spectrum-rose) 100%);
+      margin: 8px 0;
+    }
+
+    .spectrum-indicator {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background-color: var(--text-main);
+      border: 2px solid #FFF;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: left 0.3s ease;
+    }
+
+    .spectrum-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
 
     .ingredient-item {
@@ -615,7 +667,7 @@
     };
 
     /* ==========================================================================
-       3. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
+       3. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA (Vizuális Tengely Értékekkel)
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
@@ -625,6 +677,8 @@
         category: "baby-care",
         market: "HU",
         packageSize: "125g",
+        spectrumValue: 75, // Mályva felé hajol (Hagyományos/Okkluzív, ásványiolaj alap)
+        spectrumLabel: "Hagyományos védőkrém / Alternatíva mérlegelhető",
         sources: [{ type: "manufacturer", url: "https://www.sudocrem.com/hu/vedokrem/", checkedAt: "2026-10-07" }],
         summary: "Cink-oxidot tartalmazó védőkrém, amelyet a gyártó a bőrfelszín védelmére és a nedvesség elleni védelemre pozicionál.",
         fullIngredients: ["Aqua", "Paraffinum Liquidum", "Zinc Oxide", "Paraffin", "Lanolin", "Ozokerite", "Sorbitan Sesquioleate", "Benzyl Benzoate", "Synthetic Beeswax", "Benzyl Cinnamate", "Cinnamyl Alcohol", "Propylene Glycol", "Benzyl Alcohol", "Linalyl Acetate", "BHA", "Citric Acid", "BHT"],
@@ -646,6 +700,8 @@
         category: "baby-care",
         market: "HU",
         packageSize: "60db",
+        spectrumValue: 15, // Zöld felé hajol (Minimál növényi/vizes formula)
+        spectrumLabel: "Kímélő, vizes alapú formula",
         sources: [{ type: "manufacturer", url: "https://www.waterwipes.com/hu/hu/termekek/original-babatorlokendo", checkedAt: "2026-10-07" }],
         summary: "Vizes babatörlőkendő, amelyet a gyártó csecsemők bőrének kíméletes tisztítására pozicionál.",
         fullIngredients: ["Aqua (Water) 99.9%", "Citrus Grandis (Grapefruit) Seed Extract*"],
@@ -660,6 +716,8 @@
         category: "baby-care",
         market: "HU",
         packageSize: "75ml",
+        spectrumValue: 10, // Zöld felé hajol (100% növényi olaj alap)
+        spectrumLabel: "Természetes, növényi fókuszú formula",
         sources: [{ type: "manufacturer", url: "https://www.weleda.hu/", checkedAt: "2026-10-07" }],
         summary: "Növényi olajokból és bio körömvirág-kivonatból álló védőkrém.",
         fullIngredients: ["Sesamum Indicum (Sesame) Seed Oil", "Prunus Amygdalus Dulcis (Sweet Almond) Oil", "Zinc Oxide", "Beeswax (Cera Alba)", "Lanolin", "Calendula Officinalis Flower Extract"],
@@ -673,6 +731,8 @@
         category: "food",
         market: "HU",
         packageSize: "125g",
+        spectrumValue: 10, // Zöld felé hajol (Egyetlen bio összetevő)
+        spectrumLabel: "Tiszta, egyetlen zöldségből álló bébiétel",
         sources: [{ type: "manufacturer", url: "https://www.hipp.hu/", checkedAt: "2026-10-07" }],
         summary: "Egyetlen zöldségből álló bébiétel.",
         nutrition: { totalSugarPer100g: 4.8, sugarUnit: "g/100g", source: "Csomagolási tápértéktáblázat" },
@@ -687,6 +747,8 @@
         category: "cosmetics",
         market: "HU",
         packageSize: "236ml",
+        spectrumValue: 45, // Középtartomány (Tudományos, kímélő szintetikus/bőrazonos összetevők)
+        spectrumLabel: "Dermatológiailag tesztelt, bőrazonos formula",
         sources: [
           { type: "manufacturer", url: "https://www.cerave.hu/termekek/arctisztitas/hidratalo-tisztito-krem", checkedAt: "2026-10-07" }
         ],
@@ -724,6 +786,8 @@
             category: 'food',
             market: "HU",
             packageSize: p.quantity || "Ismeretlen",
+            spectrumValue: 50,
+            spectrumLabel: "Nyílt adatbázisból származó termék",
             sources: [{ type: "open-data", url: `https://world.openfoodfacts.org/product/${barcode}`, checkedAt: new Date().toISOString().split('T')[0] }],
             summary: 'A termék adatai a nyílt Open Food Facts adatbázisból származnak.',
             nutrition: sugarVal !== null ? { totalSugarPer100g: sugarVal, sugarUnit: "g/100g", source: "Open Food Facts API" } : undefined,
@@ -861,6 +925,12 @@
       const prefs = getSavedPreferences();
       const relevanceResults = evaluateRelevance(product, prefs);
 
+      // Dinamikus Skála Érték Kiszámítás a Profil alapján
+      let val = product.spectrumValue !== undefined ? product.spectrumValue : 50;
+      if (prefs.includes('avoid-mineral') && product.featuredIngredients && product.featuredIngredients.includes("inci_paraffinum_liquidum")) {
+        val = 85; // Ha kerülni akarja az ásványi olajat és van benne, a skála a mályva felé mozdul
+      }
+
       // Összetevők megjelenítése a Szótár alapján
       let ingredientsHtml = '';
       if (product.featuredIngredients && product.featuredIngredients.length > 0) {
@@ -944,6 +1014,22 @@
 
           <hr class="section-divider">
 
+          <!-- VIZUÁLIS SKÁLA BLOKK -->
+          <div class="spectrum-container">
+            <div class="spectrum-header">
+              <span>Formulajellemző</span>
+              <span style="color:var(--text-main); font-weight:700;">${escapeHtml(product.spectrumLabel || "Ellenőrzött formula")}</span>
+            </div>
+            <div class="spectrum-bar-bg">
+              <div class="spectrum-indicator" style="left: ${val}%;"></div>
+            </div>
+            <div class="spectrum-labels">
+              <span>Természetes / Növényi</span>
+              <span>Kiegyensúlyozott</span>
+              <span>Alternatívát érdemes nézned</span>
+            </div>
+          </div>
+
           <h3 style="font-size:0.95rem; margin-bottom:6px;">Röviden</h3>
           <p style="font-size:0.88rem; color:var(--text-main); line-height:1.5;">${escapeHtml(product.summary)}</p>
           ${product.nutrition && product.nutrition.totalSugarPer100g !== undefined ? `<p style="font-size:0.85rem; font-weight:600; color:var(--text-main); margin-top:6px;">Összes cukor: ${product.nutrition.totalSugarPer100g}${product.nutrition.sugarUnit}</p>` : ''}
@@ -994,6 +1080,8 @@
         brand: product.brand,
         category: product.category,
         packageSize: product.packageSize,
+        spectrumValue: product.spectrumValue,
+        spectrumLabel: product.spectrumLabel,
         sources: product.sources,
         summary: product.summary,
         nutrition: product.nutrition,
@@ -1080,6 +1168,8 @@
             brand: product.brand,
             category: product.category,
             packageSize: product.packageSize,
+            spectrumValue: product.spectrumValue,
+            spectrumLabel: product.spectrumLabel,
             sources: product.sources,
             summary: product.summary,
             nutrition: product.nutrition,
