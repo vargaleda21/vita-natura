@@ -7,11 +7,11 @@
 
   <!-- PWA beállítások -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2D4A3E">
+  <meta name="theme-color" content="#555239">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="daleday">
-  <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/2D4A3E/FFFFFF?text=daleday">
+  <link rel="apple-touch-icon" href="https://via.placeholder.com/192x192/555239/FFFFFF?text=daleday">
 
   <!-- Google Fonts: Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +24,14 @@
 
   <style>
     :root {
-      --bg-organic: #FBF9F4;
+      --bg-organic: #F2E8DC;
       --card-bg: #FFFFFF;
-      --text-main: #1C2421;
-      --text-muted: #5A6561;
-      --accent-eucalyptus: #2D4A3E;
-      --accent-sage: #8A9A86;
-      --accent-gold: #D4A359;
-      --border-light: rgba(45, 74, 62, 0.08);
+      --card-border: rgba(184, 168, 152, 0.35);
+      --text-main: #4A3125;
+      --text-muted: #7A6356;
+      --accent-olive: #555239;
+      --accent-sand: #B8A898;
+      --accent-soft: rgba(184, 168, 152, 0.18);
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
@@ -46,7 +46,6 @@
 
     body {
       background-color: var(--bg-organic);
-      background-image: radial-gradient(circle at 50% 0%, rgba(212, 163, 89, 0.03), transparent 70%);
       color: var(--text-main);
       padding: 16px;
       max-width: 520px;
@@ -58,7 +57,7 @@
 
     h1, h2, h3 {
       font-weight: 700;
-      color: var(--accent-eucalyptus);
+      color: var(--text-main);
       letter-spacing: -0.3px;
     }
 
@@ -68,11 +67,12 @@
       align-items: center;
       margin-bottom: 20px;
       padding: 6px 0;
-      border-bottom: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--card-border);
     }
 
     h1.brand-logo {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
+      color: var(--text-main);
       cursor: pointer;
     }
 
@@ -83,10 +83,11 @@
 
     .card {
       background: var(--card-bg);
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
       padding: 18px;
       margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(74, 49, 37, 0.03);
     }
 
     .hero-section {
@@ -96,6 +97,7 @@
 
     .hero-title {
       font-size: 1.7rem;
+      color: var(--text-main);
       margin-bottom: 6px;
     }
 
@@ -114,7 +116,7 @@
     input[type="text"], input[type="email"], input[type="password"] {
       flex: 1;
       padding: 11px 14px;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--card-border);
       background: #FAFAFA;
       border-radius: var(--radius-sm);
       font-size: 0.88rem;
@@ -123,12 +125,12 @@
     }
 
     input:focus {
-      border-color: var(--accent-sage);
+      border-color: var(--accent-olive);
       background: #FFF;
     }
 
     button {
-      background: var(--accent-eucalyptus);
+      background: var(--accent-olive);
       color: #FFF;
       border: none;
       padding: 11px 18px;
@@ -143,19 +145,21 @@
       gap: 6px;
     }
 
-    button:hover { background: #233B31; }
+    button:hover { background: #3E3C29; }
 
     button.btn-secondary {
-      background: #EFECE6;
+      background: var(--bg-organic);
       color: var(--text-main);
+      border: 1px solid var(--card-border);
     }
 
-    button.btn-secondary:hover { background: #E4E0D6; }
+    button.btn-secondary:hover { background: #E6DCCE; }
 
     .tag-badge {
       display: inline-block;
-      background: #EFECE6;
-      color: var(--accent-eucalyptus);
+      background: var(--bg-organic);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
       font-size: 0.75rem;
       font-weight: 600;
       padding: 4px 10px;
@@ -167,12 +171,12 @@
     .section-divider {
       border: 0;
       height: 1px;
-      background: var(--border-light);
+      background: var(--card-border);
       margin: 20px 0;
     }
 
     .ingredient-item {
-      border-bottom: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--card-border);
       padding: 10px 0;
       cursor: pointer;
     }
@@ -184,6 +188,7 @@
       justify-content: space-between;
       align-items: center;
       font-weight: 600;
+      color: var(--text-main);
     }
 
     .ingredient-details {
@@ -191,7 +196,7 @@
       margin-top: 8px;
       font-size: 0.83rem;
       color: var(--text-muted);
-      background: #F8FAF7;
+      background: var(--accent-soft);
       padding: 10px;
       border-radius: var(--radius-sm);
     }
@@ -205,14 +210,14 @@
       transform: translateX(-50%);
       width: calc(100% - 28px);
       max-width: 480px;
-      background: rgba(251, 249, 244, 0.94);
+      background: rgba(242, 232, 220, 0.94);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-lg);
       display: flex;
       justify-content: space-around;
       padding: 8px 0;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 24px rgba(74, 49, 37, 0.08);
       z-index: 900;
     }
 
@@ -229,7 +234,7 @@
     }
 
     .nav-item.active {
-      color: var(--accent-eucalyptus);
+      color: var(--text-main);
       font-weight: 700;
     }
 
@@ -238,7 +243,7 @@
       display: block;
       width: 4px;
       height: 4px;
-      background: var(--accent-gold);
+      background: var(--accent-olive);
       border-radius: 50%;
       margin-top: 1px;
     }
@@ -255,7 +260,7 @@
       align-items: center;
       padding: 12px;
       background: #FFF;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-sm);
       margin-bottom: 8px;
       cursor: pointer;
@@ -274,6 +279,7 @@
       gap: 10px;
       font-size: 0.85rem;
       cursor: pointer;
+      color: var(--text-main);
     }
 
     #reader {
@@ -284,8 +290,8 @@
     }
 
     .relevance-box {
-      background: #F8FAF7;
-      border-left: 3px solid var(--accent-sage);
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent-olive);
       padding: 12px;
       margin-top: 14px;
       border-radius: var(--radius-sm);
@@ -295,7 +301,7 @@
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(28, 36, 33, 0.6);
+      background: rgba(74, 49, 37, 0.6);
       backdrop-filter: blur(4px);
       z-index: 1000;
       justify-content: center;
@@ -317,7 +323,7 @@
     .modal-card img {
       width: 100%;
       border-radius: var(--radius-sm);
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--card-border);
       margin: 12px 0;
     }
 
@@ -325,9 +331,9 @@
       display: inline-block;
       width: 16px;
       height: 16px;
-      border: 2px solid rgba(45, 74, 62, 0.2);
+      border: 2px solid rgba(85, 82, 57, 0.2);
       border-radius: 50%;
-      border-top-color: var(--accent-eucalyptus);
+      border-top-color: var(--accent-olive);
       animation: spin 0.8s linear infinite;
       vertical-align: middle;
       margin-right: 6px;
@@ -778,7 +784,7 @@
        4. VALIDATION RULES LAYER (Szigorú szűrőfüggvények)
        ========================================================================== */
     function validateProductContract(product) {
-      if (!validateBarcode(product.barcode)) return { valid: false, error: "Érvénytelen GTIN/EAN vonalkód." };
+      if (!validateBarcode(product.barcode)) return { valid: false, error: "Érvénytelen GS1 GTIN-8/12/13/14 vonalkód." };
       if (!product.exactName || !product.brand || !product.packageSize) return { valid: false, error: "Hiányzó kötelező termékazonosítók." };
       if (!product.sources || product.sources.length < 1) return { valid: false, error: "Kötelező legalább egy forrás URL." };
 
@@ -1030,7 +1036,7 @@
         ingredientsHtml = '<p style="color:var(--text-muted); font-size:0.85rem;">Erről az összetevőlistáról jelenleg nincs részletes adatunk.</p>';
       }
 
-      // Gyártói megjegyzés blokk (pl. WaterWipes Trace Note)
+      // Gyártói megjegyzés blokk
       let notesHtml = '';
       if (product.manufacturerNotes && product.manufacturerNotes.length > 0) {
         notesHtml = `<p style="font-size:0.78rem; color:var(--text-muted); margin-top:8px; font-style:italic;">Gyártói kiegészítő megjegyzés: ${product.manufacturerNotes.map(n => escapeHtml(n)).join(', ')}</p>`;
@@ -1045,7 +1051,7 @@
         }
 
         alternativesHtml = `
-          <div class="card" style="background:#F1F4F0; border:1px dashed var(--accent-sage);">
+          <div class="card" style="background:var(--accent-soft); border:1px dashed var(--accent-sand);">
             <h4 style="font-size:0.88rem; margin-bottom:6px;">${reasonHeader}</h4>
             ${product.alternatives.map(alt => {
               const safeUrl = isValidUrl(alt.url) ? escapeHtml(alt.url) : '#';
@@ -1082,17 +1088,17 @@
 
           <h3 style="font-size:0.95rem; margin-bottom:6px;">Röviden</h3>
           <p style="font-size:0.88rem; color:var(--text-main); line-height:1.5;">${escapeHtml(product.summary)}</p>
-          ${product.nutrition && product.nutrition.totalSugarPer100g !== undefined ? `<p style="font-size:0.85rem; font-weight:600; color:var(--accent-eucalyptus); margin-top:6px;">Összes cukor: ${product.nutrition.totalSugarPer100g}${product.nutrition.sugarUnit}</p>` : ''}
+          ${product.nutrition && product.nutrition.totalSugarPer100g !== undefined ? `<p style="font-size:0.85rem; font-weight:600; color:var(--text-main); margin-top:6px;">Összes cukor: ${product.nutrition.totalSugarPer100g}${product.nutrition.sugarUnit}</p>` : ''}
 
           ${relevanceResults.length > 0 ? `
             <div class="relevance-box">
-              <strong style="font-size:0.82rem; color:var(--accent-eucalyptus);">Összhang a beállításaiddal:</strong>
+              <strong style="font-size:0.82rem; color:var(--text-main);">Összhang a beállításaiddal:</strong>
               <p style="font-size:0.82rem; color:var(--text-main); margin-top:4px;">${relevanceResults.map(r => escapeHtml(r.reason)).join('<br>')}</p>
             </div>
           ` : `
             <div style="margin-top:12px; font-size:0.8rem; color:var(--text-muted);">
               Szeretnéd, hogy a daleday a saját szempontjaid alapján emelje ki, mire érdemes figyelned?
-              <span style="text-decoration:underline; cursor:pointer; color:var(--accent-eucalyptus);" onclick="switchTab('profile')">Beállítások megadása</span>
+              <span style="text-decoration:underline; cursor:pointer; color:var(--text-main);" onclick="switchTab('profile')">Beállítások megadása</span>
             </div>
           `}
 
@@ -1158,7 +1164,7 @@
             <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(item.exactName)}</strong>
             <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(item.brand)} • ${escapeHtml(item.date)}</p>
           </div>
-          <span style="font-size:0.8rem; color:var(--accent-sage);">Megnyitás</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Megnyitás</span>
         </div>
       `).join('');
     }
@@ -1248,7 +1254,7 @@
             <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.exactName)}</strong>
             <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(p.brand)}</p>
           </div>
-          <span style="font-size:0.8rem; color:var(--accent-sage);">Megtekintés</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">Megtekintés</span>
         </div>
       `).join('');
     }
