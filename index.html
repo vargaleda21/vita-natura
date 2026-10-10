@@ -477,7 +477,7 @@
       overflow: hidden;
     }
 
-    /* .relevance-box szegélyei letisztítva: kizárólag a bal oldali sötétzöld kiemelő sáv marad meg */
+    /* relevance-box letisztított szegéllyel */
     .relevance-box {
       background: var(--bg-organic);
       border-left: 3px solid var(--accent-main);
@@ -559,6 +559,63 @@
       margin-top: 8px;
     }
 
+    /* Tudástár Cikk kártya stílusok */
+    .article-card {
+      background: var(--bg-organic);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 12px;
+      border: 1px solid var(--border-light);
+    }
+
+    .article-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .article-title:hover {
+      color: var(--accent-main);
+    }
+
+    .article-lead {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    /* Modal cikk törzsszöveg formázás */
+    .article-modal-content {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    .article-modal-content h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .article-modal-content p {
+      margin-bottom: 12px;
+    }
+
+    .article-modal-content ul {
+      margin-left: 18px;
+      margin-bottom: 14px;
+    }
+
+    .article-modal-content li {
+      margin-bottom: 6px;
+    }
+
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
@@ -618,15 +675,22 @@
       </div>
     </div>
 
-    <!-- TUDÁSTÁR & ÉLETMÓD KÁRTYA -->
-    <div class="section-block" style="background: var(--accent-soft);">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+    <!-- TUDÁSTÁR & ÉLETMÓD SZEKCIÓ ELSŐ ÉLES CIKKEL -->
+    <div class="section-block">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
         <h3 style="font-size: 1rem; font-weight:700;">Tudástár & Életmód</h3>
-        <span class="badge-soft">Hamarosan</span>
+        <span class="badge-soft">Új cikk</span>
       </div>
       <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5;">
-        Gyakorlati útmutatók és gondolatok a fenntartható, tiszta otthon megteremtéséhez – a konyhától a babaápolásig.
+        Gyakorlati útmutatók és tudományos bizonyítékok a fenntartható, tiszta otthon megteremtéséhez.
       </p>
+
+      <!-- Éles cikk kártya -->
+      <div class="article-card">
+        <h4 class="article-title" onclick="openArticleModal()">Miért érdemes lecserélni a műanyag vágódeszkát fára?</h4>
+        <p class="article-lead">A műanyag vágódeszka mikroműanyag-szennyezéssel és elrejtőzött baktériumokkal fenyegeti a konyhát. A legújabb kutatások szerint a fa természetes védelme messze túlszárnyalja.</p>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal()">Elolvasom a cikket</button>
+      </div>
     </div>
 
   </div>
@@ -695,7 +759,7 @@
     <span onclick="openImpressumModal()">Impresszum</span>
   </footer>
 
-  <!-- IMPRESSZUM MODAL (A11y ARIA attribútumokkal) -->
+  <!-- IMPRESSZUM MODAL -->
   <div class="modal-overlay" id="impressumModal" role="dialog" aria-modal="true" aria-labelledby="impressumModalTitle" onclick="handleOverlayClick(event, 'impressumModal')">
     <div class="modal-card">
       <h3 id="impressumModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 14px;">Impresszum & Nyilatkozat</h3>
@@ -720,7 +784,7 @@
     </div>
   </div>
 
-  <!-- ABOUT MODAL (A11y ARIA attribútumokkal) -->
+  <!-- ABOUT MODAL -->
   <div class="modal-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" onclick="handleOverlayClick(event, 'aboutModal')">
     <div class="modal-card">
       <h3 id="aboutModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 16px; line-height: 1.35;">
@@ -736,6 +800,53 @@
       </p>
 
       <button class="btn-primary" style="padding:12px;" onclick="closeAboutModal()">Rendben</button>
+    </div>
+  </div>
+
+  <!-- CIKK OLVASÓ MODAL -->
+  <div class="modal-overlay" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="articleModalTitle" onclick="handleOverlayClick(event, 'articleModal')">
+    <div class="modal-card" style="max-width: 480px;">
+      <h3 id="articleModalTitle" style="font-size: 1.18rem; color: var(--text-main); margin-bottom: 14px; line-height: 1.35;">
+        Miért érdemes lecserélni a műanyag vágódeszkát fára?
+      </h3>
+
+      <div class="article-modal-content">
+        <p>A konyhákban évtizedekig tartotta magát az a tévhit, hogy a műanyag vágódeszkák higiénikusabbak és biztonságosabbak a hagyományos fa társaiknál. A legújabb toxikológiai és mikrobiológiai kutatások azonban gyökeresen megcáfolják ezt a nézetet.</p>
+        
+        <p>A műanyag deszkák nemcsak jelentős mikroműanyag-terhelést jelentenek, de a kések ejtette karcolások miatt a baktériumok melegágyává is válhatnak.</p>
+
+        <h4>1. Mikroműanyag-szennyezés minden vágással</h4>
+        <p>A műanyag vágódeszka használata során a kés éle apró műanyagszilánkokat és rostokat választ le a felületről, amelyek közvetlenül az ételünkbe kerülnek.</p>
+        <p style="font-size: 0.82rem; background: var(--bg-organic); padding: 12px; border-radius: var(--radius-md); font-style: italic;">
+          <strong>Mit mond a tudomány?</strong><br>
+          Az American Chemical Society (ACS) <em>Environmental Science & Technology</em> című folyóiratában megjelent 2023-as kutatás (Himani et al.) megállapította, hogy egy ember meglévő szokásai mellett évente 14–71 millió mikroműanyag-részecskének lehet kitéve kizárólag a polietilén és polipropilén vágódeszkák használata miatt. Ezek felhalmozódhatnak a szervezetben és krónikus gyulladásos folyamatokat előidézhetnek.
+        </p>
+
+        <h4>2. A fa természetes antibakteriális védelme</h4>
+        <p>Sokan hiszik, hogy a fa magába szívja a kórokozókat. A valóságban ennek épp az ellenkezője igaz:</p>
+        <ul>
+          <li><strong>Műanyag:</strong> A konyhakés mély, mikroszkopikus barázdákat hoz létre rajta, ahonnan a mosogatás szinte képtelen eltávolítani a kórokozókat (pl. Salmonella, E. coli).</li>
+          <li><strong>Fa:</strong> A fa természetes kapilláris szerkezete elszívja a nedvességet a felületről, kiszárítva a baktériumokat. A keményfák (tölgy, bükk, dió, juhar) ezenfelül természetes polifenolokat és tanninokat tartalmaznak, amelyek aktív antimikrobiális hatással bírnak.</li>
+        </ul>
+        <p style="font-size: 0.82rem; background: var(--bg-organic); padding: 12px; border-radius: var(--radius-md); font-style: italic;">
+          A kaliforniai Davis Egyetem (UC Davis) úttörő kutatása (Dean O. Cliver et al.) kimutatta, hogy a fafelületre kijuttatott baktériumok perceken belül elpusztultak, míg a műanyag deszkák vágásaiban túléltek és szaporodtak.
+        </p>
+
+        <h4>3. Tartósság és késkímélő kialakítás</h4>
+        <p>A keményfa rostjai rugalmasan engednek a penge élének, így a kések tovább tartják az élüket. Míg a karcolódott műanyag deszka cserére szorul, a fa vágódeszka csiszolással és olajozással újra és újra felújítható, így évtizedekig szolgálhatja a háztartást.</p>
+
+        <h4>Így tartsd karban a fa vágódeszkát</h4>
+        <ul>
+          <li><strong>Keményfát válassz:</strong> Tölgy, juhar, bükk és dió a legmegfelelőbbek.</li>
+          <li><strong>Kerüld a mosogatógépet:</strong> A magas hőmérséklet elvetemedést vagy repedést okoz.</li>
+          <li><strong>Tisztítás után szárítsd állítva:</strong> Töröld át kímélő mosószerrel, majd hagydd szellőzni.</li>
+          <li><strong>Rendszeres olajozás:</strong> Havonta egyszer kend át élelmiszeripari ásványi olajjal vagy méhviaszzal.</li>
+        </ul>
+
+        <p style="margin-top: 16px; font-weight: 600;">A fa vágódeszkára való váltás egy apró, de határozott lépés a mikroműanyag-terhelés csökkentése és a higiénikusabb konyha felé.</p>
+      </div>
+
+      <button class="btn-primary" style="padding:12px; margin-top: 16px;" onclick="closeArticleModal()">Bezárás</button>
     </div>
   </div>
 
@@ -1063,7 +1174,6 @@
             const featuredIncs = matchApiIngredientsToDictionary(parsedRaw);
             const sugarVal = p.nutriments ? p.nutriments.sugars_100g : null;
 
-            // Kategória finomítása többnyelvű kulcsszó-egyezésekkel
             let detectedCategory = ep.category;
             const fullSearchText = `${p.product_name_hu || ''} ${p.product_name || ''} ${p.categories || ''}`.toLowerCase();
             const babyKeywords = ['baby', 'baba', 'csecsemő', 'bébé', 'säugling', 'kinder', 'diaper', 'nappy', 'babycare'];
@@ -1311,7 +1421,6 @@
         return ing ? ing.inciName.toLowerCase() : '';
       }).filter(Boolean);
 
-      // Szilárdabb INCI szűrés reguláris kifejezéssel
       const filteredFullIngredients = (product.fullIngredients || []).filter(rawIng => {
         const cleanRaw = String(rawIng).toLowerCase();
         return !featuredInciNames.some(inci => {
@@ -1483,7 +1592,21 @@
     }
 
     /* ==========================================================================
-       7. KÁRTYA EXPORTÁLÁSI LOGIKA (html2canvas ignoreElements kiegészítéssel)
+       7. CIKK MODAL KEZELŐ FÜGGVÉNYEK
+       ========================================================================== */
+    async function openArticleModal() {
+      await stopCameraScanner();
+      const modal = document.getElementById('articleModal');
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeArticleModal() {
+      const modal = document.getElementById('articleModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    /* ==========================================================================
+       8. KÁRTYA EXPORTÁLÁSI LOGIKA (html2canvas)
        ========================================================================== */
     async function exportToImageModal() {
       const exportCard = document.getElementById('exportCard');
@@ -1502,7 +1625,6 @@
           backgroundColor: '#FFFFFF',
           logging: false,
           ignoreElements: (element) => {
-            // Kizárjuk a mentés gombot és az exportáló gomb konténerét
             return element.id === 'exportIgnoreBtn' || (element.tagName === 'BUTTON' && element.classList.contains('btn-secondary'));
           }
         });
@@ -1528,14 +1650,13 @@
 
     function closeExportModal() {
       const modal = document.getElementById('imageExportModal');
-      if (modal) modal.classList.remove('active');
-      // Memória ürítése a modal bezárásakor az előnézeti konténer törlésével
       const previewContainer = document.getElementById('exportPreviewContainer');
       if (previewContainer) previewContainer.innerHTML = '';
+      if (modal) modal.classList.remove('active');
     }
 
     /* ==========================================================================
-       8. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
+       9. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
        ========================================================================== */
     function saveToHistory(product) {
       try {
@@ -1724,7 +1845,7 @@
     }
 
     /* ==========================================================================
-       9. MODAL KEZELŐ FÜGGVÉNYEK & ACCESSIBILITY
+       10. MODAL KEZELŐ FÜGGVÉNYEK & ACCESSIBILITY
        ========================================================================== */
     async function openAboutModal() {
       await stopCameraScanner();
@@ -1752,9 +1873,12 @@
       if (event && event.target && event.target.id === modalId) {
         if (modalId === 'imageExportModal') {
           closeExportModal();
-        } else {
-          const modal = document.getElementById(modalId);
-          if (modal) modal.classList.remove('active');
+        } else if (modalId === 'articleModal') {
+          closeArticleModal();
+        } else if (modalId === 'aboutModal') {
+          closeAboutModal();
+        } else if (modalId === 'impressumModal') {
+          closeImpressumModal();
         }
       }
     }
@@ -1764,12 +1888,13 @@
         closeAboutModal();
         closeImpressumModal();
         closeExportModal();
+        closeArticleModal();
         await stopCameraScanner();
       }
     });
 
     /* ==========================================================================
-       10. NAVIGÁCIÓ ÉS INICIALIZÁLÁS (Async Kamera Tisztítással)
+       11. NAVIGÁCIÓ ÉS INICIALIZÁLÁS (Async Kamera Tisztítással)
        ========================================================================== */
     async function switchTab(tabName) {
       await stopCameraScanner();
