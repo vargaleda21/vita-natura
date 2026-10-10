@@ -588,7 +588,7 @@
       margin-bottom: 12px;
     }
 
-    /* Modal cikk törzsszöveg formázás */
+    /* Modal cikk törzsszöveg formázás pontok nélkül */
     .article-modal-content {
       font-size: 0.88rem;
       color: var(--text-main);
@@ -596,7 +596,7 @@
     }
 
     .article-modal-content h4 {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       margin-top: 18px;
       margin-bottom: 6px;
@@ -607,13 +607,13 @@
       margin-bottom: 12px;
     }
 
-    .article-modal-content ul {
-      margin-left: 18px;
-      margin-bottom: 14px;
-    }
-
-    .article-modal-content li {
-      margin-bottom: 6px;
+    .article-callout {
+      font-size: 0.82rem;
+      background: var(--bg-organic);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+      border-left: 3px solid var(--accent-main);
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -675,21 +675,35 @@
       </div>
     </div>
 
-    <!-- TUDÁSTÁR & ÉLETMÓD SZEKCIÓ ELSŐ ÉLES CIKKEL -->
+    <!-- TUDÁSTÁR & ÉLETMÓD SZEKCIÓ 3 ÉLES CIKKEL -->
     <div class="section-block">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
         <h3 style="font-size: 1rem; font-weight:700;">Tudástár & Életmód</h3>
-        <span class="badge-soft">Új cikk</span>
+        <span class="badge-soft">Új cikkek</span>
       </div>
       <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5;">
         Gyakorlati útmutatók és tudományos bizonyítékok a fenntartható, tiszta otthon megteremtéséhez.
       </p>
 
-      <!-- Éles cikk kártya -->
+      <!-- 1. Cikk Kártya -->
       <div class="article-card">
-        <h4 class="article-title" onclick="openArticleModal()">Miért érdemes lecserélni a műanyag vágódeszkát fára?</h4>
+        <h4 class="article-title" onclick="openArticleModal('cutting_board')">Miért érdemes lecserélni a műanyag vágódeszkát fára?</h4>
         <p class="article-lead">A műanyag vágódeszka mikroműanyag-szennyezéssel és elrejtőzött baktériumokkal fenyegeti a konyhát. A legújabb kutatások szerint a fa természetes védelme messze túlszárnyalja.</p>
-        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal()">Elolvasom a cikket</button>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('cutting_board')">Elolvasom a cikket</button>
+      </div>
+
+      <!-- 2. Cikk Kártya -->
+      <div class="article-card">
+        <h4 class="article-title" onclick="openArticleModal('teflon')">Teflon a konyhában: Miért érdemes öntöttvasra vagy rozsdamentes acélra cserélni?</h4>
+        <p class="article-lead">A bevonatolt serpenyők elhasználódásával apró polimer-részecskék és vegyületek kerülhetnek az ételeinkbe. Ismerd meg a bevonat nélküli alternatívákat.</p>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('teflon')">Elolvasom a cikket</button>
+      </div>
+
+      <!-- 3. Cikk Kártya -->
+      <div class="article-card">
+        <h4 class="article-title" onclick="openArticleModal('microwaving')">Műanyag ételhordók és a mikrohullámú sütő: A tudatos ételmelegítés alapjai</h4>
+        <p class="article-lead">Mi történik a műanyag dobozokkal melegítés közben? A hőhatás miatt kioldódó anyagok elkerülésére az üveg és kerámia kínál tiszta megoldást.</p>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('microwaving')">Elolvasom a cikket</button>
       </div>
     </div>
 
@@ -807,43 +821,11 @@
   <div class="modal-overlay" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="articleModalTitle" onclick="handleOverlayClick(event, 'articleModal')">
     <div class="modal-card" style="max-width: 480px;">
       <h3 id="articleModalTitle" style="font-size: 1.18rem; color: var(--text-main); margin-bottom: 14px; line-height: 1.35;">
-        Miért érdemes lecserélni a műanyag vágódeszkát fára?
+        <!-- Dinamikus cím -->
       </h3>
 
-      <div class="article-modal-content">
-        <p>A konyhákban évtizedekig tartotta magát az a tévhit, hogy a műanyag vágódeszkák higiénikusabbak és biztonságosabbak a hagyományos fa társaiknál. A legújabb toxikológiai és mikrobiológiai kutatások azonban gyökeresen megcáfolják ezt a nézetet.</p>
-        
-        <p>A műanyag deszkák nemcsak jelentős mikroműanyag-terhelést jelentenek, de a kések ejtette karcolások miatt a baktériumok melegágyává is válhatnak.</p>
-
-        <h4>1. Mikroműanyag-szennyezés minden vágással</h4>
-        <p>A műanyag vágódeszka használata során a kés éle apró műanyagszilánkokat és rostokat választ le a felületről, amelyek közvetlenül az ételünkbe kerülnek.</p>
-        <p style="font-size: 0.82rem; background: var(--bg-organic); padding: 12px; border-radius: var(--radius-md); font-style: italic;">
-          <strong>Mit mond a tudomány?</strong><br>
-          Az American Chemical Society (ACS) <em>Environmental Science & Technology</em> című folyóiratában megjelent 2023-as kutatás (Himani et al.) megállapította, hogy egy ember meglévő szokásai mellett évente 14–71 millió mikroműanyag-részecskének lehet kitéve kizárólag a polietilén és polipropilén vágódeszkák használata miatt. Ezek felhalmozódhatnak a szervezetben és krónikus gyulladásos folyamatokat előidézhetnek.
-        </p>
-
-        <h4>2. A fa természetes antibakteriális védelme</h4>
-        <p>Sokan hiszik, hogy a fa magába szívja a kórokozókat. A valóságban ennek épp az ellenkezője igaz:</p>
-        <ul>
-          <li><strong>Műanyag:</strong> A konyhakés mély, mikroszkopikus barázdákat hoz létre rajta, ahonnan a mosogatás szinte képtelen eltávolítani a kórokozókat (pl. Salmonella, E. coli).</li>
-          <li><strong>Fa:</strong> A fa természetes kapilláris szerkezete elszívja a nedvességet a felületről, kiszárítva a baktériumokat. A keményfák (tölgy, bükk, dió, juhar) ezenfelül természetes polifenolokat és tanninokat tartalmaznak, amelyek aktív antimikrobiális hatással bírnak.</li>
-        </ul>
-        <p style="font-size: 0.82rem; background: var(--bg-organic); padding: 12px; border-radius: var(--radius-md); font-style: italic;">
-          A kaliforniai Davis Egyetem (UC Davis) úttörő kutatása (Dean O. Cliver et al.) kimutatta, hogy a fafelületre kijuttatott baktériumok perceken belül elpusztultak, míg a műanyag deszkák vágásaiban túléltek és szaporodtak.
-        </p>
-
-        <h4>3. Tartósság és késkímélő kialakítás</h4>
-        <p>A keményfa rostjai rugalmasan engednek a penge élének, így a kések tovább tartják az élüket. Míg a karcolódott műanyag deszka cserére szorul, a fa vágódeszka csiszolással és olajozással újra és újra felújítható, így évtizedekig szolgálhatja a háztartást.</p>
-
-        <h4>Így tartsd karban a fa vágódeszkát</h4>
-        <ul>
-          <li><strong>Keményfát válassz:</strong> Tölgy, juhar, bükk és dió a legmegfelelőbbek.</li>
-          <li><strong>Kerüld a mosogatógépet:</strong> A magas hőmérséklet elvetemedést vagy repedést okoz.</li>
-          <li><strong>Tisztítás után szárítsd állítva:</strong> Töröld át kímélő mosószerrel, majd hagydd szellőzni.</li>
-          <li><strong>Rendszeres olajozás:</strong> Havonta egyszer kend át élelmiszeripari ásványi olajjal vagy méhviaszzal.</li>
-        </ul>
-
-        <p style="margin-top: 16px; font-weight: 600;">A fa vágódeszkára való váltás egy apró, de határozott lépés a mikroműanyag-terhelés csökkentése és a higiénikusabb konyha felé.</p>
+      <div class="article-modal-content" id="articleModalBody">
+        <!-- Dinamikus törzsszöveg -->
       </div>
 
       <button class="btn-primary" style="padding:12px; margin-top: 16px;" onclick="closeArticleModal()">Bezárás</button>
@@ -1019,7 +1001,115 @@
     };
 
     /* ==========================================================================
-       3. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
+       3. TUDÁSTÁR CIKKEK ADATBÁZISA
+       ========================================================================== */
+    const ARTICLES_DATABASE = {
+      "cutting_board": {
+        title: "Miért érdemes lecserélni a műanyag vágódeszkát fára?",
+        content: `
+          <p>A konyhákban évtizedekig tartotta magát az a tévhit, hogy a műanyag vágódeszkák higiénikusabbak és biztonságosabbak a hagyományos fa társaiknál. A legújabb toxikológiai és mikrobiológiai kutatások azonban gyökeresen megcáfolják ezt a nézetet.</p>
+          <p>A műanyag deszkák nemcsak jelentős mikroműanyag-terhelést jelentenek, de a kések ejtette karcolások miatt a baktériumok melegágyává is válhatnak.</p>
+
+          <h4>1. Mikroműanyag-szennyezés minden vágással</h4>
+          <p>A műanyag vágódeszka használata során a kés éle apró műanyagszilánkokat és rostokat választ le a felületről, amelyek közvetlenül az ételünkbe kerülnek.</p>
+          <div class="article-callout">
+            <strong>Mit mond a tudomány?</strong><br>
+            Az American Chemical Society (ACS) <em>Environmental Science & Technology</em> című folyóiratában megjelent 2023-as kutatás (Himani et al.) megállapította, hogy egy ember évente 14–71 millió mikroműanyag-részecskének lehet kitéve kizárólag a polietilén és polipropilén vágódeszkák használata miatt. Ezek felhalmozódhatnak a szervezetben, átjuthatnak a bélgáton, és krónikus gyulladásos folyamatokat, valamint hormonális zavarokat idézhetnek elő.
+          </div>
+
+          <h4>2. A fa természetes antibakteriális védelme</h4>
+          <p>Sokan hiszik, hogy a fa magába szívja a kórokozókat, míg a műanyag sterilizálható. A valóságban ennek épp az ellenkezője igaz:</p>
+          <p>A konyhakés mély, mikroszkopikus barázdákat hoz létre a műanyagon. Ezekből a résekből mosogatással szinte lehetetlen teljesen eltávolítani a szerves anyagokat és a kórokozókat (pl. Salmonella, E. coli), így a baktériumok zavartalanul szaporodnak.</p>
+
+          <p>A fa természetes kapilláris szerkezete elszívja a nedvességet a felületről, kiszárítva és elpusztítva a kórokozókat. Ezenfelül a keményfák (tölgy, bükk, dió, juhar) természetes polifenolokat és tanninokat tartalmaznak, amelyek aktív antimikrobiális hatással bírnak.</p>
+
+          <div class="article-callout">
+            <strong>A kutatások eredménye:</strong><br>
+            A kaliforniai Davis Egyetem (UC Davis) úttörő kutatása (Dean O. Cliver et al.) kimutatta, hogy a fafelületre kijuttatott Salmonella és Listeria baktériumok perceken belül elpusztultak, míg a műanyag deszkák vágásaiban túléltek és szaporodtak.
+          </div>
+
+          <h4>3. Tartósság és késkímélő kialakítás</h4>
+          <p>A keményfa rostjai rugalmasan engednek a penge élének, így a kések tovább tartják az élüket.</p>
+          <p>A karcolódott műanyag deszka veszélyes hulladék. Ezzel szemben a fa vágódeszka csiszolással és olajozással újra és újra felújítható, így évtizedekig használható anélkül, hogy szintetikus hulladékkal terhelné a környezetet.</p>
+
+          <h4>Így tartsd karban a fa vágódeszkát</h4>
+          <p>Keményfát válassz: A tölgy, juhar, bükk és dió a legmegfelelőbbek a magas sűrűségük és a természetes baktériumölő tulajdonságaik miatt.</p>
+          <p>Kerüld a mosogatógépet: A magas hőmérséklet és a túlzott áztatás könnyen elvetemedést vagy repedéseket okoz.</p>
+          <p>Tisztítás után szárítsd állítva: Kímélő mosogatószeres lemosás után töröld át, majd állítva hagyd megszáradni, hogy mindkét oldala szellőzni tudjon.</p>
+          <p>Gondoskodj a rendszeres olajozásról: Havonta egyszer kend át élelmiszeripari ásványi olajjal vagy méhviaszos ápolóval, így a fafelület megőrzi a vízzáró védőrétegét.</p>
+
+          <p style="margin-top: 16px; font-weight: 600;">A fa vágódeszkára való váltás egy apró, de határozott lépés a mikroműanyag-terhelés csökkentése és egy higiénikusabb, fenntarthatóbb konyha felé.</p>
+        `
+      },
+      "teflon": {
+        title: "Teflon a konyhában: Miért érdemes a tapadásmentes serpenyőt öntöttvasra vagy rozsdamentes acélra cserélni?",
+        content: `
+          <p>A teflonbevonatú serpenyők évtizedekig a kényelmes konyha szimbólumai voltak. Az újabb anyagtudományi és egészségügyi vizsgálatok fényében azonban látható, hogy a hagyományos, bevonat nélküli edények nemcsak időtállóbbak, de hosszú távon az egészségünket is jobban támogatják.</p>
+          <p>A szintetikus felületek elhasználódásával apró polimer-részecskék és vegyületek kerülhetnek a szervezetünkbe, miközben a klasszikus alternatívák használatával teljesen természetes módon, kockázatok nélkül készíthetjük el az ételeinket.</p>
+
+          <h4>1. Anyagszerkezet és a szervezetünket érő hatások</h4>
+          <p>A mindennapi használat és a konyhai eszközök igénybevétele során a szintetikus bevonatok felületén idővel mikroszkopikus nyomok keletkeznek.</p>
+          <div class="article-callout">
+            <strong>Mit mutatnak a vizsgálatok?</strong><br>
+            A <em>Science of The Total Environment</em> című szakfolyóiratban megjelent 2022-es tanulmány (Cheng et al.) rámutatott, hogy a teflonbevonat felületén keletkező apró karcolásokból a használat során mikroszkopikus polimer-részecskék válhatnak kivé és juthatnak a táplálékba.
+          </div>
+          <p>A teflon gyártásához használt per- és polyfluoralkyl vegyületek (PFAS) lassan bomlanak le, és a szervezetbe jutva idővel felhalmozódhatnak, ami terhelheti az immunrendszert és a belső szervek működését. A tudatos konyhavezetéssel éppen ezért érdemes csökkenteni ezek jelenlétét a sütés és főzés során.</p>
+
+          <h4>2. Mire érdemes figyelni a használat során?</h4>
+          <p>A PTFE (politetrafluoretilén) alapú bevonatok bizonyos hőmérséklet felett megváltoztatják a szerkezetüket, ami odafigyelést igényel.</p>
+          <p>A bevonat magas hőfokon (kb. 260 °C felett) veszít a stabilitásából, ezért ezeket a serpenyőket nem ajánlott üresen a tűzhelyen felejteni vagy intenzív pirításhoz használni.</p>
+          <p>A túlhevülésből származó gőzök belélegzése irritálhatja a légutakat, és a háztartásban élő kisállatokra, különösen a madarakra is nemkívánatos hatással lehet.</p>
+
+          <h4>3. Öntöttvas és rozsdamentes acél: A biztonságos alternatívák</h4>
+          <p>A szintetikus bevonatok helyett két klasszikus és időtálló anyag kínál kiváló megoldást a konyhában:</p>
+          <p><strong>Öntöttvas serpenyő:</strong> A megfelelő kiégetés és használat során természetes, növényi olaj alapú védőréteg alakul ki rajta. Kiváló a hőtartása, és az étellel érintkezve kis mennyiségű, jól hasznosuló vasat is juttathat a szervezetbe.</p>
+          <p><strong>18/10-es rozsdamentes acél:</strong> Semleges tulajdonságú felület, amely nem lép reakcióba savas összetevőkkel (például paradicsommal vagy citrommal). Kiválóan bírja a magas hőfokot és nem kell aggódni amiatt, hogy nemkívánatos anyagok válnak levé róla.</p>
+
+          <h4>Így hozhatod ki a legtöbbet a természetes edényekből</h4>
+          <p>Melegítsd elő az edényt: A rozsdamentes acélnál várd meg, amíg a vízcsepp gurul a felületén, csak ezután önts bele zsiradékot, így az étel nem fog letapadni.</p>
+          <p>Kerüld az öntöttvas áztatását: Tisztításhoz használj meleg vizet és kefét, majd száradás után kenj rá egy vékony réteg növényi olajat a felület védelmére.</p>
+          <p>Válassz az ételhez illő edényt: Magas hőfokú pirításhoz a rozsdamentes acél, lassú sütéshez és pirításhoz az öntöttvas a legjobb választás.</p>
+
+          <p style="margin-top: 16px; font-weight: 600;">A teflonedények fokozatos kiváltásával csökkenthetjük a nemkívánatos szintetikus anyagok jelenlétét az ételeinkben, miközben egy életre szóló, megbízható edénykészletre válthatunk.</p>
+        `
+      },
+      "microwaving": {
+        title: "Műanyag ételhordók és a mikrohullámú sütő: A tudatos ételmelegítés alapjai",
+        content: `
+          <p>A műanyag dobozok és ételhordók praktikus kiegészítői a mindennapoknak. Sokan használják ezeket az edényeket ételmelegítésre is, a „mikrózható” jelzésre támaszkodva. Az újabb kutatások azonban segítenek jobban megérteni, mi történik az anyagokkal a melegítés során.</p>
+          <p>A hőhatás hatására a műanyagok szerkezetéből apró részecskék és lágyítószerek kerülhetnek az ételbe, amelyeket tudatos odafigyeléssel és egyszerű váltásokkal könnyen elkerülhetünk.</p>
+
+          <h4>1. Mi történik melegítés közben?</h4>
+          <p>A mikrohullámú sütőben keletkező hő hatására a műanyagok felületi szerkezete megbomlik, ami megkönnyíti a részecskék kioldódását.</p>
+          <div class="article-callout">
+            <strong>Mit mutatnak a mérések?</strong><br>
+            Az <em>Environmental Science & Technology</em> folyóiratban megjelent 2023-as tanulmány (Hussain et al.) kimutatta, hogy a mikrohullámú sütőben történő melegítés során a műanyag edények felületéről mikroszkopikus részecskék és vegyületek válhatnak levé és kerülhetnek az ételekbe.
+          </div>
+          <p>Ezek a mikroszkopikus anyagok a szervezetbe jutva terhelhetik az emésztőrendszert és a sejtek normális működését, ezért érdemes csökkenteni a velük való érintkezést.</p>
+
+          <h4>2. Amit a jelölésekről érdemes tudni</h4>
+          <p>A csomagolásokon található jelzések segítik a tájékozódást, de érdemes a mélyükre nézni:</p>
+          <p><strong>BPA-mentes jelzés:</strong> Azt mutatja, hogy az edény nem tartalmaz biszfenol-A-t. Ugyanakkor a műanyagok rugalmasságát biztosító egyéb helyettesítő anyagok hő hatására hasonlóan viselkedhetnek, és zavarhatják a szervezet természetes hormonháztartását.</p>
+          <p><strong>Zsíros vagy olajos ételek:</strong> Melegítéskor a magasabb hőmérséklet miatt a kioldódási folyamatok intenzívebbé válhatnak, mivel a szintetikus összetevők zsírban könnyebben oldódnak.</p>
+          <p><strong>„Mikrózható” felirat:</strong> Elsősorban azt garantálja, hogy maga a doboz nem deformálódik vagy olvad meg a használat során, de a részecskék átjutását nem zárja ki a porózusabbá váló szerkezetből.</p>
+
+          <h4>3. Üveg és kerámia: Tiszta és természetes választás</h4>
+          <p>Az ételek melegítéséhez és tárolásához a hagyományos anyagok nyújtják a legbiztonságosabb alternatívát:</p>
+          <p><strong>Hőálló üveg edények:</strong> Semleges szerkezetű anyagok, amelyek semmilyen hőfokon nem lépnek reakcióba az étellel, nem juttatnak idegen anyagokat a szervezetbe, nem veszik át az ízeket, ráadásul sütőben és mikróban is sokoldalúan használhatók.</p>
+          <p><strong>Kerámia és porcelán:</strong> Természetes alapanyagokból készülő edények, amelyek esztétikusak és teljesen tisztán, vegyszermentesen tarthatók.</p>
+
+          <h4>Egyszerű lépések a tudatosabb mindennapokért</h4>
+          <p>Használj üveg- vagy kerámiatányért a melegítéshez: Az ételt melegítés előtt egyszerűen szedd át egy megfelelő tálra, így megelőzöd a kioldódást.</p>
+          <p>Várd meg, amíg kihűl az étel: A meleg, frissen főtt ételeket hagyd szobahőmérsékletűre hűlni, mielőtt a műanyag tárolóba tennéd őket.</p>
+          <p>Részesítsd előnyben az üvegedényeket: A mindennapi ebédes dobozok cseréjével hosszabb távon is tisztábbá teheted a konyhádat és óvhatod a szervezetedet.</p>
+
+          <p style="margin-top: 16px; font-weight: 600;">Az üveg- és kerámiaedények használata egyszerű, mégis rendkívül hatékony módja annak, hogy kizárjuk a felesleges szintetikus anyagokat az étkezéseinkből.</p>
+        `
+      }
+    };
+
+    /* ==========================================================================
+       4. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
@@ -1107,7 +1197,7 @@
     };
 
     /* ==========================================================================
-       4. OPEN FOOD FACTS ÉS OPEN BEAUTY FACTS DUAL API FALLBACK
+       5. OPEN FOOD FACTS ÉS OPEN BEAUTY FACTS DUAL API FALLBACK
        ========================================================================== */
     function matchApiIngredientsToDictionary(rawIngredientsList) {
       if (!rawIngredientsList || !Array.isArray(rawIngredientsList)) return [];
@@ -1205,7 +1295,7 @@
     }
 
     /* ==========================================================================
-       5. SZKENNER ÉS KERESÉS (Biztonságos Async Életciklus Kezeléssel)
+       6. SZKENNER ÉS KERESÉS (Biztonságos Async Életciklus Kezeléssel)
        ========================================================================== */
     let html5QrcodeScanner = null;
 
@@ -1337,7 +1427,7 @@
     }
 
     /* ==========================================================================
-       6. DINAMIKUS RELEVANCIAMOTOR, SKÁLAKALIBTRÁCIÓ ÉS TERMÉKOLDAL RENDER
+       7. DINAMIKUS RELEVANCIAMOTOR, SKÁLAKALIBTRÁCIÓ ÉS TERMÉKOLDAL RENDER
        ========================================================================== */
     function evaluateRelevance(product, prefs) {
       let results = [];
@@ -1592,11 +1682,20 @@
     }
 
     /* ==========================================================================
-       7. CIKK MODAL KEZELŐ FÜGGVÉNYEK
+       8. CIKK MODAL KEZELŐ FÜGGVÉNYEK
        ========================================================================== */
-    async function openArticleModal() {
+    async function openArticleModal(articleId) {
       await stopCameraScanner();
+      const article = ARTICLES_DATABASE[articleId];
+      if (!article) return;
+
+      const titleEl = document.getElementById('articleModalTitle');
+      const bodyEl = document.getElementById('articleModalBody');
       const modal = document.getElementById('articleModal');
+
+      if (titleEl) titleEl.innerText = article.title;
+      if (bodyEl) bodyEl.innerHTML = article.content;
+
       if (modal) modal.classList.add('active');
     }
 
@@ -1606,7 +1705,7 @@
     }
 
     /* ==========================================================================
-       8. KÁRTYA EXPORTÁLÁSI LOGIKA (html2canvas)
+       9. KÁRTYA EXPORTÁLÁSI LOGIKA (html2canvas)
        ========================================================================== */
     async function exportToImageModal() {
       const exportCard = document.getElementById('exportCard');
@@ -1656,7 +1755,7 @@
     }
 
     /* ==========================================================================
-       9. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
+       10. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
        ========================================================================== */
     function saveToHistory(product) {
       try {
@@ -1845,7 +1944,7 @@
     }
 
     /* ==========================================================================
-       10. MODAL KEZELŐ FÜGGVÉNYEK & ACCESSIBILITY
+       11. MODAL KEZELŐ FÜGGVÉNYEK & ACCESSIBILITY
        ========================================================================== */
     async function openAboutModal() {
       await stopCameraScanner();
@@ -1894,7 +1993,7 @@
     });
 
     /* ==========================================================================
-       11. NAVIGÁCIÓ ÉS INICIALIZÁLÁS (Async Kamera Tisztítással)
+       12. NAVIGÁCIÓ ÉS INICIALIZÁLÁS (Async Kamera Tisztítással)
        ========================================================================== */
     async function switchTab(tabName) {
       await stopCameraScanner();
