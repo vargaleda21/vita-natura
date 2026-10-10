@@ -443,6 +443,28 @@
       background: #EFECE6;
     }
 
+    /* Szöveges Keresési Találati Lista Stílusai */
+    .search-result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px;
+      background: var(--bg-organic);
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .search-result-item:hover {
+      background: #EFECE6;
+    }
+
+    .search-result-item:active {
+      transform: scale(0.98);
+    }
+
     .checkbox-group {
       display: flex;
       flex-direction: column;
@@ -477,7 +499,6 @@
       overflow: hidden;
     }
 
-    /* relevance-box letisztított szegéllyel */
     .relevance-box {
       background: var(--bg-organic);
       border-left: 3px solid var(--accent-main);
@@ -588,7 +609,7 @@
       margin-bottom: 12px;
     }
 
-    /* Modal cikk törzsszöveg formázás pontok nélkül */
+    /* Modal cikk törzsszöveg formázás */
     .article-modal-content {
       font-size: 0.88rem;
       color: var(--text-main);
@@ -638,17 +659,17 @@
     
     <div class="hero-section">
       <h2 class="hero-title">Értsd, mit választasz.</h2>
-      <p class="hero-sub">Szkenneld be a vonalkódot, és ismerd meg a termékek valódi tartalmát.</p>
+      <p class="hero-sub">Szkenneld be a vonalkódot vagy írd be a termék nevét.</p>
       
       <button class="btn-primary" onclick="startCameraScanner()" aria-label="Termék beolvasása kamerával">
         <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
         Termék beolvasása kamerával
       </button>
 
-      <!-- Kapszula keresősáv numerikus billentyűzettel -->
+      <!-- Kapszula keresősáv (Márka, terméknév vagy vonalkód) -->
       <div class="search-capsule">
-        <input type="text" id="barcodeInput" inputmode="numeric" pattern="[0-9]*" placeholder="Írd be a vonalkódot" aria-label="Vonalkód megadása kézzel">
-        <button class="search-btn" onclick="handleScanInput()" title="Keresés" aria-label="Vonalkód keresése">
+        <input type="text" id="barcodeInput" placeholder="Név, márka vagy vonalkód..." aria-label="Termék neve vagy vonalkódja">
+        <button class="search-btn" onclick="handleScanInput()" title="Keresés" aria-label="Keresés indítása">
           <svg class="icon-svg" style="width:16px; height:16px;" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         </button>
       </div>
@@ -675,7 +696,7 @@
       </div>
     </div>
 
-    <!-- TUDÁSTÁR & ÉLETMÓD SZEKCIÓ 3 ÉLES CIKKEL -->
+    <!-- TUDÁSTÁR & ÉLETMÓD SZEKCIÓ CIKKEKKEL -->
     <div class="section-block">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
         <h3 style="font-size: 1rem; font-weight:700;">Tudástár & Életmód</h3>
@@ -1014,13 +1035,12 @@
           <p>A műanyag vágódeszka használata során a kés éle apró műanyagszilánkokat és rostokat választ le a felületről, amelyek közvetlenül az ételünkbe kerülnek.</p>
           <div class="article-callout">
             <strong>Mit mond a tudomány?</strong><br>
-            Az American Chemical Society (ACS) <em>Environmental Science & Technology</em> című folyóiratában megjelent 2023-as kutatás (Himani et al.) megállapította, hogy egy ember évente 14–71 millió mikroműanyag-részecskének lehet kitéve kizárólag a polietilén és polipropilén vágódeszkák használata miatt. Ezek felhalmozódhatnak a szervezetben, átjuthatnak a bélgáton, és krónikus gyulladásos folyamatokat, valamint hormonális zavarokat idézhetnek elő.
+            Az American Chemical Society (ACS) <em>Environmental Science & Technology</em> című folyóiratában megjelent 2023-as kutatás (Himani et al.) megállapította, hogy egy ember ÉVENTE 14–71 millió mikroműanyag-részecskének lehet kitéve kizárólag a polietilén és polipropilén vágódeszkák használata miatt. Ezek felhalmozódhatnak a szervezetben, átjuthatnak a bélgáton, és krónikus gyulladásos folyamatokat, valamint hormonális zavarokat idézhetnek elő.
           </div>
 
           <h4>2. A fa természetes antibakteriális védelme</h4>
           <p>Sokan hiszik, hogy a fa magába szívja a kórokozókat, míg a műanyag sterilizálható. A valóságban ennek épp az ellenkezője igaz:</p>
           <p>A konyhakés mély, mikroszkopikus barázdákat hoz létre a műanyagon. Ezekből a résekből mosogatással szinte lehetetlen teljesen eltávolítani a szerves anyagokat és a kórokozókat (pl. Salmonella, E. coli), így a baktériumok zavartalanul szaporodnak.</p>
-
           <p>A fa természetes kapilláris szerkezete elszívja a nedvességet a felületről, kiszárítva és elpusztítva a kórokozókat. Ezenfelül a keményfák (tölgy, bükk, dió, juhar) természetes polifenolokat és tanninokat tartalmaznak, amelyek aktív antimikrobiális hatással bírnak.</p>
 
           <div class="article-callout">
@@ -1053,7 +1073,7 @@
             <strong>Mit mutatnak a vizsgálatok?</strong><br>
             A <em>Science of The Total Environment</em> című szakfolyóiratban megjelent 2022-es tanulmány (Cheng et al.) rámutatott, hogy a teflonbevonat felületén keletkező apró karcolásokból a használat során mikroszkopikus polimer-részecskék válhatnak kivé és juthatnak a táplálékba.
           </div>
-          <p>A teflon gyártásához használt per- és polyfluoralkyl vegyületek (PFAS) lassan bomlanak le, és a szervezetbe jutva idővel felhalmozódhatnak, ami terhelheti az immunrendszert és a belső szervek működését. A tudatos konyhavezetéssel éppen ezért érdemes csökkenteni ezek jelenlétét a sütés és főzés során.</p>
+          <p>A teflon gyártásához használt per- és polyfluoralkyl vegyületek (PFAS) lassan bomlanak le, és a szervezetbe jutva idővel felhalmozódhatnak, ami terhelheti az immunrendszert és a belső szervek működését.</p>
 
           <h4>2. Mire érdemes figyelni a használat során?</h4>
           <p>A PTFE (politetrafluoretilén) alapú bevonatok bizonyos hőmérséklet felett megváltoztatják a szerkezetüket, ami odafigyelést igényel.</p>
@@ -1085,7 +1105,7 @@
             <strong>Mit mutatnak a mérések?</strong><br>
             Az <em>Environmental Science & Technology</em> folyóiratban megjelent 2023-as tanulmány (Hussain et al.) kimutatta, hogy a mikrohullámú sütőben történő melegítés során a műanyag edények felületéről mikroszkopikus részecskék és vegyületek válhatnak levé és kerülhetnek az ételekbe.
           </div>
-          <p>Ezek a mikroszkopikus anyagok a szervezetbe jutva terhelhetik az emésztőrendszert és a sejtek normális működését, ezért érdemes csökkenteni a velük való érintkezést.</p>
+          <p>Ezek a mikroszkopikus anyagok a szervezetbe jutva terhelhetik az emésztőrendszert és a sejtek normális működését.</p>
 
           <h4>2. Amit a jelölésekről érdemes tudni</h4>
           <p>A csomagolásokon található jelzések segítik a tájékozódást, de érdemes a mélyükre nézni:</p>
@@ -1197,7 +1217,7 @@
     };
 
     /* ==========================================================================
-       5. OPEN FOOD FACTS ÉS OPEN BEAUTY FACTS DUAL API FALLBACK
+       5. OPEN FOOD FACTS ÉS OPEN BEAUTY FACTS DUAL API FALLBACK + SZÖVEGES KERESŐ
        ========================================================================== */
     function matchApiIngredientsToDictionary(rawIngredientsList) {
       if (!rawIngredientsList || !Array.isArray(rawIngredientsList)) return [];
@@ -1232,6 +1252,91 @@
       return Array.from(matchedIds);
     }
 
+    // Nyers API termékátalakító (mapping) a daleday belső adatformátumára
+    function mapApiProductToDaleday(p, sourceLabel, defaultCategory) {
+      let parsedRaw = [];
+      if (p.ingredients_text_hu || p.ingredients_text) {
+        const rawText = p.ingredients_text_hu || p.ingredients_text;
+        parsedRaw = rawText.split(',').map(item => item.trim());
+      }
+
+      const featuredIncs = matchApiIngredientsToDictionary(parsedRaw);
+      const sugarVal = p.nutriments ? p.nutriments.sugars_100g : null;
+
+      let detectedCategory = defaultCategory;
+      const fullSearchText = `${p.product_name_hu || ''} ${p.product_name || ''} ${p.categories || ''}`.toLowerCase();
+      const babyKeywords = ['baby', 'baba', 'csecsemő', 'bébé', 'säugling', 'kinder', 'diaper', 'nappy', 'babycare'];
+      if (babyKeywords.some(kw => fullSearchText.includes(kw))) {
+        detectedCategory = 'baby-care';
+      }
+
+      return {
+        barcode: p.code || p._id || String(Math.floor(1000000000000 + Math.random() * 9000000000000)),
+        exactName: p.product_name_hu || p.product_name || 'Ismeretlen termék',
+        brand: p.brands || 'Ismeretlen márka',
+        category: detectedCategory,
+        market: "HU",
+        packageSize: p.quantity || "N/A",
+        spectrumValue: undefined,
+        sources: [{ type: "open-data", url: `https://world.${sourceLabel === 'Open Beauty Facts' ? 'openbeautyfacts' : 'openfoodfacts'}.org/product/${p.code}`, checkedAt: new Date().toISOString().split('T')[0] }],
+        summary: `A termék adatai a nyílt ${sourceLabel} adatbázisból származnak.`,
+        nutrition: sugarVal !== null ? { totalSugarPer100g: sugarVal, sugarUnit: "g/100g", source: sourceLabel } : undefined,
+        fullIngredients: parsedRaw,
+        featuredIngredients: featuredIncs,
+        alternatives: []
+      };
+    }
+
+    // Szöveges keresés az API-kban (/cgi/search.pl)
+    async function fetchByTextSearch(query) {
+      if (!navigator.onLine) throw new Error("offline");
+
+      const searchUrl = (domain) => 
+        `https://world.${domain}.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=6`;
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+      try {
+        const [beautyRes, foodRes] = await Promise.allSettled([
+          fetch(searchUrl('openbeautyfacts'), { signal: controller.signal }),
+          fetch(searchUrl('openfoodfacts'), { signal: controller.signal })
+        ]);
+
+        clearTimeout(timeoutId);
+        let mappedResults = [];
+
+        if (beautyRes.status === 'fulfilled' && beautyRes.value.ok) {
+          const data = await beautyRes.value.json();
+          if (data.products && Array.isArray(data.products)) {
+            data.products.forEach(p => {
+              if (p.product_name || p.product_name_hu) {
+                mappedResults.push(mapApiProductToDaleday(p, 'Open Beauty Facts', 'cosmetics'));
+              }
+            });
+          }
+        }
+
+        if (foodRes.status === 'fulfilled' && foodRes.value.ok) {
+          const data = await foodRes.value.json();
+          if (data.products && Array.isArray(data.products)) {
+            data.products.forEach(p => {
+              if (p.product_name || p.product_name_hu) {
+                mappedResults.push(mapApiProductToDaleday(p, 'Open Food Facts', 'food'));
+              }
+            });
+          }
+        }
+
+        return mappedResults;
+      } catch (err) {
+        clearTimeout(timeoutId);
+        if (err.message === "offline") throw err;
+        console.error("Szöveges keresési hiba:", err);
+        return [];
+      }
+    }
+
     async function fetchFromExternalApis(barcode) {
       if (!navigator.onLine) {
         throw new Error("offline");
@@ -1253,39 +1358,7 @@
           
           const data = await res.json();
           if (data.status === 1 && data.product) {
-            const p = data.product;
-            
-            let parsedRaw = [];
-            if (p.ingredients_text_hu || p.ingredients_text) {
-              const rawText = p.ingredients_text_hu || p.ingredients_text;
-              parsedRaw = rawText.split(',').map(item => item.trim());
-            }
-
-            const featuredIncs = matchApiIngredientsToDictionary(parsedRaw);
-            const sugarVal = p.nutriments ? p.nutriments.sugars_100g : null;
-
-            let detectedCategory = ep.category;
-            const fullSearchText = `${p.product_name_hu || ''} ${p.product_name || ''} ${p.categories || ''}`.toLowerCase();
-            const babyKeywords = ['baby', 'baba', 'csecsemő', 'bébé', 'säugling', 'kinder', 'diaper', 'nappy', 'babycare'];
-            if (babyKeywords.some(kw => fullSearchText.includes(kw))) {
-              detectedCategory = 'baby-care';
-            }
-
-            return {
-              barcode: barcode,
-              exactName: p.product_name_hu || p.product_name || 'Ismeretlen termék',
-              brand: p.brands || 'Ismeretlen márka',
-              category: detectedCategory,
-              market: "HU",
-              packageSize: p.quantity || "N/A",
-              spectrumValue: undefined,
-              sources: [{ type: "open-data", url: ep.url, checkedAt: new Date().toISOString().split('T')[0] }],
-              summary: `A termék adatai a nyílt ${ep.sourceLabel} adatbázisból származnak.`,
-              nutrition: sugarVal !== null ? { totalSugarPer100g: sugarVal, sugarUnit: "g/100g", source: ep.sourceLabel } : undefined,
-              fullIngredients: parsedRaw,
-              featuredIngredients: featuredIncs,
-              alternatives: []
-            };
+            return mapApiProductToDaleday(data.product, ep.sourceLabel, ep.category);
           }
         } catch (innerErr) {
           clearTimeout(timeoutId);
@@ -1295,9 +1368,10 @@
     }
 
     /* ==========================================================================
-       6. SZKENNER ÉS KERESÉS (Biztonságos Async Életciklus Kezeléssel)
+       6. SZKENNER ÉS INTELLIGENS KERESÉS (Vonalkód vs Szöveges találati lista)
        ========================================================================== */
     let html5QrcodeScanner = null;
+    let currentSearchResults = [];
 
     async function stopCameraScanner() {
       const readerContainer = document.getElementById('readerContainer');
@@ -1368,21 +1442,97 @@
       }
     }
 
-    function handleScanInput() {
+    async function handleScanInput() {
       clearInputError();
       const inputEl = document.getElementById('barcodeInput');
-      const rawCode = inputEl ? inputEl.value.trim() : '';
+      const rawQuery = inputEl ? inputEl.value.trim() : '';
       
-      if (!rawCode) {
-        showInputError('Írd be a termék vonalkódját.');
+      if (!rawQuery) {
+        showInputError('Írd be a termék nevét, márkáját vagy vonalkódját.');
         return;
       }
-      const validCode = validateBarcode(rawCode);
-      if (!validCode) {
-        showInputError('Ez nem tűnik érvényes vonalkódnak. Ellenőrizd a számokat.');
-        return;
+
+      // Ellenőrizzük, hogy tisztán számokból áll-e (vonalkód)
+      const isNumeric = /^[0-9]+$/.test(rawQuery);
+
+      if (isNumeric) {
+        const validCode = validateBarcode(rawQuery);
+        if (!validCode) {
+          showInputError('Ez nem tűnik érvényes vonalkódnak. Ellenőrizd a számokat.');
+          return;
+        }
+        handleScanCode(validCode);
+      } else {
+        // Szöveges név/márka keresés
+        handleTextSearch(rawQuery);
       }
-      handleScanCode(validCode);
+    }
+
+    async function handleTextSearch(query) {
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+
+      container.innerHTML = '<div class="section-block"><p><span class="spinner"></span>Keresés az adatbázisban…</p></div>';
+
+      try {
+        const apiResults = await fetchByTextSearch(query);
+        currentSearchResults = apiResults;
+
+        if (apiResults.length === 0) {
+          container.innerHTML = `
+            <div class="section-block">
+              <h3 style="font-size:1.05rem; margin-bottom: 6px;">Nincs találat</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Nem találtunk terméket a(z) "<strong>${escapeHtml(query)}</strong>" keresési feltételre. Próbáld meg a vonalkód beírását vagy más kifejezést.
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        renderSearchResultsList(query, apiResults);
+      } catch (err) {
+        if (err.message === "offline") {
+          container.innerHTML = `
+            <div class="section-block">
+              <h3 style="font-size:1.05rem; margin-bottom: 6px;">Nincs internetkapcsolat</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">
+                A keresés most nem sikerült. Ellenőrizd az internetkapcsolatot, majd próbáld újra.
+              </p>
+            </div>`;
+        }
+      }
+    }
+
+    function renderSearchResultsList(query, results) {
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+
+      let listHtml = results.map((p, index) => `
+        <div class="search-result-item" onclick="selectSearchResult(${index})">
+          <div>
+            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.exactName)}</strong>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(p.brand)} ${p.packageSize !== 'N/A' ? '• ' + escapeHtml(p.packageSize) : ''}</p>
+          </div>
+          <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Kiválasztás ›</span>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="section-block">
+          <h3 style="font-size:1.05rem; margin-bottom: 4px;">Találatok: "${escapeHtml(query)}"</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 14px;">Válaszd ki a keresett terméket az elemzés megnyitásához:</p>
+          <div>${listHtml}</div>
+        </div>
+      `;
+    }
+
+    function selectSearchResult(index) {
+      const selectedProduct = currentSearchResults[index];
+      if (selectedProduct) {
+        saveToHistory(selectedProduct);
+        renderProductView(selectedProduct);
+      }
     }
 
     async function handleScanCode(code) {
