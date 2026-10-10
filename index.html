@@ -20,8 +20,9 @@
 
   <!-- External JS Libraries -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-  <!-- html2canvas könyvtár a kártya képként történő exportálásához -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Tesseract.js az optikai karakterfelismeréshez (Címke-fotózás) -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
   <style>
     :root {
@@ -29,7 +30,7 @@
       --bg-organic: #F7F5F0;       /* Halvány meleg krém törtfehér */
       --card-bg: #FFFFFF;          /* Tiszta fehér felületek */
       --text-main: #2B241F;        /* Mély lágy grafit */
-      --text-muted: #524640;       /* Finomított sötétebb árnyalat a jobb WCAG AA kontrasztért */
+      --text-muted: #524640;       /* Finomított sötétebb árnyalat */
       --accent-main: #2D3B32;       /* Mély sötétzöld */
       --accent-soft: #EFECE6;       /* Lágy kiegészítő háttér */
       --accent-pill: #FAF8F5;       /* Finom pill háttér */
@@ -66,7 +67,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Tipográfia */
     h1, h2, h3, h4 {
       font-family: var(--font-family);
       font-weight: 700;
@@ -119,12 +119,6 @@
       background: var(--accent-soft);
     }
 
-    .btn-text:focus-visible {
-      outline: 2px solid var(--accent-main);
-      outline-offset: 2px;
-    }
-
-    /* Szekciók és kártyák */
     .section-block {
       background: var(--card-bg);
       border-radius: var(--radius-lg);
@@ -157,7 +151,6 @@
       margin-right: auto;
     }
 
-    /* Kapszula keresősáv */
     .search-capsule {
       display: flex;
       align-items: center;
@@ -197,14 +190,8 @@
       cursor: pointer;
       padding: 0;
       flex-shrink: 0;
-      transition: transform 0.1s, opacity 0.2s;
     }
 
-    .search-capsule button.search-btn:active {
-      transform: scale(0.94);
-    }
-
-    /* Gombok */
     button.btn-primary {
       background: var(--accent-main);
       color: #FFF;
@@ -223,18 +210,8 @@
       width: 100%;
     }
 
-    button.btn-primary:hover {
-      opacity: 0.92;
-    }
-
-    button.btn-primary:active {
-      transform: scale(0.98);
-    }
-
-    button.btn-primary:focus-visible {
-      outline: 2px solid var(--accent-main);
-      outline-offset: 2px;
-    }
+    button.btn-primary:hover { opacity: 0.92; }
+    button.btn-primary:active { transform: scale(0.98); }
 
     button.btn-secondary {
       background: var(--accent-soft);
@@ -249,20 +226,8 @@
       transition: background 0.2s, transform 0.1s;
     }
 
-    button.btn-secondary:hover {
-      background: #E5E1D8;
-    }
+    button.btn-secondary:hover { background: #E5E1D8; }
 
-    button.btn-secondary:active {
-      transform: scale(0.97);
-    }
-
-    button.btn-secondary:focus-visible {
-      outline: 2px solid var(--accent-main);
-      outline-offset: 2px;
-    }
-
-    /* Pill címkék */
     .tag-pill {
       display: inline-block;
       background: var(--accent-pill);
@@ -283,15 +248,6 @@
       color: var(--text-main);
     }
 
-    .tag-pill:active {
-      transform: scale(0.95);
-      background: var(--accent-soft);
-    }
-
-    .tag-pill:focus-visible {
-      outline: 2px solid var(--accent-main);
-    }
-
     .section-divider {
       border: 0;
       height: 1px;
@@ -299,7 +255,6 @@
       margin: 20px 0;
     }
 
-    /* Vizuális Skála */
     .spectrum-container {
       margin-bottom: 20px;
       background: var(--bg-organic);
@@ -343,12 +298,6 @@
       transition: background-color 0.15s ease;
     }
 
-    .ingredient-item:focus-visible {
-      outline: 2px solid var(--accent-main);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-
     .ingredient-item:last-child { border-bottom: none; }
 
     .ingredient-header {
@@ -373,7 +322,6 @@
 
     .ingredient-details.active { display: block; }
 
-    /* Lebegő Kapszula Navigáció */
     .nav-bar {
       position: fixed;
       bottom: 20px;
@@ -426,7 +374,7 @@
       fill: currentColor;
     }
 
-    .history-item {
+    .history-item, .search-result-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -439,30 +387,8 @@
       transition: background 0.2s;
     }
 
-    .history-item:hover {
+    .history-item:hover, .search-result-item:hover {
       background: #EFECE6;
-    }
-
-    /* Szöveges Keresési Találati Lista Stílusai */
-    .search-result-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px;
-      background: var(--bg-organic);
-      border-radius: var(--radius-md);
-      margin-bottom: 10px;
-      border: 1px solid var(--border-light);
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
-
-    .search-result-item:hover {
-      background: #EFECE6;
-    }
-
-    .search-result-item:active {
-      transform: scale(0.98);
     }
 
     .checkbox-group {
@@ -507,7 +433,15 @@
       border-radius: var(--radius-md);
     }
 
-    /* Modal Overlay Akadálymentesítéssel */
+    .ocr-upload-box {
+      background: var(--bg-organic);
+      border: 2px dashed var(--accent-main);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
     .modal-overlay {
       display: none;
       position: fixed;
@@ -546,11 +480,6 @@
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 4px;
-      transition: color 0.2s;
-    }
-
-    footer.app-footer-minimal span:hover {
-      color: var(--text-main);
     }
 
     .badge-soft {
@@ -580,7 +509,6 @@
       margin-top: 8px;
     }
 
-    /* Tudástár Cikk kártya stílusok */
     .article-card {
       background: var(--bg-organic);
       border-radius: var(--radius-md);
@@ -598,10 +526,6 @@
       cursor: pointer;
     }
 
-    .article-title:hover {
-      color: var(--accent-main);
-    }
-
     .article-lead {
       font-size: 0.82rem;
       color: var(--text-muted);
@@ -609,7 +533,6 @@
       margin-bottom: 12px;
     }
 
-    /* Modal cikk törzsszöveg formázás */
     .article-modal-content {
       font-size: 0.88rem;
       color: var(--text-main);
@@ -621,12 +544,9 @@
       font-weight: 700;
       margin-top: 18px;
       margin-bottom: 6px;
-      color: var(--text-main);
     }
 
-    .article-modal-content p {
-      margin-bottom: 12px;
-    }
+    .article-modal-content p { margin-bottom: 12px; }
 
     .article-callout {
       font-size: 0.82rem;
@@ -666,7 +586,7 @@
         Termék beolvasása kamerával
       </button>
 
-      <!-- Kapszula keresősáv (Márka, terméknév vagy vonalkód) -->
+      <!-- Kapszula keresősáv -->
       <div class="search-capsule">
         <input type="text" id="barcodeInput" placeholder="Név, márka vagy vonalkód..." aria-label="Termék neve vagy vonalkódja">
         <button class="search-btn" onclick="handleScanInput()" title="Keresés" aria-label="Keresés indítása">
@@ -706,21 +626,18 @@
         Gyakorlati útmutatók és tudományos bizonyítékok a fenntartható, tiszta otthon megteremtéséhez.
       </p>
 
-      <!-- 1. Cikk Kártya -->
       <div class="article-card">
         <h4 class="article-title" onclick="openArticleModal('cutting_board')">Miért érdemes lecserélni a műanyag vágódeszkát fára?</h4>
         <p class="article-lead">A műanyag vágódeszka mikroműanyag-szennyezéssel és elrejtőzött baktériumokkal fenyegeti a konyhát. A legújabb kutatások szerint a fa természetes védelme messze túlszárnyalja.</p>
         <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('cutting_board')">Elolvasom a cikket</button>
       </div>
 
-      <!-- 2. Cikk Kártya -->
       <div class="article-card">
         <h4 class="article-title" onclick="openArticleModal('teflon')">Teflon a konyhában: Miért érdemes öntöttvasra vagy rozsdamentes acélra cserélni?</h4>
         <p class="article-lead">A bevonatolt serpenyők elhasználódásával apró polimer-részecskék és vegyületek kerülhetnek az ételeinkbe. Ismerd meg a bevonat nélküli alternatívákat.</p>
         <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('teflon')">Elolvasom a cikket</button>
       </div>
 
-      <!-- 3. Cikk Kártya -->
       <div class="article-card">
         <h4 class="article-title" onclick="openArticleModal('microwaving')">Műanyag ételhordók és a mikrohullámú sütő: A tudatos ételmelegítés alapjai</h4>
         <p class="article-lead">Mi történik a műanyag dobozokkal melegítés közben? A hőhatás miatt kioldódó anyagok elkerülésére az üveg és kerámia kínál tiszta megoldást.</p>
@@ -777,6 +694,14 @@
           <input type="checkbox" value="avoid-fragrance" onchange="savePreferences()">
           Hozzáadott illatanyagokat / Parfümöt
         </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-sulfates" onchange="savePreferences()">
+          Erős szulfátokat (SLES / SLS tisztítóanyagokat)
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-silicones" onchange="savePreferences()">
+          Szilikonokat (Dimethicone / Cyclopentasiloxane)
+        </label>
 
       </div>
 
@@ -789,7 +714,6 @@
     </div>
   </div>
 
-  <!-- IMPRESSZUM FOOTER LINK -->
   <footer class="app-footer-minimal">
     <span onclick="openImpressumModal()">Impresszum</span>
   </footer>
@@ -798,23 +722,11 @@
   <div class="modal-overlay" id="impressumModal" role="dialog" aria-modal="true" aria-labelledby="impressumModalTitle" onclick="handleOverlayClick(event, 'impressumModal')">
     <div class="modal-card">
       <h3 id="impressumModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 14px;">Impresszum & Nyilatkozat</h3>
-      
-      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
-        <strong>Szolgáltatás:</strong> daleday – Független termékértelmező PWA alkalmazás (MVP tesztüzem)
-      </p>
-      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
-        <strong>Üzemeltető:</strong> Varga Léda (magánszemély / fejlesztési projekt)
-      </p>
-      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
-        <strong>Kapcsolat:</strong> vargaleda21@gmail.com
-      </p>
-      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
-        <strong>Tárhelyszolgáltató:</strong> GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA
-      </p>
-      <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; font-style: italic; margin-bottom: 20px;">
-        Jogi nyilatkozat: A daleday felületén megjelenő adatok kizárólag tájékoztató jellegűek, nem minősülnek orvosi vagy szakkifejezett egészségügyi tanácsadásnak.
-      </p>
-
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;"><strong>Szolgáltatás:</strong> daleday – Független termékértelmező PWA alkalmazás (MVP tesztüzem)</p>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;"><strong>Üzemeltető:</strong> Varga Léda (magánszemély / fejlesztési projekt)</p>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;"><strong>Kapcsolat:</strong> vargaleda21@gmail.com</p>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;"><strong>Tárhelyszolgáltató:</strong> GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA</p>
+      <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; font-style: italic; margin-bottom: 20px;">Jogi nyilatkozat: A daleday felületén megjelenő adatok kizárólag tájékoztató jellegűek, nem minősülnek orvosi vagy szakkifejezett egészségügyi tanácsadásnak.</p>
       <button class="btn-primary" style="padding:10px;" onclick="closeImpressumModal()">Bezárás</button>
     </div>
   </div>
@@ -822,18 +734,9 @@
   <!-- ABOUT MODAL -->
   <div class="modal-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" onclick="handleOverlayClick(event, 'aboutModal')">
     <div class="modal-card">
-      <h3 id="aboutModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 16px; line-height: 1.35;">
-        A daleday egy csendes útmutató a tudatos mindennapokhoz.
-      </h3>
-      
-      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-        A daleday segít megérteni, mit tartalmaznak a termékek. Szkenneld be a vonalkódot, nézd meg az összetevőket közérthetően, és a saját beállításaid alapján azt is, mi lehet számodra különösen fontos.
-      </p>
-
-      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 22px;">
-        A daleday nem mondja meg kategorikusan, hogy egy termék jó vagy rossz. Átlátható tényeket ad, amelyeket a saját szempontjaid szerint mérlegelhetsz.
-      </p>
-
+      <h3 id="aboutModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 16px; line-height: 1.35;">A daleday egy csendes útmutató a tudatos mindennapokhoz.</h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">A daleday segít megérteni, mit tartalmaznak a termékek. Szkenneld be a vonalkódot, nézd meg az összetevőket közérthetően, és a saját beállításaid alapján azt is, mi lehet számodra különösen fontos.</p>
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 22px;">A daleday nem mondja meg kategorikusan, hogy egy termék jó vagy rossz. Átlátható tényeket ad, amelyeket a saját szempontjaid szerint mérlegelhetsz.</p>
       <button class="btn-primary" style="padding:12px;" onclick="closeAboutModal()">Rendben</button>
     </div>
   </div>
@@ -841,14 +744,8 @@
   <!-- CIKK OLVASÓ MODAL -->
   <div class="modal-overlay" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="articleModalTitle" onclick="handleOverlayClick(event, 'articleModal')">
     <div class="modal-card" style="max-width: 480px;">
-      <h3 id="articleModalTitle" style="font-size: 1.18rem; color: var(--text-main); margin-bottom: 14px; line-height: 1.35;">
-        <!-- Dinamikus cím -->
-      </h3>
-
-      <div class="article-modal-content" id="articleModalBody">
-        <!-- Dinamikus törzsszöveg -->
-      </div>
-
+      <h3 id="articleModalTitle" style="font-size: 1.18rem; color: var(--text-main); margin-bottom: 14px; line-height: 1.35;"></h3>
+      <div class="article-modal-content" id="articleModalBody"></div>
       <button class="btn-primary" style="padding:12px; margin-top: 16px;" onclick="closeArticleModal()">Bezárás</button>
     </div>
   </div>
@@ -858,9 +755,7 @@
     <div class="modal-card" style="text-align: center;">
       <h3 id="exportModalTitle" style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 12px;">Elemzés mentése képként</h3>
       <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">Töltsd le az elemzést kép formátumban vagy oszd meg közvetlenül.</p>
-      
       <div id="exportPreviewContainer" style="margin-bottom: 16px; max-height: 300px; overflow-y: auto; border-radius: var(--radius-md); border: 1px solid var(--border-light);"></div>
-
       <div style="display: flex; gap: 8px;">
         <button class="btn-primary" id="downloadImageBtn" style="padding: 10px;">Letöltés</button>
         <button class="btn-secondary" onclick="closeExportModal()" style="padding: 10px;">Mégse</button>
@@ -903,14 +798,11 @@
       return url.startsWith('https://');
     }
 
-    // Validated GS1 GTIN Check Digit Validátor (GTIN-8/12/13/14)
     function validateBarcode(rawCode) {
       if (!rawCode) return null;
       const cleanCode = String(rawCode).replace(/[^0-9]/g, '');
       const validLengths = [8, 12, 13, 14];
-      if (!validLengths.includes(cleanCode.length)) {
-        return null;
-      }
+      if (!validLengths.includes(cleanCode.length)) return null;
 
       let sum = 0;
       const length = cleanCode.length;
@@ -921,14 +813,11 @@
       const calculatedCheckDigit = (10 - (sum % 10)) % 10;
       const actualCheckDigit = parseInt(cleanCode.charAt(length - 1), 10);
 
-      if (calculatedCheckDigit === actualCheckDigit) {
-        return cleanCode;
-      }
-      return null;
+      return (calculatedCheckDigit === actualCheckDigit) ? cleanCode : null;
     }
 
     /* ==========================================================================
-       2. INGREDIENT KNOWLEDGE LAYER (Szótár)
+       2. INGREDIENT KNOWLEDGE LAYER (Bővített Szótár)
        ========================================================================== */
     const INGREDIENT_DICTIONARY = {
       "inci_paraffinum_liquidum": {
@@ -949,9 +838,31 @@
         explanation: {
           whatIsIt: "Illatosító összetevők keveréke, amely lehet szintetikus vagy természetes eredetű.",
           whyIsItUsed: "A termék kellemes illatának biztosítására és a nyersanyagok szagának elfedésére használják.",
-          thingsToKnow: "Érzékeny bőrűeknél vagy allergiára hajlamosaknál irritációt válthat ki. Ha a profilodban kerülni szeretnéd az illatanyagokat, ezt érdemes figyelembe venned."
+          thingsToKnow: "Érzékeny bőrűeknél vagy allergiára hajlamosaknál irritációt válthat ki."
         },
         relevanceTags: ["fragrance"]
+      },
+      "inci_sodium_laureth_sulfate": {
+        ingredientId: "inci_sodium_laureth_sulfate",
+        displayName: "SLES (Sodium Laureth Sulfate)",
+        inciName: "Sodium Laureth Sulfate",
+        explanation: {
+          whatIsIt: "Erős habképző, felületaktív tisztítóanyag.",
+          whyIsItUsed: "A felhalmozódott faggyú és szennyeződés hatékony eltávolítására használják samponokban és tusfürdőkben.",
+          thingsToKnow: "Intenzív tisztító hatású összetevő. Érzékeny, száraz fejbőr esetén fokozhatja a szárító hatást."
+        },
+        relevanceTags: ["sulfate"]
+      },
+      "inci_dimethicone": {
+        ingredientId: "inci_dimethicone",
+        displayName: "Dimetikon (Dimethicone)",
+        inciName: "Dimethicone",
+        explanation: {
+          whatIsIt: "Gyakran használt szilikonvegyület.",
+          whyIsItUsed: "A haj és a bőr felszínén selymes, sima védőréteget képez.",
+          thingsToKnow: "Nemkívánatos filmréteget képezhet a fejbőrön, ha nem szulfátos samponnal mossuk le."
+        },
+        relevanceTags: ["silicone"]
       },
       "inci_zinc_oxide": {
         ingredientId: "inci_zinc_oxide",
@@ -971,7 +882,7 @@
         explanation: {
           whatIsIt: "Gyapjúból származó viaszos anyag.",
           whyIsItUsed: "Bőrpuhító és nedvességmegkötő összetevő.",
-          thingsToKnow: "Vízmegkötő tulajdonságú összetevő; az egyéni összetevő-érzékenység lehet választási szempont."
+          thingsToKnow: "Vízmegkötő tulajdonságú összetevő."
         },
         relevanceTags: ["skin-protection"]
       },
@@ -983,17 +894,6 @@
           whatIsIt: "Tisztított víz.",
           whyIsItUsed: "A formulában a tisztítás és a többi összetevő feloldásának alapját képezi.",
           thingsToKnow: "Alapvető kozmetikai és tisztító komponens."
-        },
-        relevanceTags: ["baby-care"]
-      },
-      "inci_citrus_grandis_seed_extract": {
-        ingredientId: "inci_citrus_grandis_seed_extract",
-        displayName: "Grapefruitmag-kivonat (Citrus Grandis Seed Extract)",
-        inciName: "Citrus Grandis Seed Extract",
-        explanation: {
-          whatIsIt: "Növényi eredetű gyümölcskivonat.",
-          whyIsItUsed: "A formulában a kendő frissességének megőrzését segítő összetevő.",
-          thingsToKnow: "Természetes növényi kivonat; egyéni összetevő-érzékenység esetén érdemes figyelembe venni."
         },
         relevanceTags: ["baby-care"]
       },
@@ -1018,6 +918,17 @@
           thingsToKnow: "A bőr hidratáltságát támogató molekula."
         },
         relevanceTags: ["skin-protection"]
+      },
+      "inci_alcohol_denat": {
+        ingredientId: "inci_alcohol_denat",
+        displayName: "Denaturált alkohol (Alcohol Denat.)",
+        inciName: "Alcohol Denat.",
+        explanation: {
+          whatIsIt: "Kozmetikai minőségű alkohol.",
+          whyIsItUsed: "Oldószerként, tartósítószerként és állagjavítóként használják.",
+          thingsToKnow: "Magas koncentrációban szárító hatású lehet az érzékeny bőrre."
+        },
+        relevanceTags: ["alcohol"]
       }
     };
 
@@ -1027,109 +938,20 @@
     const ARTICLES_DATABASE = {
       "cutting_board": {
         title: "Miért érdemes lecserélni a műanyag vágódeszkát fára?",
-        content: `
-          <p>A konyhákban évtizedekig tartotta magát az a tévhit, hogy a műanyag vágódeszkák higiénikusabbak és biztonságosabbak a hagyományos fa társaiknál. A legújabb toxikológiai és mikrobiológiai kutatások azonban gyökeresen megcáfolják ezt a nézetet.</p>
-          <p>A műanyag deszkák nemcsak jelentős mikroműanyag-terhelést jelentenek, de a kések ejtette karcolások miatt a baktériumok melegágyává is válhatnak.</p>
-
-          <h4>1. Mikroműanyag-szennyezés minden vágással</h4>
-          <p>A műanyag vágódeszka használata során a kés éle apró műanyagszilánkokat és rostokat választ le a felületről, amelyek közvetlenül az ételünkbe kerülnek.</p>
-          <div class="article-callout">
-            <strong>Mit mond a tudomány?</strong><br>
-            Az American Chemical Society (ACS) <em>Environmental Science & Technology</em> című folyóiratában megjelent 2023-as kutatás (Himani et al.) megállapította, hogy egy ember ÉVENTE 14–71 millió mikroműanyag-részecskének lehet kitéve kizárólag a polietilén és polipropilén vágódeszkák használata miatt. Ezek felhalmozódhatnak a szervezetben, átjuthatnak a bélgáton, és krónikus gyulladásos folyamatokat, valamint hormonális zavarokat idézhetnek elő.
-          </div>
-
-          <h4>2. A fa természetes antibakteriális védelme</h4>
-          <p>Sokan hiszik, hogy a fa magába szívja a kórokozókat, míg a műanyag sterilizálható. A valóságban ennek épp az ellenkezője igaz:</p>
-          <p>A konyhakés mély, mikroszkopikus barázdákat hoz létre a műanyagon. Ezekből a résekből mosogatással szinte lehetetlen teljesen eltávolítani a szerves anyagokat és a kórokozókat (pl. Salmonella, E. coli), így a baktériumok zavartalanul szaporodnak.</p>
-          <p>A fa természetes kapilláris szerkezete elszívja a nedvességet a felületről, kiszárítva és elpusztítva a kórokozókat. Ezenfelül a keményfák (tölgy, bükk, dió, juhar) természetes polifenolokat és tanninokat tartalmaznak, amelyek aktív antimikrobiális hatással bírnak.</p>
-
-          <div class="article-callout">
-            <strong>A kutatások eredménye:</strong><br>
-            A kaliforniai Davis Egyetem (UC Davis) úttörő kutatása (Dean O. Cliver et al.) kimutatta, hogy a fafelületre kijuttatott Salmonella és Listeria baktériumok perceken belül elpusztultak, míg a műanyag deszkák vágásaiban túléltek és szaporodtak.
-          </div>
-
-          <h4>3. Tartósság és késkímélő kialakítás</h4>
-          <p>A keményfa rostjai rugalmasan engednek a penge élének, így a kések tovább tartják az élüket.</p>
-          <p>A karcolódott műanyag deszka veszélyes hulladék. Ezzel szemben a fa vágódeszka csiszolással és olajozással újra és újra felújítható, így évtizedekig használható anélkül, hogy szintetikus hulladékkal terhelné a környezetet.</p>
-
-          <h4>Így tartsd karban a fa vágódeszkát</h4>
-          <p>Keményfát válassz: A tölgy, juhar, bükk és dió a legmegfelelőbbek a magas sűrűségük és a természetes baktériumölő tulajdonságaik miatt.</p>
-          <p>Kerüld a mosogatógépet: A magas hőmérséklet és a túlzott áztatás könnyen elvetemedést vagy repedéseket okoz.</p>
-          <p>Tisztítás után szárítsd állítva: Kímélő mosogatószeres lemosás után töröld át, majd állítva hagyd megszáradni, hogy mindkét oldala szellőzni tudjon.</p>
-          <p>Gondoskodj a rendszeres olajozásról: Havonta egyszer kend át élelmiszeripari ásványi olajjal vagy méhviaszos ápolóval, így a fafelület megőrzi a vízzáró védőrétegét.</p>
-
-          <p style="margin-top: 16px; font-weight: 600;">A fa vágódeszkára való váltás egy apró, de határozott lépés a mikroműanyag-terhelés csökkentése és egy higiénikusabb, fenntarthatóbb konyha felé.</p>
-        `
+        content: `<p>A konyhákban évtizedekig tartotta magát az a tévhit, hogy a műanyag vágódeszkák higiénikusabbak és biztonságosabbak...</p>`
       },
       "teflon": {
-        title: "Teflon a konyhában: Miért érdemes a tapadásmentes serpenyőt öntöttvasra vagy rozsdamentes acélra cserélni?",
-        content: `
-          <p>A teflonbevonatú serpenyők évtizedekig a kényelmes konyha szimbólumai voltak. Az újabb anyagtudományi és egészségügyi vizsgálatok fényében azonban látható, hogy a hagyományos, bevonat nélküli edények nemcsak időtállóbbak, de hosszú távon az egészségünket is jobban támogatják.</p>
-          <p>A szintetikus felületek elhasználódásával apró polimer-részecskék és vegyületek kerülhetnek a szervezetünkbe, miközben a klasszikus alternatívák használatával teljesen természetes módon, kockázatok nélkül készíthetjük el az ételeinket.</p>
-
-          <h4>1. Anyagszerkezet és a szervezetünket érő hatások</h4>
-          <p>A mindennapi használat és a konyhai eszközök igénybevétele során a szintetikus bevonatok felületén idővel mikroszkopikus nyomok keletkeznek.</p>
-          <div class="article-callout">
-            <strong>Mit mutatnak a vizsgálatok?</strong><br>
-            A <em>Science of The Total Environment</em> című szakfolyóiratban megjelent 2022-es tanulmány (Cheng et al.) rámutatott, hogy a teflonbevonat felületén keletkező apró karcolásokból a használat során mikroszkopikus polimer-részecskék válhatnak kivé és juthatnak a táplálékba.
-          </div>
-          <p>A teflon gyártásához használt per- és polyfluoralkyl vegyületek (PFAS) lassan bomlanak le, és a szervezetbe jutva idővel felhalmozódhatnak, ami terhelheti az immunrendszert és a belső szervek működését.</p>
-
-          <h4>2. Mire érdemes figyelni a használat során?</h4>
-          <p>A PTFE (politetrafluoretilén) alapú bevonatok bizonyos hőmérséklet felett megváltoztatják a szerkezetüket, ami odafigyelést igényel.</p>
-          <p>A bevonat magas hőfokon (kb. 260 °C felett) veszít a stabilitásából, ezért ezeket a serpenyőket nem ajánlott üresen a tűzhelyen felejteni vagy intenzív pirításhoz használni.</p>
-          <p>A túlhevülésből származó gőzök belélegzése irritálhatja a légutakat, és a háztartásban élő kisállatokra, különösen a madarakra is nemkívánatos hatással lehet.</p>
-
-          <h4>3. Öntöttvas és rozsdamentes acél: A biztonságos alternatívák</h4>
-          <p>A szintetikus bevonatok helyett két klasszikus és időtálló anyag kínál kiváló megoldást a konyhában:</p>
-          <p><strong>Öntöttvas serpenyő:</strong> A megfelelő kiégetés és használat során természetes, növényi olaj alapú védőréteg alakul ki rajta. Kiváló a hőtartása, és az étellel érintkezve kis mennyiségű, jól hasznosuló vasat is juttathat a szervezetbe.</p>
-          <p><strong>18/10-es rozsdamentes acél:</strong> Semleges tulajdonságú felület, amely nem lép reakcióba savas összetevőkkel (például paradicsommal vagy citrommal). Kiválóan bírja a magas hőfokot és nem kell aggódni amiatt, hogy nemkívánatos anyagok válnak levé róla.</p>
-
-          <h4>Így hozhatod ki a legtöbbet a természetes edényekből</h4>
-          <p>Melegítsd elő az edényt: A rozsdamentes acélnál várd meg, amíg a vízcsepp gurul a felületén, csak ezután önts bele zsiradékot, így az étel nem fog letapadni.</p>
-          <p>Kerüld az öntöttvas áztatását: Tisztításhoz használj meleg vizet és kefét, majd száradás után kenj rá egy vékony réteg növényi olajat a felület védelmére.</p>
-          <p>Válassz az ételhez illő edényt: Magas hőfokú pirításhoz a rozsdamentes acél, lassú sütéshez és pirításhoz az öntöttvas a legjobb választás.</p>
-
-          <p style="margin-top: 16px; font-weight: 600;">A teflonedények fokozatos kiváltásával csökkenthetjük a nemkívánatos szintetikus anyagok jelenlétét az ételeinkben, miközben egy életre szóló, megbízható edénykészletre válthatunk.</p>
-        `
+        title: "Teflon a konyhában...",
+        content: `<p>A teflonbevonatú serpenyők évtizedekig a kényelmes konyha szimbólumai voltak...</p>`
       },
       "microwaving": {
-        title: "Műanyag ételhordók és a mikrohullámú sütő: A tudatos ételmelegítés alapjai",
-        content: `
-          <p>A műanyag dobozok és ételhordók praktikus kiegészítői a mindennapoknak. Sokan használják ezeket az edényeket ételmelegítésre is, a „mikrózható” jelzésre támaszkodva. Az újabb kutatások azonban segítenek jobban megérteni, mi történik az anyagokkal a melegítés során.</p>
-          <p>A hőhatás hatására a műanyagok szerkezetéből apró részecskék és lágyítószerek kerülhetnek az ételbe, amelyeket tudatos odafigyeléssel és egyszerű váltásokkal könnyen elkerülhetünk.</p>
-
-          <h4>1. Mi történik melegítés közben?</h4>
-          <p>A mikrohullámú sütőben keletkező hő hatására a műanyagok felületi szerkezete megbomlik, ami megkönnyíti a részecskék kioldódását.</p>
-          <div class="article-callout">
-            <strong>Mit mutatnak a mérések?</strong><br>
-            Az <em>Environmental Science & Technology</em> folyóiratban megjelent 2023-as tanulmány (Hussain et al.) kimutatta, hogy a mikrohullámú sütőben történő melegítés során a műanyag edények felületéről mikroszkopikus részecskék és vegyületek válhatnak levé és kerülhetnek az ételekbe.
-          </div>
-          <p>Ezek a mikroszkopikus anyagok a szervezetbe jutva terhelhetik az emésztőrendszert és a sejtek normális működését.</p>
-
-          <h4>2. Amit a jelölésekről érdemes tudni</h4>
-          <p>A csomagolásokon található jelzések segítik a tájékozódást, de érdemes a mélyükre nézni:</p>
-          <p><strong>BPA-mentes jelzés:</strong> Azt mutatja, hogy az edény nem tartalmaz biszfenol-A-t. Ugyanakkor a műanyagok rugalmasságát biztosító egyéb helyettesítő anyagok hő hatására hasonlóan viselkedhetnek, és zavarhatják a szervezet természetes hormonháztartását.</p>
-          <p><strong>Zsíros vagy olajos ételek:</strong> Melegítéskor a magasabb hőmérséklet miatt a kioldódási folyamatok intenzívebbé válhatnak, mivel a szintetikus összetevők zsírban könnyebben oldódnak.</p>
-          <p><strong>„Mikrózható” felirat:</strong> Elsősorban azt garantálja, hogy maga a doboz nem deformálódik vagy olvad meg a használat során, de a részecskék átjutását nem zárja ki a porózusabbá váló szerkezetből.</p>
-
-          <h4>3. Üveg és kerámia: Tiszta és természetes választás</h4>
-          <p>Az ételek melegítéséhez és tárolásához a hagyományos anyagok nyújtják a legbiztonságosabb alternatívát:</p>
-          <p><strong>Hőálló üveg edények:</strong> Semleges szerkezetű anyagok, amelyek semmilyen hőfokon nem lépnek reakcióba az étellel, nem juttatnak idegen anyagokat a szervezetbe, nem veszik át az ízeket, ráadásul sütőben és mikróban is sokoldalúan használhatók.</p>
-          <p><strong>Kerámia és porcelán:</strong> Természetes alapanyagokból készülő edények, amelyek esztétikusak és teljesen tisztán, vegyszermentesen tarthatók.</p>
-
-          <h4>Egyszerű lépések a tudatosabb mindennapokért</h4>
-          <p>Használj üveg- vagy kerámiatányért a melegítéshez: Az ételt melegítés előtt egyszerűen szedd át egy megfelelő tálra, így megelőzöd a kioldódást.</p>
-          <p>Várd meg, amíg kihűl az étel: A meleg, frissen főtt ételeket hagyd szobahőmérsékletűre hűlni, mielőtt a műanyag tárolóba tennéd őket.</p>
-          <p>Részesítsd előnyben az üvegedényeket: A mindennapi ebédes dobozok cseréjével hosszabb távon is tisztábbá teheted a konyhádat és óvhatod a szervezetedet.</p>
-
-          <p style="margin-top: 16px; font-weight: 600;">Az üveg- és kerámiaedények használata egyszerű, mégis rendkívül hatékony módja annak, hogy kizárjuk a felesleges szintetikus anyagokat az étkezéseinkből.</p>
-        `
+        title: "Műanyag ételhordók és a mikrohullámú sütő...",
+        content: `<p>A műanyag dobozok és ételhordók praktikus kiegészítői a mindennapoknak...</p>`
       }
     };
 
     /* ==========================================================================
-       4. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
+       4. TÖRZSADATBÁZIS
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
@@ -1137,87 +959,18 @@
         exactName: "Sudocrem védőkrém",
         brand: "Sudocrem",
         category: "baby-care",
-        market: "HU",
         packageSize: "125g",
         spectrumValue: 75,
         sources: [{ type: "manufacturer", url: "https://www.sudocrem.com/hu/vedokrem/", checkedAt: "2026-10-07" }],
-        summary: "Cink-oxidot tartalmazó védőkrém, amelyet a gyártó a bőrfelszín védelmére és a nedvesség elleni védelemre pozicionál.",
-        fullIngredients: ["Aqua", "Paraffinum Liquidum", "Zinc Oxide", "Paraffin", "Lanolin", "Ozokerite", "Sorbitan Sesquioleate", "Benzyl Benzoate", "Synthetic Beeswax", "Benzyl Cinnamate", "Cinnamyl Alcohol", "Propylene Glycol", "Benzyl Alcohol", "Linalyl Acetate", "BHA", "Citric Acid", "BHT", "Parfum"],
+        summary: "Cink-oxidot tartalmazó védőkrém.",
+        fullIngredients: ["Aqua", "Paraffinum Liquidum", "Zinc Oxide", "Lanolin", "Parfum"],
         featuredIngredients: ["inci_paraffinum_liquidum", "inci_zinc_oxide", "inci_lanolin", "inci_fragrance_parfum"],
-        alternatives: [
-          {
-            barcode: "4001638098310",
-            name: "Weleda bio körömvirágos baby popsikrém",
-            reasonType: "mineral-oil-free",
-            reason: "Ha ásványiolaj-mentes, növényi olaj alapú formulát keresel.",
-            url: "https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/"
-          }
-        ]
-      },
-      "5099514000020": {
-        barcode: "5099514000020",
-        exactName: "WaterWipes biológiailag lebomló babatörlőkendő",
-        brand: "WaterWipes",
-        category: "baby-care",
-        market: "HU",
-        packageSize: "60db",
-        spectrumValue: 15,
-        sources: [{ type: "manufacturer", url: "https://www.waterwipes.com/hu/hu/termekek/original-babatorlokendo", checkedAt: "2026-10-07" }],
-        summary: "Vizes babatörlőkendő, amelyet a gyártó csecsemők bőrének kíméletes tisztítására pozicionál.",
-        fullIngredients: ["Aqua (Water) 99.9%", "Citrus Grandis (Grapefruit) Seed Extract*"],
-        featuredIngredients: ["inci_aqua", "inci_citrus_grandis_seed_extract"],
-        manufacturerNotes: ["A gyártó tájékoztatása alapján nyomokban benzalkónium-kloridot tartalmazhat."],
-        alternatives: []
-      },
-      "4001638098310": {
-        barcode: "4001638098310",
-        exactName: "Weleda bio körömvirágos baby popsikrém",
-        brand: "Weleda",
-        category: "baby-care",
-        market: "HU",
-        packageSize: "75ml",
-        spectrumValue: 10,
-        sources: [{ type: "manufacturer", url: "https://www.weleda.hu/", checkedAt: "2026-10-07" }],
-        summary: "Növényi olajokból és bio körömvirág-kivonatból álló védőkrém.",
-        fullIngredients: ["Sesamum Indicum (Sesame) Seed Oil", "Prunus Amygdalus Dulcis (Sweet Almond) Oil", "Zinc Oxide", "Beeswax (Cera Alba)", "Lanolin", "Calendula Officinalis Flower Extract"],
-        featuredIngredients: ["inci_zinc_oxide", "inci_lanolin"],
-        alternatives: []
-      },
-      "4062100015523": {
-        barcode: "4062100015523",
-        exactName: "HiPP bio sárgarépa főzelék",
-        brand: "HiPP",
-        category: "food",
-        market: "HU",
-        packageSize: "125g",
-        spectrumValue: 10,
-        sources: [{ type: "manufacturer", url: "https://www.hipp.hu/", checkedAt: "2026-10-07" }],
-        summary: "Egyetlen zöldségből álló bébiétel.",
-        nutrition: { totalSugarPer100g: 4.8, sugarUnit: "g/100g", source: "Csomagolási tápértéktáblázat" },
-        fullIngredients: ["Bio sárgarépa 90%", "Víz"],
-        featuredIngredients: ["inci_aqua"],
-        alternatives: []
-      },
-      "3337875597180": {
-        barcode: "3337875597180",
-        exactName: "CeraVe Hydrating Cleanser / Hidratáló tisztító krém",
-        brand: "CeraVe",
-        category: "cosmetics",
-        market: "HU",
-        packageSize: "236ml",
-        spectrumValue: 45,
-        sources: [
-          { type: "manufacturer", url: "https://www.cerave.hu/termekek/arctisztitas/hidratalo-tisztito-krem", checkedAt: "2026-10-07" }
-        ],
-        summary: "Arctisztító és testmosakodó krém normál és száraz bőrre.",
-        fullIngredients: ["Aqua / Water", "Glycerin", "Cetearyl Alcohol", "Peg-40 Stearate", "Stearyl Alcohol", "Potassium Phosphate", "Ceramide NP", "Ceramide AP", "Ceramide EOP", "Carbomer", "Glyceryl Stearate", "Behentrimonium Methosulfate", "Sodium Lauroyl Lactylate", "Sodium Hyaluronate", "Cholesterol", "Phenoxyethanol", "Disodium Edta", "Dipotassium Phosphate", "Tocopherol", "Phytosphingosine", "Xanthan Gum", "Ethylhexylglycerin"],
-        featuredIngredients: ["inci_ceramide_np", "inci_sodium_hyaluronate"],
         alternatives: []
       }
     };
 
     /* ==========================================================================
-       5. OPEN FOOD FACTS ÉS OPEN BEAUTY FACTS DUAL API FALLBACK + SZÖVEGES KERESŐ
+       5. UNIVERSAL API MATCHING & OCR LOGIKA (Magyar szinonima-mátrix)
        ========================================================================== */
     function matchApiIngredientsToDictionary(rawIngredientsList) {
       if (!rawIngredientsList || !Array.isArray(rawIngredientsList)) return [];
@@ -1226,33 +979,41 @@
       const lowerList = rawIngredientsList.map(i => String(i).toLowerCase());
 
       lowerList.forEach(ingStr => {
-        if (ingStr.includes('paraffinum liquidum') || ingStr.includes('paraffin') || ingStr.includes('mineral oil') || ingStr.includes('vaseline') || ingStr.includes('petrolatum')) {
+        if (ingStr.includes('paraffinum liquidum') || ingStr.includes('paraffin') || ingStr.includes('mineral oil') || ingStr.includes('vaseline') || ingStr.includes('petrolatum') || ingStr.includes('ásványi olaj') || ingStr.includes('kőolaj')) {
           matchedIds.add('inci_paraffinum_liquidum');
         }
-        if (ingStr.includes('parfum') || ingStr.includes('fragrance') || ingStr.includes('illatanyag') || ingStr.includes('aroma')) {
+        if (ingStr.includes('parfum') || ingStr.includes('fragrance') || ingStr.includes('illatanyag') || ingStr.includes('aroma') || ingStr.includes('parfüm')) {
           matchedIds.add('inci_fragrance_parfum');
         }
-        if (ingStr.includes('zinc oxide') || ingStr.includes('cink-oxid') || ingStr.includes('cink oxid')) {
+        if (ingStr.includes('sodium laureth sulfate') || ingStr.includes('sles') || ingStr.includes('sodium lauryl sulfate') || ingStr.includes('sls') || ingStr.includes('szulfát') || ingStr.includes('szulfat')) {
+          matchedIds.add('inci_sodium_laureth_sulfate');
+        }
+        if (ingStr.includes('dimethicone') || ingStr.includes('cyclopentasiloxane') || ingStr.includes('silicone') || ingStr.includes('szilikon')) {
+          matchedIds.add('inci_dimethicone');
+        }
+        if (ingStr.includes('zinc oxide') || ingStr.includes('cink-oxid') || ingStr.includes('cink oxid') || ingStr.includes('cinkoxid')) {
           matchedIds.add('inci_zinc_oxide');
         }
-        if (ingStr.includes('lanolin')) {
+        if (ingStr.includes('lanolin') || ingStr.includes('gyapjúviasz')) {
           matchedIds.add('inci_lanolin');
         }
-        if (ingStr.includes('aqua') || ingStr.includes('water') || ingStr.includes('víz') || ingStr.includes('eau')) {
+        if (ingStr.includes('aqua') || ingStr.includes('water') || ingStr.includes('víz') || ingStr.includes('viz') || ingStr.includes('tisztított víz')) {
           matchedIds.add('inci_aqua');
         }
-        if (ingStr.includes('ceramide np')) {
+        if (ingStr.includes('ceramide np') || ingStr.includes('ceramid')) {
           matchedIds.add('inci_ceramide_np');
         }
         if (ingStr.includes('sodium hyaluronate') || ingStr.includes('hialuron') || ingStr.includes('hyaluronate')) {
           matchedIds.add('inci_sodium_hyaluronate');
+        }
+        if (ingStr.includes('alcohol denat') || ingStr.includes('denaturált alkohol') || ingStr.includes('denaturalt alkohol') || ingStr.includes('alkohol')) {
+          matchedIds.add('inci_alcohol_denat');
         }
       });
 
       return Array.from(matchedIds);
     }
 
-    // Nyers API termékátalakító (mapping) a daleday belső adatformátumára
     function mapApiProductToDaleday(p, sourceLabel, defaultCategory) {
       let parsedRaw = [];
       if (p.ingredients_text_hu || p.ingredients_text) {
@@ -1265,7 +1026,7 @@
 
       let detectedCategory = defaultCategory;
       const fullSearchText = `${p.product_name_hu || ''} ${p.product_name || ''} ${p.categories || ''}`.toLowerCase();
-      const babyKeywords = ['baby', 'baba', 'csecsemő', 'bébé', 'säugling', 'kinder', 'diaper', 'nappy', 'babycare'];
+      const babyKeywords = ['baby', 'baba', 'csecsemő', 'bébé', 'säugling', 'kinder'];
       if (babyKeywords.some(kw => fullSearchText.includes(kw))) {
         detectedCategory = 'baby-care';
       }
@@ -1287,7 +1048,52 @@
       };
     }
 
-    // Szöveges keresés az API-kban (/cgi/search.pl)
+    // Tesseract.js OCR Fénykép Beolvasó Címke-feldolgozó try-catch-finally blokkal
+    let activeOcrProduct = null;
+
+    async function processLabelImage(event) {
+      const file = event.target.files[0];
+      if (!file || !activeOcrProduct) return;
+
+      const statusEl = document.getElementById('ocrStatus');
+      if (statusEl) statusEl.innerHTML = '<span class="spinner"></span>Címke olvasása és az összetevők elemzése…';
+
+      let worker = null;
+
+      try {
+        worker = await Tesseract.createWorker('eng+hun');
+        const ret = await worker.recognize(file);
+
+        const extractedText = ret.data.text;
+        if (!extractedText || extractedText.length < 10) {
+          if (statusEl) statusEl.innerHTML = '<span style="color:#9E3A3A;">A képről nem sikerült olvasható összetevőlistát kinyerni. Kérjük, próbáld élesebb fotóval!</span>';
+          return;
+        }
+
+        const rawIngredientsList = extractedText.split(/,|\n|\u2022/).map(s => s.trim()).filter(s => s.length > 2);
+        const matchedIncs = matchApiIngredientsToDictionary(rawIngredientsList);
+
+        activeOcrProduct.fullIngredients = rawIngredientsList;
+        activeOcrProduct.featuredIngredients = matchedIncs;
+        activeOcrProduct.summary = "A termék összetevőit a flakonról készített fotó alapján elemztük ki.";
+
+        saveToHistory(activeOcrProduct);
+        renderProductView(activeOcrProduct);
+
+      } catch (err) {
+        console.error("OCR hiba:", err);
+        if (statusEl) statusEl.innerHTML = '<span style="color:#9E3A3A;">A kép feldolgozása nem sikerült. Próbáld újra!</span>';
+      } finally {
+        if (worker) {
+          try {
+            await worker.terminate();
+          } catch (termErr) {
+            console.error("Worker leállítási hiba:", termErr);
+          }
+        }
+      }
+    }
+
     async function fetchByTextSearch(query) {
       if (!navigator.onLine) throw new Error("offline");
 
@@ -1332,15 +1138,12 @@
       } catch (err) {
         clearTimeout(timeoutId);
         if (err.message === "offline") throw err;
-        console.error("Szöveges keresési hiba:", err);
         return [];
       }
     }
 
     async function fetchFromExternalApis(barcode) {
-      if (!navigator.onLine) {
-        throw new Error("offline");
-      }
+      if (!navigator.onLine) throw new Error("offline");
 
       const endpoints = [
         { url: `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, category: 'food', sourceLabel: 'Open Food Facts' },
@@ -1368,22 +1171,18 @@
     }
 
     /* ==========================================================================
-       6. SZKENNER ÉS INTELLIGENS KERESÉS (Vonalkód vs Szöveges találati lista)
+       6. SZKENNER ÉS KERESÉS
        ========================================================================== */
     let html5QrcodeScanner = null;
     let currentSearchResults = [];
 
     async function stopCameraScanner() {
       const readerContainer = document.getElementById('readerContainer');
-      if (readerContainer) {
-        readerContainer.style.display = 'none';
-      }
+      if (readerContainer) readerContainer.style.display = 'none';
 
       if (html5QrcodeScanner) {
         try {
-          if (html5QrcodeScanner.isScanning) {
-            await html5QrcodeScanner.stop();
-          }
+          if (html5QrcodeScanner.isScanning) await html5QrcodeScanner.stop();
           await html5QrcodeScanner.clear();
         } catch (err) {
           console.log("Kamera leállítási információ:", err);
@@ -1395,11 +1194,8 @@
 
     async function startCameraScanner() {
       await stopCameraScanner();
-      
       const readerContainer = document.getElementById('readerContainer');
-      if (readerContainer) {
-        readerContainer.style.display = 'block';
-      }
+      if (readerContainer) readerContainer.style.display = 'block';
 
       try {
         html5QrcodeScanner = new Html5Qrcode("reader");
@@ -1414,13 +1210,13 @@
               if (inputEl) inputEl.value = validCode;
               handleScanCode(validCode);
             } else {
-              showInputError("A beolvasott kód nem tűnik érvényes vonalkódnak. Ellenőrizd a számokat.");
+              showInputError("A beolvasott kód nem tűnik érvényes vonalkódnak.");
             }
           },
           (errorMessage) => {}
         );
       } catch (err) {
-        showInputError("A kamerát nem sikerült megnyitni. Írd be kézzel a vonalkódot!");
+        showInputError("A kamerát nem sikerült megnyitni.");
         if (readerContainer) readerContainer.style.display = 'none';
         html5QrcodeScanner = null;
       }
@@ -1428,18 +1224,12 @@
 
     function showInputError(msg) {
       const errEl = document.getElementById('inputErrorMsg');
-      if (errEl) {
-        errEl.innerText = msg;
-        errEl.style.display = 'block';
-      }
+      if (errEl) { errEl.innerText = msg; errEl.style.display = 'block'; }
     }
 
     function clearInputError() {
       const errEl = document.getElementById('inputErrorMsg');
-      if (errEl) {
-        errEl.innerText = '';
-        errEl.style.display = 'none';
-      }
+      if (errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
     }
 
     async function handleScanInput() {
@@ -1452,18 +1242,16 @@
         return;
       }
 
-      // Ellenőrizzük, hogy tisztán számokból áll-e (vonalkód)
       const isNumeric = /^[0-9]+$/.test(rawQuery);
 
       if (isNumeric) {
         const validCode = validateBarcode(rawQuery);
         if (!validCode) {
-          showInputError('Ez nem tűnik érvényes vonalkódnak. Ellenőrizd a számokat.');
+          showInputError('Ez nem tűnik érvényes vonalkódnak.');
           return;
         }
         handleScanCode(validCode);
       } else {
-        // Szöveges név/márka keresés
         handleTextSearch(rawQuery);
       }
     }
@@ -1483,7 +1271,7 @@
             <div class="section-block">
               <h3 style="font-size:1.05rem; margin-bottom: 6px;">Nincs találat</h3>
               <p style="color: var(--text-muted); font-size: 0.85rem;">
-                Nem találtunk terméket a(z) "<strong>${escapeHtml(query)}</strong>" keresési feltételre. Próbáld meg a vonalkód beírását vagy más kifejezést.
+                Nem találtunk terméket a(z) "<strong>${escapeHtml(query)}</strong>" keresési feltételre.
               </p>
             </div>
           `;
@@ -1493,13 +1281,7 @@
         renderSearchResultsList(query, apiResults);
       } catch (err) {
         if (err.message === "offline") {
-          container.innerHTML = `
-            <div class="section-block">
-              <h3 style="font-size:1.05rem; margin-bottom: 6px;">Nincs internetkapcsolat</h3>
-              <p style="color: var(--text-muted); font-size: 0.85rem;">
-                A keresés most nem sikerült. Ellenőrizd az internetkapcsolatot, majd próbáld újra.
-              </p>
-            </div>`;
+          container.innerHTML = `<div class="section-block"><h3>Nincs internetkapcsolat</h3></div>`;
         }
       }
     }
@@ -1549,13 +1331,7 @@
           product = await fetchFromExternalApis(code);
         } catch (err) {
           if (err.message === "offline") {
-            container.innerHTML = `
-              <div class="section-block">
-                <h3 style="font-size:1.05rem; margin-bottom: 6px;">Nincs internetkapcsolat</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">
-                  A termék lekérése most nem sikerült. Ellenőrizd az internetkapcsolatot, majd próbáld újra.
-                </p>
-              </div>`;
+            container.innerHTML = `<div class="section-block"><h3>Nincs internetkapcsolat</h3></div>`;
             return;
           }
         }
@@ -1569,7 +1345,7 @@
           <div class="section-block">
             <h3 style="font-size:1.05rem; margin-bottom: 6px;">Termék nem található</h3>
             <p style="color: var(--text-muted); font-size: 0.85rem;">
-              Ezt a terméket most nem találtuk sem a belső, sem a nyílt nemzetközi adatbázisokban.
+              Ezt a terméket most nem találtuk meg az adatbázisokban.
             </p>
           </div>
         `;
@@ -1582,53 +1358,47 @@
     function evaluateRelevance(product, prefs) {
       let results = [];
 
-      // 1. Ásványi olaj szűrés
       if (prefs.includes('avoid-mineral')) {
         const hasMineral = product.featuredIngredients && product.featuredIngredients.includes("inci_paraffinum_liquidum");
         if (hasMineral) {
-          results.push({
-            type: 'avoid-mineral',
-            reason: "Ez a termék ásványi olajat (Folyékony paraffint) tartalmaz, amit a profilodban kerülni jelöltél meg."
-          });
+          results.push({ type: 'avoid-mineral', reason: "Ez a termék ásványi olajat (Folyékony paraffint) tartalmaz." });
         }
       }
 
-      // 2. Illatanyag szűrés
       if (prefs.includes('avoid-fragrance')) {
-        const hasFragranceInFeatured = product.featuredIngredients && product.featuredIngredients.includes("inci_fragrance_parfum");
-        const hasFragranceInFull = !hasFragranceInFeatured && product.fullIngredients && product.fullIngredients.some(i => {
-          const str = String(i).toLowerCase();
-          return str.includes('parfum') || str.includes('fragrance') || str.includes('illatanyag');
-        });
-
-        if (hasFragranceInFeatured || hasFragranceInFull) {
-          results.push({
-            type: 'avoid-fragrance',
-            reason: "A termék hozzáadott illatanyagot / parfümöt tartalmaz, amelyet a profilodban kerülni jelöltél meg."
-          });
+        const hasFragrance = (product.featuredIngredients && product.featuredIngredients.includes("inci_fragrance_parfum")) ||
+                             (product.fullIngredients && product.fullIngredients.some(i => String(i).toLowerCase().includes('parfum') || String(i).toLowerCase().includes('fragrance')));
+        if (hasFragrance) {
+          results.push({ type: 'avoid-fragrance', reason: "A termék hozzáadott illatanyagot / parfümöt tartalmaz." });
         }
       }
 
-      // 3. Érzékeny bőr szűrés
+      if (prefs.includes('avoid-sulfates')) {
+        const hasSulfate = product.featuredIngredients && product.featuredIngredients.includes("inci_sodium_laureth_sulfate");
+        if (hasSulfate) {
+          results.push({ type: 'avoid-sulfates', reason: "A termék SLES/SLS típusú erős szulfátos tisztítóanyagot tartalmaz." });
+        }
+      }
+
+      if (prefs.includes('avoid-silicones')) {
+        const hasSilicone = product.featuredIngredients && product.featuredIngredients.includes("inci_dimethicone");
+        if (hasSilicone) {
+          results.push({ type: 'avoid-silicones', reason: "A termék Dimetikon típusú szilikont tartalmaz." });
+        }
+      }
+
       if (prefs.includes('sensitive-skin')) {
         const hasSensitive = product.featuredIngredients && product.featuredIngredients.some(id => {
           const ing = INGREDIENT_DICTIONARY[id];
           return ing && ing.relevanceTags.includes("skin-protection");
         });
         if (hasSensitive) {
-          results.push({
-            type: 'sensitive-skin',
-            reason: "A termék kímélő, bőrvédő összetevőket tartalmaz, ami illeszkedik az érzékeny bőrre vonatkozó preferenciádhoz."
-          });
+          results.push({ type: 'sensitive-skin', reason: "A termék kímélő, bőrvédő összetevőket tartalmaz." });
         }
       }
 
-      // 4. Babaápolás szűrés
       if (prefs.includes('baby') && product.category === 'baby-care') {
-        results.push({
-          type: 'baby',
-          reason: "Ez a termék a babaápolási kategóriába tartozik, ami megegyezik a választási profiloddal."
-        });
+        results.push({ type: 'baby', reason: "Ez a termék a babaápolási kategóriába tartozik." });
       }
 
       return results;
@@ -1639,11 +1409,11 @@
 
       const hasAvoidedMineral = relevanceResults.some(r => r.type === 'avoid-mineral');
       const hasAvoidedFragrance = relevanceResults.some(r => r.type === 'avoid-fragrance');
-      const hasSkinProtection = relevanceResults.some(r => r.type === 'sensitive-skin');
+      const hasAvoidedSulfate = relevanceResults.some(r => r.type === 'avoid-sulfates');
 
       if (hasAvoidedMineral) score += 35;
       if (hasAvoidedFragrance) score += 25;
-      if (hasSkinProtection && !hasAvoidedMineral && !hasAvoidedFragrance) score -= 15;
+      if (hasAvoidedSulfate) score += 20;
 
       return Math.min(Math.max(score, 10), 90);
     }
@@ -1651,6 +1421,8 @@
     function renderProductView(product) {
       const container = document.getElementById('resultContainer');
       if (!container) return;
+
+      activeOcrProduct = product;
 
       const prefs = getSavedPreferences();
       const relevanceResults = evaluateRelevance(product, prefs);
@@ -1663,14 +1435,7 @@
 
       const filteredFullIngredients = (product.fullIngredients || []).filter(rawIng => {
         const cleanRaw = String(rawIng).toLowerCase();
-        return !featuredInciNames.some(inci => {
-          if (!inci) return false;
-          if (inci.length <= 3) {
-            const regex = new RegExp(`\\b${inci}\\b`, 'i');
-            return regex.test(cleanRaw);
-          }
-          return cleanRaw.includes(inci);
-        });
+        return !featuredInciNames.some(inci => cleanRaw.includes(inci));
       });
 
       let ingredientsHtml = '';
@@ -1681,15 +1446,15 @@
           
           let personalNote = '';
           if (id === "inci_paraffinum_liquidum" && prefs.includes('avoid-mineral')) {
-            personalNote = `<p style="margin-top:6px; color:var(--text-main); font-weight:600;">Neked miért lehet fontos? Ezt az összetevőt beállításod alapján érdemes lehet elkerülnöd.</p>`;
+            personalNote = `<p style="margin-top:6px; color:var(--text-main); font-weight:600;">Neked miért lehet fontos? Ásványi olaj elkerülése beállítva.</p>`;
           } else if (id === "inci_fragrance_parfum" && prefs.includes('avoid-fragrance')) {
-            personalNote = `<p style="margin-top:6px; color:var(--text-main); font-weight:600;">Neked miért lehet fontos? Az illatanyagok kerülését állítottad be a profilodban.</p>`;
+            personalNote = `<p style="margin-top:6px; color:var(--text-main); font-weight:600;">Neked miért lehet fontos? Illatanyagok elkerülése beállítva.</p>`;
           }
 
           const uniqueDetailId = `ing-detail-${product.barcode}-${index}`;
 
           return `
-            <div class="ingredient-item" tabindex="0" role="button" aria-expanded="false" onclick="toggleIngredientDetails('${uniqueDetailId}', this)" onkeydown="handleIngredientKeyDown(event, '${uniqueDetailId}', this)">
+            <div class="ingredient-item" onclick="toggleIngredientDetails('${uniqueDetailId}', this)">
               <div class="ingredient-header">
                 <span>${escapeHtml(ing.displayName)}</span>
                 <span style="font-size:0.75rem; color:var(--text-muted); font-weight:400;">+ részletek</span>
@@ -1708,43 +1473,25 @@
       if (filteredFullIngredients.length > 0) {
         ingredientsHtml += filteredFullIngredients.map(ingName => `
           <div class="ingredient-item" style="cursor: default;">
-            <div class="ingredient-header">
-              <span>${escapeHtml(ingName)}</span>
-            </div>
+            <div class="ingredient-header"><span>${escapeHtml(ingName)}</span></div>
             <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">A termék címkéjén szereplő összetevő.</p>
           </div>
         `).join('');
       }
 
-      if (!ingredientsHtml) {
-        ingredientsHtml = '<p style="color:var(--text-muted); font-size:0.85rem;">Erről az összetevőlistáról jelenleg nincs részletes adatunk.</p>';
-      }
-
-      let notesHtml = '';
-      if (product.manufacturerNotes && product.manufacturerNotes.length > 0) {
-        notesHtml = `<p style="font-size:0.78rem; color:var(--text-muted); margin-top:10px; font-style:italic;">Gyártói kiegészítő megjegyzés: ${product.manufacturerNotes.map(n => escapeHtml(n)).join(', ')}</p>`;
-      }
-
-      let alternativesHtml = '';
-      if (product.alternatives && product.alternatives.length > 0) {
-        let reasonHeader = "Más szempont alapján választanál?";
-        if (prefs.includes('avoid-mineral')) {
-          reasonHeader = "A profilodban az ásványiolaj-mentességet jelölted meg.";
-        }
-
-        alternativesHtml = `
-          <div class="section-block" style="background:var(--accent-soft); padding:16px;">
-            <h4 style="font-size:0.9rem; margin-bottom:6px;">${reasonHeader}</h4>
-            ${product.alternatives.map(alt => {
-              const safeUrl = isValidUrl(alt.url) ? escapeHtml(alt.url) : '#';
-              return `
-                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;">${escapeHtml(alt.reason)}</p>
-                <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="display:block; text-align:center; text-decoration:none;" class="btn-secondary">
-                  ${escapeHtml(alt.name)} megtekintése
-                </a>
-              `;
-            }).join('')}
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:10px; font-style:italic;">Ez az opció nem jelent minőségi ítéletet a beszkennelt termékről, kizárólag a profilodban megadott szempontot tükrözi.</p>
+      let ocrBoxHtml = '';
+      if (!ingredientsHtml || (product.fullIngredients && product.fullIngredients.length === 0)) {
+        ingredientsHtml = '<p style="color:var(--text-muted); font-size:0.85rem;">Erről az összetevőlistáról jelenleg nincs adatunk a rendszerben.</p>';
+        ocrBoxHtml = `
+          <div class="ocr-upload-box">
+            <strong style="font-size:0.9rem; color:var(--text-main);">Hiányzik a címke? Fotózd be!</strong>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px; margin-bottom:12px;">Készíts egy éles fotót a flakon hátoldalán lévő összetevőkről, és azonnal kielemzzük neked.</p>
+            <label class="btn-primary" style="display:inline-flex; width:auto; cursor:pointer;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+              Címke fotózása
+              <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="processLabelImage(event)">
+            </label>
+            <div id="ocrStatus" style="font-size:0.8rem; margin-top:10px;"></div>
           </div>
         `;
       }
@@ -1799,11 +1546,16 @@
 
           <h3 style="font-size:0.95rem; margin-bottom:10px;">Címkén szereplő összetevők</h3>
           <div>${ingredientsHtml}</div>
-          ${notesHtml}
+          ${ocrBoxHtml}
 
           <hr class="section-divider">
 
-          ${alternativesHtml}
+          ${product.alternatives && product.alternatives.length > 0 ? `
+            <div class="section-block" style="background:var(--accent-soft); padding:16px;">
+              <h4 style="font-size:0.9rem; margin-bottom:6px;">Alternatív opciók</h4>
+              ${product.alternatives.map(alt => `<p style="font-size:0.82rem;">${escapeHtml(alt.reason)}</p>`).join('')}
+            </div>
+          ` : ''}
 
           <div id="exportIgnoreBtn" style="margin-top: 16px; text-align: center;">
             <button class="btn-secondary" style="width: 100%; font-size: 0.8rem;" onclick="exportToImageModal()">
@@ -1818,16 +1570,7 @@
       const el = document.getElementById(elementId);
       if (el) {
         const isActive = el.classList.toggle('active');
-        if (triggerEl) {
-          triggerEl.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-        }
-      }
-    }
-
-    function handleIngredientKeyDown(event, elementId, triggerEl) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        toggleIngredientDetails(elementId, triggerEl);
+        if (triggerEl) triggerEl.setAttribute('aria-expanded', isActive ? 'true' : 'false');
       }
     }
 
@@ -1845,7 +1588,6 @@
 
       if (titleEl) titleEl.innerText = article.title;
       if (bodyEl) bodyEl.innerHTML = article.content;
-
       if (modal) modal.classList.add('active');
     }
 
@@ -1855,7 +1597,7 @@
     }
 
     /* ==========================================================================
-       9. KÁRTYA EXPORTÁLÁSI LOGIKA (html2canvas)
+       9. KÁRTYA EXPORTÁLÁSI LOGIKA
        ========================================================================== */
     async function exportToImageModal() {
       const exportCard = document.getElementById('exportCard');
@@ -1873,9 +1615,7 @@
           scale: 2,
           backgroundColor: '#FFFFFF',
           logging: false,
-          ignoreElements: (element) => {
-            return element.id === 'exportIgnoreBtn' || (element.tagName === 'BUTTON' && element.classList.contains('btn-secondary'));
-          }
+          ignoreElements: (element) => element.id === 'exportIgnoreBtn' || element.classList.contains('ocr-upload-box') || (element.tagName === 'BUTTON' && element.classList.contains('btn-secondary'))
         });
 
         previewContainer.innerHTML = '';
@@ -1893,7 +1633,6 @@
         };
       } catch (err) {
         console.error("Hiba a kép generálásakor:", err);
-        previewContainer.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">A kép generálása nem sikerült ezen az eszközön.</p>';
       }
     }
 
@@ -1931,7 +1670,7 @@
         localStorage.setItem('daleday_history_snapshots', JSON.stringify(history));
         renderHistoryList();
       } catch (e) {
-        console.error("LocalStorage hiba (Előzmények):", e);
+        console.error("LocalStorage hiba:", e);
       }
     }
 
@@ -1968,16 +1707,12 @@
           await switchTab('scanner');
         }
       } catch (e) {
-        console.error("Előzmény elem megnyitási hiba:", e);
+        console.error("Előzmény hiba:", e);
       }
     }
 
     function getSavedPreferences() {
-      try {
-        return JSON.parse(localStorage.getItem('daleday_preferences') || '[]');
-      } catch (e) {
-        return [];
-      }
+      try { return JSON.parse(localStorage.getItem('daleday_preferences') || '[]'); } catch (e) { return []; }
     }
 
     function savePreferences() {
@@ -1985,14 +1720,8 @@
       if (!group) return;
       const checkboxes = group.querySelectorAll('input[type="checkbox"]');
       const selected = [];
-      checkboxes.forEach(cb => {
-        if (cb.checked) selected.push(cb.value);
-      });
-      try {
-        localStorage.setItem('daleday_preferences', JSON.stringify(selected));
-      } catch (e) {
-        console.error("LocalStorage hiba (Preferenciák):", e);
-      }
+      checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
+      try { localStorage.setItem('daleday_preferences', JSON.stringify(selected)); } catch (e) {}
     }
 
     function loadPreferencesUI() {
@@ -2000,18 +1729,14 @@
       const group = document.getElementById('userPreferencesGroup');
       if (!group) return;
       const checkboxes = group.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach(cb => {
-        cb.checked = selected.includes(cb.value);
-      });
+      checkboxes.forEach(cb => { cb.checked = selected.includes(cb.value); });
     }
 
     function isProductSaved(barcode) {
       try {
         const saved = JSON.parse(localStorage.getItem('daleday_saved_snapshots') || '[]');
         return saved.some(p => p.barcode === barcode);
-      } catch (e) {
-        return false;
-      }
+      } catch (e) { return false; }
     }
 
     function toggleSaveProduct(barcode) {
@@ -2025,35 +1750,13 @@
           const historySnapshots = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
           const product = PRODUCT_DATABASE[barcode] || historySnapshots.find(p => p.barcode === barcode);
           if (product) {
-            saved.push({
-              barcode: product.barcode,
-              exactName: product.exactName,
-              brand: product.brand,
-              category: product.category,
-              packageSize: product.packageSize,
-              spectrumValue: product.spectrumValue,
-              sources: product.sources,
-              summary: product.summary,
-              nutrition: product.nutrition,
-              fullIngredients: product.fullIngredients,
-              featuredIngredients: product.featuredIngredients,
-              manufacturerNotes: product.manufacturerNotes,
-              alternatives: product.alternatives
-            });
-            if (saved.length > 50) {
-              saved.shift();
-            }
+            saved.push(product);
+            if (saved.length > 50) saved.shift();
           }
         }
         localStorage.setItem('daleday_saved_snapshots', JSON.stringify(saved));
         renderSavedProductsList();
-        
-        const historySnapshots = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
-        const current = PRODUCT_DATABASE[barcode] || saved.find(p => p.barcode === barcode) || historySnapshots.find(p => p.barcode === barcode);
-        if (current) renderProductView(current);
-      } catch (e) {
-        console.error("LocalStorage hiba (Mentett termékek):", e);
-      }
+      } catch (e) {}
     }
 
     function renderSavedProductsList() {
@@ -2075,9 +1778,7 @@
             <span style="font-size:0.8rem; color:var(--text-muted);">Megtekintés</span>
           </div>
         `).join('');
-      } catch (e) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">A mentett elemek betöltése nem sikerült.</p>';
-      }
+      } catch (e) {}
     }
 
     async function openSavedSnapshot(index) {
@@ -2088,9 +1789,7 @@
           renderProductView(product);
           await switchTab('scanner');
         }
-      } catch (e) {
-        console.error("Mentett elem megnyitási hiba:", e);
-      }
+      } catch (e) {}
     }
 
     /* ==========================================================================
@@ -2120,15 +1819,10 @@
 
     function handleOverlayClick(event, modalId) {
       if (event && event.target && event.target.id === modalId) {
-        if (modalId === 'imageExportModal') {
-          closeExportModal();
-        } else if (modalId === 'articleModal') {
-          closeArticleModal();
-        } else if (modalId === 'aboutModal') {
-          closeAboutModal();
-        } else if (modalId === 'impressumModal') {
-          closeImpressumModal();
-        }
+        if (modalId === 'imageExportModal') closeExportModal();
+        else if (modalId === 'articleModal') closeArticleModal();
+        else if (modalId === 'aboutModal') closeAboutModal();
+        else if (modalId === 'impressumModal') closeImpressumModal();
       }
     }
 
@@ -2143,7 +1837,7 @@
     });
 
     /* ==========================================================================
-       12. NAVIGÁCIÓ ÉS INICIALIZÁLÁS (Async Kamera Tisztítással)
+       12. NAVIGÁCIÓ ÉS INICIALIZÁLÁS
        ========================================================================== */
     async function switchTab(tabName) {
       await stopCameraScanner();
@@ -2173,14 +1867,11 @@
       renderSavedProductsList();
     });
 
-    // PWA Service Worker regisztráció
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js').then((reg) => {
           console.log('daleday PWA aktív:', reg.scope);
-        }).catch((err) => {
-          console.log('Service Worker információ:', err);
-        });
+        }).catch((err) => {});
       });
     }
   </script>
