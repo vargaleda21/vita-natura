@@ -255,6 +255,7 @@
       margin: 20px 0;
     }
 
+    /* Vizuális Skála – Címkék pontos illesztése Flexbox-szal */
     .spectrum-container {
       margin-bottom: 20px;
       background: var(--bg-organic);
@@ -286,9 +287,31 @@
     .spectrum-labels {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
       font-size: 0.72rem;
       color: var(--text-muted);
       font-weight: 600;
+    }
+
+    .spectrum-labels span {
+      flex: 1;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    .spectrum-labels span:first-child { text-align: left; }
+    .spectrum-labels span:last-child { text-align: right; }
+
+    .full-ingredients-paragraph {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      background: var(--bg-organic);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      margin-bottom: 16px;
     }
 
     .ingredient-item {
@@ -798,6 +821,7 @@
       return url.startsWith('https://');
     }
 
+    // Javított GS1 GTIN validációs függvény
     function validateBarcode(rawCode) {
       if (!rawCode) return null;
       const cleanCode = String(rawCode).replace(/[^0-9]/g, '');
@@ -817,7 +841,55 @@
     }
 
     /* ==========================================================================
-       2. INGREDIENT KNOWLEDGE LAYER (Bővített Szótár)
+       2. SZÓTÁRI ADATFORDÍTÓ (Német/Angol/Francia -> Magyar)
+       ========================================================================== */
+    const INGREDIENT_TRANSLATIONS = {
+      "speisesalz": "étkezési só",
+      "salz": "só",
+      "palmöl": "pálmaolaj",
+      "palmfett": "pálmazsír",
+      "geschmacksverstärker": "ízfokozó",
+      "karotten": "sárgarépa",
+      "möhren": "sárgarépa",
+      "nudeln": "tészta",
+      "nudeln asiatischer art": "ázsiai jellegű tészta",
+      "weizenmehl": "búzaliszt",
+      "zucker": "cukor",
+      "wasser": "víz",
+      "sonnenblumenöl": "napraforgóolaj",
+      "hefeextrakt": "élesztőkivonat",
+      "stärke": "keményítő",
+      "maisstärke": "kukoricakeményítő",
+      "magermilchpulver": "sovány tejpor",
+      "vollmilchpulver": "zsíros tejpor",
+      "hühnerfett": "csirkezsír",
+      "zwiebeln": "vöröshagyma",
+      "knoblauch": "fokhagyma",
+      "gewürze": "fűszerek",
+      "kräuter": "fűszernövények",
+      "maltodextrin": "maltodextrin",
+      "salt": "étkezési só",
+      "palm oil": "pálmaolaj",
+      "sugar": "cukor",
+      "water": "víz",
+      "wheat flour": "búzaliszt",
+      "flavor enhancer": "ízfokozó",
+      "carrots": "sárgarépa",
+      "noodles": "tészta"
+    };
+
+    function translateIngredientToHu(rawIng) {
+      if (!rawIng) return '';
+      const clean = String(rawIng).trim();
+      const lower = clean.toLowerCase();
+      if (INGREDIENT_TRANSLATIONS[lower]) {
+        return INGREDIENT_TRANSLATIONS[lower];
+      }
+      return clean;
+    }
+
+    /* ==========================================================================
+       3. INGREDIENT KNOWLEDGE LAYER (Bővített Szótár)
        ========================================================================== */
     const INGREDIENT_DICTIONARY = {
       "inci_paraffinum_liquidum": {
@@ -827,7 +899,7 @@
         explanation: {
           whatIsIt: "Ásványiolaj-alapú, magasan tisztított kozmetikai összetevő.",
           whyIsItUsed: "A bőr felszínén védő, okkluzív réteget képez, amely segít csökkenteni a vízvesztést.",
-          thingsToKnow: "Az ásványi olajok kőolajból származó összetevők. Ha a profilodban azt állítottad be, hogy ezeket kerülni szeretnéd, ez az összetevő számodra különösen releváns."
+          thingsToKnow: "Az ásványi olajok kőolajból származó összetevők."
         },
         relevanceTags: ["mineral-oil-based"]
       },
@@ -837,7 +909,7 @@
         inciName: "Parfum",
         explanation: {
           whatIsIt: "Illatosító összetevők keveréke, amely lehet szintetikus vagy természetes eredetű.",
-          whyIsItUsed: "A termék kellemes illatának biztosítására és a nyersanyagok szagának elfedésére használják.",
+          whyIsItUsed: "A termék kellemes illatának biztosítására használják.",
           thingsToKnow: "Érzékeny bőrűeknél vagy allergiára hajlamosaknál irritációt válthat ki."
         },
         relevanceTags: ["fragrance"]
@@ -848,8 +920,8 @@
         inciName: "Sodium Laureth Sulfate",
         explanation: {
           whatIsIt: "Erős habképző, felületaktív tisztítóanyag.",
-          whyIsItUsed: "A felhalmozódott faggyú és szennyeződés hatékony eltávolítására használják samponokban és tusfürdőkben.",
-          thingsToKnow: "Intenzív tisztító hatású összetevő. Érzékeny, száraz fejbőr esetén fokozhatja a szárító hatást."
+          whyIsItUsed: "A felhalmozódott faggyú és szennyeződés hatékony eltávolítására használják.",
+          thingsToKnow: "Intenzív tisztító hatású összetevő, ami száríthatja a fejbőrt."
         },
         relevanceTags: ["sulfate"]
       },
@@ -860,9 +932,31 @@
         explanation: {
           whatIsIt: "Gyakran használt szilikonvegyület.",
           whyIsItUsed: "A haj és a bőr felszínén selymes, sima védőréteget képez.",
-          thingsToKnow: "Nemkívánatos filmréteget képezhet a fejbőrön, ha nem szulfátos samponnal mossuk le."
+          thingsToKnow: "Filmréteget képezhet a fejbőrön vagy a hajszálakon."
         },
         relevanceTags: ["silicone"]
+      },
+      "inci_palm_oil": {
+        ingredientId: "inci_palm_oil",
+        displayName: "Pálmaolaj / Pálmazsír (Palm Oil / Palmfett)",
+        inciName: "Palm Oil",
+        explanation: {
+          whatIsIt: "Olajpálma gyümölcséből sajtolt növényi zsiradék.",
+          whyIsItUsed: "Kedvező ára és szobahőmérsékleten szilárd állaga miatt széles körben alkalmazott az élelmiszeriparban.",
+          thingsToKnow: "Magas telített zsírsavtartalmú. Kitermelése környezeti és fenntarthatósági szempontból gyakran kifogásolt."
+        },
+        relevanceTags: ["palm-oil"]
+      },
+      "inci_flavor_enhancer": {
+        ingredientId: "inci_flavor_enhancer",
+        displayName: "Ízfokozók (pl. Nátrium-glutamát / MSG)",
+        inciName: "Geschmacksverstärker",
+        explanation: {
+          whatIsIt: "Az ételek ízének és aromájának intenzitását növelő adalékanyagok.",
+          whyIsItUsed: "Mélyebb, sósabb 'umami' ízélményt nyújtanak feldolgozott ételekben.",
+          thingsToKnow: "Érzékeny egyéneknél túlzott fogyasztása fejfájást vagy kellemetlen tüneteket okozhat."
+        },
+        relevanceTags: ["additive"]
       },
       "inci_zinc_oxide": {
         ingredientId: "inci_zinc_oxide",
@@ -870,8 +964,8 @@
         inciName: "Zinc Oxide",
         explanation: {
           whatIsIt: "Ásványi vegyület.",
-          whyIsItUsed: "Bőrvédő összetevő, amelyet többek között védőkrémekben és popsikrémekben használnak.",
-          thingsToKnow: "Bőrvédő és hámvédő tulajdonságairól ismert komponens."
+          whyIsItUsed: "Bőrvédő összetevő.",
+          thingsToKnow: "Bőrvédő és hámvédő tulajdonságairól ismert."
         },
         relevanceTags: ["baby-care", "skin-protection"]
       },
@@ -892,32 +986,10 @@
         inciName: "Aqua",
         explanation: {
           whatIsIt: "Tisztított víz.",
-          whyIsItUsed: "A formulában a tisztítás és a többi összetevő feloldásának alapját képezi.",
+          whyIsItUsed: "A formulák alapja.",
           thingsToKnow: "Alapvető kozmetikai és tisztító komponens."
         },
         relevanceTags: ["baby-care"]
-      },
-      "inci_ceramide_np": {
-        ingredientId: "inci_ceramide_np",
-        displayName: "Ceramid NP (Ceramide NP)",
-        inciName: "Ceramide NP",
-        explanation: {
-          whatIsIt: "A bőrben természetesen is megtalálható lipid (ceramid).",
-          whyIsItUsed: "Segít támogatni a bőr természetes védőrétegét.",
-          thingsToKnow: "Bőrazonos lipid komponens."
-        },
-        relevanceTags: ["skin-protection"]
-      },
-      "inci_sodium_hyaluronate": {
-        ingredientId: "inci_sodium_hyaluronate",
-        displayName: "Hialuronsav (Sodium Hyaluronate)",
-        inciName: "Sodium Hyaluronate",
-        explanation: {
-          whatIsIt: "Hialuronsav-származék.",
-          whyIsItUsed: "Vízmegkötő összetevő.",
-          thingsToKnow: "A bőr hidratáltságát támogató molekula."
-        },
-        relevanceTags: ["skin-protection"]
       },
       "inci_alcohol_denat": {
         ingredientId: "inci_alcohol_denat",
@@ -933,7 +1005,7 @@
     };
 
     /* ==========================================================================
-       3. TUDÁSTÁR CIKKEK ADATBÁZISA
+       4. TUDÁSTÁR CIKKEK ADATBÁZISA
        ========================================================================== */
     const ARTICLES_DATABASE = {
       "cutting_board": {
@@ -951,7 +1023,7 @@
     };
 
     /* ==========================================================================
-       4. TÖRZSADATBÁZIS
+       5. TÖRZSADATBÁZIS
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
@@ -970,7 +1042,7 @@
     };
 
     /* ==========================================================================
-       5. UNIVERSAL API MATCHING & OCR LOGIKA (Magyar szinonima-mátrix)
+       6. UNIVERSAL API MATCHING & OCR LOGIKA (Bővített magyar szinonimákkal)
        ========================================================================== */
     function matchApiIngredientsToDictionary(rawIngredientsList) {
       if (!rawIngredientsList || !Array.isArray(rawIngredientsList)) return [];
@@ -991,6 +1063,12 @@
         if (ingStr.includes('dimethicone') || ingStr.includes('cyclopentasiloxane') || ingStr.includes('silicone') || ingStr.includes('szilikon')) {
           matchedIds.add('inci_dimethicone');
         }
+        if (ingStr.includes('palmöl') || ingStr.includes('palmfett') || ingStr.includes('palm oil') || ingStr.includes('pálmaolaj') || ingStr.includes('pálmazsír')) {
+          matchedIds.add('inci_palm_oil');
+        }
+        if (ingStr.includes('geschmacksverstärker') || ingStr.includes('flavor enhancer') || ingStr.includes('ízfokozó') || ingStr.includes('msg') || ingStr.includes('glutamat')) {
+          matchedIds.add('inci_flavor_enhancer');
+        }
         if (ingStr.includes('zinc oxide') || ingStr.includes('cink-oxid') || ingStr.includes('cink oxid') || ingStr.includes('cinkoxid')) {
           matchedIds.add('inci_zinc_oxide');
         }
@@ -999,12 +1077,6 @@
         }
         if (ingStr.includes('aqua') || ingStr.includes('water') || ingStr.includes('víz') || ingStr.includes('viz') || ingStr.includes('tisztított víz')) {
           matchedIds.add('inci_aqua');
-        }
-        if (ingStr.includes('ceramide np') || ingStr.includes('ceramid')) {
-          matchedIds.add('inci_ceramide_np');
-        }
-        if (ingStr.includes('sodium hyaluronate') || ingStr.includes('hialuron') || ingStr.includes('hyaluronate')) {
-          matchedIds.add('inci_sodium_hyaluronate');
         }
         if (ingStr.includes('alcohol denat') || ingStr.includes('denaturált alkohol') || ingStr.includes('denaturalt alkohol') || ingStr.includes('alkohol')) {
           matchedIds.add('inci_alcohol_denat');
@@ -1018,7 +1090,7 @@
       let parsedRaw = [];
       if (p.ingredients_text_hu || p.ingredients_text) {
         const rawText = p.ingredients_text_hu || p.ingredients_text;
-        parsedRaw = rawText.split(',').map(item => item.trim());
+        parsedRaw = rawText.split(',').map(item => translateIngredientToHu(item));
       }
 
       const featuredIncs = matchApiIngredientsToDictionary(parsedRaw);
@@ -1048,7 +1120,7 @@
       };
     }
 
-    // Tesseract.js OCR Fénykép Beolvasó Címke-feldolgozó try-catch-finally blokkal
+    // Tesseract.js OCR Címkefotózás try-catch-finally struktúrával
     let activeOcrProduct = null;
 
     async function processLabelImage(event) {
@@ -1070,7 +1142,7 @@
           return;
         }
 
-        const rawIngredientsList = extractedText.split(/,|\n|\u2022/).map(s => s.trim()).filter(s => s.length > 2);
+        const rawIngredientsList = extractedText.split(/,|\n|\u2022/).map(s => translateIngredientToHu(s)).filter(s => s.length > 2);
         const matchedIncs = matchApiIngredientsToDictionary(rawIngredientsList);
 
         activeOcrProduct.fullIngredients = rawIngredientsList;
@@ -1171,7 +1243,7 @@
     }
 
     /* ==========================================================================
-       6. SZKENNER ÉS KERESÉS
+       7. SZKENNER ÉS KERESÉS
        ========================================================================== */
     let html5QrcodeScanner = null;
     let currentSearchResults = [];
@@ -1353,7 +1425,7 @@
     }
 
     /* ==========================================================================
-       7. DINAMIKUS RELEVANCIAMOTOR, SKÁLAKALIBTRÁCIÓ ÉS TERMÉKOLDAL RENDER
+       8. DINAMIKUS RELEVANCIAMOTOR ÉS TERMÉKOLDAL RENDER (V9.0 Kompakt UI)
        ========================================================================== */
     function evaluateRelevance(product, prefs) {
       let results = [];
@@ -1387,20 +1459,6 @@
         }
       }
 
-      if (prefs.includes('sensitive-skin')) {
-        const hasSensitive = product.featuredIngredients && product.featuredIngredients.some(id => {
-          const ing = INGREDIENT_DICTIONARY[id];
-          return ing && ing.relevanceTags.includes("skin-protection");
-        });
-        if (hasSensitive) {
-          results.push({ type: 'sensitive-skin', reason: "A termék kímélő, bőrvédő összetevőket tartalmaz." });
-        }
-      }
-
-      if (prefs.includes('baby') && product.category === 'baby-care') {
-        results.push({ type: 'baby', reason: "Ez a termék a babaápolási kategóriába tartozik." });
-      }
-
       return results;
     }
 
@@ -1428,60 +1486,41 @@
       const relevanceResults = evaluateRelevance(product, prefs);
       const dynamicSpectrumVal = calculateDynamicSpectrumValue(product, prefs, relevanceResults);
 
-      const featuredInciNames = (product.featuredIngredients || []).map(id => {
-        const ing = INGREDIENT_DICTIONARY[id];
-        return ing ? ing.inciName.toLowerCase() : '';
-      }).filter(Boolean);
+      // 1. Összetevők magyarítása és egybefüggő bekezdésként való formázása (Vesszővel elválasztva)
+      let rawIngredientsText = "";
+      if (product.fullIngredients && product.fullIngredients.length > 0) {
+        const translatedList = product.fullIngredients.map(i => translateIngredientToHu(i));
+        rawIngredientsText = translatedList.join(', ');
+      }
 
-      const filteredFullIngredients = (product.fullIngredients || []).filter(rawIng => {
-        const cleanRaw = String(rawIng).toLowerCase();
-        return !featuredInciNames.some(inci => cleanRaw.includes(inci));
-      });
-
-      let ingredientsHtml = '';
+      // 2. Kifogásolható / Figyelemreméltó összetevők kigyűjtése + Lenyitható kártyák
+      let notableIngredientsHtml = '';
       if (product.featuredIngredients && product.featuredIngredients.length > 0) {
-        ingredientsHtml += product.featuredIngredients.map((id, index) => {
+        notableIngredientsHtml = product.featuredIngredients.map((id, index) => {
           const ing = INGREDIENT_DICTIONARY[id];
           if (!ing) return '';
           
-          let personalNote = '';
-          if (id === "inci_paraffinum_liquidum" && prefs.includes('avoid-mineral')) {
-            personalNote = `<p style="margin-top:6px; color:var(--text-main); font-weight:600;">Neked miért lehet fontos? Ásványi olaj elkerülése beállítva.</p>`;
-          } else if (id === "inci_fragrance_parfum" && prefs.includes('avoid-fragrance')) {
-            personalNote = `<p style="margin-top:6px; color:var(--text-main); font-weight:600;">Neked miért lehet fontos? Illatanyagok elkerülése beállítva.</p>`;
-          }
-
-          const uniqueDetailId = `ing-detail-${product.barcode}-${index}`;
+          const uniqueDetailId = `notable-detail-${product.barcode}-${index}`;
 
           return `
             <div class="ingredient-item" onclick="toggleIngredientDetails('${uniqueDetailId}', this)">
               <div class="ingredient-header">
                 <span>${escapeHtml(ing.displayName)}</span>
-                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:400;">+ részletek</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">+ részletek</span>
               </div>
               <div class="ingredient-details" id="${uniqueDetailId}">
                 <p><strong>Mi ez?</strong> ${escapeHtml(ing.explanation.whatIsIt)}</p>
                 <p style="margin-top:6px;"><strong>Miért használják?</strong> ${escapeHtml(ing.explanation.whyIsItUsed)}</p>
-                <p style="margin-top:6px;"><strong>Miért lehet érdekes?</strong> ${escapeHtml(ing.explanation.thingsToKnow)}</p>
-                ${personalNote}
+                <p style="margin-top:6px;"><strong>Miért lehet fontos?</strong> ${escapeHtml(ing.explanation.thingsToKnow)}</p>
               </div>
             </div>
           `;
         }).join('');
       }
 
-      if (filteredFullIngredients.length > 0) {
-        ingredientsHtml += filteredFullIngredients.map(ingName => `
-          <div class="ingredient-item" style="cursor: default;">
-            <div class="ingredient-header"><span>${escapeHtml(ingName)}</span></div>
-            <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">A termék címkéjén szereplő összetevő.</p>
-          </div>
-        `).join('');
-      }
-
       let ocrBoxHtml = '';
-      if (!ingredientsHtml || (product.fullIngredients && product.fullIngredients.length === 0)) {
-        ingredientsHtml = '<p style="color:var(--text-muted); font-size:0.85rem;">Erről az összetevőlistáról jelenleg nincs adatunk a rendszerben.</p>';
+      if (!rawIngredientsText && (!product.fullIngredients || product.fullIngredients.length === 0)) {
+        rawIngredientsText = 'Erről az összetevőlistáról jelenleg nincs adatunk a rendszerben.';
         ocrBoxHtml = `
           <div class="ocr-upload-box">
             <strong style="font-size:0.9rem; color:var(--text-main);">Hiányzik a címke? Fotózd be!</strong>
@@ -1495,6 +1534,44 @@
           </div>
         `;
       }
+
+      // 3. Otthoni elkészítési tipp / Recept szekció
+      let homeRecipeHtml = '';
+      if (product.category === 'food') {
+        homeRecipeHtml = `
+          <div class="section-block" style="background:var(--accent-soft); padding:18px; margin-top:16px;">
+            <h4 style="font-size:0.92rem; margin-bottom:6px;">Elkészítheted otthon is!</h4>
+            <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.5;">
+              A bolti csomagolt levesek és szószok helyett otthon pálmaolaj és ízfokozók nélkül, friss zöldségekből és természetes fűszerekből percek alatt készíthetsz tiszta, tápláló alaplevet.
+            </p>
+          </div>
+        `;
+      } else {
+        homeRecipeHtml = `
+          <div class="section-block" style="background:var(--accent-soft); padding:18px; margin-top:16px;">
+            <h4 style="font-size:0.92rem; margin-bottom:6px;">Tiszta bőrápolási tipp</h4>
+            <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.5;">
+              Ha szeretnéd elkerülni a felesleges adalékokat és szintetikus anyagokat, keress olyan natúr termékeket, amelyek növényi olajokra (pl. jojoba, mandula) és védő ceramidokra épülnek.
+            </p>
+          </div>
+        `;
+      }
+
+      // 4. Egészségesebb alternatíva (Vilgain)
+      let vilgainHtml = `
+        <div class="section-block" style="background:var(--card-bg); border: 1px solid var(--border-light); padding:18px; margin-top:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <h4 style="font-size:0.92rem;">Tiszta összetevőjű alternatíva</h4>
+            <span class="badge-soft">Vilgain</span>
+          </div>
+          <p style="font-size:0.83rem; color:var(--text-muted); margin-bottom:12px; line-height:1.5;">
+            Ha szeretnéd elkerülni a túlmunkált összetevőket és a szintetikus adalékokat, válogass a Vilgain tiszta, minimalista receptekből álló termékei között.
+          </p>
+          <a href="https://vilgain.hu" target="_blank" rel="noopener noreferrer" style="display:block; text-align:center; text-decoration:none;" class="btn-secondary">
+            Vilgain tiszta alternatívák megtekintése
+          </a>
+        </div>
+      `;
 
       const isSaved = isProductSaved(product.barcode);
       const sourceName = product.sources && product.sources.length > 0 ? (product.sources[0].type === "manufacturer" ? "Gyártói információ alapján" : "Nyílt adatbázis") : "daleday";
@@ -1544,18 +1621,20 @@
 
           <hr class="section-divider">
 
-          <h3 style="font-size:0.95rem; margin-bottom:10px;">Címkén szereplő összetevők</h3>
-          <div>${ingredientsHtml}</div>
+          <h3 style="font-size:0.95rem; margin-bottom:8px;">Címkén szereplő összetevők</h3>
+          <div class="full-ingredients-paragraph">${escapeHtml(rawIngredientsText)}</div>
+
+          ${notableIngredientsHtml ? `
+            <h4 style="font-size:0.88rem; margin-top:16px; margin-bottom:8px;">Figyelemreméltó komponensek</h4>
+            <div>${notableIngredientsHtml}</div>
+          ` : ''}
+
           ${ocrBoxHtml}
 
           <hr class="section-divider">
 
-          ${product.alternatives && product.alternatives.length > 0 ? `
-            <div class="section-block" style="background:var(--accent-soft); padding:16px;">
-              <h4 style="font-size:0.9rem; margin-bottom:6px;">Alternatív opciók</h4>
-              ${product.alternatives.map(alt => `<p style="font-size:0.82rem;">${escapeHtml(alt.reason)}</p>`).join('')}
-            </div>
-          ` : ''}
+          ${homeRecipeHtml}
+          ${vilgainHtml}
 
           <div id="exportIgnoreBtn" style="margin-top: 16px; text-align: center;">
             <button class="btn-secondary" style="width: 100%; font-size: 0.8rem;" onclick="exportToImageModal()">
@@ -1575,7 +1654,7 @@
     }
 
     /* ==========================================================================
-       8. CIKK MODAL KEZELŐ FÜGGVÉNYEK
+       9. CIKK MODAL KEZELŐ FÜGGVÉNYEK
        ========================================================================== */
     async function openArticleModal(articleId) {
       await stopCameraScanner();
@@ -1597,7 +1676,7 @@
     }
 
     /* ==========================================================================
-       9. KÁRTYA EXPORTÁLÁSI LOGIKA
+       10. KÁRTYA EXPORTÁLÁSI LOGIKA (html2canvas .ocr-upload-box kizárással)
        ========================================================================== */
     async function exportToImageModal() {
       const exportCard = document.getElementById('exportCard');
@@ -1644,7 +1723,7 @@
     }
 
     /* ==========================================================================
-       10. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
+       11. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL LOGIKA
        ========================================================================== */
     function saveToHistory(product) {
       try {
@@ -1793,7 +1872,7 @@
     }
 
     /* ==========================================================================
-       11. MODAL KEZELŐ FÜGGVÉNYEK & ACCESSIBILITY
+       12. MODAL KEZELŐ FÜGGVÉNYEK & ACCESSIBILITY
        ========================================================================== */
     async function openAboutModal() {
       await stopCameraScanner();
@@ -1837,7 +1916,7 @@
     });
 
     /* ==========================================================================
-       12. NAVIGÁCIÓ ÉS INICIALIZÁLÁS
+       13. NAVIGÁCIÓ ÉS INICIALIZÁLÁS
        ========================================================================== */
     async function switchTab(tabName) {
       await stopCameraScanner();
