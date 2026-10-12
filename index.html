@@ -774,12 +774,36 @@
     </div>
   </div>
 
-  <!-- ABOUT MODAL -->
+  <!-- ABOUT MODAL (Frissített, szellős listás formátum) -->
   <div class="modal-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" onclick="handleOverlayClick(event, 'aboutModal')">
     <div class="modal-card">
-      <h3 id="aboutModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 16px; line-height: 1.35;">A daleday egy csendes útmutató a tudatos mindennapokhoz.</h3>
-      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">A daleday segít megérteni, mit tartalmaznak a termékek. Szkenneld be a vonalkódot, nézd meg az összetevőket közérthetően, és a saját beállításaid alapján azt is, mi lehet számodra különösen fontos.</p>
-      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 22px;">A daleday nem mondja meg kategorikusan, hogy egy termék jó vagy rossz. Átlátható tényeket ad, amelyeket a saját szempontjaid szerint mérlegelhetsz.</p>
+      <h3 id="aboutModalTitle" style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 16px; line-height: 1.35;">
+        A daleday egy csendes útmutató a tudatos mindennapokhoz.
+      </h3>
+      
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+        A daleday segít átlátni a termékek összetételét, hogy gyorsan és magabiztosan hozhass döntést vásárlás közben.
+      </p>
+
+      <ul style="list-style: none; padding: 0; margin-bottom: 18px;">
+        <li style="font-size: 0.85rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+          <span>🔍</span>
+          <span><strong>Szkenneld be</strong> a vonalkódot, vagy keresd ki a terméket név szerint.</span>
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+          <span>🌿</span>
+          <span><strong>Lásd az összetevőket</strong> közérthetően, tiszta magyar nyelven, egybefüggő bekezdésben.</span>
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 8px;">
+          <span>⚖️</span>
+          <span><strong>Kapj azonnali</strong>, egyértelmű vásárlási döntési segítséget a saját beállításaid alapján.</span>
+        </li>
+      </ul>
+
+      <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 22px; font-style: italic;">
+        A daleday tényalapú tájékoztatást ad, amelyet a saját szempontjaid szerint mérlegelhetsz.
+      </p>
+
       <button class="btn-primary" style="padding:12px;" onclick="closeAboutModal()">Rendben</button>
     </div>
   </div>
@@ -813,7 +837,7 @@
       <div>Beolvasás</div>
     </div>
     <div class="nav-item" id="nav-history" onclick="switchTab('history')">
-      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 7 7 6.97 6.97 0 0 1-5-2.14l-1.42 1.42A8.92 8.92 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg>
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 7 7 6.97 6.97 0 0 0 0-18zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg>
       <div>Előzmények</div>
     </div>
     <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
@@ -1034,7 +1058,7 @@
     };
 
     /* ==========================================================================
-       5. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA (A víz kiszűrve a figyelemreméltókból)
+       5. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA (Minta elemek)
        ========================================================================== */
     const PRODUCT_DATABASE = {
       "5011082138032": {
@@ -1554,17 +1578,19 @@
       const relevanceResults = evaluateRelevance(product, prefs);
       const dynamicSpectrumVal = calculateDynamicSpectrumValue(product, prefs, relevanceResults);
 
-      // 1. Összetevők magyarítása és egybefüggő bekezdésként való formázása (Vesszővel elválasztva)
+      // a) Nyers összetevők magyarítása és egybefüggő, vesszővel elválasztott bekezdésként való formázása
       let rawIngredientsText = "";
       if (product.fullIngredients && product.fullIngredients.length > 0) {
         const translatedList = product.fullIngredients.map(i => translateIngredientToHu(i));
         rawIngredientsText = translatedList.join(', ');
       }
 
-      // 2. Kifogásolható / Figyelemreméltó összetevők kigyűjtése + Lenyitható kártyák
+      // b) Figyelemreméltó komponensek szűrése – az inci_aqua (Víz) szigorú kizárásával
+      let filteredFeatured = (product.featuredIngredients || []).filter(id => id !== 'inci_aqua');
+
       let notableIngredientsHtml = '';
-      if (product.featuredIngredients && product.featuredIngredients.length > 0) {
-        notableIngredientsHtml = product.featuredIngredients.map((id, index) => {
+      if (filteredFeatured.length > 0) {
+        notableIngredientsHtml = filteredFeatured.map((id, index) => {
           const ing = INGREDIENT_DICTIONARY[id];
           if (!ing) return '';
           
@@ -1603,36 +1629,36 @@
         `;
       }
 
-      // 3. daleday Vásárlási Útmutató / Konklúzió Doboz
+      // c) Vásárlási Döntési Doboz (decision-box)
       let decisionBoxHtml = '';
       if (relevanceResults.length > 0) {
         decisionBoxHtml = `
           <div class="decision-box warning">
-            <strong style="font-size:0.88rem; color:#9E3A3A;">Mérlegelendő választás</strong>
+            <strong style="font-size:0.88rem; color:#9E3A3A;">DÖNTÉS: MÉRLEGELENDŐ</strong>
             <p style="font-size:0.83rem; color:var(--text-main); margin-top:4px; line-height:1.45;">
-              A termék a profilodban megadott szempontok alapján elkerülendő összetevőt tartalmaz (${relevanceResults.map(r => escapeHtml(r.reason)).join(' ')}). Ha érzékeny a bőröd vagy kerülni szeretnéd ezeket az anyagokat, érdemes alternatívát választanod.
+              A termék a profilodban megadott szempontok alapján elkerülendő összetevőt tartalmaz (${relevanceResults.map(r => escapeHtml(r.reason)).join(' ')}). Érdemes tisztább alternatívát választanod.
             </p>
           </div>
         `;
       } else {
         decisionBoxHtml = `
           <div class="decision-box green">
-            <strong style="font-size:0.88rem; color:#2D3B32;">Zöld lámpa: Tiszta választás</strong>
+            <strong style="font-size:0.88rem; color:#2D3B32;">DÖNTÉS: MEGVEHETED</strong>
             <p style="font-size:0.83rem; color:var(--text-main); margin-top:4px; line-height:1.45;">
-              A termék összetétele a profilodban megadott szempontok alapján megfelelő, nem tartalmaz elkerülendő anyagokat. Bátran megvásárolhatod.
+              A termék összetétele tiszta, nem tartalmaz a profilodban megadott elkerülendő anyagot. Bátran megvásárolhatod.
             </p>
           </div>
         `;
       }
 
-      // 4. Otthoni elkészítési tipp / Recept szekció
+      // d) Otthoni recept és Vilgain alternatíva kártyák
       let homeRecipeHtml = '';
       if (product.category === 'food') {
         homeRecipeHtml = `
           <div class="section-block" style="background:var(--accent-soft); padding:18px; margin-top:16px;">
             <h4 style="font-size:0.92rem; margin-bottom:6px;">Elkészítheted otthon is!</h4>
             <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.5;">
-              A bolti csomagolt levesek és szószok helyett otthon pálmaolaj és ízfokozók nélkül, friss zöldségekből és természetes fűszerekből percek alatt készíthetsz tiszta, tápláló alaplevet.
+              A bolti csomagolt ételek helyett otthon pálmaolaj és ízfokozók nélkül, friss zöldségekből és természetes fűszerekből percek alatt készíthetsz tiszta, tápláló ételeket.
             </p>
           </div>
         `;
@@ -1647,7 +1673,6 @@
         `;
       }
 
-      // 5. Egészségesebb alternatíva (Vilgain)
       let vilgainHtml = `
         <div class="section-block" style="background:var(--card-bg); border: 1px solid var(--border-light); padding:18px; margin-top:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
