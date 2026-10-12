@@ -1,6 +1,6 @@
 /* daleday service worker – app shell cache + könyvtárak cache-elése */
-const CACHE = 'daleday-v2';
-const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+const CACHE = 'daleday-v7';
+const SHELL = ['./', './index.html', './alternatives.js', './recipes.js', './config.js', './manifest.json', './icon-192.png', './icon-512.png'];
 const LIB_HOSTS = ['cdn.jsdelivr.net', 'cdnjs.cloudflare.com'];
 
 self.addEventListener('install', (event) => {
