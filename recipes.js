@@ -12,12 +12,11 @@
   Mezők:
     id, title, time (pl. "10 perc"), category ("food"),
     matchKeywords, excludeKeywords, free_of,
-    ingredients: [{ name, amount, shop }]  (shop = keresőszó a Kifli.hu-hoz, elhagyható)
+    ingredients: [{ name, amount }]
     steps: [ "..." ]
     note: rövid megjegyzés (allergén, tárolás). Egészségügyi állítás NEM szerepelhet.
 
   Szabály: legfeljebb 6 hozzávaló, rövid elkészítés, nincs egészségügyi ígéret.
-  A Kifli-linkek sima keresőlinkek, nem partnerlinkek.
 */
 window.DALEDAY_RECIPES = [
   {
@@ -29,9 +28,9 @@ window.DALEDAY_RECIPES = [
     excludeKeywords: ["szelet", "keks", "tabla", "leves"],
     free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
     ingredients: [
-      { name: "pörkölt mogyoró", amount: "200 g", shop: "pörkölt mogyoró" },
-      { name: "cukrozatlan kakaópor", amount: "2–3 evőkanál", shop: "kakaópor" },
-      { name: "juharszirup vagy méz", amount: "3–4 evőkanál", shop: "juharszirup" },
+      { name: "pörkölt mogyoró", amount: "200 g" },
+      { name: "cukrozatlan kakaópor", amount: "2–3 evőkanál" },
+      { name: "juharszirup vagy méz", amount: "3–4 evőkanál" },
       { name: "só", amount: "egy csipet" }
     ],
     steps: [
@@ -51,10 +50,10 @@ window.DALEDAY_RECIPES = [
     excludeKeywords: ["tej", "joghurt"],
     free_of: ["inci_flavor_enhancer"],
     ingredients: [
-      { name: "szárított zöldségek (sárgarépa, zeller, petrezselyemgyökér)", amount: "4 evőkanál", shop: "szárított zöldség" },
-      { name: "szárított petrezselyemzöld", amount: "2 evőkanál", shop: "szárított petrezselyem" },
-      { name: "hagymapor", amount: "1 evőkanál", shop: "hagymapor" },
-      { name: "kurkuma", amount: "1 teáskanál", shop: "kurkuma" },
+      { name: "szárított zöldségek (sárgarépa, zeller, petrezselyemgyökér)", amount: "4 evőkanál" },
+      { name: "szárított petrezselyemzöld", amount: "2 evőkanál" },
+      { name: "hagymapor", amount: "1 evőkanál" },
+      { name: "kurkuma", amount: "1 teáskanál" },
       { name: "só", amount: "2–3 evőkanál" }
     ],
     steps: [
@@ -70,14 +69,14 @@ window.DALEDAY_RECIPES = [
     title: "Házi zabszelet",
     time: "10 perc + 1 óra hűtés",
     category: "food",
-    matchKeywords: ["szelet", " bar", "riegel", "musli", "muesli", "granola", "flapjack", "zab"],
+    matchKeywords: ["musli", "muzli", "muesli", "granola", "flapjack", "zabszelet", "zabpehely", "cereal bar", "mueslirieg"],
     excludeKeywords: ["csokolad", "chocolate", "schokolade", "keks", "leves"],
     free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
     ingredients: [
-      { name: "zabpehely", amount: "150 g", shop: "zabpehely" },
-      { name: "100%-os mogyoróvaj", amount: "100 g", shop: "mogyoróvaj" },
-      { name: "méz vagy juharszirup", amount: "80 g", shop: "juharszirup" },
-      { name: "aszalt gyümölcs (pl. datolya, mazsola)", amount: "40 g", shop: "aszalt gyümölcs" },
+      { name: "zabpehely", amount: "150 g" },
+      { name: "100%-os mogyoróvaj", amount: "100 g" },
+      { name: "méz vagy juharszirup", amount: "80 g" },
+      { name: "aszalt gyümölcs (pl. datolya, mazsola)", amount: "40 g" },
       { name: "só", amount: "egy csipet" }
     ],
     steps: [
@@ -97,9 +96,9 @@ window.DALEDAY_RECIPES = [
     excludeKeywords: ["csokolad", "chocolate", "schokolade", "krem "],
     free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
     ingredients: [
-      { name: "finomliszt", amount: "250 g", shop: "finomliszt" },
-      { name: "hideg vaj", amount: "125 g", shop: "vaj" },
-      { name: "porcukor", amount: "70 g", shop: "porcukor" },
+      { name: "finomliszt", amount: "250 g" },
+      { name: "hideg vaj", amount: "125 g" },
+      { name: "porcukor", amount: "70 g" },
       { name: "tojássárgája", amount: "1 db" },
       { name: "vanília és só", amount: "egy csipet" }
     ],
@@ -110,5 +109,93 @@ window.DALEDAY_RECIPES = [
       "Süsd 170 °C-on 12–15 percig, amíg a széle enyhén megaranyosodik."
     ],
     note: "Glutént, tojást és tejterméket tartalmaz (allergének). Zárt dobozban 4–5 napig eláll."
+  },
+  {
+    id: "hazi-popcorn",
+    title: "Házi pattogatott kukorica",
+    time: "kb. 5 perc",
+    category: "food",
+    matchKeywords: ["popcorn", "pop corn", "pattogatott"],
+    excludeKeywords: [],
+    free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
+    ingredients: [
+      { name: "pattogatni való kukorica", amount: "3 evőkanál" },
+      { name: "napraforgó- vagy repceolaj", amount: "1 evőkanál" },
+      { name: "só", amount: "egy csipet" }
+    ],
+    steps: [
+      "Melegítsd fel az olajat egy fedős lábasban, tegyél bele 3–4 szem kukoricát.",
+      "Amikor ezek kipattognak, add hozzá a többi kukoricát, és tedd rá a fedőt.",
+      "Közepes lángon időnként rázogasd a lábast, amíg a pattogás lelassul.",
+      "Vedd le a tűzről, és sózd meg ízlés szerint."
+    ],
+    note: "Vigyázz a forró olajjal. A pattogatott kukorica kisgyerekeknek (kb. 4 éves kor alatt) fulladásveszélyes lehet. Ízesítheted fahéjjal vagy fűszerekkel is."
+  },
+  {
+    id: "sutoben-sult-chips",
+    title: "Sütőben sült burgonyachips",
+    time: "10 perc + kb. 20 perc sütés",
+    category: "food",
+    matchKeywords: ["chips", "crisps", "burgonyachips"],
+    excludeKeywords: ["popcorn", "tortilla", "kukorica", "nacho"],
+    free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
+    ingredients: [
+      { name: "közepes burgonya", amount: "2 db" },
+      { name: "olívaolaj vagy napraforgóolaj", amount: "1–2 evőkanál" },
+      { name: "só", amount: "egy csipet" }
+    ],
+    steps: [
+      "Szeleteld a burgonyát nagyon vékonyra (1–2 mm), lehetőleg zöldséghámozóval vagy szeletelővel.",
+      "Itasd fel a felesleges nedvességet konyhai papírral, majd forgasd meg olajjal és sóval.",
+      "Terítsd el egy rétegben sütőpapíros tepsin, ne fedjék egymást.",
+      "Süsd 180 °C-on 15–20 percig, a végén figyeld, nehogy megégjen."
+    ],
+    note: "Nem lesz olyan ropogós, mint a bolti chips. Más zöldségekkel is kipróbálhatod, például sárgarépával vagy céklával. Frissen a legjobb, zárt dobozban 1–2 napig eláll."
+  },
+  {
+    id: "hazi-salataontet",
+    title: "Házi salátaöntet",
+    time: "5 perc",
+    category: "food",
+    matchKeywords: ["dressing", "ontet", "vinaigrette"],
+    excludeKeywords: ["majonez", "mayonnaise", "tartar"],
+    free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
+    ingredients: [
+      { name: "olívaolaj", amount: "3 evőkanál" },
+      { name: "citromlé vagy almaecet", amount: "1 evőkanál" },
+      { name: "mustár", amount: "1 teáskanál" },
+      { name: "méz", amount: "1 teáskanál" },
+      { name: "só és bors", amount: "ízlés szerint" }
+    ],
+    steps: [
+      "Tedd az összes hozzávalót egy kis csavaros üvegbe.",
+      "Rázd össze, amíg krémes, egyenletes nem lesz.",
+      "Ízlés szerint igazítsd a sót és a savasságot.",
+      "Használat előtt rázd fel, mert az olaj és a sav szétválik."
+    ],
+    note: "A mustár szezámot, mustárt vagy szulfitot tartalmazhat (allergének, nézd meg a csomagolást). Mézet 1 év alatti gyereknek ne adj. Hűtőben kb. 1 hétig eláll."
+  },
+  {
+    id: "datolyas-kakaos-falat",
+    title: "Házi kakaós-datolyás falat",
+    time: "kb. 15 perc",
+    category: "food",
+    matchKeywords: ["csokolad", "chocolate", "schokolade", "pralin", "bonbon"],
+    excludeKeywords: ["krem", "spread", "nutella", "paste", "vaj", "keks", "leves", "ital", "drink", "zab"],
+    free_of: ["inci_palm_oil", "inci_flavor_enhancer"],
+    ingredients: [
+      { name: "magozott datolya", amount: "150 g" },
+      { name: "mogyoró vagy mandula", amount: "60 g" },
+      { name: "cukrozatlan kakaópor", amount: "2 evőkanál" },
+      { name: "só", amount: "egy csipet" },
+      { name: "kókuszreszelék a forgatáshoz", amount: "2 evőkanál" }
+    ],
+    steps: [
+      "Ha a datolya kemény, áztasd 10 percig forró vízben, majd csöpögtesd le.",
+      "Turmixold a datolyát a dióféle, a kakaó és a só társaságában ragacsos masszává.",
+      "Formálj belőle kis golyókat.",
+      "Forgasd meg kókuszreszelékben, és tedd hűtőbe."
+    ],
+    note: "Dióféléket tartalmaz (allergén). A datolya természetes cukrot tartalmaz. Hűtőben kb. 1 hétig eláll. Az íze és az állaga eltér a csokoládétól."
   }
 ];
