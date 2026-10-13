@@ -1,0 +1,2872 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>daleday - Értsd, mit választasz</title>
+
+  <!-- PWA beállítások -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1E2D3B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="daleday">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <!-- A betűk a fő mappából töltődnek (lásd @font-face), külső betűszerver nincs. -->
+
+  <!-- A külső könyvtárak (html5-qrcode, html2canvas, tesseract.js) igény szerint töltődnek be, lásd: loadScript() -->
+
+  <style>
+    /* ==========================================================================
+       daleday – letisztult, földszínű, tintakék stílus
+       Betűk: Cormorant Garamond (címek, logó) + Jost (szöveg, kezelőfelület),
+       mindkettő a fő mappából töltődik (lásd @font-face).
+       ========================================================================== */
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      src: url('CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+      font-weight: 300 700; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      src: url('CormorantGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+      font-weight: 300 700; font-style: italic; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Jost';
+      src: url('Jost-VariableFont_wght.ttf') format('truetype');
+      font-weight: 100 900; font-style: normal; font-display: swap;
+    }
+
+    :root {
+      /* Elefántcsont, tintakék, taupe */
+      --bg-organic: #F3EEE4;       /* elefántcsont háttér */
+      --card-bg: #FBF8F2;          /* világosabb felület */
+      --text-main: #1E2D3B;        /* tintakék (szöveg, gombok) */
+      --text-muted: #5B4A3E;       /* mokka (másodlagos szöveg) */
+      --accent-main: #1E2D3B;
+      --accent-soft: #EAE3D6;
+      --accent-pill: #F7F3EA;
+      --border-light: #D9D0BF;     /* taupe hajszálvonal */
+      --taupe: #A89C88;
+
+      /* Jelzőszínek */
+      --spectrum-green: #849398;   /* szürkéskék */
+      --spectrum-mid: #C5B9A5;
+      --spectrum-rose: #9E7476;    /* porrózsa */
+
+      --radius-pill: 4px;
+      --radius-md: 4px;
+      --radius-lg: 6px;
+
+      --font-display: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+      --font-family: 'Jost', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 106.25%; } /* 17px alap: a Jost kisebbnek hat, így jól olvasható marad */
+
+    body {
+      background-color: var(--bg-organic);
+      color: var(--text-main);
+      padding: 24px 20px;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-size: 0.92rem;
+      font-family: var(--font-family);
+      padding-bottom: 110px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-family);
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -0.005em;
+    }
+
+    /* Csak a nagy címek használják a díszes betűt, kis méretben túl vékony lenne */
+    .display, h1.brand-logo, .hero-title, .modal-card h3 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      padding: 4px 0 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    h1.brand-logo {
+      font-size: 2rem;
+      font-style: italic;
+      line-height: 1;
+      cursor: pointer;
+    }
+    p.subtitle { color: var(--text-muted); font-size: 0.74rem; font-weight: 400; letter-spacing: 0.02em; margin-top: 4px; }
+    .header-actions { display: flex; gap: 4px; align-items: center; }
+
+    .btn-text {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 8px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      font-family: var(--font-family);
+    }
+    .btn-text:hover { color: var(--text-main); text-decoration: underline; text-underline-offset: 4px; }
+
+    /* Lapos szakaszok: vékony vonal, nincs árnyék */
+    .section-block {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 24px 22px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-light);
+    }
+
+    .hero-section { text-align: center; padding: 20px 0 30px 0; }
+    .hero-title { font-size: 2.7rem; line-height: 1.05; margin-bottom: 14px; }
+    .hero-sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 400;
+      margin-bottom: 28px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .search-capsule {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      padding: 3px 3px 3px 16px;
+      margin-top: 14px;
+      border: 1px solid var(--taupe);
+    }
+    .search-capsule:focus-within { border-color: var(--accent-main); background: #FFFFFF; }
+    .search-capsule input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      font-family: var(--font-family);
+      outline: none;
+      min-width: 0;
+    }
+    .search-capsule input::placeholder { color: #8A7F70; }
+    .search-capsule button.search-btn {
+      background: var(--accent-main);
+      color: #F3EEE4;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    /* Az egyetlen helyen használt tagolt nagybetű: az elsődleges gomb */
+    button.btn-primary, label.btn-primary {
+      background: var(--accent-main);
+      color: #F3EEE4;
+      border: none;
+      padding: 15px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: var(--font-family);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+    button.btn-primary:hover { background: #2A3E50; }
+    button.btn-primary:active { transform: scale(0.99); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--taupe);
+      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: 0.8rem;
+      font-family: var(--font-family);
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: var(--accent-soft); }
+
+    :focus-visible { outline: 2px solid var(--accent-main); outline-offset: 2px; }
+
+    .tag-pill {
+      display: inline-block;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-family: var(--font-family);
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      margin-right: 4px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      border: 1px solid var(--border-light);
+    }
+    .tag-pill:hover { border-color: var(--taupe); background: var(--accent-soft); }
+
+    .section-divider { border: 0; height: 1px; background: var(--border-light); margin: 22px 0; }
+
+    /* Termékfej */
+    .product-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+    .product-brand {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+    }
+    .product-name { font-size: 1.85rem; line-height: 1.1; margin-top: 6px; }
+    .source-line { font-size: 0.74rem; color: var(--text-muted); margin-top: 8px; }
+    .sub-title { font-size: 0.95rem; margin-bottom: 6px; }
+    .body-text { font-size: 0.92rem; line-height: 1.6; }
+
+    /* Illeszkedés-skála */
+    .spectrum-container { margin-bottom: 22px; padding: 14px 0 0; border-top: 1px solid var(--border-light); }
+    .spectrum-title { font-size: 0.78rem; font-weight: 500; color: var(--text-muted); margin-bottom: 2px; }
+    .spectrum-bar-bg {
+      position: relative;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(to right, var(--spectrum-green) 0%, var(--spectrum-mid) 50%, var(--spectrum-rose) 100%);
+      margin: 12px 0 12px 0;
+    }
+    .spectrum-indicator {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 13px;
+      height: 13px;
+      background-color: var(--accent-main);
+      border: 2px solid var(--card-bg);
+      border-radius: 50%;
+      transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .spectrum-labels {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .spectrum-labels span { flex: 1; text-align: center; line-height: 1.25; }
+    .spectrum-labels span:first-child { text-align: left; }
+    .spectrum-labels span:last-child { text-align: right; }
+
+    /* Teljes összetevőlista, összecsukható */
+    /* Otthoni alternatíva (recept), összecsukható */
+    details.recipe-details { margin-top: 16px; border-top: 1px solid var(--border-light); padding-top: 14px; }
+    details.recipe-details > summary { cursor: pointer; font-size: 0.9rem; font-style: italic; color: var(--text-main); }
+    .recipe-h { font-size: 0.85rem; font-weight: 600; margin: 14px 0 6px; }
+    .recipe-list { padding-left: 20px; font-size: 0.86rem; line-height: 1.6; color: var(--text-main); }
+    .recipe-amount { font-weight: 600; }
+    .recipe-shop { font-size: 0.72rem; color: var(--text-muted); margin-left: 4px; }
+    .recipe-note { font-size: 0.76rem; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
+    details.orig-list { margin-top: 8px; }
+    details.orig-list > summary { cursor: pointer; font-size: 0.8rem; color: var(--text-muted); }
+    details.ing-details { margin-top: 22px; border-top: 1px solid var(--border-light); padding-top: 14px; }
+    details.ing-details > summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.92rem;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    details.ing-details > summary::-webkit-details-marker { display: none; }
+    details.ing-details > summary::after { content: '+'; font-size: 1.3rem; font-weight: 400; color: var(--text-muted); line-height: 1; }
+    details.ing-details[open] > summary::after { content: '\2212'; }
+    details.ing-details .full-ingredients-paragraph { margin-top: 12px; }
+
+    .full-ingredients-paragraph {
+      font-size: 0.86rem;
+      color: var(--text-main);
+      line-height: 1.7;
+      background: var(--bg-organic);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      margin-bottom: 10px;
+    }
+
+    .ingredient-item { border-bottom: 1px solid var(--border-light); padding: 13px 0; cursor: pointer; }
+    .ingredient-item:last-child { border-bottom: none; }
+    .ingredient-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      font-size: 0.92rem;
+    }
+    .ingredient-details {
+      display: none;
+      margin-top: 10px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      background: var(--bg-organic);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+    }
+    .ingredient-details.active { display: block; }
+    .ingredient-header span:last-child { white-space: nowrap; margin-left: 12px; }
+
+    /* Verdikt: vékony szín-sáv a bal szélen, szöveg sötét marad */
+    .decision-box {
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      margin-top: 20px;
+      margin-bottom: 22px;
+      border-left: 3px solid var(--taupe);
+      background: var(--accent-soft);
+    }
+    .decision-box.green { background: #E8EDEE; border-left-color: var(--spectrum-green); }
+    .decision-box.warning { background: #F3E8E6; border-left-color: var(--spectrum-rose); }
+    .decision-box.neutral { background: var(--accent-soft); border-left-color: var(--taupe); }
+    .decision-box.unknown { background: var(--accent-soft); border-left-color: var(--taupe); }
+    .decision-box .decision-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.3rem;
+      line-height: 1.2;
+      color: var(--text-main);
+    }
+    .decision-box p { font-size: 0.88rem; color: var(--text-main); margin-top: 6px; line-height: 1.55; }
+    .decision-box .decision-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; }
+
+    /* Lapos alsó menü */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: rgba(251, 248, 242, 0.96);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      gap: 56px;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border-light);
+      z-index: 900;
+    }
+    .nav-item {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      min-width: 64px;
+    }
+    .nav-item.active { color: var(--text-main); font-weight: 600; }
+    .nav-item.active::after {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .icon-svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .history-item, .search-result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4px;
+      background: transparent;
+      border-bottom: 1px solid var(--border-light);
+      cursor: pointer;
+    }
+    .history-item:hover, .search-result-item:hover { background: var(--accent-soft); }
+
+    .checkbox-group { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      color: var(--text-main);
+      font-weight: 400;
+    }
+    .checkbox-label input { accent-color: var(--accent-main); width: 18px; height: 18px; flex-shrink: 0; }
+    .pref-group-title { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-top: 14px; margin-bottom: 6px; }
+
+    #reader { width: 100%; margin-top: 12px; border-radius: var(--radius-md); overflow: hidden; }
+
+    .ocr-upload-box {
+      background: transparent;
+      border: 1px dashed var(--taupe);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(30, 45, 59, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: var(--radius-lg);
+      max-width: 420px;
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--border-light);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-card h3 { font-size: 1.5rem; line-height: 1.2; }
+
+    footer.app-footer-minimal { margin-top: 40px; text-align: center; padding: 10px 0; }
+    footer.app-footer-minimal span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .badge-soft {
+      font-size: 0.7rem;
+      font-weight: 500;
+      border: 1px solid var(--border-light);
+      color: var(--text-muted);
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(30, 45, 59, 0.18);
+      border-radius: 50%;
+      border-top-color: var(--accent-main);
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    .error-msg { color: #7A4246; font-size: 0.84rem; margin-top: 8px; }
+
+    .article-card { background: transparent; border-top: 1px solid var(--border-light); padding: 18px 0; margin-top: 4px; }
+    .article-title { font-size: 1rem; font-weight: 600; line-height: 1.35; margin-bottom: 6px; cursor: pointer; }
+    .article-lead { font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+    .article-modal-content { font-size: 0.92rem; line-height: 1.65; }
+    .article-modal-content h4 { font-size: 1rem; font-weight: 600; margin-top: 18px; margin-bottom: 6px; }
+    .article-modal-content p { margin-bottom: 12px; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <h1 class="brand-logo" onclick="switchTab('scanner')">daleday</h1>
+      <p class="subtitle">Értsd, mit választasz</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-text" onclick="openAboutModal()">Mi a daleday?</button>
+      <button class="btn-text" onclick="switchTab('profile')">Profilom</button>
+    </div>
+  </header>
+
+  <!-- 1. TAB: SZKENNER ÉS FŐOLDAL -->
+  <div id="tab-scanner" class="tab-view">
+
+    <div class="hero-section">
+      <h2 class="hero-title">Értsd, mit választasz.</h2>
+      <p class="hero-sub">Szkenneld be a vonalkódot vagy írd be a termék nevét.</p>
+
+      <button class="btn-primary" onclick="startCameraScanner()" aria-label="Termék beolvasása kamerával">
+        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+        Termék beolvasása kamerával
+      </button>
+
+      <div class="search-capsule">
+        <input type="text" id="barcodeInput" placeholder="Név, márka vagy vonalkód..." aria-label="Termék neve vagy vonalkódja">
+        <button class="search-btn" onclick="handleScanInput()" title="Keresés" aria-label="Keresés indítása">
+          <svg class="icon-svg" style="width:16px; height:16px;" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+      </div>
+      <div id="inputErrorMsg" class="error-msg" style="display:none;"></div>
+
+      <div id="readerContainer" style="display: none; margin-top: 12px;">
+        <div id="reader"></div>
+        <button class="btn-secondary" style="width: 100%; margin-top: 8px;" onclick="stopCameraScanner()">Kamera bezárása</button>
+      </div>
+    </div>
+
+    <div id="resultContainer"></div>
+
+    <!-- DEMÓ PRÓBALEHETŐSÉG -->
+    <div class="section-block">
+      <h3 style="font-size: 0.95rem; font-weight:700; margin-bottom: 4px;">Próbáld ki</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Válassz egy példaterméket, és nézd meg, hogyan működik a daleday.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+        <button class="tag-pill" onclick="handleScanCode('5011082138032')">Sudocrem</button>
+        <button class="tag-pill" onclick="handleScanCode('5099514000020')">WaterWipes</button>
+        <button class="tag-pill" onclick="handleScanCode('4001638098310')">Weleda Baby</button>
+        <button class="tag-pill" onclick="handleScanCode('4062100015523')">HiPP Bio</button>
+        <button class="tag-pill" onclick="handleScanCode('3337875597180')">CeraVe</button>
+      </div>
+    </div>
+
+    <!-- TUDÁSTÁR & ÉLETMÓD – ELREJTVE, amíg a cikkek nincsenek megírva.
+         Visszakapcsolás: töröld a hidden attribútumot és a style="display:none;" részt a következő sorból. -->
+    <div class="section-block" id="knowledgeSection" hidden style="display:none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+        <h3 style="font-size: 1rem; font-weight:700;">Tudástár & Életmód</h3>
+        <span class="badge-soft">Új cikkek</span>
+      </div>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5;">
+        Gyakorlati útmutatók és tudományos bizonyítékok a fenntartható, tiszta otthon megteremtéséhez.
+      </p>
+
+      <div class="article-card">
+        <h4 class="article-title" onclick="openArticleModal('cutting_board')">Miért érdemes lecserélni a műanyag vágódeszkát fára?</h4>
+        <p class="article-lead">A műanyag vágódeszka mikroműanyag-szennyezéssel és elrejtőzött baktériumokkal fenyegeti a konyhát. A legújabb kutatások szerint a fa természetes védelme messze túlszárnyalja.</p>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('cutting_board')">Elolvasom a cikket</button>
+      </div>
+
+      <div class="article-card">
+        <h4 class="article-title" onclick="openArticleModal('teflon')">Teflon a konyhában: Miért érdemes öntöttvasra vagy rozsdamentes acélra cserélni?</h4>
+        <p class="article-lead">A bevonatolt serpenyők elhasználódásával apró polimer-részecskék és vegyületek kerülhetnek az ételeinkbe. Ismerd meg a bevonat nélküli alternatívákat.</p>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('teflon')">Elolvasom a cikket</button>
+      </div>
+
+      <div class="article-card">
+        <h4 class="article-title" onclick="openArticleModal('microwaving')">Műanyag ételhordók és a mikrohullámú sütő: A tudatos ételmelegítés alapjai</h4>
+        <p class="article-lead">Mi történik a műanyag dobozokkal melegítés közben? A hőhatás miatt kioldódó anyagok elkerülésére az üveg és kerámia kínál tiszta megoldást.</p>
+        <button class="btn-secondary" style="font-size: 0.78rem; padding: 6px 12px;" onclick="openArticleModal('microwaving')">Elolvasom a cikket</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 2. TAB: ELŐZMÉNYEK -->
+  <div id="tab-history" class="tab-view" style="display: none;">
+    <div class="section-block">
+      <h3 style="font-size: 1.1rem; margin-bottom: 4px;">Legutóbb ellenőrzött termékek</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">Az előzményeket biztonságosan ezen az eszközön tároljuk.</p>
+      <div id="historyListContainer">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Még nem ellenőriztél egyetlen terméket sem.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. TAB: PROFILOM -->
+  <div id="tab-profile" class="tab-view" style="display: none;">
+    <div class="section-block">
+      <h3 style="font-size: 1.1rem; margin-bottom: 4px;">Profilom</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted);">
+        A daleday megjegyzi a beállításaidat ezen az eszközön, hogy számodra relevánsabb információkat emelhessen ki.
+      </p>
+
+      <hr class="section-divider">
+
+      <h4 style="font-size: 1rem; margin-bottom: 4px;">Mit szeretnél kerülni?</h4>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px;">Ha bejelölsz valamit, minden elemzésnél jelezzük, ha a termék tartalmazza.</p>
+      <div class="checkbox-group" id="userPreferencesGroup">
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-mineral" onchange="savePreferences()">
+          Ásványi olajokat (pl. Paraffinum Liquidum)
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-fragrance" onchange="savePreferences()">
+          Hozzáadott illatanyagokat / Parfümöt
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-sulfates" onchange="savePreferences()">
+          Erős szulfátokat (SLES / SLS tisztítóanyagokat)
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-silicones" onchange="savePreferences()">
+          Szilikonokat (Dimethicone / Cyclopentasiloxane)
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-palm" onchange="savePreferences()">
+          Pálmaolajat / pálmazsírt
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" value="avoid-enhancers" onchange="savePreferences()">
+          Ízfokozókat (pl. nátrium-glutamát)
+        </label>
+
+      </div>
+
+      <hr class="section-divider">
+
+      <h4 style="font-size: 0.95rem; margin-bottom: 10px;">Mentett termékek</h4>
+      <div id="savedProductsContainer">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Még nem mentettél el termékeket.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer-minimal">
+    <a href="osszetevok/index.html" style="color:inherit; margin-right:16px;">Összetevők</a>
+    <a href="tudastar/index.html" style="color:inherit; margin-right:16px;">Tudástár</a>
+    <span onclick="openImpressumModal()">Impresszum</span>
+    <span onclick="openPrivacyModal()" style="margin-left:16px;">Adatkezelési tájékoztató</span>
+  </footer>
+
+  <!-- IMPRESSZUM MODAL -->
+  <div class="modal-overlay" id="impressumModal" role="dialog" aria-modal="true" aria-labelledby="impressumModalTitle" onclick="handleOverlayClick(event, 'impressumModal')">
+    <div class="modal-card">
+      <h3 id="impressumModalTitle" style="font-size: 1.15rem; margin-bottom: 14px;">Impresszum & Nyilatkozat</h3>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;"><strong>Szolgáltatás:</strong> daleday – Független termékértelmező PWA alkalmazás (MVP tesztüzem)</p>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;"><strong>Üzemeltető:</strong> Varga Léda (magánszemély / fejlesztési projekt)</p>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;"><strong>Kapcsolat:</strong> vargaleda21@gmail.com</p>
+      <p style="font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;"><strong>Tárhelyszolgáltató:</strong> GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA</p>
+      <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; font-style: italic; margin-bottom: 20px;">Jogi nyilatkozat: A daleday felületén megjelenő adatok kizárólag tájékoztató jellegűek, nem minősülnek orvosi vagy szakkifejezett egészségügyi tanácsadásnak. Az összetevőlistákat a csomagoláson is érdemes ellenőrizni.</p>
+      <button class="btn-primary" style="padding:10px;" onclick="closeImpressumModal()">Bezárás</button>
+    </div>
+  </div>
+
+  <!-- ADATKEZELÉSI TÁJÉKOZTATÓ MODAL -->
+  <div class="modal-overlay" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle" onclick="handleOverlayClick(event, 'privacyModal')">
+    <div class="modal-card" style="max-width: 480px;">
+      <h3 id="privacyModalTitle" style="font-size: 1.15rem; margin-bottom: 4px;">Adatkezelési tájékoztató</h3>
+      <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:14px;">Utolsó frissítés: 2026. október 12.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Ki kezeli az adataidat?</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">Varga Léda (magánszemély), kapcsolat: <span id="privacyEmail"></span>. Fiókot nem kérünk, nevet, e-mail-címet nem gyűjtünk.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Mi tárolódik az eszközödön?</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">Az előzmények, a mentett termékek és a profilod beállításai kizárólag a saját böngésződben (helyi tárolóban) vannak. Ezeket nem küldjük el nekünk. A böngésző adatainak törlésével bármikor eltávolíthatod őket.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Sütik</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">A daleday maga nem használ sütiket. A fenti helyi tárolás az alkalmazás működéséhez, a beállításaid megjegyzéséhez kell.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Külső szolgáltatások</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">Az alkalmazás használatakor a böngésződ kapcsolatba lép harmadik felekkel, akik így megkapják az IP-címedet:</p>
+      <ul style="font-size:0.83rem; color:var(--text-muted); line-height:1.55; padding-left:18px; margin-top:4px;">
+        <li>Open Food Facts és Open Beauty Facts: ide megy a beolvasott vonalkód vagy a beírt keresőszó, hogy megkapjuk a termék adatait.</li>
+        <li>jsDelivr és cdnjs: az olvasáshoz használt programkönyvtárak (vonalkód-olvasó, címkeolvasó, képmentés) letöltése.</li>
+        <li>GitHub Pages: az oldal tárhelye, a szerver naplózhat technikai adatokat.</li>
+      </ul>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Kamera és fotók</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">A kamerát a vonalkód beolvasásához használjuk. A címkéről készített fotót az eszközödön dolgozzuk fel, nem töltjük fel sehová, és nem mentjük el.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Látogatottság-mérés</h4>
+      <p id="privacyAnalytics" style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;"></p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Ajánlott linkek</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">Egyes ajánlásoknál „Ajánlott link – jutalékot kaphatunk” felirat szerepel: ha ezen keresztül vásárolsz, a daleday jutalékot kaphat, neked ez nem kerül többe. A linkre kattintva már a partner webhelyének adatkezelése érvényes, ők sütiket is elhelyezhetnek.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Beküldött termékek</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">Ha e-mailben hiányzó terméket küldesz be, a küldött adatokat (e-mail-cím, fotók, vonalkód) csak a termék felvételéhez és az esetleges válaszhoz használjuk, kérésedre töröljük.</p>
+
+      <h4 style="font-size:0.9rem; margin:12px 0 4px;">Jogaid</h4>
+      <p style="font-size:0.83rem; color:var(--text-muted); line-height:1.55;">Kérhetsz tájékoztatást, helyesbítést vagy törlést a fenti e-mail-címen. Panasszal a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH, naih.hu) fordulhatsz.</p>
+
+      <button class="btn-primary" style="padding:12px; margin-top:18px;" onclick="closePrivacyModal()">Bezárás</button>
+    </div>
+  </div>
+
+  <!-- ABOUT MODAL -->
+  <div class="modal-overlay" id="aboutModal" role="dialog" aria-modal="true" aria-labelledby="aboutModalTitle" onclick="handleOverlayClick(event, 'aboutModal')">
+    <div class="modal-card">
+      <h3 id="aboutModalTitle" style="font-size: 1.15rem; margin-bottom: 14px; line-height: 1.35;">
+        A daleday egy csendes útmutató a tudatos mindennapokhoz.
+      </h3>
+
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+        Segítünk átlátni, mi van a termékekben.
+      </p>
+
+      <ul style="list-style: none; padding: 0; margin-bottom: 18px;">
+        <li style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--spectrum-green); font-size: 0.9rem; line-height: 1.4;">•</span>
+          <span><strong>Vonalkód alapján, vagy név szerint</strong> megmutatjuk a termék összetevőlistáját, ha elérhető az adatbázisokban, és megjelöljük, honnan származik az adat.</span>
+        </li>
+        <li style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--spectrum-green); font-size: 0.9rem; line-height: 1.4;">•</span>
+          <span>Az érthetetlen rövidítések, kifejezések helyett <strong>közérthető magyarázatot</strong> kapsz. Saját profilodban beállíthatod, mit szeretnél kerülni (pl. pálmaolaj, szilikon, illatanyagok).</span>
+        </li>
+        <li style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px;">
+          <span style="color: var(--spectrum-green); font-size: 0.9rem; line-height: 1.4;">•</span>
+          <span><strong>Alternatívák:</strong> Ha egy termék a profilodban kerülendő összetevőt tartalmaz, kézzel válogatott alternatívákat mutatunk, élelmiszereknél pedig néha egy otthoni receptet is. Ha egy ajánlott linkért jutalékot kapunk, azt jelezzük.</span>
+        </li>
+      </ul>
+
+      <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 22px; font-style: italic;">
+        A daleday átlátható adatokat ad, a döntés mindig a tiéd.
+      </p>
+
+      <button class="btn-primary" style="padding:12px;" onclick="closeAboutModal()">Rendben</button>
+    </div>
+  </div>
+
+  <!-- CIKK OLVASÓ MODAL -->
+  <div class="modal-overlay" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="articleModalTitle" onclick="handleOverlayClick(event, 'articleModal')">
+    <div class="modal-card" style="max-width: 480px;">
+      <h3 id="articleModalTitle" style="font-size: 1.18rem; margin-bottom: 14px; line-height: 1.35;"></h3>
+      <div class="article-modal-content" id="articleModalBody"></div>
+      <button class="btn-primary" style="padding:12px; margin-top: 16px;" onclick="closeArticleModal()">Bezárás</button>
+    </div>
+  </div>
+
+  <!-- IMAGE EXPORT MODAL -->
+  <div class="modal-overlay" id="imageExportModal" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle" onclick="handleOverlayClick(event, 'imageExportModal')">
+    <div class="modal-card" style="text-align: center;">
+      <h3 id="exportModalTitle" style="font-size: 1.1rem; margin-bottom: 12px;">Elemzés mentése képként</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">Töltsd le az elemzést kép formátumban vagy oszd meg közvetlenül.</p>
+      <div id="exportPreviewContainer" style="margin-bottom: 16px; max-height: 300px; overflow-y: auto; border-radius: var(--radius-md); border: 1px solid var(--border-light);"></div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-primary" id="downloadImageBtn" style="padding: 10px;">Letöltés</button>
+        <button class="btn-secondary" onclick="closeExportModal()" style="padding: 10px;">Mégse</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEBEGŐ NAVIGÁCIÓS BÁR -->
+  <div class="nav-bar">
+    <div class="nav-item active" id="nav-scanner" onclick="switchTab('scanner')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <div>Beolvasás</div>
+    </div>
+    <div class="nav-item" id="nav-history" onclick="switchTab('history')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 7 7 6.97 6.97 0 0 1-5-2.14l-1.42 1.42A8.92 8.92 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg>
+      <div>Előzmények</div>
+    </div>
+    <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
+      <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      <div>Profilom</div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="alternatives.js"></script>
+  <script src="recipes.js"></script>
+  <script src="translations.js"></script>
+  <script>
+    /* ==========================================================================
+       1. SEGÉDFÜGGVÉNYEK, GS1 VALIDÁCIÓ, IGÉNY SZERINTI KÖNYVTÁRBETÖLTÉS
+       ========================================================================== */
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function validateBarcode(rawCode) {
+      if (!rawCode) return null;
+      const cleanCode = String(rawCode).replace(/[^0-9]/g, '');
+      const validLengths = [8, 12, 13, 14];
+      if (!validLengths.includes(cleanCode.length)) return null;
+
+      let sum = 0;
+      const length = cleanCode.length;
+      for (let i = 0; i < length - 1; i++) {
+        const digit = parseInt(cleanCode.charAt(length - 2 - i), 10);
+        sum += (i % 2 === 0) ? digit * 3 : digit;
+      }
+      const calculatedCheckDigit = (10 - (sum % 10)) % 10;
+      const actualCheckDigit = parseInt(cleanCode.charAt(length - 1), 10);
+      return (calculatedCheckDigit === actualCheckDigit) ? cleanCode : null;
+    }
+
+    // Külső könyvtárak: rögzített verzió, csak akkor töltődnek be, amikor kellenek.
+    // Ha saját hostolásra váltasz, csak az URL-eket kell átírni erre: 'vendor/fájlnév.js'
+    const LIB_URLS = {
+      qrcode: 'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
+      html2canvas: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+      tesseract: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'
+    };
+    const _libPromises = {};
+
+    function loadScript(key) {
+      if (_libPromises[key]) return _libPromises[key];
+      _libPromises[key] = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = LIB_URLS[key];
+        s.async = true;
+        s.onload = () => resolve();
+        s.onerror = () => { delete _libPromises[key]; reject(new Error('lib-load-failed:' + key)); };
+        document.head.appendChild(s);
+      });
+      return _libPromises[key];
+    }
+
+    /* ==========================================================================
+       2. ÖSSZETEVŐ-NORMALIZÁLÁS ÉS MAGYAR SZÓTÁR
+       ========================================================================== */
+    // kisbetű, ékezetek nélkül, százalékok és csillagok törölve, csak betű/szám/szóköz marad
+    function normalizeIng(str) {
+      return String(str || '')
+        .toLowerCase()
+        .replace(/œ/g, 'oe').replace(/æ/g, 'ae').replace(/ß/g, 'ss').replace(/ł/g, 'l').replace(/đ/g, 'd')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/\d+([.,]\d+)?\s*%/g, ' ')
+        .replace(/\*/g, ' ')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    const INGREDIENT_TRANSLATIONS = {
+      // Élelmiszer összetevők
+      "speisesalz": "étkezési só",
+      "salz": "só",
+      "palmöl": "pálmaolaj",
+      "palmfett": "pálmazsír",
+      "geschmacksverstärker": "ízfokozó",
+      "karotten": "sárgarépa",
+      "möhren": "sárgarépa",
+      "nudeln": "tészta",
+      "nudeln asiatischer art": "ázsiai jellegű tészta",
+      "weizenmehl": "búzaliszt",
+      "zucker": "cukor",
+      "wasser": "víz",
+      "sonnenblumenöl": "napraforgóolaj",
+      "hefeextrakt": "élesztőkivonat",
+      "stärke": "keményítő",
+      "maisstärke": "kukoricakeményítő",
+      "magermilchpulver": "sovány tejpor",
+      "vollmilchpulver": "zsíros tejpor",
+      "hühnerfett": "csirkezsír",
+      "zwiebeln": "vöröshagyma",
+      "knoblauch": "fokhagyma",
+      "gewürze": "fűszerek",
+      "kräuter": "fűszernövények",
+      "maltodextrin": "maltodextrin",
+      "salt": "étkezési só",
+      "palm oil": "pálmaolaj",
+      "sugar": "cukor",
+      "water": "víz",
+      "wheat flour": "búzaliszt",
+      "flavor enhancer": "ízfokozó",
+      "carrots": "sárgarépa",
+      "noodles": "tészta",
+
+      // Kozmetikai INCI összetevők
+      "aqua": "tisztított víz",
+      "aqua / water": "tisztított víz",
+      "aqua/water": "tisztított víz",
+      "glycerin": "glicerin",
+      "cetearyl alcohol": "cetearil-alkohol",
+      "stearyl alcohol": "stearil-alkohol",
+      "carbomer": "karbomer",
+      "xanthan gum": "xantángumi",
+      "tocopherol": "E-vitamin (tokoferol)",
+      "citric acid": "citromsav",
+      "glyceryl stearate": "glicerin-sztearát",
+      "sodium hyaluronate": "hialuronsav",
+      "phenoxyethanol": "fenoxietanol",
+      "ethylhexylglycerin": "etilhexil-glicerin",
+      "butyrospermum parkii butter": "karitévaj (shea vaj)",
+      "panthenol": "B5-vitamin (pantenol)",
+      "niacinamide": "B3-vitamin (niacinamid)",
+      "salicylic acid": "szalicilsav (BHA)",
+      "sodium laureth sulfate": "SLES (Sodium Laureth Sulfate)",
+      "sodium lauryl sulfate": "SLS (Sodium Lauryl Sulfate)",
+      "dimethicone": "dimetikon szilikon",
+      "paraffinum liquidum": "folyékony paraffin",
+      "parfum": "illatanyag / parfüm",
+      "fragrance": "illatanyag / parfüm"
+    };
+
+    function translateIngredientToHu(rawIng) {
+      if (!rawIng) return '';
+      const clean = String(rawIng).trim();
+      const lower = clean.toLowerCase();
+      return INGREDIENT_TRANSLATIONS[lower] || clean;
+    }
+
+    /* ==========================================================================
+       3. INGREDIENT KNOWLEDGE LAYER
+       ========================================================================== */
+    const INGREDIENT_DICTIONARY = {
+      "inci_paraffinum_liquidum": {
+        ingredientId: "inci_paraffinum_liquidum",
+        displayName: "Folyékony paraffin (Paraffinum Liquidum)",
+        inciName: "Paraffinum Liquidum",
+        explanation: {
+          whatIsIt: "Ásványiolaj-alapú, magasan tisztított kozmetikai összetevő.",
+          whyIsItUsed: "A bőr felszínén védő, okkluzív réteget képez, amely segít csökkenteni a vízvesztést.",
+          thingsToKnow: "Az ásványi olajok kőolajból származó összetevők."
+        },
+        relevanceTags: ["mineral-oil-based"]
+      },
+      "inci_fragrance_parfum": {
+        ingredientId: "inci_fragrance_parfum",
+        displayName: "Illatanyag / Parfüm (Parfum / Fragrance)",
+        inciName: "Parfum",
+        explanation: {
+          whatIsIt: "Illatosító összetevők keveréke, amely lehet szintetikus vagy természetes eredetű.",
+          whyIsItUsed: "A termék kellemes illatának biztosítására használják.",
+          thingsToKnow: "Érzékeny bőrűeknél vagy allergiára hajlamosaknál irritációt válthat ki."
+        },
+        relevanceTags: ["fragrance"]
+      },
+      "inci_sodium_laureth_sulfate": {
+        ingredientId: "inci_sodium_laureth_sulfate",
+        displayName: "SLES / SLS (Sodium Laureth / Lauryl Sulfate)",
+        inciName: "Sodium Laureth Sulfate",
+        explanation: {
+          whatIsIt: "Erős habképző, felületaktív tisztítóanyag.",
+          whyIsItUsed: "A felhalmozódott faggyú és szennyeződés hatékony eltávolítására használják.",
+          thingsToKnow: "Intenzív tisztító hatású összetevő, ami száríthatja a fejbőrt."
+        },
+        relevanceTags: ["sulfate"]
+      },
+      "inci_dimethicone": {
+        ingredientId: "inci_dimethicone",
+        displayName: "Dimetikon (Dimethicone)",
+        inciName: "Dimethicone",
+        explanation: {
+          whatIsIt: "Gyakran használt szilikonvegyület.",
+          whyIsItUsed: "A haj és a bőr felszínén selymes, sima védőréteget képez.",
+          thingsToKnow: "Filmréteget képezhet a fejbőrön vagy a hajszálakon."
+        },
+        relevanceTags: ["silicone"]
+      },
+      "inci_palm_oil": {
+        ingredientId: "inci_palm_oil",
+        displayName: "Pálmaolaj / Pálmazsír (Palm Oil / Palmfett)",
+        inciName: "Palm Oil",
+        explanation: {
+          whatIsIt: "Olajpálma gyümölcséből sajtolt növényi zsiradék.",
+          whyIsItUsed: "Kedvező ára és szobahőmérsékleten szilárd állaga miatt széles körben alkalmazott az élelmiszeriparban.",
+          thingsToKnow: "Magas telített zsírsavtartalmú. Kitermelése környezeti és fenntarthatósági szempontból gyakran kifogásolt."
+        },
+        relevanceTags: ["palm-oil"]
+      },
+      "inci_flavor_enhancer": {
+        ingredientId: "inci_flavor_enhancer",
+        displayName: "Ízfokozók (pl. Nátrium-glutamát / MSG)",
+        inciName: "Geschmacksverstärker",
+        explanation: {
+          whatIsIt: "Az ételek ízének és aromájának intenzitását növelő adalékanyagok.",
+          whyIsItUsed: "Mélyebb, sósabb 'umami' ízélményt nyújtanak feldolgozott ételekben.",
+          thingsToKnow: "Az EU engedélyezi a használatát. Egyesek érzékenynek tartják magukat rá, a tudományos bizonyítékok erről vegyesek."
+        },
+        relevanceTags: ["additive"]
+      },
+      "inci_alcohol_denat": {
+        ingredientId: "inci_alcohol_denat",
+        displayName: "Denaturált alkohol (Alcohol Denat.)",
+        inciName: "Alcohol Denat.",
+        explanation: {
+          whatIsIt: "Kozmetikai minőségű alkohol.",
+          whyIsItUsed: "Oldószerként és állagjavítóként használják.",
+          thingsToKnow: "Magas koncentrációban szárító hatású lehet."
+        },
+        relevanceTags: ["alcohol"]
+      },
+      "inci_glycerin": {
+        ingredientId: "inci_glycerin",
+        displayName: "Glicerin (Glycerin / E422)",
+        inciName: "Glycerin",
+        explanation: {
+          whatIsIt: "Szerves alkoholvegyület, amely növényi vagy állati zsiradékból, illetve szintetikusan állítható elő.",
+          whyIsItUsed: "Nedvességmegkötő: kozmetikumban a bőr felszínén, élelmiszerben pedig az állag és a nedvességtartalom megőrzésében segít.",
+          thingsToKnow: "Rendkívül elterjedt összetevő. Nem azonos a glicerid-típusú zsírokkal, és a legtöbb termékben nagyon kis mennyiségben szerepel."
+        },
+        relevanceTags: ["humectant"]
+      },
+      "inci_niacinamide": {
+        ingredientId: "inci_niacinamide",
+        displayName: "Niacinamid (Niacinamide)",
+        inciName: "Niacinamide",
+        explanation: {
+          whatIsIt: "A B3-vitamin egyik formája.",
+          whyIsItUsed: "Bőrápoló termékekben sokféle célra használják, például a bőr felszínének ápolására és az állag javítására.",
+          thingsToKnow: "Gyakori hatóanyag arckrémekben és szérumokban. Egyeseknél nagyobb töménységben bőrpírt vagy csípést okozhat."
+        },
+        relevanceTags: ["skincare-active"]
+      },
+      "inci_hyaluronate": {
+        ingredientId: "inci_hyaluronate",
+        displayName: "Hialuronsav (Sodium Hyaluronate)",
+        inciName: "Sodium Hyaluronate",
+        explanation: {
+          whatIsIt: "A hialuronsav sója, amely vízmegkötő képességéről ismert.",
+          whyIsItUsed: "Nedvességmegkötőként használják hidratáló termékekben.",
+          thingsToKnow: "A testünk is termel hialuronsavat. A kozmetikumokban használt forma kisebb molekulákból álló, laboratóriumban előállított változat."
+        },
+        relevanceTags: ["humectant"]
+      },
+      "inci_phenoxyethanol": {
+        ingredientId: "inci_phenoxyethanol",
+        displayName: "Fenoxietanol (Phenoxyethanol)",
+        inciName: "Phenoxyethanol",
+        explanation: {
+          whatIsIt: "Szintetikus tartósítószer.",
+          whyIsItUsed: "Megakadályozza, hogy baktériumok és penész szaporodjanak a termékben.",
+          thingsToKnow: "Az EU kozmetikai szabályozása legfeljebb 1% koncentrációt enged meg. Érzékeny bőrűeknél ritkán irritációt okozhat."
+        },
+        relevanceTags: ["preservative"]
+      },
+      "inci_tocopherol": {
+        ingredientId: "inci_tocopherol",
+        displayName: "E-vitamin (Tocopherol)",
+        inciName: "Tocopherol",
+        explanation: {
+          whatIsIt: "Az E-vitamin természetes vagy szintetikus formája.",
+          whyIsItUsed: "Antioxidánsként védi a termék olajait és zsírjait az avasodástól.",
+          thingsToKnow: "Gyakori a kozmetikumokban és élelmiszerekben is. Növényi olajokból is kinyerhető."
+        },
+        relevanceTags: ["antioxidant"]
+      },
+      "inci_citric_acid": {
+        ingredientId: "inci_citric_acid",
+        displayName: "Citromsav (Citric Acid / E330)",
+        inciName: "Citric Acid",
+        explanation: {
+          whatIsIt: "Természetesen a citrusfélékben előforduló szerves sav, az iparban erjesztéssel állítják elő.",
+          whyIsItUsed: "Élelmiszerben savanyúságot szabályozó és tartósító, kozmetikumban a termék pH-értékét állítja be.",
+          thingsToKnow: "Nagyon elterjedt adalékanyag. Nagy mennyiségben fogyasztva a savassága károsíthatja a fogzománcot."
+        },
+        relevanceTags: ["acidity-regulator"]
+      },
+      "inci_lecithin": {
+        ingredientId: "inci_lecithin",
+        displayName: "Lecitin (Lecithin / E322)",
+        inciName: "Lecithin",
+        explanation: {
+          whatIsIt: "Zsírszerű anyag, amelyet általában szójából vagy napraforgóból nyernek.",
+          whyIsItUsed: "Emulgeálószer: segít összekeverni az olajat és a vizet, így egyenletes állagot ad a terméknek.",
+          thingsToKnow: "A szójalecitin szóját tartalmaz, ami allergén. Ez a csomagoláson jelölt. A napraforgólecitin nem szója alapú."
+        },
+        relevanceTags: ["emulsifier"]
+      },
+      "inci_sodium_benzoate": {
+        ingredientId: "inci_sodium_benzoate",
+        displayName: "Nátrium-benzoát (Sodium Benzoate / E211)",
+        inciName: "Sodium Benzoate",
+        explanation: {
+          whatIsIt: "A benzoesav sója, tartósítószer.",
+          whyIsItUsed: "Gátolja a penész és az élesztő szaporodását élelmiszerekben és kozmetikumokban.",
+          thingsToKnow: "Az EU szabályozza, hogy mennyi használható belőle. Savas közegben működik a legjobban."
+        },
+        relevanceTags: ["preservative"]
+      },
+      "inci_potassium_sorbate": {
+        ingredientId: "inci_potassium_sorbate",
+        displayName: "Kálium-szorbát (Potassium Sorbate / E202)",
+        inciName: "Potassium Sorbate",
+        explanation: {
+          whatIsIt: "A szorbinsav sója, tartósítószer.",
+          whyIsItUsed: "Gátolja a penész és az élesztő szaporodását élelmiszerekben és kozmetikumokban.",
+          thingsToKnow: "Az EU szabályozza a megengedett mennyiséget. Nagyon gyakori, kis mennyiségben használt tartósítószer."
+        },
+        relevanceTags: ["preservative"]
+      },
+      "inci_xanthan_gum": {
+        ingredientId: "inci_xanthan_gum",
+        displayName: "Xantángumi (Xanthan Gum / E415)",
+        inciName: "Xanthan Gum",
+        explanation: {
+          whatIsIt: "Természetes eredetű sűrítőanyag, amelyet cukor baktériumos erjesztésével állítanak elő.",
+          whyIsItUsed: "Sűrítőként és állagjavítóként használják szószokban, fagylaltban, krémekben, samponokban.",
+          thingsToKnow: "Nagyon kis mennyiségben is hat. Gluténmentes termékekben a tészta rugalmasságát segít pótolni."
+        },
+        relevanceTags: ["thickener"]
+      },
+      "inci_carbomer": {
+        ingredientId: "inci_carbomer",
+        displayName: "Karbomer (Carbomer)",
+        inciName: "Carbomer",
+        explanation: {
+          whatIsIt: "Szintetikus polimer.",
+          whyIsItUsed: "Gélképző és sűrítő: átlátszó géleknek és krémeknek ad állagot.",
+          thingsToKnow: "Gyakori a szérumokban, gélekben. A bőrre kerülve nem szívódik fel."
+        },
+        relevanceTags: ["thickener"]
+      },
+      "inci_fatty_alcohols": {
+        ingredientId: "inci_fatty_alcohols",
+        displayName: "Zsíralkoholok (Cetearyl / Cetyl / Stearyl Alcohol)",
+        inciName: "Cetearyl Alcohol",
+        explanation: {
+          whatIsIt: "Növényi zsírokból, például kókuszolajból készülő, viaszszerű anyagok.",
+          whyIsItUsed: "Állagjavítók és lágyítók: krémeknek adnak selymes állagot, és segítenek az olaj és a víz összekeverésében.",
+          thingsToKnow: "Nem azonosak az etanollal, ezért nem szárítanak. Kókuszolaj- vagy pálmaolaj-eredetűek lehetnek."
+        },
+        relevanceTags: ["emollient"]
+      },
+      "inci_propylene_glycol": {
+        ingredientId: "inci_propylene_glycol",
+        displayName: "Propilénglikol (Propylene Glycol)",
+        inciName: "Propylene Glycol",
+        explanation: {
+          whatIsIt: "Szintetikus eredetű alkohol (diol).",
+          whyIsItUsed: "Oldószerként és nedvességmegkötőként használják kozmetikumokban és gyógyszerekben, élelmiszerben E1520 néven szerepel.",
+          thingsToKnow: "Egyeseknél, főleg érzékeny vagy sérült bőrön, csípést vagy irritációt okozhat. Az EU engedélyezi a használatát."
+        },
+        relevanceTags: ["solvent"]
+      },
+      "inci_fragrance_allergens": {
+        ingredientId: "inci_fragrance_allergens",
+        displayName: "Illatanyag-összetevők (pl. Limonene, Linalool)",
+        inciName: "Limonene, Linalool",
+        explanation: {
+          whatIsIt: "Illatanyagokban és illóolajokban előforduló vegyületek, amelyek természetesen is megtalálhatók például citrusfélékben és levendulában.",
+          whyIsItUsed: "Az illat részei, vagy illóolajok természetes összetevői.",
+          thingsToKnow: "Az EU előírja, hogy bizonyos illatanyag-összetevőket külön fel kell tüntetni a címkén, mert egyeseknél érzékenységet okozhatnak."
+        },
+        relevanceTags: ["fragrance-component"]
+      },
+      "inci_zinc_oxide": {
+        ingredientId: "inci_zinc_oxide",
+        displayName: "Cink-oxid (Zinc Oxide)",
+        inciName: "Zinc Oxide",
+        explanation: {
+          whatIsIt: "Ásványi eredetű, fehér por.",
+          whyIsItUsed: "Védőkrémekben a bőr felszínén védőréteget alkot, fényvédőkben fizikai UV-szűrő.",
+          thingsToKnow: "Nem szívódik fel a bőrbe. Hagyhat fehér réteget a bőrön."
+        },
+        relevanceTags: ["mineral"]
+      },
+      "inci_lanolin": {
+        ingredientId: "inci_lanolin",
+        displayName: "Lanolin (Lanolin)",
+        inciName: "Lanolin",
+        explanation: {
+          whatIsIt: "Birkagyapjúból nyert viaszos zsiradék.",
+          whyIsItUsed: "Bőrpuhító és védő: zsíros réteget hagy a bőrön, és segít megőrizni a nedvességet.",
+          thingsToKnow: "Állati eredetű, így nem vegán. Egyeseknél érzékenységet okozhat."
+        },
+        relevanceTags: ["emollient"]
+      },
+      "inci_beeswax": {
+        ingredientId: "inci_beeswax",
+        displayName: "Méhviasz (Beeswax / Cera Alba)",
+        inciName: "Cera Alba",
+        explanation: {
+          whatIsIt: "A méhek által termelt viasz.",
+          whyIsItUsed: "Sűrítőként és védő összetevőként használják krémekben, ajakápolókban.",
+          thingsToKnow: "Állati eredetű, így nem vegán. Egyeseknél érzékenységet okozhat."
+        },
+        relevanceTags: ["emollient"]
+      },
+      "inci_aloe": {
+        ingredientId: "inci_aloe",
+        displayName: "Aloe vera (Aloe Barbadensis Leaf Extract)",
+        inciName: "Aloe Barbadensis Leaf Extract",
+        explanation: {
+          whatIsIt: "Az aloe vera növény leveléből készült kivonat.",
+          whyIsItUsed: "Bőrápoló termékekben nedvességet adó, lágyító összetevőként használják.",
+          thingsToKnow: "Víz alapú, nagyon elterjedt összetevő. Egyeseknél érzékenységet okozhat."
+        },
+        relevanceTags: ["plant-extract"]
+      },
+      "inci_glucosides": {
+        ingredientId: "inci_glucosides",
+        displayName: "Cukor- és kókuszeredetű tisztítóanyagok (pl. Coco-Glucoside)",
+        inciName: "Coco-Glucoside",
+        explanation: {
+          whatIsIt: "Kókuszolajból és növényi cukrokból előállított felületaktív anyagok.",
+          whyIsItUsed: "Habképzők és tisztítók, amelyek a szulfátoknál enyhébbnek számítanak.",
+          thingsToKnow: "Ettől még nem feltétlenül szulfátmentes a termék, mert gyakran kombinálják más tisztítóanyaggal."
+        },
+        relevanceTags: ["surfactant"]
+      },
+      "inci_disodium_edta": {
+        ingredientId: "inci_disodium_edta",
+        displayName: "Dinátrium-EDTA (Disodium EDTA)",
+        inciName: "Disodium EDTA",
+        explanation: {
+          whatIsIt: "Szintetikus komplexképző anyag.",
+          whyIsItUsed: "Megköti a fémionokat, amelyek rontanák a termék állagát vagy állagmegőrzését, így segíti a tartósítást.",
+          thingsToKnow: "Kis mennyiségben használják. Környezetben lassan bomlik le."
+        },
+        relevanceTags: ["stabilizer"]
+      },
+      "inci_ascorbic_acid": {
+        ingredientId: "inci_ascorbic_acid",
+        displayName: "C-vitamin (Ascorbic Acid / E300)",
+        inciName: "Ascorbic Acid",
+        explanation: {
+          whatIsIt: "A C-vitamin kémiai neve.",
+          whyIsItUsed: "Élelmiszerben antioxidáns, védi az ételt a barnulástól és az avasodástól, kozmetikumban bőrápoló hatóanyagként is használják.",
+          thingsToKnow: "Instabil összetevő, fénytől és levegőtől lebomolhat."
+        },
+        relevanceTags: ["antioxidant"]
+      },
+      "inci_vanillin": {
+        ingredientId: "inci_vanillin",
+        displayName: "Vanillin (Vanillin)",
+        inciName: "Vanillin",
+        explanation: {
+          whatIsIt: "A vanília ízének fő összetevője, amely előállítható vaníliababból vagy mesterségesen.",
+          whyIsItUsed: "Édes, vaníliás aromát ad élelmiszereknek.",
+          thingsToKnow: "A vanillin nem azonos a természetes vaníliakivonattal, amely sok további összetevőt is tartalmaz. A csomagoláson a vanillin általában a mesterséges aromaként szerepel."
+        },
+        relevanceTags: ["flavouring"]
+      },
+      "inci_sweeteners": {
+        ingredientId: "inci_sweeteners",
+        displayName: "Édesítőszerek (pl. Aszpartám, Szukralóz)",
+        inciName: "Aspartame, Sucralose",
+        explanation: {
+          whatIsIt: "Cukor helyett használt, alacsony energiatartalmú édesítőanyagok.",
+          whyIsItUsed: "Édes ízt adnak úgy, hogy a termék kevesebb cukrot és energiát tartalmaz.",
+          thingsToKnow: "Az EU engedélyezi őket, és napi elfogadható beviteli értéket (ADI) határoz meg rájuk. Az aszpartámot tartalmazó termékeken fel kell tüntetni, hogy fenilalanint tartalmaz, mert ez fenilketonuriásoknak fontos."
+        },
+        relevanceTags: ["sweetener"]
+      },
+      "inci_glucose_syrup": {
+        ingredientId: "inci_glucose_syrup",
+        displayName: "Glükóz- és fruktózszirupok (Glucose / Fructose Syrup)",
+        inciName: "Glucose Syrup",
+        explanation: {
+          whatIsIt: "Keményítőből, például kukoricából vagy búzából előállított cukorszirupok.",
+          whyIsItUsed: "Édesítőként és állagjavítóként, a termék nedvességének megőrzésére használják.",
+          thingsToKnow: "Hozzáadott cukornak számítanak. A címkén a cukortartalom mellett érdemes nézni a lista elején elfoglalt helyét is."
+        },
+        relevanceTags: ["sugar"]
+      },
+      "inci_carrageenan": {
+        ingredientId: "inci_carrageenan",
+        displayName: "Karaginán (Carrageenan / E407)",
+        inciName: "Carrageenan",
+        explanation: {
+          whatIsIt: "Vörösalgából kinyert természetes eredetű sűrítőanyag.",
+          whyIsItUsed: "Sűrítőként és gélesítőként használják tejtermékekben, növényi italokban, húskészítményekben.",
+          thingsToKnow: "Az EU engedélyezett adalékanyaga. Egyes emésztési érzékenységekről szóló vita miatt néhány fogyasztó kerüli."
+        },
+        relevanceTags: ["thickener"]
+      }
+    };
+
+    /* ==========================================================================
+       4. TUDÁSTÁR CIKKEK ADATBÁZISA
+       ========================================================================== */
+    const ARTICLES_DATABASE = {
+      "cutting_board": {
+        title: "Miért érdemes lecserélni a műanyag vágódeszkát fára?",
+        content: `<p>A konyhákban évtizedekig tartotta magát az a tévhit, hogy a műanyag vágódeszkák higiénikusabbak és biztonságosabbak...</p>`
+      },
+      "teflon": {
+        title: "Teflon a konyhában...",
+        content: `<p>A teflonbevonatú serpenyők évtizedekig a kényelmes konyha szimbólumai voltak...</p>`
+      },
+      "microwaving": {
+        title: "Műanyag ételhordók és a mikrohullámú sütő...",
+        content: `<p>A műanyag dobozok és ételhordók praktikus kiegészítői a mindennapoknak...</p>`
+      }
+    };
+
+    /* ==========================================================================
+       5. TÖRZSADATBÁZIS – DALEDAY CURATED PRODUCT DATA
+       ========================================================================== */
+    const PRODUCT_DATABASE = {
+      "5011082138032": {
+        barcode: "5011082138032",
+        exactName: "Sudocrem védőkrém",
+        brand: "Sudocrem",
+        category: "baby-care",
+        market: "HU",
+        packageSize: "125g",
+        spectrumValue: 75,
+        sources: [{ type: "manufacturer", url: "https://www.sudocrem.com/hu/vedokrem/", checkedAt: "2026-10-07" }],
+        summary: "Cink-oxidot tartalmazó védőkrém, amelyet a gyártó a bőrfelszín védelmére és a nedvesség elleni védelemre pozicionál.",
+        fullIngredients: ["Aqua", "Paraffinum Liquidum", "Zinc Oxide", "Paraffin", "Lanolin", "Ozokerite", "Sorbitan Sesquioleate", "Benzyl Benzoate", "Synthetic Beeswax", "Benzyl Cinnamate", "Cinnamyl Alcohol", "Propylene Glycol", "Benzyl Alcohol", "Linalyl Acetate", "BHA", "Citric Acid", "BHT", "Parfum"],
+        featuredIngredients: ["inci_paraffinum_liquidum", "inci_fragrance_parfum"],
+        alternatives: [
+          {
+            barcode: "4001638098310",
+            name: "Weleda bio körömvirágos baby popsikrém",
+            reasonType: "mineral-oil-free",
+            reason: "Ha ásványiolaj-mentes, növényi olaj alapú formulát keresel.",
+            url: "https://www.notino.hu/weleda/baby-and-child-koromviragos-popsikrem/"
+          }
+        ]
+      },
+      "5099514000020": {
+        barcode: "5099514000020",
+        exactName: "WaterWipes biológiailag lebomló babatörlőkendő",
+        brand: "WaterWipes",
+        category: "baby-care",
+        market: "HU",
+        packageSize: "60db",
+        spectrumValue: 15,
+        sources: [{ type: "manufacturer", url: "https://www.waterwipes.com/hu/hu/termekek/original-babatorlokendo", checkedAt: "2026-10-07" }],
+        summary: "Vizes babatörlőkendő, amelyet a gyártó csecsemők bőrének kíméletes tisztítására pozicionál.",
+        fullIngredients: ["Aqua (Water) 99.9%", "Citrus Grandis (Grapefruit) Seed Extract*"],
+        featuredIngredients: [],
+        manufacturerNotes: ["A gyártó tájékoztatása alapján nyomokban benzalkónium-kloridot tartalmazhat."],
+        alternatives: []
+      },
+      "4001638098310": {
+        barcode: "4001638098310",
+        exactName: "Weleda bio körömvirágos baby popsikrém",
+        brand: "Weleda",
+        category: "baby-care",
+        market: "HU",
+        packageSize: "75ml",
+        spectrumValue: 10,
+        sources: [{ type: "manufacturer", url: "https://www.weleda.hu/termekek/pelenkakiutes-elleni-natur-popsikrem-bio-koromviraggal-g009831?variant=g009831_HU1", checkedAt: "2026-10-12" }],
+        summary: "Növényi olajokból, méhviaszból és bio körömvirág-kivonatból álló védőkrém. Illatanyagot (parfümöt) tartalmaz.",
+        fullIngredients: ["Water (Aqua)", "Prunus Amygdalus Dulcis (Sweet Almond) Oil", "Sesamum Indicum (Sesame) Seed Oil", "Zinc Oxide", "Beeswax (Cera Alba)", "Lanolin", "Glyceryl Linoleate", "Hectorite", "Calendula Officinalis Flower Extract", "Chamomilla Recutita (Matricaria) Flower Extract", "Fragrance (Parfum)", "Beta-Caryophyllene", "Citronellol", "Citrus Aurantium Flower Oil", "Geraniol", "Geranyl Acetate", "Limonene", "Linalool", "Pelargonium Graveolens Flower Oil", "Pinene"],
+        featuredIngredients: ["inci_fragrance_parfum"],
+        alternatives: []
+      },
+      "4062100015523": {
+        barcode: "4062100015523",
+        exactName: "HiPP bio sárgarépa főzelék",
+        brand: "HiPP",
+        category: "food",
+        market: "HU",
+        packageSize: "125g",
+        spectrumValue: 10,
+        sources: [{ type: "manufacturer", url: "https://www.hipp.hu/", checkedAt: "2026-10-07" }],
+        summary: "Egyetlen zöldségből álló bébiétel.",
+        nutrition: { totalSugarPer100g: 4.8, sugarUnit: "g/100g", source: "Csomagolási tápértéktáblázat" },
+        fullIngredients: ["Bio sárgarépa 90%", "Víz"],
+        featuredIngredients: [],
+        alternatives: []
+      },
+      "3337875597180": {
+        barcode: "3337875597180",
+        exactName: "CeraVe Hydrating Cleanser / Hidratáló tisztító krém",
+        brand: "CeraVe",
+        category: "cosmetics",
+        market: "HU",
+        packageSize: "236ml",
+        spectrumValue: 45,
+        sources: [{ type: "manufacturer", url: "https://www.cerave.hu/termekek/arctisztitas/hidratalo-tisztito-krem", checkedAt: "2026-10-07" }],
+        summary: "Arctisztító és testmosakodó krém normál és száraz bőrre.",
+        fullIngredients: ["Aqua / Water", "Glycerin", "Cetearyl Alcohol", "Peg-40 Stearate", "Stearyl Alcohol", "Potassium Phosphate", "Ceramide NP", "Ceramide AP", "Ceramide EOP", "Carbomer", "Glyceryl Stearate", "Behentrimonium Methosulfate", "Sodium Lauroyl Lactylate", "Sodium Hyaluronate", "Cholesterol", "Phenoxyethanol", "Disodium Edta", "Dipotassium Phosphate", "Tocopherol", "Phytosphingosine", "Xanthan Gum", "Ethylhexylglycerin"],
+        featuredIngredients: [],
+        alternatives: []
+      }
+    };
+
+    /* ==========================================================================
+       6. SZÓHATÁROS ÖSSZETEVŐ-ILLESZTÉS, API-LEKÉPEZÉS, OCR
+       ========================================================================== */
+    // Minden minta a normalizeIng() kimenetén fut (kisbetű, ékezet nélkül), szóhatárral.
+    // Ezért a "sls" nem illik pl. "nuts" belsejére, az "aroma" pedig már nem számít illatanyagnak.
+    const MATCH_RULES = [
+      { id: 'inci_paraffinum_liquidum', patterns: [
+        /\bparaffinum liquidum\b/, /\bparaffin\b/, /\bparaffinum\b/, /\bmineral oil\b/,
+        /\bpetrolatum\b/, /\bvaseline\b/, /\basvanyi olaj\b/, /\bkoolaj\b/, /\bfolyekony paraffin\b/,
+        /\bhuile minerale\b/, /\bparaffine\b/, /\bmineraloel\b/, /\bmineralol\b/
+      ]},
+      { id: 'inci_fragrance_parfum', patterns: [
+        /\bparfum\b/, /\bfragrance\b/, /\billatanyag\b/
+      ]},
+      { id: 'inci_sodium_laureth_sulfate', patterns: [
+        /\bsodium laureth sulfate\b/, /\bsodium lauryl sulfate\b/, /\bammonium lauryl sulfate\b/,
+        /\bsodium laureth sulphate\b/, /\bsodium lauryl sulphate\b/, /\bsles\b/, /\bsls\b/, /\bszulfat\b/
+      ]},
+      { id: 'inci_dimethicone', patterns: [
+        /\bdimethicone\b/, /\bdimetikon\b/, /\bamodimethicone\b/, /\bcyclopentasiloxane\b/,
+        /\bcyclohexasiloxane\b/, /\bcyclomethicone\b/, /\bsilicone\b/, /\bszilikon\b/
+      ]},
+      { id: 'inci_palm_oil', patterns: [
+        /\bpalm oil\b/, /\bpalm fat\b/, /\bpalm kernel\b/, /\bpalmol\b/, /\bpalmfett\b/,
+        /\bpalmaolaj\b/, /\bpalmazsir\b/, /\bpalmolein\b/,
+        /\bhuile de palm(e|iste)\b/, /\bgraisse de palm(e|iste)\b/, /\bgraisses? vegetales? de palm(e|iste)\b/, /\baceite de palma\b/, /\bgrasa de palma\b/, /\bolio di palma\b/, /\bgrasso di palma\b/, /\boleo de palma\b/, /\bpalmkernfett\b/, /\bpalmoel\b/, /\bpalmiste\b/
+      ]},
+      { id: 'inci_flavor_enhancer', patterns: [
+        /\bgeschmacksverstarker\b/, /\bflavou?r enhancers?\b/, /\bizfokozo\b/,
+        /\bmonosodium glutamate\b/, /\bmsg\b/, /\bglutamat\b/, /\bglutamate\b/, /\be 621\b/, /\be621\b/,
+        /\bexhausteurs? de gout\b/, /\bpotenciadores? del sabor\b/, /\besaltatori? di sapidita\b/, /\bsmaakversterkers?\b/, /\bkoncentrat? smaku\b/
+      ]},
+      { id: 'inci_alcohol_denat', patterns: [
+        /\balcohol denat\b/, /\bdenatured alcohol\b/, /\bdenaturalt alkohol\b/
+      ]},
+      { id: "inci_glycerin", patterns: [
+        /\bglycerin\b/, /\bglicerin\b/, /\bglycerol\b/, /\be ?422\b/
+      ]},
+      { id: "inci_niacinamide", patterns: [
+        /\bniacinamide\b/, /\bnikotinamid\b/, /\bniacinamid\b/
+      ]},
+      { id: "inci_hyaluronate", patterns: [
+        /\bsodium hyaluronate\b/, /\bhyaluronic acid\b/, /\bhialuronsav\b/, /\bhyaluronat\b/
+      ]},
+      { id: "inci_phenoxyethanol", patterns: [
+        /\bphenoxyethanol\b/, /\bfenoxietanol\b/
+      ]},
+      { id: "inci_tocopherol", patterns: [
+        /\btocopherol\b/, /\btokoferol\b/, /\be vitamin\b/, /\bvitamin e\b/
+      ]},
+      { id: "inci_citric_acid", patterns: [
+        /\bcitric acid\b/, /\bcitromsav\b/, /\be ?330\b/
+      ]},
+      { id: "inci_lecithin", patterns: [
+        /\blecithin\b/, /\blecitin(ek)?\b/, /\be ?322\b/
+      ]},
+      { id: "inci_sodium_benzoate", patterns: [
+        /\bsodium benzoate\b/, /\bnatrium benzoat\b/, /\be ?211\b/
+      ]},
+      { id: "inci_potassium_sorbate", patterns: [
+        /\bpotassium sorbate\b/, /\bkalium ?szorbat\b/, /\be ?202\b/
+      ]},
+      { id: "inci_xanthan_gum", patterns: [
+        /\bxanthan gum\b/, /\bxantan ?gumi\b/, /\be ?415\b/
+      ]},
+      { id: "inci_carbomer", patterns: [
+        /\bcarbomer\b/
+      ]},
+      { id: "inci_fatty_alcohols", patterns: [
+        /\bcetearyl alcohol\b/, /\bcetyl alcohol\b/, /\bstearyl alcohol\b/, /\bcetil alkohol\b/, /\bsztearil alkohol\b/
+      ]},
+      { id: "inci_propylene_glycol", patterns: [
+        /\bpropylene glycol\b/, /\bpropilenglikol\b/, /\bpropilen glikol\b/, /\be ?1520\b/
+      ]},
+      { id: "inci_fragrance_allergens", patterns: [
+        /\blimonene\b/, /\blinalool\b/, /\bcitronellol\b/, /\bgeraniol\b/, /\bcitral\b/, /\beugenol\b/, /\bcoumarin\b/, /\bfarnesol\b/, /\bhexyl cinnamal\b/, /\bbenzyl salicylate\b/, /\bbenzyl benzoate\b/, /\bbenzyl cinnamate\b/, /\bcinnamyl alcohol\b/, /\blinalyl acetate\b/
+      ]},
+      { id: "inci_zinc_oxide", patterns: [
+        /\bzinc oxide\b/, /\bcink ?oxid\b/
+      ]},
+      { id: "inci_lanolin", patterns: [
+        /\blanolin\b/
+      ]},
+      { id: "inci_beeswax", patterns: [
+        /\bbeeswax\b/, /\bcera alba\b/, /\bmehviasz\b/
+      ]},
+      { id: "inci_aloe", patterns: [
+        /\baloe barbadensis\b/, /\baloe vera\b/
+      ]},
+      { id: "inci_glucosides", patterns: [
+        /\bcoco glucoside\b/, /\blauryl glucoside\b/, /\bdecyl glucoside\b/, /\bcaprylyl capryl glucoside\b/
+      ]},
+      { id: "inci_disodium_edta", patterns: [
+        /\bdisodium edta\b/, /\btetrasodium edta\b/, /\bdinatrium edta\b/
+      ]},
+      { id: "inci_ascorbic_acid", patterns: [
+        /\bascorbic acid\b/, /\baszkorbinsav\b/, /\be ?300\b/, /\bc vitamin\b/, /\bvitamin c\b/
+      ]},
+      { id: "inci_vanillin", patterns: [
+        /\bvanillin\b/, /\bvanilin\b/
+      ]},
+      { id: "inci_sweeteners", patterns: [
+        /\baspartame\b/, /\baszpartam\b/, /\bsucralose\b/, /\bszukraloz\b/, /\bacesulfame\b/, /\baceszulfam\b/, /\be ?95[0-5]\b/
+      ]},
+      { id: "inci_glucose_syrup", patterns: [
+        /\bglucose syrup\b/, /\bglukozszirup\b/, /\bglucose fructose syrup\b/, /\bfructose syrup\b/, /\bhigh fructose\b/, /\bglukoz fruktoz szirup\b/, /\bfruktozszirup\b/, /\bizoglukoz\b/, /\bisoglucose\b/
+      ]},
+      { id: "inci_carrageenan", patterns: [
+        /\bcarrageenan\b/, /\bkaraginan\b/, /\be ?407\b/
+      ]}
+    ];
+
+    function matchApiIngredientsToDictionary(rawIngredientsList) {
+      if (!rawIngredientsList || !Array.isArray(rawIngredientsList) || rawIngredientsList.length === 0) return [];
+      const text = ' ' + rawIngredientsList.map(normalizeIng).join(' | ') + ' ';
+      const matched = [];
+      MATCH_RULES.forEach(rule => {
+        if (rule.patterns.some(re => re.test(text))) matched.push(rule.id);
+      });
+      return matched;
+    }
+
+    function splitIngredientText(rawText) {
+      // vesszők a zárójelek belsejében nem választanak el összetevőt;
+      // a tizedesvessző sem ("cacao maigre 7, 4%" = 7,4%)
+      const parts = [];
+      let depth = 0, current = '';
+      const prepared = String(rawText || '').replace(/(\d),\s?(\d+\s*%)/g, '$1.$2').replace(/_/g, '');
+      for (const ch of prepared) {
+        if (ch === '(' || ch === '[') depth++;
+        if (ch === ')' || ch === ']') depth = Math.max(0, depth - 1);
+        if ((ch === ',' || ch === '\n' || ch === '\u2022' || ch === ';') && depth === 0) {
+          parts.push(current); current = '';
+        } else {
+          current += ch;
+        }
+      }
+      parts.push(current);
+      return parts.map(s => s.trim().replace(/^[.:\-–\s]+|[.\s]+$/g, '')).filter(s => s.length > 1);
+    }
+
+    function mapApiProductToDaleday(p, sourceLabel, defaultCategory) {
+      let parsedRaw = [];
+      const rawText = p.ingredients_text_hu || p.ingredients_text;
+      if (rawText) {
+        parsedRaw = splitIngredientText(rawText);
+      }
+
+      const featuredIncs = matchApiIngredientsToDictionary(parsedRaw);
+      const sugarVal = p.nutriments ? p.nutriments.sugars_100g : null;
+
+      let detectedCategory = defaultCategory;
+      const fullSearchText = `${p.product_name_hu || ''} ${p.product_name || ''} ${p.categories || ''}`.toLowerCase();
+      const babyKeywords = ['baby', 'baba', 'csecsemő', 'bébé', 'säugling', 'kinder'];
+      if (babyKeywords.some(kw => fullSearchText.includes(kw))) detectedCategory = 'baby-care';
+
+      const domain = sourceLabel === 'Open Beauty Facts' ? 'openbeautyfacts' : 'openfoodfacts';
+
+      return {
+        barcode: p.code || p._id || String(Math.floor(1000000000000 + Math.random() * 9000000000000)),
+        exactName: p.product_name_hu || p.product_name || 'Ismeretlen termék',
+        brand: p.brands || 'Ismeretlen márka',
+        category: detectedCategory,
+        market: "HU",
+        packageSize: p.quantity || "N/A",
+        spectrumValue: undefined,
+        sources: [{ type: "open-data", url: `https://world.${domain}.org/product/${p.code}`, checkedAt: new Date().toISOString().split('T')[0] }],
+        summary: parsedRaw.length
+          ? `A termék adatai a nyílt ${sourceLabel} adatbázisból származnak.`
+          : `A nyílt ${sourceLabel} adatbázisban ehhez a termékhez nincs összetevőlista.`,
+        nutrition: (sugarVal !== null && sugarVal !== undefined) ? { totalSugarPer100g: sugarVal, sugarUnit: "g/100g", source: sourceLabel } : undefined,
+        fullIngredients: parsedRaw,
+        featuredIngredients: featuredIncs,
+        alternatives: []
+      };
+    }
+
+    let activeOcrProduct = null;
+
+    async function processLabelImage(event) {
+      const file = event.target.files[0];
+      if (!file || !activeOcrProduct) return;
+
+      const statusEl = document.getElementById('ocrStatus');
+      if (statusEl) statusEl.innerHTML = '<span class="spinner"></span>Címke olvasása és az összetevők elemzése…';
+
+      let worker = null;
+
+      try {
+        await loadScript('tesseract');
+        worker = await Tesseract.createWorker('eng+hun');
+        const ret = await worker.recognize(file);
+
+        const extractedText = ret.data.text;
+        if (!extractedText || extractedText.length < 10) {
+          if (statusEl) statusEl.innerHTML = '<span style="color:#7A4246;">A képről nem sikerült olvasható összetevőlistát kinyerni. Kérjük, próbáld élesebb fotóval!</span>';
+          return;
+        }
+
+        const rawIngredientsList = splitIngredientText(extractedText);
+        if (rawIngredientsList.length === 0) {
+          if (statusEl) statusEl.innerHTML = '<span style="color:#7A4246;">Nem találtunk összetevőlistát a képen. Próbáld élesebb fotóval!</span>';
+          return;
+        }
+
+        activeOcrProduct.fullIngredients = rawIngredientsList;
+        activeOcrProduct.featuredIngredients = matchApiIngredientsToDictionary(rawIngredientsList);
+        activeOcrProduct.ocr = true;
+        activeOcrProduct.summary = "A termék összetevőit a címkéről készített fotó alapján olvastuk be.";
+
+        saveToHistory(activeOcrProduct);
+        renderProductView(activeOcrProduct);
+
+      } catch (err) {
+        console.error("OCR hiba:", err);
+        if (statusEl) statusEl.innerHTML = '<span style="color:#7A4246;">A kép feldolgozása nem sikerült. Ellenőrizd a kapcsolatot, és próbáld újra!</span>';
+      } finally {
+        if (worker) {
+          try { await worker.terminate(); } catch (termErr) { console.error("Worker leállítási hiba:", termErr); }
+        }
+      }
+    }
+
+    // A felhasználó által javított összetevőszöveg újraelemzése
+    function reanalyzeEditedIngredients() {
+      const ta = document.getElementById('ingredientsTextarea');
+      if (!ta || !activeOcrProduct) return;
+      const list = splitIngredientText(ta.value);
+      if (list.length === 0) return;
+      activeOcrProduct.fullIngredients = list;
+      activeOcrProduct.featuredIngredients = matchApiIngredientsToDictionary(list);
+      activeOcrProduct.userEdited = true;
+      saveToHistory(activeOcrProduct);
+      renderProductView(activeOcrProduct);
+    }
+
+    // Szerkesztő mód: csak akkor nyílik meg, ha a felhasználó a gombra kattint
+    function startEditIngredients() {
+      if (!activeOcrProduct) return;
+      const box = document.getElementById('ingredientsEditable');
+      const row = document.getElementById('reanalyzeRow');
+      if (!box || !row) return;
+      const ta = document.createElement('textarea');
+      ta.id = 'ingredientsTextarea';
+      ta.value = (activeOcrProduct.fullIngredients || []).join(', ');
+      ta.setAttribute('aria-label', 'Összetevők szerkesztése');
+      ta.style.cssText = 'width:100%; min-height:140px; font-family:inherit; font-size:0.85rem; line-height:1.6; border:1px solid var(--accent-main); border-radius:12px; padding:12px; background:#fff; color:inherit;';
+      box.replaceChildren(ta);
+      row.innerHTML = '<button class="btn-secondary" style="font-size:0.76rem; padding:6px 12px;" onclick="reanalyzeEditedIngredients()">Mentés és újraelemzés</button> <button class="btn-secondary" style="font-size:0.76rem; padding:6px 12px;" onclick="renderProductView(activeOcrProduct, true)">Mégse</button>';
+      ta.focus();
+    }
+
+    /* ---- Idegen nyelvű összetevőlisták szótár alapú fordítása (translations.js) ---- */
+    const TRANS_MAP = {};
+    let TRANS_MAX = 1;
+    (Array.isArray(window.DALEDAY_TRANSLATIONS) ? window.DALEDAY_TRANSLATIONS : []).forEach(pair => {
+      const k = normalizeIng(pair[0]);
+      if (!k) return;
+      TRANS_MAP[k] = pair[1];
+      TRANS_MAX = Math.max(TRANS_MAX, k.split(' ').length);
+    });
+
+    // Szavanként, a leghosszabb illeszkedő kifejezéssel. Ami nincs a szótárban, az eredetiben marad.
+    function translateIngredientText(text) {
+      const tokens = String(text || '').replace(/_/g, '').match(/[\p{L}\p{N}]+|[^\p{L}\p{N}]+/gu) || [];
+      const isWord = t => /^[\p{L}\p{N}]/u.test(t);
+      const isGlue = t => /^[\s\-'’]+$/.test(t);
+      let out = '', changed = false, i = 0;
+      while (i < tokens.length) {
+        const t = tokens[i];
+        if (!isWord(t)) { out += t; i++; continue; }
+        let matched = false;
+        for (let n = TRANS_MAX; n >= 1 && !matched; n--) {
+          const words = [t];
+          let j = i + 1;
+          while (words.length < n && j + 1 < tokens.length && isGlue(tokens[j]) && isWord(tokens[j + 1])) {
+            words.push(tokens[j + 1]); j += 2;
+          }
+          if (words.length !== n) continue;
+          const key = normalizeIng(words.join(' '));
+          const hu = TRANS_MAP[key];
+          if (!hu) continue;
+          const first = words[0];
+          let res = hu;
+          if (first.length > 1 && first === first.toUpperCase() && first !== first.toLowerCase()) res = hu.toUpperCase();
+          else if (first[0] !== first[0].toLowerCase() && first[0] === first[0].toUpperCase()) res = hu.charAt(0).toUpperCase() + hu.slice(1);
+          if (normalizeIng(hu) !== key) changed = true;
+          out += res;
+          i = j;
+          matched = true;
+        }
+        if (!matched) { out += t; i++; }
+      }
+      if (changed) out = out.replace(/(\d)\.(\d)/g, '$1,$2');
+      return { text: out, changed };
+    }
+
+    // A termékoldalon megjelenő lista: a kozmetikai INCI-nevek mellett zárójelben a magyar megfelelő,
+    // az idegen nyelvű élelmiszer-összetevők pedig szótár alapján lefordítva.
+    function buildDisplayIngredients(list) {
+      let translated = false;
+      const shown = (list || []).map(raw => {
+        const clean = String(raw || '').trim();
+        const r = translateIngredientText(clean);
+        if (r.changed) { translated = true; return r.text; }
+        if (INGREDIENT_TRANSLATIONS[clean.toLowerCase()]) return formatIngredientLabel(clean);
+        return clean.replace(/_/g, '');
+      });
+      return { text: shown.join(', '), translated };
+    }
+
+    // A címkén szereplő nevet mutatjuk, mellette zárójelben a magyar megfelelővel (ha ismerjük)
+    function formatIngredientLabel(raw) {
+      const clean = String(raw || '').trim();
+      const hu = INGREDIENT_TRANSLATIONS[clean.toLowerCase()];
+      return (hu && hu.toLowerCase() !== clean.toLowerCase()) ? `${clean} (${hu})` : clean;
+    }
+
+    /* ---- Keresés a nyílt adatbázisokban, kevés kéréssel ----
+       A nyílt adatbázis korlátja kb. 10 keresés/perc/IP (olvasás: 15/perc/IP), ezért:
+       egy keresés = egy kérés (élelmiszer), kozmetikumot csak ha ott nincs találat vagy kérik;
+       nincs újrapróbálás korlátozás (429) esetén; találatok eltárolva; egyszerre egy keresés fut. */
+    let searchInFlight = false;
+    let searchBlockedUntil = 0;
+    let lastSearchQuery = '';
+    const SEARCH_CACHE_KEY = 'daleday_search_cache';
+    const SEARCH_CACHE_TTL = 12 * 60 * 60 * 1000;
+
+    function readSearchCache(query) {
+      try {
+        const all = JSON.parse(localStorage.getItem(SEARCH_CACHE_KEY) || '{}');
+        const hit = all[normalizeIng(query)];
+        if (hit && Date.now() - hit.t < SEARCH_CACHE_TTL && Array.isArray(hit.items) && hit.items.length) return hit.items;
+      } catch (e) {}
+      return null;
+    }
+    function writeSearchCache(query, items) {
+      try {
+        const all = JSON.parse(localStorage.getItem(SEARCH_CACHE_KEY) || '{}');
+        all[normalizeIng(query)] = { t: Date.now(), items };
+        const keys = Object.keys(all).sort((x, y) => all[y].t - all[x].t).slice(0, 20);
+        const trimmed = {};
+        keys.forEach(k => { trimmed[k] = all[k]; });
+        localStorage.setItem(SEARCH_CACHE_KEY, JSON.stringify(trimmed));
+      } catch (e) {}
+    }
+
+    // JSON lekérés: 429 esetén kivétel (nem próbáljuk újra), egyéb hibánál null
+    async function fetchJsonSafe(url, timeoutMs) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const res = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (res.status === 429) throw new Error('ratelimited');
+        if (!res.ok) return null;
+        return await res.json();
+      } catch (e) {
+        clearTimeout(timeoutId);
+        if (e.message === 'ratelimited') throw e;
+        return null;
+      }
+    }
+
+    function pickText(v) {
+      if (!v) return '';
+      if (typeof v === 'string') return v;
+      if (Array.isArray(v)) return v.join(', ');
+      if (typeof v === 'object') {
+        const s = v.hu || v.en || v.main || Object.values(v).find(x => typeof x === 'string');
+        return s || '';
+      }
+      return String(v);
+    }
+    function hitToProduct(hit) {
+      const code = hit && (hit.code || hit._id);
+      const name = pickText(hit && hit.product_name);
+      if (!code || !name) return null;
+      return {
+        code: String(code),
+        product_name: name,
+        brands: pickText(hit.brands),
+        quantity: pickText(hit.quantity),
+        ingredients_text: pickText(hit.ingredients_text),
+        categories: pickText(hit.categories),
+        nutriments: hit.nutriments
+      };
+    }
+    function legacySearchUrl(domain, query) {
+      return `https://world.${domain}.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=8&fields=code,product_name,product_name_hu,brands,quantity,ingredients_text,ingredients_text_hu,categories,nutriments`;
+    }
+
+    async function searchFoodDb(query) {
+      // 1) Search-a-licious (a nyílt adatbázis saját keresője, gyorsabb)
+      const fresh = await fetchJsonSafe(`https://search.openfoodfacts.org/search?q=${encodeURIComponent(query)}&page_size=10&fields=code,product_name,brands,quantity,ingredients_text,categories`, 9000);
+      if (fresh && Array.isArray(fresh.hits)) {
+        const items = fresh.hits.map(hitToProduct).filter(Boolean)
+          .map(p => mapApiProductToDaleday(p, 'Open Food Facts', 'food'));
+        return { ok: true, items };
+      }
+      // 2) tartalék: a régi keresővégpont (csak ha az új nem válaszolt)
+      const legacy = await fetchJsonSafe(legacySearchUrl('openfoodfacts', query), 12000);
+      if (legacy && Array.isArray(legacy.products)) {
+        const items = legacy.products.filter(p => p.product_name || p.product_name_hu)
+          .map(p => mapApiProductToDaleday(p, 'Open Food Facts', 'food'));
+        return { ok: true, items };
+      }
+      return { ok: false, items: [] };
+    }
+
+    async function searchBeautyDb(query) {
+      const legacy = await fetchJsonSafe(legacySearchUrl('openbeautyfacts', query), 12000);
+      if (legacy && Array.isArray(legacy.products)) {
+        const items = legacy.products.filter(p => p.product_name || p.product_name_hu)
+          .map(p => mapApiProductToDaleday(p, 'Open Beauty Facts', 'cosmetics'));
+        return { ok: true, items };
+      }
+      return { ok: false, items: [] };
+    }
+
+    // Pontosabb névegyezés előre, azonos pontszámnál élelmiszer
+    function rankSearchResults(items, query) {
+      const q = normalizeIng(query);
+      const score = (p) => {
+        const name = normalizeIng(p.exactName);
+        const brand = normalizeIng(p.brand);
+        if (name === q || name.indexOf(q + ' ') === 0 || brand === q) return 3;
+        if ((' ' + name + ' ' + brand + ' ').indexOf(' ' + q + ' ') !== -1) return 2;
+        return 1;
+      };
+      const seen = new Set();
+      return items
+        .filter(p => { const k = p.barcode; if (seen.has(k)) return false; seen.add(k); return true; })
+        .map((p, i) => ({ p, i, s: score(p) }))
+        .sort((x, y) => (y.s - x.s) || (x.i - y.i))
+        .map(x => x.p);
+    }
+
+    // mode: 'food' | 'beauty'. Kivételek: offline, ratelimited, unavailable
+    async function fetchByTextSearch(query, mode) {
+      if (!navigator.onLine) throw new Error('offline');
+      try {
+        const r = mode === 'beauty' ? await searchBeautyDb(query) : await searchFoodDb(query);
+        if (!r.ok) throw new Error('unavailable');
+        return rankSearchResults(r.items, query);
+      } catch (e) {
+        if (e.message === 'ratelimited') searchBlockedUntil = Date.now() + 60 * 1000;
+        throw e;
+      }
+    }
+
+    async function fetchFromExternalApis(barcode, preferCategory) {
+      if (!navigator.onLine) throw new Error("offline");
+
+      let endpoints = [
+        { url: `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, category: 'food', sourceLabel: 'Open Food Facts' },
+        { url: `https://world.openbeautyfacts.org/api/v0/product/${barcode}.json`, category: 'cosmetics', sourceLabel: 'Open Beauty Facts' }
+      ];
+      if (preferCategory === 'cosmetics') endpoints = endpoints.reverse();
+      let failures = 0;
+      let limited = false;
+
+      for (const ep of endpoints) {
+        let answered = false;
+        // időtúllépésnél egyszer újrapróbáljuk, korlátozásnál (429) nem
+        for (let attempt = 0; attempt < 2 && !answered && !limited; attempt++) {
+          try {
+            const data = await fetchJsonSafe(ep.url, 8000);
+            if (data) {
+              answered = true;
+              if (data.status === 1 && data.product) {
+                return mapApiProductToDaleday(data.product, ep.sourceLabel, ep.category);
+              }
+            }
+          } catch (e) {
+            if (e.message === 'ratelimited') limited = true;
+          }
+        }
+        if (!answered) failures++;
+      }
+      if (limited) throw new Error('ratelimited');
+      // Ha egyik adatbázis sem válaszolt, az nem azonos azzal, hogy nincs ilyen termék.
+      if (failures > 0) throw new Error('unavailable');
+      return null;
+    }
+
+    /* ==========================================================================
+       7. SZKENNER ÉS KERESÉS
+       ========================================================================== */
+    let html5QrcodeScanner = null;
+    let currentSearchResults = [];
+
+    async function stopCameraScanner() {
+      const readerContainer = document.getElementById('readerContainer');
+      if (readerContainer) readerContainer.style.display = 'none';
+
+      if (html5QrcodeScanner) {
+        try {
+          if (html5QrcodeScanner.isScanning) await html5QrcodeScanner.stop();
+          await html5QrcodeScanner.clear();
+        } catch (err) {
+          console.log("Kamera leállítási információ:", err);
+        } finally {
+          html5QrcodeScanner = null;
+        }
+      }
+    }
+
+    async function startCameraScanner() {
+      await stopCameraScanner();
+      clearInputError();
+      const readerContainer = document.getElementById('readerContainer');
+
+      try {
+        await loadScript('qrcode');
+      } catch (e) {
+        showInputError("A vonalkód-olvasó nem töltődött be. Ellenőrizd az internetkapcsolatot, vagy írd be a vonalkódot kézzel.");
+        return;
+      }
+
+      if (readerContainer) readerContainer.style.display = 'block';
+
+      try {
+        html5QrcodeScanner = new Html5Qrcode("reader");
+        await html5QrcodeScanner.start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: { width: 240, height: 140 } },
+          async (decodedText) => {
+            const validCode = validateBarcode(decodedText);
+            if (validCode) {
+              if (navigator.vibrate) navigator.vibrate(50);
+              await stopCameraScanner();
+              const inputEl = document.getElementById('barcodeInput');
+              if (inputEl) inputEl.value = validCode;
+              handleScanCode(validCode);
+            } else {
+              showInputError("A beolvasott kód nem tűnik érvényes vonalkódnak.");
+            }
+          },
+          () => {}
+        );
+      } catch (err) {
+        showInputError("A kamerát nem sikerült megnyitni.");
+        if (readerContainer) readerContainer.style.display = 'none';
+        html5QrcodeScanner = null;
+      }
+    }
+
+    function showInputError(msg) {
+      const errEl = document.getElementById('inputErrorMsg');
+      if (errEl) { errEl.innerText = msg; errEl.style.display = 'block'; }
+    }
+
+    function clearInputError() {
+      const errEl = document.getElementById('inputErrorMsg');
+      if (errEl) { errEl.innerText = ''; errEl.style.display = 'none'; }
+    }
+
+    async function handleScanInput() {
+      clearInputError();
+      const inputEl = document.getElementById('barcodeInput');
+      const rawQuery = inputEl ? inputEl.value.trim() : '';
+
+      if (!rawQuery) {
+        showInputError('Írd be a termék nevét, márkáját vagy vonalkódját.');
+        return;
+      }
+
+      if (/^[0-9]+$/.test(rawQuery)) {
+        const validCode = validateBarcode(rawQuery);
+        if (!validCode) {
+          showInputError('Ez nem tűnik érvényes vonalkódnak.');
+          return;
+        }
+        handleScanCode(validCode);
+      } else {
+        handleTextSearch(rawQuery);
+      }
+    }
+
+    function renderSearchProblem(kind) {
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+      const wait = Math.max(1, Math.ceil((searchBlockedUntil - Date.now()) / 1000));
+      const text = kind === 'ratelimited'
+        ? `Rövid időn belül túl sok keresés történt, ezért a nyílt adatbázis egy időre korlátozza a kéréseket. Várj ${wait > 1 ? 'kb. ' + wait + ' másodpercet' : 'egy kicsit'}, aztán próbáld újra.`
+        : 'Ez nem jelenti azt, hogy nincs ilyen termék, csak a nyílt adatbázis lassú vagy nem érhető el. Próbáld újra egy kicsit később.';
+      const title = kind === 'ratelimited' ? 'Egy kicsit várni kell' : 'Az adatbázis most nem válaszolt';
+      container.innerHTML = `<div class="section-block"><h3 style="font-size:1.05rem; margin-bottom: 6px;">${title}</h3><p style="color: var(--text-muted); font-size: 0.85rem;">${text}</p><button class="btn-secondary" style="margin-top:12px;" onclick="handleScanInput()">Újrapróbálom</button></div>`;
+    }
+
+    async function handleTextSearch(query) {
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+      if (searchInFlight) return; // egy keresés fut, ne indítsunk újabbat
+      lastSearchQuery = query;
+      lastMissing = { barcode: '', query: query };
+
+      const cached = readSearchCache(query);
+      if (cached) {
+        currentSearchResults = cached;
+        trackEvent('search_ok');
+        renderSearchResultsList(query, cached);
+        return;
+      }
+      if (Date.now() < searchBlockedUntil) { renderSearchProblem('ratelimited'); return; }
+
+      searchInFlight = true;
+      container.innerHTML = '<div class="section-block"><p><span class="spinner"></span>Keresés az adatbázisban…</p></div>';
+
+      try {
+        let results = await fetchByTextSearch(query, 'food');
+        // ha élelmiszerek között nincs találat, megnézzük a kozmetikumokat is
+        if (results.length === 0) results = await fetchByTextSearch(query, 'beauty');
+        currentSearchResults = results;
+        trackEvent(results.length === 0 ? 'search_no_result' : 'search_ok');
+
+        if (results.length === 0) {
+          container.innerHTML = `
+            <div class="section-block">
+              <h3 style="font-size:1.05rem; margin-bottom: 6px;">Nincs találat</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Nem találtunk terméket a(z) "<strong>${escapeHtml(query)}</strong>" keresési feltételre. Próbáld a vonalkóddal, vagy rövidebb névvel.
+              </p>
+              ${buildSubmitBoxHtml()}
+            </div>
+          `;
+          return;
+        }
+        writeSearchCache(query, results);
+        renderSearchResultsList(query, results);
+      } catch (err) {
+        if (err.message === 'offline') {
+          container.innerHTML = `<div class="section-block"><h3>Nincs internetkapcsolat</h3></div>`;
+        } else if (err.message === 'ratelimited') {
+          renderSearchProblem('ratelimited');
+        } else {
+          renderSearchProblem('unavailable');
+        }
+      } finally {
+        searchInFlight = false;
+      }
+    }
+
+    // Kozmetikumok között is keres (csak kérésre), és hozzáfűzi a találatokhoz
+    async function searchBeautyMore() {
+      if (searchInFlight || !lastSearchQuery) return;
+      if (Date.now() < searchBlockedUntil) { renderSearchProblem('ratelimited'); return; }
+      searchInFlight = true;
+      const btn = document.getElementById('beautyMoreBtn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Keresés…'; }
+      try {
+        const more = await fetchByTextSearch(lastSearchQuery, 'beauty');
+        const merged = rankSearchResults(currentSearchResults.concat(more), lastSearchQuery);
+        currentSearchResults = merged;
+        writeSearchCache(lastSearchQuery, merged);
+        renderSearchResultsList(lastSearchQuery, merged, true);
+      } catch (err) {
+        renderSearchProblem(err.message === 'ratelimited' ? 'ratelimited' : 'unavailable');
+      } finally {
+        searchInFlight = false;
+      }
+    }
+
+    function renderSearchResultsList(query, results, beautyDone) {
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+
+      const listHtml = results.map((p, index) => `
+        <div class="search-result-item" onclick="selectSearchResult(${index})">
+          <div>
+            <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.exactName)}</strong>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(p.brand)} ${p.packageSize !== 'N/A' ? '• ' + escapeHtml(p.packageSize) : ''} • ${p.category === 'food' ? 'Élelmiszer' : 'Kozmetikum'}</p>
+          </div>
+          <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Kiválasztás ›</span>
+        </div>
+      `).join('');
+
+      const hasBeauty = results.some(p => p.category !== 'food');
+      const moreHtml = (!hasBeauty && !beautyDone)
+        ? `<button id="beautyMoreBtn" class="btn-secondary" style="margin-top:14px; width:100%;" onclick="searchBeautyMore()">Kozmetikumok között is keresek</button>`
+        : '';
+
+      container.innerHTML = `
+        <div class="section-block">
+          <h3 style="font-size:1.05rem; margin-bottom: 4px;">Találatok: "${escapeHtml(query)}"</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 14px;">Válaszd ki a keresett terméket az elemzés megnyitásához:</p>
+          <div>${listHtml}</div>
+          ${moreHtml}
+        </div>
+      `;
+    }
+
+    async function selectSearchResult(index) {
+      let selected = currentSearchResults[index];
+      if (!selected) return;
+      const noIngredients = !selected.fullIngredients || selected.fullIngredients.length === 0;
+      // Ha a találati lista nem tartalmazott összetevőlistát, a teljes terméket külön kérjük le
+      if (noIngredients && /^[0-9]{8,14}$/.test(String(selected.barcode))) {
+        const container = document.getElementById('resultContainer');
+        if (container) container.innerHTML = '<div class="section-block"><p><span class="spinner"></span>Termék betöltése…</p></div>';
+        try {
+          const full = await fetchFromExternalApis(String(selected.barcode), selected.category);
+          if (full) selected = full;
+        } catch (e) { /* marad a találati lista adata */ }
+      }
+      saveToHistory(selected);
+      renderProductView(selected);
+    }
+
+    async function handleScanCode(code) {
+      clearInputError();
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+
+      container.innerHTML = '<div class="section-block"><p><span class="spinner"></span>Termék keresése…</p></div>';
+
+      lastMissing = { barcode: code, query: '' };
+      let product = PRODUCT_DATABASE[code];
+
+      if (!product) {
+        try {
+          product = await fetchFromExternalApis(code);
+        } catch (err) {
+          if (err.message === "offline") {
+            container.innerHTML = `<div class="section-block"><h3>Nincs internetkapcsolat</h3></div>`;
+            return;
+          }
+          if (err.message === "ratelimited") {
+            renderSearchProblem('ratelimited');
+            return;
+          }
+          if (err.message === "unavailable") {
+            container.innerHTML = `<div class="section-block"><h3 style="font-size:1.05rem; margin-bottom: 6px;">Az adatbázis most nem válaszolt</h3><p style="color: var(--text-muted); font-size: 0.85rem;">Ez nem jelenti azt, hogy nincs ilyen termék, csak a nyílt adatbázis lassú vagy nem érhető el. Próbáld újra egy kicsit később.</p><button class="btn-secondary" style="margin-top:12px;" onclick="handleScanInput()">Újrapróbálom</button></div>`;
+            return;
+          }
+        }
+      }
+
+      if (product) {
+        trackEvent('scan_found', { category: product.category });
+        saveToHistory(product);
+        renderProductView(product);
+      } else {
+        trackEvent('scan_not_found', { barcode: code });
+        container.innerHTML = `
+          <div class="section-block">
+            <h3 style="font-size:1.05rem; margin-bottom: 6px;">Termék nem található</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+              Ezt a terméket most nem találtuk meg az adatbázisokban.
+            </p>
+            ${buildSubmitBoxHtml()}
+          </div>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       8. RELEVANCIAMOTOR ÉS TERMÉKOLDAL
+       ========================================================================== */
+    // Egy termék összetevő-azonosítói: kézzel kurált + a teljes listából szóhatárosan felismert
+    function getDetectedIds(product) {
+      const ids = new Set(product.featuredIngredients || []);
+      matchApiIngredientsToDictionary(product.fullIngredients || []).forEach(id => ids.add(id));
+      return ids;
+    }
+
+    const AVOID_RULES = [
+      { pref: 'avoid-mineral',   id: 'inci_paraffinum_liquidum',    reason: "ásványi olaj alapú összetevőt (pl. folyékony paraffint)" },
+      { pref: 'avoid-fragrance', id: 'inci_fragrance_parfum',       reason: "hozzáadott illatanyagot / parfümöt" },
+      { pref: 'avoid-sulfates',  id: 'inci_sodium_laureth_sulfate', reason: "SLES/SLS típusú szulfátos tisztítóanyagot" },
+      { pref: 'avoid-silicones', id: 'inci_dimethicone',            reason: "szilikont (pl. dimetikont)" },
+      { pref: 'avoid-palm',      id: 'inci_palm_oil',               reason: "pálmaolajat / pálmazsírt" },
+      { pref: 'avoid-enhancers', id: 'inci_flavor_enhancer',        reason: "ízfokozót" }
+    ];
+
+    function evaluateRelevance(product, prefs) {
+      const detected = getDetectedIds(product);
+      return AVOID_RULES
+        .filter(r => prefs.includes(r.pref) && detected.has(r.id))
+        .map(r => ({ type: r.pref, id: r.id, reason: r.reason }));
+    }
+
+    /* ---- Alternatíva-ajánló (kézzel kurált katalógus: alternatives.js) ---- */
+    // Csak akkor ajánl, ha a termék a felhasználó profilja szerint kerülendő összetevőt tartalmaz,
+    // és a katalógusban van olyan termék, ami pontosan ettől az összetevőtől mentes.
+    function findAlternatives(product, relevanceResults) {
+      const catalog = Array.isArray(window.DALEDAY_ALTERNATIVES) ? window.DALEDAY_ALTERNATIVES : [];
+      if (relevanceResults.length === 0 || catalog.length === 0) return [];
+      const avoidIds = relevanceResults.map(r => r.id);
+      const skin = ['baby-care', 'cosmetics'];
+      const ownName = normalizeIng(product.exactName);
+      const hay = normalizeIng((product.exactName || '') + ' ' + (product.brand || ''));
+      return catalog
+        .filter(a => a.category === product.category || (skin.includes(a.category) && skin.includes(product.category)))
+        .filter(a => !Array.isArray(a.matchKeywords) || a.matchKeywords.length === 0 || a.matchKeywords.some(k => hay.indexOf(k) !== -1))
+        .filter(a => !Array.isArray(a.excludeKeywords) || !a.excludeKeywords.some(k => hay.indexOf(k) !== -1))
+        .filter(a => normalizeIng(a.name) !== ownName)
+        .filter(a => avoidIds.every(id => (a.free_of || []).includes(id)))
+        .slice(0, 3);
+    }
+
+    // Egyszerű, eszközön tárolt kattintásszámláló. Később ide köthető rá az analitika.
+    function trackAltClick(altId) {
+      try {
+        const data = JSON.parse(localStorage.getItem('daleday_alt_clicks') || '{}');
+        data[altId] = (data[altId] || 0) + 1;
+        localStorage.setItem('daleday_alt_clicks', JSON.stringify(data));
+      } catch (e) {}
+      trackEvent('alt_click', { id: altId });
+    }
+
+    function buildAlternativesHtml(product, relevanceResults) {
+      const alts = findAlternatives(product, relevanceResults);
+      if (alts.length === 0) return '';
+      const hasAffiliate = alts.some(a => a.affiliateUrl && a.affiliateUrl.indexOf('https://') === 0);
+
+      const items = alts.map(a => {
+        const isAff = a.affiliateUrl && a.affiliateUrl.indexOf('https://') === 0;
+        const href = isAff ? a.affiliateUrl : a.url;
+        if (!href || href.indexOf('https://') !== 0) return '';
+        const rel = isAff ? 'sponsored noopener noreferrer' : 'noopener noreferrer';
+        return `
+          <div style="padding:12px 0; border-bottom:1px solid var(--border-light);">
+            <strong style="font-size:0.88rem;">${escapeHtml(a.name)}</strong>
+            <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">${escapeHtml(a.brand)}${a.store && a.store !== a.brand ? ', ' + escapeHtml(a.store) : ''}</p>
+            <p style="font-size:0.82rem; color:var(--text-main); margin-top:6px; line-height:1.45;">${escapeHtml(a.reason)}</p>
+            <a href="${escapeHtml(href)}" target="_blank" rel="${rel}" class="btn-secondary" style="display:inline-block; margin-top:8px; text-decoration:none; font-size:0.78rem; padding:6px 12px;" onclick="trackAltClick('${escapeHtml(a.id)}')">Megnézem: ${escapeHtml(a.store)}</a>
+            ${isAff ? '<span style="display:block; font-size:0.7rem; color:var(--text-muted); margin-top:4px;">Ajánlott link – jutalékot kaphatunk</span>' : ''}
+          </div>`;
+      }).join('');
+      if (!items.trim()) return '';
+
+      return `
+        <div class="section-block" style="background:var(--card-bg); border:1px solid var(--border-light); padding:18px; margin-top:16px;">
+          <h4 style="font-size:0.92rem; margin-bottom:4px;">Ha kerülni szeretnéd ezt az összetevőt</h4>
+          <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:4px; line-height:1.45;">
+            Olyan termékek, amelyek a címkén szereplő lista alapján nem tartalmazzák a profilodban kerülendőként megjelölt összetevőt.
+          </p>
+          ${items}
+          ${hasAffiliate ? '<p style="font-size:0.72rem; color:var(--text-muted); margin-top:10px;">A jelölt linkeken keresztül vásárolva a daleday jutalékot kaphat, ez neked nem kerül többe.</p>' : ''}
+        </div>`;
+    }
+
+    /* ---- Otthoni alternatíva (rövid receptek: recipes.js, csak élelmiszer) ---- */
+    function findRecipe(product, relevanceResults) {
+      const list = Array.isArray(window.DALEDAY_RECIPES) ? window.DALEDAY_RECIPES : [];
+      if (product.category !== 'food' || relevanceResults.length === 0 || list.length === 0) return null;
+      const avoidIds = relevanceResults.map(r => r.id);
+      const hay = normalizeIng((product.exactName || '') + ' ' + (product.brand || ''));
+      return list
+        .filter(r => r.category === 'food')
+        .filter(r => Array.isArray(r.matchKeywords) && r.matchKeywords.some(k => hay.indexOf(k) !== -1))
+        .filter(r => !Array.isArray(r.excludeKeywords) || !r.excludeKeywords.some(k => hay.indexOf(k) !== -1))
+        .filter(r => avoidIds.every(id => (r.free_of || []).includes(id)))
+        .sort((a, b) => (b.priority || 0) - (a.priority || 0))[0] || null;
+    }
+
+    function buildRecipeHtml(product, relevanceResults) {
+      const r = findRecipe(product, relevanceResults);
+      if (!r) return '';
+      const ings = r.ingredients.map(i => {
+        return `<li><span class="recipe-amount">${escapeHtml(i.amount)}</span> ${escapeHtml(i.name)}</li>`;
+      }).join('');
+      const steps = r.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('');
+      return `
+        <details class="recipe-details" ontoggle="if(this.open) trackEvent('recipe_open',{id:'${escapeHtml(r.id)}'})">
+          <summary>Elkészítheted otthon is: ${escapeHtml(r.title.toLowerCase())}, ${escapeHtml(r.time)}</summary>
+          <h4 class="recipe-h">Hozzávalók</h4>
+          <ul class="recipe-list">${ings}</ul>
+          <h4 class="recipe-h">Elkészítés</h4>
+          <ol class="recipe-list">${steps}</ol>
+          ${r.note ? `<p class="recipe-note">${escapeHtml(r.note)}</p>` : ''}
+          <p class="recipe-note">Az elkészült étel íze és állaga eltérhet a bolti terméktől.</p>
+        </details>`;
+    }
+
+    function hasAvoidCriteria(prefs) {
+      return prefs.some(p => p.indexOf('avoid-') === 0);
+    }
+
+    // Az adat megbízhatósága: 'missing' | 'ocr' | 'open' | 'curated'
+    function getDataQuality(product) {
+      if (!product.fullIngredients || product.fullIngredients.length === 0) return 'missing';
+      if (product.ocr || product.userEdited) return 'ocr';
+      const src = product.sources && product.sources[0];
+      if (src && src.type === 'open-data') return 'open';
+      return 'curated';
+    }
+
+    // Illeszkedés a profilhoz (nem "természetességi" pontszám)
+    function calculateFitValue(relevanceResults) {
+      if (relevanceResults.length === 0) return 12;
+      return Math.min(45 + relevanceResults.length * 20, 90);
+    }
+
+    function buildDecisionBox(quality, prefs, relevanceResults) {
+      const qualityNote = quality === 'ocr'
+        ? 'Az összetevőlista fotóból vagy kézi javításból származik, pontatlan lehet. Ellenőrizd a csomagoláson.'
+        : quality === 'open'
+          ? 'Az adat egy közösségi nyílt adatbázisból származik, hiányos vagy elavult lehet. Ellenőrizd a csomagoláson.'
+          : '';
+      const noteHtml = qualityNote ? `<p class="decision-note">${escapeHtml(qualityNote)}</p>` : '';
+
+      if (quality === 'missing') {
+        return `
+          <div class="decision-box unknown">
+            <div class="decision-title">Nincs elég adat az értékeléshez</div>
+            <p>Ehhez a termékhez nem ismerjük az összetevőlistát, ezért nem tudjuk megmondani, tartalmaz-e a profilodban kerülendő anyagot.</p>
+          </div>`;
+      }
+
+      if (!hasAvoidCriteria(prefs)) {
+        return `
+          <div class="decision-box neutral">
+            <div class="decision-title">Még nincs beállított szempontod</div>
+            <p>Állítsd be a Profilom oldalon, mit szeretnél kerülni, és megmutatjuk, hogy ez a termék tartalmaz-e ilyet.</p>
+            <button class="btn-secondary" style="margin-top:12px;" onclick="switchTab('profile')">Szempontok beállítása</button>
+            ${noteHtml}
+          </div>`;
+      }
+
+      if (relevanceResults.length > 0) {
+        const reasons = relevanceResults.map(r => escapeHtml(r.reason)).join(', ');
+        return `
+          <div class="decision-box warning">
+            <div class="decision-title">A profilodban kerülendő összetevőt találtunk</div>
+            <p>A megadott szempontjaid alapján a lista ${reasons} tartalmaz. A döntés a tiéd, érdemes mérlegelned.</p>
+            ${noteHtml}
+          </div>`;
+      }
+
+      return `
+        <div class="decision-box green">
+          <div class="decision-title">Nem találtunk kerülendő összetevőt</div>
+          <p>A rendelkezésre álló összetevőlista alapján nem szerepel benne olyan, amit a profilodban kerülni szeretnél. Ez nem jelenti azt, hogy a termék minden szempontból megfelelő.</p>
+          ${noteHtml}
+        </div>`;
+    }
+
+    function renderProductView(product, keepScroll) {
+      const container = document.getElementById('resultContainer');
+      if (!container) return;
+
+      activeOcrProduct = product;
+
+      const prefs = getSavedPreferences();
+      const quality = getDataQuality(product);
+      const relevanceResults = quality === 'missing' ? [] : evaluateRelevance(product, prefs);
+      const showSpectrum = quality !== 'missing' && hasAvoidCriteria(prefs);
+      const fitValue = calculateFitValue(relevanceResults);
+
+      let rawIngredientsText = "";
+      let translationNoteHtml = '';
+      if (product.fullIngredients && product.fullIngredients.length > 0) {
+        const disp = buildDisplayIngredients(product.fullIngredients);
+        rawIngredientsText = disp.text;
+        if (disp.translated) {
+          translationNoteHtml = `
+            <p class="recipe-note">A lista idegen nyelvű volt, ezt szótár alapján fordítottuk magyarra. A fordítás hiányos lehet, ellenőrizd a csomagoláson.</p>
+            <details class="orig-list"><summary>Eredeti lista mutatása</summary><div class="full-ingredients-paragraph">${escapeHtml(product.fullIngredients.join(', '))}</div></details>`;
+        }
+      }
+
+      // Figyelemreméltó komponensek (a víz nem szerepel közöttük)
+      const detectedIds = Array.from(getDetectedIds(product)).filter(id => id !== 'inci_aqua').slice(0, 8);
+      let notableIngredientsHtml = '';
+      if (detectedIds.length > 0) {
+        notableIngredientsHtml = detectedIds.map((id, index) => {
+          const ing = INGREDIENT_DICTIONARY[id];
+          if (!ing) return '';
+          const uniqueDetailId = `notable-detail-${escapeHtml(product.barcode)}-${index}`;
+          return `
+            <div class="ingredient-item" onclick="toggleIngredientDetails('${uniqueDetailId}', this)">
+              <div class="ingredient-header">
+                <span>${escapeHtml(ing.displayName)}</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">+ részletek</span>
+              </div>
+              <div class="ingredient-details" id="${uniqueDetailId}">
+                <p><strong>Mi ez?</strong> ${escapeHtml(ing.explanation.whatIsIt)}</p>
+                <p style="margin-top:6px;"><strong>Miért használják?</strong> ${escapeHtml(ing.explanation.whyIsItUsed)}</p>
+                <p style="margin-top:6px;"><strong>Miért lehet fontos?</strong> ${escapeHtml(ing.explanation.thingsToKnow)}</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      let ocrBoxHtml = '';
+      let reanalyzeBtnHtml = '';
+      if (quality === 'missing') {
+        rawIngredientsText = 'Erről az összetevőlistáról jelenleg nincs adatunk a rendszerben.';
+        ocrBoxHtml = `
+          <div class="ocr-upload-box">
+            <strong style="font-size:0.9rem; color:var(--text-main);">Hiányzik a lista? Fotózd le a címkét!</strong>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px; margin-bottom:12px;">Készíts egy éles fotót a csomagolás hátoldalán lévő összetevőkről, és kielemezzük.</p>
+            <label class="btn-primary" style="width:auto; cursor:pointer;">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/></svg>
+              Címke fotózása
+              <input type="file" accept="image/*" capture="environment" style="display:none;" onchange="processLabelImage(event)">
+            </label>
+            <div id="ocrStatus" style="font-size:0.8rem; margin-top:10px;"></div>
+          </div>
+        `;
+      } else {
+        reanalyzeBtnHtml = `
+          <div id="reanalyzeRow" style="margin-bottom:10px;">
+            <button class="btn-secondary" style="font-size:0.76rem; padding:6px 12px;" onclick="startEditIngredients()">Hibás a lista? Javítás</button>
+          </div>`;
+      }
+
+      const decisionBoxHtml = buildDecisionBox(quality, prefs, relevanceResults);
+
+      const spectrumHtml = showSpectrum ? `
+          <div class="spectrum-container">
+            <div class="spectrum-title">Illeszkedés a profilodhoz</div>
+            <div class="spectrum-bar-bg">
+              <div class="spectrum-indicator" style="left: ${fitValue}%;"></div>
+            </div>
+            <div class="spectrum-labels">
+              <span>Jól illeszkedik</span>
+              <span>Részben</span>
+              <span>Mérlegelendő</span>
+            </div>
+          </div>` : '';
+
+      const vilgainHtml = buildAlternativesHtml(product, relevanceResults);
+      const recipeHtml = buildRecipeHtml(product, relevanceResults);
+
+      const isSaved = isProductSaved(product.barcode);
+      const sourceName = quality === 'ocr' ? 'Fotóból vagy kézzel megadva (ellenőrizd a csomagoláson)'
+        : quality === 'open' ? 'Nyílt, közösségi adatbázis'
+        : (product.sources && product.sources[0] && product.sources[0].type === 'manufacturer') ? 'Gyártói információ alapján'
+        : 'daleday';
+
+      const nutritionHtml = (product.nutrition && product.nutrition.totalSugarPer100g !== undefined)
+        ? `<p class="body-text" style="font-weight:600; margin-top:8px;">Összes cukor: ${escapeHtml(product.nutrition.totalSugarPer100g)}${escapeHtml(product.nutrition.sugarUnit)}</p>`
+        : '';
+      const ingCount = (product.fullIngredients && product.fullIngredients.length) ? ` (${product.fullIngredients.length})` : '';
+      const sizePart = (product.packageSize && product.packageSize !== 'N/A') ? `, ${escapeHtml(product.packageSize)}` : '';
+
+      container.innerHTML = `
+        <div class="section-block" id="exportCard">
+          <div class="product-head">
+            <div style="flex:1; min-width:0;">
+              <p class="product-brand">${escapeHtml(product.brand)}${sizePart}</p>
+              <h2 class="display product-name">${escapeHtml(product.exactName)}</h2>
+            </div>
+            <button class="btn-secondary" style="flex-shrink:0;" onclick="toggleSaveProduct('${escapeHtml(product.barcode)}')">
+              ${isSaved ? 'Mentve' : 'Mentés'}
+            </button>
+          </div>
+          <p class="source-line">Adatforrás: ${escapeHtml(sourceName)}</p>
+
+          ${decisionBoxHtml}
+
+          ${spectrumHtml}
+
+          <h3 class="sub-title">Összefoglalás</h3>
+          <p class="body-text">${escapeHtml(product.summary)}</p>
+          ${nutritionHtml}
+
+          ${notableIngredientsHtml ? `
+            <h3 class="sub-title" style="margin-top:24px;">Érdemes tudni</h3>
+            <div>${notableIngredientsHtml}</div>
+          ` : ''}
+
+          <details class="ing-details" ${quality === 'missing' ? 'open' : ''}>
+            <summary>Teljes összetevőlista${ingCount}</summary>
+            <div class="full-ingredients-paragraph" id="ingredientsEditable">${escapeHtml(rawIngredientsText)}</div>
+            ${translationNoteHtml}
+            ${reanalyzeBtnHtml}
+          </details>
+
+          ${ocrBoxHtml}
+
+          ${vilgainHtml}
+
+          ${recipeHtml}
+
+          <div id="exportIgnoreBtn" style="margin-top: 22px; text-align: center;">
+            <button class="btn-secondary" style="width: 100%;" onclick="exportToImageModal()">
+              Elemzés mentése képként
+            </button>
+          </div>
+        </div>
+      `;
+
+      if (!keepScroll) {
+        const card = document.getElementById('exportCard');
+        if (card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function toggleIngredientDetails(elementId, triggerEl) {
+      const el = document.getElementById(elementId);
+      if (el) {
+        const isActive = el.classList.toggle('active');
+        if (triggerEl) triggerEl.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      }
+    }
+
+    /* ==========================================================================
+       9. CIKK MODAL
+       ========================================================================== */
+    async function openArticleModal(articleId) {
+      await stopCameraScanner();
+      const article = ARTICLES_DATABASE[articleId];
+      if (!article) return;
+
+      const titleEl = document.getElementById('articleModalTitle');
+      const bodyEl = document.getElementById('articleModalBody');
+      const modal = document.getElementById('articleModal');
+
+      if (titleEl) titleEl.innerText = article.title;
+      if (bodyEl) bodyEl.innerHTML = article.content;
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeArticleModal() {
+      const modal = document.getElementById('articleModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    /* ==========================================================================
+       10. KÁRTYA EXPORT
+       ========================================================================== */
+    async function exportToImageModal() {
+      const exportCard = document.getElementById('exportCard');
+      if (!exportCard) return;
+
+      const modal = document.getElementById('imageExportModal');
+      const previewContainer = document.getElementById('exportPreviewContainer');
+      const downloadBtn = document.getElementById('downloadImageBtn');
+
+      previewContainer.innerHTML = '<p style="padding: 20px;"><span class="spinner"></span>Kép generálása…</p>';
+      if (modal) modal.classList.add('active');
+
+      try {
+        await loadScript('html2canvas');
+        const canvas = await html2canvas(exportCard, {
+          scale: 2,
+          backgroundColor: '#FFFFFF',
+          logging: false,
+          ignoreElements: (element) => element.id === 'exportIgnoreBtn' || element.id === 'reanalyzeRow' || element.classList.contains('ocr-upload-box') || (element.tagName === 'BUTTON' && element.classList.contains('btn-secondary'))
+        });
+
+        previewContainer.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = canvas.toDataURL('image/png');
+        img.style.width = '100%';
+        img.style.borderRadius = 'var(--radius-md)';
+        previewContainer.appendChild(img);
+
+        downloadBtn.onclick = () => {
+          const link = document.createElement('a');
+          link.download = `daleday-elemzes.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        };
+      } catch (err) {
+        console.error("Hiba a kép generálásakor:", err);
+        previewContainer.innerHTML = '<p style="padding: 20px; color:#7A4246;">A kép elkészítése nem sikerült. Próbáld újra!</p>';
+      }
+    }
+
+    function closeExportModal() {
+      const modal = document.getElementById('imageExportModal');
+      const previewContainer = document.getElementById('exportPreviewContainer');
+      if (previewContainer) previewContainer.innerHTML = '';
+      if (modal) modal.classList.remove('active');
+    }
+
+    /* ==========================================================================
+       11. LOCALSTORAGE, ELŐZMÉNYEK ÉS PROFIL
+       ========================================================================== */
+    function saveToHistory(product) {
+      try {
+        let history = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
+        history = history.filter(p => p.barcode !== product.barcode);
+        history.unshift({
+          barcode: product.barcode,
+          exactName: product.exactName,
+          brand: product.brand,
+          category: product.category,
+          packageSize: product.packageSize,
+          spectrumValue: product.spectrumValue,
+          sources: product.sources,
+          summary: product.summary,
+          nutrition: product.nutrition,
+          fullIngredients: product.fullIngredients,
+          featuredIngredients: product.featuredIngredients,
+          manufacturerNotes: product.manufacturerNotes,
+          alternatives: product.alternatives,
+          ocr: product.ocr === true,
+          userEdited: product.userEdited === true,
+          date: new Date().toLocaleDateString('hu-HU')
+        });
+        if (history.length > 20) history.pop();
+        localStorage.setItem('daleday_history_snapshots', JSON.stringify(history));
+        renderHistoryList();
+      } catch (e) {
+        console.error("LocalStorage hiba:", e);
+      }
+    }
+
+    function renderHistoryList() {
+      const container = document.getElementById('historyListContainer');
+      if (!container) return;
+
+      try {
+        const history = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
+        if (history.length === 0) {
+          container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Még nem ellenőriztél egyetlen terméket sem.</p>';
+          return;
+        }
+        container.innerHTML = history.map((item, index) => `
+          <div class="history-item" onclick="openHistorySnapshot(${index})">
+            <div>
+              <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(item.exactName)}</strong>
+              <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(item.brand)} • ${escapeHtml(item.date)}</p>
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-muted);">Megnyitás</span>
+          </div>
+        `).join('');
+      } catch (e) {
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Az előzmények betöltése nem sikerült.</p>';
+      }
+    }
+
+    async function openHistorySnapshot(index) {
+      try {
+        const history = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
+        const product = history[index];
+        if (product) {
+          renderProductView(product);
+          await switchTab('scanner');
+        }
+      } catch (e) {
+        console.error("Előzmény hiba:", e);
+      }
+    }
+
+    function getSavedPreferences() {
+      try { return JSON.parse(localStorage.getItem('daleday_preferences') || '[]'); } catch (e) { return []; }
+    }
+
+    function savePreferences() {
+      const group = document.getElementById('userPreferencesGroup');
+      if (!group) return;
+      const selected = [];
+      group.querySelectorAll('input[type="checkbox"]').forEach(cb => { if (cb.checked) selected.push(cb.value); });
+      try { localStorage.setItem('daleday_preferences', JSON.stringify(selected)); } catch (e) {}
+    }
+
+    function loadPreferencesUI() {
+      const selected = getSavedPreferences();
+      const group = document.getElementById('userPreferencesGroup');
+      if (!group) return;
+      group.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = selected.includes(cb.value); });
+    }
+
+    function isProductSaved(barcode) {
+      try {
+        const saved = JSON.parse(localStorage.getItem('daleday_saved_snapshots') || '[]');
+        return saved.some(p => p.barcode === barcode);
+      } catch (e) { return false; }
+    }
+
+    function toggleSaveProduct(barcode) {
+      try {
+        let saved = JSON.parse(localStorage.getItem('daleday_saved_snapshots') || '[]');
+        const exists = saved.some(p => p.barcode === barcode);
+
+        if (exists) {
+          saved = saved.filter(p => p.barcode !== barcode);
+        } else {
+          const historySnapshots = JSON.parse(localStorage.getItem('daleday_history_snapshots') || '[]');
+          const product = PRODUCT_DATABASE[barcode] || historySnapshots.find(p => p.barcode === barcode);
+          if (product) {
+            saved.push(product);
+            if (saved.length > 50) saved.shift();
+          }
+        }
+        localStorage.setItem('daleday_saved_snapshots', JSON.stringify(saved));
+        renderSavedProductsList();
+        // a gomb felirata is frissüljön
+        if (activeOcrProduct && activeOcrProduct.barcode === barcode) renderProductView(activeOcrProduct, true);
+      } catch (e) {}
+    }
+
+    function renderSavedProductsList() {
+      const container = document.getElementById('savedProductsContainer');
+      if (!container) return;
+
+      try {
+        const savedProducts = JSON.parse(localStorage.getItem('daleday_saved_snapshots') || '[]');
+        if (savedProducts.length === 0) {
+          container.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">Még nem mentettél el termékeket.</p>';
+          return;
+        }
+        container.innerHTML = savedProducts.map((p, index) => `
+          <div class="history-item" onclick="openSavedSnapshot(${index})">
+            <div>
+              <strong style="font-size:0.88rem; color:var(--text-main);">${escapeHtml(p.exactName)}</strong>
+              <p style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(p.brand)}</p>
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-muted);">Megtekintés</span>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    async function openSavedSnapshot(index) {
+      try {
+        const savedProducts = JSON.parse(localStorage.getItem('daleday_saved_snapshots') || '[]');
+        const product = savedProducts[index];
+        if (product) {
+          renderProductView(product);
+          await switchTab('scanner');
+        }
+      } catch (e) {}
+    }
+
+    /* ==========================================================================
+       12. MODALOK
+       ========================================================================== */
+    async function openAboutModal() {
+      await stopCameraScanner();
+      const modal = document.getElementById('aboutModal');
+      if (modal) modal.classList.add('active');
+    }
+    function closeAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      if (modal) modal.classList.remove('active');
+    }
+    async function openImpressumModal() {
+      await stopCameraScanner();
+      const modal = document.getElementById('impressumModal');
+      if (modal) modal.classList.add('active');
+    }
+    function closeImpressumModal() {
+      const modal = document.getElementById('impressumModal');
+      if (modal) modal.classList.remove('active');
+    }
+    async function openPrivacyModal() {
+      await stopCameraScanner();
+      const cfg = window.DALEDAY_CONFIG || {};
+      const analyticsOn = !!(cfg.analytics && cfg.analytics.enabled && cfg.analytics.domain);
+      const aEl = document.getElementById('privacyAnalytics');
+      if (aEl) {
+        aEl.textContent = analyticsOn
+          ? 'Névtelen, sütit nem használó látogatottság-mérést alkalmazunk. Nem azonosítunk téged, csak összesített eseményeket látunk (pl. sikeres beolvasás, ajánlott termékre kattintás). Ha egy vonalkódhoz nincs találat, a vonalkódot rögzítjük, hogy tudjuk, milyen terméket érdemes felvenni az adatbázisba.'
+          : 'Jelenleg nem használunk látogatottság-mérést, és nem gyűjtünk statisztikát a használatodról.';
+      }
+      const eEl = document.getElementById('privacyEmail');
+      if (eEl) eEl.textContent = cfg.submitEmail || '';
+      const modal = document.getElementById('privacyModal');
+      if (modal) modal.classList.add('active');
+    }
+    function closePrivacyModal() {
+      const modal = document.getElementById('privacyModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    /* ---- Mérés (csak akkor fut, ha a config.js-ben be van kapcsolva) ---- */
+    function initAnalytics() {
+      const cfg = (window.DALEDAY_CONFIG && window.DALEDAY_CONFIG.analytics) || {};
+      if (!cfg.enabled || !cfg.domain || !cfg.src || cfg.src.indexOf('https://') !== 0) return;
+      window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+      const s = document.createElement('script');
+      s.defer = true;
+      s.src = cfg.src;
+      s.setAttribute('data-domain', cfg.domain);
+      document.head.appendChild(s);
+    }
+    function trackEvent(name, props) {
+      try {
+        const cfg = (window.DALEDAY_CONFIG && window.DALEDAY_CONFIG.analytics) || {};
+        if (cfg.enabled && typeof window.plausible === 'function') {
+          window.plausible(name, props ? { props: props } : undefined);
+        }
+      } catch (e) {}
+    }
+
+    /* ---- Hiányzó termék beküldése e-mailben ---- */
+    let lastMissing = { barcode: '', query: '' };
+    function submitMissingProduct() {
+      const cfg = window.DALEDAY_CONFIG || {};
+      const to = cfg.submitEmail || '';
+      if (!to) return;
+      const code = lastMissing.barcode;
+      const query = lastMissing.query;
+      const subject = 'Hiányzó termék: ' + (code || query || '');
+      const body = 'Szia!\n\nEzt a terméket szeretném beküldeni a daleday-be:\n'
+        + (code ? 'Vonalkód: ' + code + '\n' : '')
+        + (query ? 'Amit kerestem: ' + query + '\n' : '')
+        + '\nKérlek, csatolj két fotót: a termék elejéről és az összetevők listájáról.\n\nKöszönöm!';
+      trackEvent('submit_click');
+      window.location.href = 'mailto:' + to
+        + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    }
+    function buildSubmitBoxHtml() {
+      return `
+        <div class="ocr-upload-box" style="margin-top:14px;">
+          <strong style="font-size:0.9rem;">Hiányzik a termék? Küldd be!</strong>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px; margin-bottom:12px;">Küldj e-mailben két fotót (a termék elejéről és az összetevőlistáról), és felvesszük az adatbázisba.</p>
+          <button class="btn-secondary" onclick="submitMissingProduct()">Termék beküldése e-mailben</button>
+        </div>`;
+    }
+
+    function handleOverlayClick(event, modalId) {
+      if (event && event.target && event.target.id === modalId) {
+        if (modalId === 'imageExportModal') closeExportModal();
+        else if (modalId === 'articleModal') closeArticleModal();
+        else if (modalId === 'aboutModal') closeAboutModal();
+        else if (modalId === 'impressumModal') closeImpressumModal();
+        else if (modalId === 'privacyModal') closePrivacyModal();
+      }
+    }
+
+    window.addEventListener('keydown', async (e) => {
+      if (e.key === 'Escape') {
+        closeAboutModal();
+        closeImpressumModal();
+        closePrivacyModal();
+        closeExportModal();
+        closeArticleModal();
+        await stopCameraScanner();
+      }
+    });
+
+    /* ==========================================================================
+       13. NAVIGÁCIÓ ÉS INICIALIZÁLÁS
+       ========================================================================== */
+    async function switchTab(tabName) {
+      await stopCameraScanner();
+      document.querySelectorAll('.tab-view').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      const targetTab = document.getElementById(`tab-${tabName}`);
+      const targetNav = document.getElementById(`nav-${tabName}`);
+
+      if (targetTab) targetTab.style.display = 'block';
+      if (targetNav) targetNav.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const inputEl = document.getElementById('barcodeInput');
+      if (inputEl) {
+        inputEl.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleScanInput();
+          }
+        });
+      }
+
+      initAnalytics();
+      renderHistoryList();
+      loadPreferencesUI();
+      renderSavedProductsList();
+    });
+
+    // Relatív útvonal, hogy GitHub Pages projektoldalon (felhasznalo.github.io/repo/) is működjön
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
