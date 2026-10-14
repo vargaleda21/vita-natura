@@ -8,6 +8,9 @@
        A tájékoztató szövege automatikusan átáll a bekapcsolt állapotra.
 
    submitEmail: ide érkeznek a beküldött hiányzó termékek.
+
+   aboutText: pár mondat rólad és arról, miért csinálod (a "Mi a daleday?" ablakban jelenik meg).
+     Üresen hagyva nem látszik semmi. Új bekezdéshez használj üres sort.
    ========================================================================== */
 window.DALEDAY_CONFIG = {
   analytics: {
@@ -15,5 +18,6 @@ window.DALEDAY_CONFIG = {
     src: "https://plausible.io/js/script.js",
     domain: ""
   },
-  submitEmail: "vargaleda21@gmail.com"
+  submitEmail: "vargaleda21@gmail.com",
+  aboutText: ""
 };

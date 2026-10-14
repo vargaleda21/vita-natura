@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vargaleda21.github.io/vita-natura/sitemap.xml
+Sitemap: https://daleday.hu/sitemap.xml
