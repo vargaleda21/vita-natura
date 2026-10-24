@@ -595,12 +595,13 @@
     <!-- DEMÓ PRÓBALEHETŐSÉG -->
     <div class="section-block">
       <h3 style="font-size: 0.95rem; font-weight:700; margin-bottom: 4px;">Próbáld ki</h3>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Válassz egy példaterméket, és nézd meg, hogyan működik a daleday.</p>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">Válassz egy példát, és nézd meg, hogyan működik a daleday. Az első három szemléltető, nem valós márka.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-        <button class="tag-pill" onclick="handleScanCode('5011082138032')">Sudocrem</button>
-        <button class="tag-pill" onclick="handleScanCode('5099514000020')">WaterWipes</button>
-        <button class="tag-pill" onclick="handleScanCode('4001638098310')">Weleda Baby</button>
+        <button class="tag-pill" onclick="handleScanCode('demo-felvagott')">Felvágott</button>
+        <button class="tag-pill" onclick="handleScanCode('demo-muzliszelet')">Gabonaszelet</button>
+        <button class="tag-pill" onclick="handleScanCode('demo-udito')">Üdítő</button>
         <button class="tag-pill" onclick="handleScanCode('4062100015523')">HiPP Bio</button>
+        <button class="tag-pill" onclick="handleScanCode('4001638098310')">Weleda Baby</button>
         <button class="tag-pill" onclick="handleScanCode('3337875597180')">CeraVe</button>
       </div>
     </div>
@@ -1428,6 +1429,47 @@
         featuredIngredients: [],
         alternatives: []
       },
+      "demo-felvagott": {
+        barcode: "demo-felvagott",
+        exactName: "Szeletelt főtt sonka (példa)",
+        brand: "Példatermék",
+        category: "food",
+        market: "HU",
+        isDemo: true,
+        sources: [],
+        summary: "Szemléltető példa egy tipikus csomagolt felvágottról. Nem valós márka, a lista egy gyakori összetételt mutat.",
+        fullIngredients: ["Sertéshús 86%", "Víz", "Étkezési só", "Dextróz", "Nátrium-nitrit (E250)", "Nátrium-aszkorbát (E301)", "Nátrium-trifoszfát (E451)", "Ízfokozó (E621)"],
+        featuredIngredients: [],
+        alternatives: []
+      },
+      "demo-muzliszelet": {
+        barcode: "demo-muzliszelet",
+        exactName: "Gabonapehely-szelet (példa)",
+        brand: "Példatermék",
+        category: "food",
+        market: "HU",
+        isDemo: true,
+        sources: [],
+        summary: "Szemléltető példa egy tipikus csomagolt gabonaszeletről. Nem valós márka, a lista egy gyakori összetételt mutat.",
+        nutrition: { totalSugarPer100g: 24, sugarUnit: "g/100g", source: "Példa érték" },
+        fullIngredients: ["Zabpehely 34%", "Glükózszirup", "Cukor", "Pálmazsír", "Rizspuffasztott", "Mazsola", "Emulgeálószer (napraforgólecitin)", "Természetes aroma", "Só"],
+        featuredIngredients: [],
+        alternatives: []
+      },
+      "demo-udito": {
+        barcode: "demo-udito",
+        exactName: "Colaízű szénsavas üdítő (példa)",
+        brand: "Példatermék",
+        category: "food",
+        market: "HU",
+        isDemo: true,
+        sources: [],
+        summary: "Szemléltető példa egy tipikus színezett, cukros üdítőről. Nem valós márka, a lista egy gyakori összetételt mutat.",
+        nutrition: { totalSugarPer100g: 10.6, sugarUnit: "g/100g", source: "Példa érték" },
+        fullIngredients: ["Víz", "Cukor", "Szén-dioxid", "Színezék (E150d)", "Savanyúságot szabályozó anyag (foszforsav, E338)", "Természetes aromák", "Koffein"],
+        featuredIngredients: [],
+        alternatives: []
+      },
       "3337875597180": {
         barcode: "3337875597180",
         exactName: "CeraVe Hydrating Cleanser / Hidratáló tisztító krém",
@@ -2020,26 +2062,38 @@
           experimentalFeatures: { useBarCodeDetectorIfSupported: true },
           verbose: false
         });
-        await html5QrcodeScanner.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: { width: 280, height: 120 } },
-          async (decodedText) => {
-            const validCode = validateBarcode(decodedText);
-            if (validCode) {
-              if (navigator.vibrate) navigator.vibrate(50);
-              await stopCameraScanner();
-              const inputEl = document.getElementById('barcodeInput');
-              if (inputEl) inputEl.value = validCode;
-              handleScanCode(validCode);
-            } else {
-              showInputError("A beolvasott kód nem tűnik érvényes vonalkódnak.");
-            }
-          },
-          () => {}
-        );
+        const onDecoded = async (decodedText) => {
+          const validCode = validateBarcode(decodedText);
+          if (validCode) {
+            if (navigator.vibrate) navigator.vibrate(50);
+            await stopCameraScanner();
+            const inputEl = document.getElementById('barcodeInput');
+            if (inputEl) inputEl.value = validCode;
+            handleScanCode(validCode);
+          } else {
+            showInputError("A beolvasott kód nem tűnik érvényes vonalkódnak.");
+          }
+        };
+        const scanCfg = { fps: 10, qrbox: { width: 260, height: 110 } };
+        try {
+          await html5QrcodeScanner.start({ facingMode: "environment" }, scanCfg, onDecoded, () => {});
+        } catch (firstErr) {
+          // Tartalék: ha a hátsó kamera kérése nem megy, megpróbáljuk az első elérhető kamerát
+          if (firstErr && (firstErr.name === 'NotAllowedError' || firstErr.name === 'SecurityError')) throw firstErr;
+          const cams = await Html5Qrcode.getCameras();
+          if (!cams || !cams.length) throw firstErr;
+          const back = cams.find(c => /back|rear|environment|hátsó/i.test(c.label || '')) || cams[cams.length - 1];
+          await html5QrcodeScanner.start(back.id, scanCfg, onDecoded, () => {});
+        }
         setTimeout(setupTorchButton, 600);
       } catch (err) {
-        showInputError("A kamerát nem sikerült megnyitni. Engedélyezd a kamera használatát a böngészőben, vagy írd be a vonalkódot kézzel.");
+        const en = (err && (err.name || '')) + ' ' + (err && (err.message || err) || '');
+        let msg = "A kamerát nem sikerült megnyitni. Írd be a vonalkódot kézzel, vagy próbáld újra.";
+        if (!window.isSecureContext) msg = "A kamera csak biztonságos (https://) kapcsolaton működik. Nyisd meg az oldalt https://daleday.hu címen.";
+        else if (/NotAllowed|Permission|denied/i.test(en)) msg = "A kamera használata le van tiltva ehhez az oldalhoz. Engedélyezd a böngésző (vagy a telefon) beállításaiban, aztán próbáld újra.";
+        else if (/NotFound|DevicesNotFound|no camera/i.test(en)) msg = "Nem találtam elérhető kamerát az eszközön. Írd be a vonalkódot kézzel.";
+        else if (/NotReadable|TrackStart|in use|Could not start/i.test(en)) msg = "A kamerát most egy másik alkalmazás használja. Zárd be, és próbáld újra.";
+        showInputError(msg);
         if (readerContainer) readerContainer.style.display = 'none';
         html5QrcodeScanner = null;
       }
@@ -2899,6 +2953,7 @@
       const isSaved = isProductSaved(product.barcode);
       const sourceName = quality === 'ocr' ? 'Fotóból vagy kézzel megadva (ellenőrizd a csomagoláson)'
         : quality === 'open' ? 'Nyílt, közösségi adatbázis (hiányos lehet, ellenőrizd a csomagoláson)'
+        : product.isDemo ? 'Szemléltető példa (nem valós márka)'
         : (product.sources && product.sources[0] && product.sources[0].type === 'manufacturer') ? 'Gyártói információ alapján'
         : 'daleday';
 
