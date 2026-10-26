@@ -1,0 +1,33 @@
+{
+  "name": "DaleDay – Tudd, mi van benne",
+  "short_name": "DaleDay",
+  "description": "Szkenneld be egy termék vonalkódját, és a DaleDay megmutatja, illik-e hozzád. Te döntöd el, mit kerülsz.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "hu",
+  "background_color": "#F7F4EC",
+  "theme_color": "#10231C",
+  "icons": [
+    {
+      "src": "/icons/icon-192.v1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.v1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-512.v1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
