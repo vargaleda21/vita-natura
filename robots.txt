@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /koszonjuk.html
 
-Sitemap: https://egiposta.hu/sitemap.xml
+Sitemap: https://daleday.hu/sitemap.xml
