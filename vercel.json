@@ -1,0 +1,18 @@
+{
+  "functions": {
+    "api/download.js": {
+      "memory": 1769,
+      "maxDuration": 60
+    },
+    "api/barion-callback.js": {
+      "maxDuration": 30
+    },
+    "api/order-status.js": {
+      "maxDuration": 30
+    },
+    "api/template.js": {
+      "memory": 1769,
+      "maxDuration": 60
+    }
+  }
+}

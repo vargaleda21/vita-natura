@@ -1,0 +1,16 @@
+{
+  "name": "egi-posta",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Égi Posta – személyre szabott karácsonyi levelek (Barion + Számlázz.hu + Resend + PDF)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "node --test test/flow.test.js"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^131.0.1",
+    "puppeteer-core": "^23.10.4"
+  }
+}
