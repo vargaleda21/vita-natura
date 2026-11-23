@@ -32,6 +32,12 @@
   a.btn{background:var(--wine);color:#fff;text-decoration:none;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;white-space:nowrap}
   .tips{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);line-height:1.6}
   .tips b{color:var(--ink)}
+  .share{margin-top:18px;background:#fff8ea;border:1px solid #efdcb0;border-radius:14px;padding:16px 18px}
+  .share b{font-family:"Cormorant Garamond",Georgia,serif;font-size:22px;color:var(--wine)}
+  .share p{margin:4px 0 12px;color:var(--muted);font-size:14px;line-height:1.5}
+  .share-btns{display:flex;flex-wrap:wrap;gap:8px}
+  .sb{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;padding:10px 16px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;text-decoration:none;color:#fff}
+  .sb-native{background:var(--wine)}.sb-msg{background:#0a7cff}.sb-fb{background:#1877f2}.sb-copy{background:#fff;color:var(--ink);border:1px solid #d9d2c3}
   .home{display:inline-block;margin-top:16px;color:var(--wine);font-weight:600;text-decoration:none}
 </style>
 <script src="/js/consent.js"></script>
@@ -65,6 +71,16 @@
     A PDF második oldalán találod a bélyeges borítékcímkéket három borítékmérethez (LC/6, LA/4, C5) és a viaszpecsét-matricákat – vágd ki azt, amelyik a borítékodhoz illik.<br>
     A számlát a Számlázz.hu küldi külön e-mailben.
   </div>
+  <div class="share" id="share" hidden>
+    <b>Tetszett? 🎄</b>
+    <p>Küldd el egy anyukának vagy apukának, akinek jól jönne – pár perc, és az ő gyereke is kap egy saját levelet.</p>
+    <div class="share-btns">
+      <button type="button" class="sb sb-native" id="shNative" hidden>Megosztás…</button>
+      <a class="sb sb-msg" id="shMsg" target="_blank" rel="noopener">Messenger</a>
+      <a class="sb sb-fb" id="shFb" target="_blank" rel="noopener">Facebook</a>
+      <button type="button" class="sb sb-copy" id="shCopy">Link másolása</button>
+    </div>
+  </div>
   <a class="home" href="/">← Vissza a főoldalra</a>
 </div>
 <script>
@@ -73,6 +89,17 @@
   const $=id=>document.getElementById(id);
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   let tries=0;
+  function showShare(){
+    const url='https://egiposta.hu/?utm_source=megosztas&utm_medium=koszonjuk';
+    const text='Személyre szabott levél a Jézuskától vagy a Mikulástól – pár perc alatt elkészül, és tényleg a gyerekről szól: ';
+    const mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    $('shFb').href='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url);
+    if(mobile) $('shMsg').href='fb-messenger://share/?link='+encodeURIComponent(url);
+    else $('shMsg').hidden=true;
+    if(navigator.share){ const b=$('shNative'); b.hidden=false; b.onclick=()=>navigator.share({title:'Égi Posta',text,url}).catch(()=>{}); }
+    $('shCopy').onclick=async()=>{ try{ await navigator.clipboard.writeText(url); $('shCopy').textContent='Kimásolva ✓'; }catch(_){ prompt('Másold ki a linket:',url); } };
+    $('share').hidden=false;
+  }
   function show(icon,title,text){ $('state').innerHTML=`${icon}<div><b>${title}</b><br><span style="color:var(--muted);font-size:14px">${text}</span></div>`; }
   async function poll(){
     tries++;
@@ -84,7 +111,7 @@
         show('<div class="ok">✓</div>','Kész! Töltsd le a leveleket', j.emailSent ? `Elküldtük e-mailben is: ${esc(j.email)}` : 'Mentsd el a leveleket most, vagy tedd könyvjelzőbe ezt az oldalt – a linkek később is működnek.');
         $('sub').textContent='A fizetés sikeres volt.';
         $('list').innerHTML=j.letters.map(l=>`<li><b>${esc(l.name)} levele</b><a class="btn" href="${l.url}">Letöltés (PDF)</a></li>`).join('');
-        $('tips').hidden=false;
+        $('tips').hidden=false; showShare();
         try{ const pk='ep_px_'+order; if(!localStorage.getItem(pk) && j.total){ localStorage.setItem(pk,'1'); window.epTrack&&epTrack('Purchase',{value:j.total,currency:'HUF',num_items:j.letters.length}); } }catch(_){}
         return;
       }

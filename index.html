@@ -55,6 +55,13 @@
   @media (prefers-reduced-motion: reduce){.snow{display:none}}
 
   header{position:relative;max-width:1180px;margin:0 auto;padding:36px 24px 28px;color:#fff}
+  .season-bar{display:inline-flex;align-items:center;gap:10px;margin:14px 0 4px;padding:9px 16px 9px 12px;border-radius:999px;background:linear-gradient(90deg,#b3202a,#8f1d24);color:#fff;text-decoration:none;font-size:15px;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.18)}
+  .season-bar[hidden]{display:none}
+  .season-bar b{color:#ffe7a8}
+  .season-bar .sb-ico{font-size:20px}
+  .season-bar .sb-go{margin-left:4px;font-weight:700;transition:transform .2s}
+  .season-bar:hover .sb-go{transform:translateX(3px)}
+  @media (max-width:560px){.season-bar{font-size:13.5px;border-radius:14px}}
   .brand{display:flex;align-items:center;gap:10px;font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:600;letter-spacing:.5px;color:var(--gold-soft)}
   h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(30px,4.4vw,48px);line-height:1.08;margin:18px 0 10px;max-width:760px}
   h1 em{color:var(--gold-soft);font-style:italic}
@@ -676,7 +683,8 @@
     <svg width="22" height="24" viewBox="0 0 24 26" aria-hidden="true"><circle cx="12" cy="3" r="2.4" fill="#e9cd7d"/><path fill="#e3707f" d="M12 5c1.2 2.6 3 4.4 5 5.4-1.2.4-2.4.4-3.4.2 1.8 2.4 4.2 4 6.6 5-1.8.6-3.8.6-5.4.2 2 2.4 4.6 4 7.2 5-6 1.6-14 1.6-20 0 2.6-1 5.2-2.6 7.2-5-1.6.4-3.6.4-5.4-.2 2.4-1 4.8-2.6 6.6-5-1 .2-2.2.2-3.4-.2 2-1 3.8-2.8 5-5.4z"/><rect x="10.6" y="21.6" width="2.8" height="3.4" rx=".6" fill="#e3707f"/></svg>
     Égi Posta
   </div>
-  <h1>Levél a Jézuskától,<br><em>amiben tényleg a te gyerekedről van szó</em></h1>
+  <a class="season-bar" id="seasonBar" href="#form" hidden><span class="sb-ico" aria-hidden="true">🎅</span><span><b>Mikulásra?</b> Rendeld meg <span style="white-space:nowrap">december 5-ig</span>, és este már ki is nyomtathatod!</span><span class="sb-go" aria-hidden="true">→</span></a>
+  <h1 id="heroTitle">Levél a Jézuskától,<br><em>amiben tényleg a te gyerekedről van szó</em></h1>
   <p class="lede">Töltsd ki pár perc alatt, és rögtön látod a kész levelet. Fizetés után kinyomtatható PDF-ként töltheted le, bélyeges borítékcímkével együtt.</p>
   <span class="demo-pill">Demó · fizetés nélkül</span>
 </header>
@@ -2052,6 +2060,20 @@
   // ---------- éles mód / nyomtatási nézet ----------
   const QS = new URLSearchParams(location.search);
   if(QS.get('print')) initPrint(); else buildSamples();
+  // ---------- szezon: Mikulás-sürgetés december 5-ig (Budapest idő szerint), utána magától eltűnik ----------
+  (function(){
+    const ov=QS.get('season');
+    const mik = ov ? ov==='mikulas' : Date.now() < Date.parse('2026-12-06T00:00:00+01:00');
+    if(!mik || QS.get('print')) return;
+    const bar=$('seasonBar'); bar.hidden=false;
+    $('heroTitle').innerHTML='Levél a Mikulástól vagy a Jézuskától,<br><em>amiben tényleg a te gyerekedről van szó</em>';
+    bar.addEventListener('click', e=>{
+      e.preventDefault();
+      const r=document.querySelector('input[name=sender][value=mikulas]');
+      if(r && !r.checked){ r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); }
+      $('form').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  })();
   fetch('/api/health').then(r=>r.ok&&r.json()).then(j=>{ if(j&&j.ok){ const p=document.querySelector('.demo-pill'); if(p) p.remove(); } }).catch(()=>{});
 
   async function initPrint(){

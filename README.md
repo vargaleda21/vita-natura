@@ -122,3 +122,15 @@ CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" npx v
 - **Vercel Web Analytics** (sütimentes látogatottság): Vercel → projekt → *Analytics* → *Enable*. A kód (`/_vercel/insights/script.js`) már benne van az oldalakban.
 - **Meta Pixel + sütibanner**: a `js/consent.js` első sorában add meg a `META_PIXEL_ID` értékét. Amíg üres, nincs banner és nincs Facebook-követés.
   Események: `PageView`, `ViewContent` (első kitöltés), `AddToCart` (újabb levél), `InitiateCheckout` (összesítő megnyitása), `Purchase` (köszönőoldal, valódi végösszeggel, rendelésenként egyszer).
+
+## Értesítő a tulajdonosnak
+
+Minden fizetett rendelés után rövid e-mail megy az `ADMIN_EMAIL` címre (ha nincs megadva, a `SUPPORT_EMAIL`-re): tartalom, összeg, rendelésszám, számla és vevői e-mail állapota – a gyerek adatai és a levél szövege nélkül. Hiba esetén a tárgy „⚠️ Ellenőrizd” kezdetű.
+
+## Szezon
+
+December 6-ig (Budapest idő) a főoldalon Mikulás-sáv és „Levél a Mikulástól vagy a Jézuskától” cím látszik; utána magától visszaáll. Teszteléshez: `/?season=mikulas` vagy `/?season=karacsony`.
+
+## Keresők
+
+`robots.txt` és `sitemap.xml` a gyökérben. Google Search Console → tulajdon hozzáadása (`egiposta.hu`) → Sitemaps → `sitemap.xml`.

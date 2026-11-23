@@ -169,3 +169,14 @@ test('több oklevél egy levélhez: mindegyik külön tétel', async () => {
   assert.equal(o.items[0].certs[2].style, 'arany', 'ismeretlen stílus → arany');
   assert.equal(o.items[0].certs[0].signer, 'mikulas');
 });
+
+test('tulajdonosi értesítő: összeg és tartalom, gyerekadatok nélkül', async () => {
+  const mails = calls.filter(c => c.url === 'https://api.resend.com/emails').map(c => JSON.parse(c.opts.body));
+  const admin = mails.find(m => /Új rendelés/.test(m.subject));
+  assert.ok(admin, 'ment értesítő');
+  assert.equal(admin.subject, 'Új rendelés: 2 levél + 1 oklevél, 4 270 Ft');
+  assert.deepEqual(admin.to, ['hello@x.hu']);
+  assert.ok(!/Bence|Réka|Titok/.test(admin.html), 'nincs benne a gyerek neve vagy a szöveg');
+  const o = await getOrder(orderId);
+  assert.ok(o.adminNotifiedAt);
+});
